@@ -1,4 +1,4 @@
-package sample;
+package raytracer;
 /**
  * Created by Marcus Baetz on 07.10.2015.
  *

@@ -1,4 +1,4 @@
-package sample;
+package raytracer;
 
 import javafx.application.Application;
 import javafx.embed.swing.SwingFXUtils;
