@@ -11,28 +11,41 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-
 public class ImageViewer extends Application {
-private Scene scene;
+
+    /**
+     * The Javafx start class.
+     * @see javafx.stage.Stage
+     * @param primaryStage The PrimaryStage of this program.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        final Image image = load(primaryStage);
+        final Scene scene = new Scene(new Group(),image.getWidth(),image.getHeight());
+        scene.setFill(new ImagePattern(image));
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Image Viewer");
+        primaryStage.show();
+    }
+    /** This method load an image from file and shows it in its native resolution
+     * @param stage The PrimaryStage of this program.
+     */
+    private Image load(Stage stage){
         final String file;
-        final Image image;
+        Image image=null;
         final FileChooser fileChooser = new FileChooser();
         final FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG");
         final FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG");
         fileChooser.getExtensionFilters().addAll(extFilterJPG, extFilterPNG);
+        try{
+            file = fileChooser.showOpenDialog(stage).toURI().toString();
+            image = new Image(file);
+        }catch(Exception e){
 
-        file = fileChooser.showOpenDialog(primaryStage).toURI().toString();
-        image = new Image(file);
-        scene = new Scene(new Group(),image.getWidth(),image.getHeight());
-
-        primaryStage.setTitle("Image Viewer");
-        primaryStage.setScene(scene);
-        primaryStage.getScene().setFill(new ImagePattern(image));
-        primaryStage.show();
+            System.exit(0);
+        }
+        return image;
     }
 
 

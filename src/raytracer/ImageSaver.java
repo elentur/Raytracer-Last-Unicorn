@@ -15,8 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -96,18 +94,17 @@ public class ImageSaver extends Application {
     private void save(Stage stage) {
         if(stage==null) throw new IllegalArgumentException("Stage can't be null");
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"),
-                new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));
         final File file = fileChooser.showSaveDialog(stage);
         final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try {  if(file != null && file.getName().contains("png")) ImageIO.write(renderedImage, "png", file);
-            if(file != null && file.getName().contains("jpg")){
+            /*if(file != null && file.getName().contains("jpg")){
                 BufferedImage image = SwingFXUtils.fromFXImage(writableImage, null);
                 BufferedImage imageRGB = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.OPAQUE);
                 Graphics2D graphics = imageRGB.createGraphics();
                 graphics.drawImage(image, 0, 0, null);
                 ImageIO.write(imageRGB, "jpg", file);
-            }
+            }*/
         } catch (IOException e) {
             e.printStackTrace();
         }
