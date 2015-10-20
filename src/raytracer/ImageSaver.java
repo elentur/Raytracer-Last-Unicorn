@@ -98,13 +98,6 @@ public class ImageSaver extends Application {
         final File file = fileChooser.showSaveDialog(stage);
         final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try {  if(file != null && file.getName().contains("png")) ImageIO.write(renderedImage, "png", file);
-            /*if(file != null && file.getName().contains("jpg")){
-                BufferedImage image = SwingFXUtils.fromFXImage(writableImage, null);
-                BufferedImage imageRGB = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.OPAQUE);
-                Graphics2D graphics = imageRGB.createGraphics();
-                graphics.drawImage(image, 0, 0, null);
-                ImageIO.write(imageRGB, "jpg", file);
-            }*/
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -118,7 +111,6 @@ public class ImageSaver extends Application {
      * Fills the image with the defined color for each pixel.
      */
     private void render() {
-
         writableImage = new WritableImage(imgWidth, imgHeight);
         image.setImage(writableImage);
         final PixelWriter myPixelWriter = writableImage.getPixelWriter();
