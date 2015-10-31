@@ -1,6 +1,7 @@
 package matVect;
 
 /**
+ * This Object represents a 3 dimensional normal and offers relevant operations for a normal.
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class Normal3 {
