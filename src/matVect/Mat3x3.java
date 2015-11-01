@@ -71,7 +71,7 @@ public class Mat3x3 {
         this.m32 = m32 + 0.0;
         this.m33 = m33 + 0.0;
 
-        determinant = (m11*m22*m33)+ (m21*m32*m13)+ (m31*m12*m23)- (m13*m22*m31)-(m23*m32*m11)-(m33*m12*m21);
+        this.determinant = (m11*m22*m33)+ (m21*m32*m13)+ (m31*m12*m23)- (m13*m22*m31)-(m23*m32*m11)-(m33*m12*m21);
     }
 
     /**
