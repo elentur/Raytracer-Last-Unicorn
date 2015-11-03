@@ -50,11 +50,12 @@ public class ImageSaver extends Application {
      * @see javafx.stage.Stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
 
         primaryStage.setTitle("Image Saver");
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
+        //render();
     }
 
     /**
@@ -63,7 +64,7 @@ public class ImageSaver extends Application {
      * @param stage The PrimaryStage of this program.
      * @return The Scene for this PrimaryStage.
      */
-    private Scene setScene(Stage stage) {
+    private Scene setScene(final Stage stage) {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         final int elementsHeight = 25;
         final Menu btnFile = new Menu("File");
@@ -93,7 +94,7 @@ public class ImageSaver extends Application {
      *
      * @param stage The PrimaryStage of this program.
      */
-    private void save(Stage stage) {
+    private void save(final Stage stage) {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));
