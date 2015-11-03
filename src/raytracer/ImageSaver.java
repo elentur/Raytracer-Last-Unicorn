@@ -100,7 +100,7 @@ public class ImageSaver extends Application {
         final File file = fileChooser.showSaveDialog(stage);
         final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
         try {
-            if (file != null && file.getName().contains("png")) ImageIO.write(renderedImage, "png", file);
+            if (file != null ) ImageIO.write(renderedImage, "png", file);
         } catch (IOException e) {
             e.printStackTrace();
         }
