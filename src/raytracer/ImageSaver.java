@@ -1,7 +1,8 @@
 package raytracer;
 
+import UI.*;
+import camera.Camera;
 import javafx.application.Application;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -11,13 +12,8 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.imageio.ImageIO;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
+import utils.World;
 
 /**
  * This program generates a black image witch a red diagonal line. This picture can be saved as a png.
@@ -44,6 +40,32 @@ public class ImageSaver extends Application {
     private final ImageView image = new ImageView();
 
     /**
+     * represents the Scene with all its lights and geometries.
+     */
+    private static World world;
+
+    /**
+     * Represents the Camera of this scene.
+     */
+    private static Camera camera;
+
+    public static World getWorld() {
+        return world;
+    }
+
+    public static void setWorld(final World world) {
+        ImageSaver.world = world;
+    }
+
+    public static Camera getCamera() {
+        return camera;
+    }
+
+    public static void setCamera(final Camera camera) {
+        ImageSaver.camera = camera;
+    }
+
+    /**
      * The Javafx start class.
      *
      * @param primaryStage The PrimaryStage of this program.
@@ -52,7 +74,7 @@ public class ImageSaver extends Application {
     @Override
     public void start(final Stage primaryStage) {
 
-        primaryStage.setTitle("Image Saver");
+        primaryStage.setTitle("Last-Unicorn Ray-Tracer");
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
         //render();
@@ -68,15 +90,37 @@ public class ImageSaver extends Application {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         final int elementsHeight = 25;
         final Menu btnFile = new Menu("File");
-        final MenuItem btnSave = new MenuItem("Save");
+        final MenuItem btnSave = new MenuItem("Save Rendered Image");
+        final MenuItem btnSaveScene = new MenuItem("Save Scene");
+        final MenuItem btnLoadScene = new MenuItem("Load Scene");
+        final Menu btnCreate = new Menu("Create");
+        final MenuItem btnNewScene = new MenuItem("New Scene");
+        final MenuItem btnNewCamera = new MenuItem("New Camera");
+        final MenuItem btnNewPlane = new MenuItem("Add new Plane");
+        final MenuItem btnNewSphere = new MenuItem("Add new Sphere");
+        final MenuItem btnNewCube = new MenuItem("Add new Cube");
+        final MenuItem btnNewTriangle = new MenuItem("Add new Triangle");
+        final MenuItem btnNewOBJ = new MenuItem("Add new OBJ");
         final MenuBar menubar = new MenuBar();
         final VBox root = new VBox(menubar, image);
         final Scene scene = new Scene(root, imgWidth, imgHeight + elementsHeight);
 
-        btnFile.getItems().addAll(btnSave);
-        menubar.getMenus().addAll(btnFile);
+        btnFile.getItems().addAll(btnSaveScene,btnLoadScene,btnSave);
+        btnCreate.getItems().addAll(btnNewScene,btnNewCamera,
+                btnNewPlane, btnNewSphere,btnNewCube,
+                btnNewTriangle, btnNewOBJ);
+        menubar.getMenus().addAll(btnFile,btnCreate);
 
-        btnSave.setOnAction(a -> save(stage));
+        btnSave.setOnAction(a -> IO.saveImage(stage,writableImage));
+        btnSaveScene.setOnAction(a -> IO.saveScene(stage,world));
+        btnLoadScene.setOnAction(a -> IO.loadScene(stage));
+        btnNewScene.setOnAction(a -> new NewWorldStage());
+        btnNewCamera.setOnAction(a -> new NewCameraStage());
+        btnNewPlane.setOnAction(a -> new NewPlaneStage());
+        btnNewSphere.setOnAction(a -> new NewSphereStage());
+        btnNewCube.setOnAction(a -> new NewCubeStage());
+        btnNewTriangle.setOnAction(a -> new NewTriangleStage());
+        btnNewOBJ.setOnAction(a -> new NewOBJStage());
 
         scene.widthProperty().addListener(a -> {
             imgWidth = ((int) scene.getWidth());
@@ -89,23 +133,8 @@ public class ImageSaver extends Application {
         return scene;
     }
 
-    /**
-     * This method saves the generated image in a png file, with a name and location, the user defined.
-     *
-     * @param stage The PrimaryStage of this program.
-     */
-    private void save(final Stage stage) {
-        if (stage == null) throw new IllegalArgumentException("Stage can't be null");
-        final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));
-        final File file = fileChooser.showSaveDialog(stage);
-        final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-        try {
-            if (file != null ) ImageIO.write(renderedImage, "png", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
 
     public static void main(String[] args) {
         launch(args);
