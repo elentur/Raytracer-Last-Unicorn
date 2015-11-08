@@ -43,13 +43,13 @@ public class World implements Serializable {
         if(g== null) throw new IllegalArgumentException("g must not be null!");
     }
 
-   /* /**
+    /**
      *  Checks every Geometry in the scene if it is hit by the given ray.
      * Returns the color for the nearest hit or the background color.
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background color.
      */
-  /*  public Color hit(final Ray r){
+    public Color hit(final Ray r){
         if(r== null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
         for(Geometry g : geometries){
@@ -59,7 +59,7 @@ public class World implements Serializable {
 
         return hit!= null ? hit.geo.color : backgroundColor;
     }
-*/
+
     @Override
     public String toString() {
         return "World{" +

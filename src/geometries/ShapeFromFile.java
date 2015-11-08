@@ -68,9 +68,14 @@ public class ShapeFromFile extends Geometry {
             Hit hit = t.hit(r);
             if(h == null ||( hit != null &&  h.t > hit.t)) h = hit;
         }
-        return h;// triangles.get(0).hit(r);
+        return h;
     }
 
+    /**
+     * Reads an Wavefront obj File and converts it into a group of triangles.
+     * @param source The path of the obj-File
+     * @return returns true if the reading progress happened without any failure
+     */
     private boolean readFile(String source) {
         Path path = Paths.get(source);
         BufferedReader br;
