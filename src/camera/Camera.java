@@ -6,7 +6,7 @@ import utils.Ray;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
- * This class represents a beam which has an origin and a direction.
+ *
  * @author Marcus Bätz
  */
 public abstract class Camera {

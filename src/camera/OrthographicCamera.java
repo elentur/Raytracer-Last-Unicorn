@@ -34,6 +34,13 @@ public class OrthographicCamera extends Camera {
     }
 
     @Override
+    public String toString() {
+        return "OrthographicCamera{" +
+                "s=" + s +
+                '}';
+    }
+
+    @Override
     public Ray rayFor(final int w,final int h,final int x,final int y) {
         double aspectRatio = (double) w / (double) h;
         double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
@@ -44,5 +51,22 @@ public class OrthographicCamera extends Camera {
         final Vector3 d = this.w.mul(-1);
 
         return new Ray(o, d);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrthographicCamera that = (OrthographicCamera) o;
+
+        return Double.compare(that.s, s) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = Double.doubleToLongBits(s);
+        return (int) (temp ^ (temp >>> 32));
     }
 }

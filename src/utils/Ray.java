@@ -50,4 +50,31 @@ public class Ray {
         }
         return p.sub(this.o).magnitude / this.d.magnitude;
     }
+
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "o=" + o +
+                ", d=" + d +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o1) {
+        if (this == o1) return true;
+        if (o1 == null || getClass() != o1.getClass()) return false;
+
+        Ray ray = (Ray) o1;
+
+        if (o != null ? !o.equals(ray.o) : ray.o != null) return false;
+        return !(d != null ? !d.equals(ray.d) : ray.d != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = o != null ? o.hashCode() : 0;
+        result = 31 * result + (d != null ? d.hashCode() : 0);
+        return result;
+    }
 }

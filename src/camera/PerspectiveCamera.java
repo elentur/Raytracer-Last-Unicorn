@@ -20,7 +20,7 @@ public class PerspectiveCamera extends Camera {
      * @param e
      *            eye position
      * @param g
-     *            gaze vector (Blickrichtung)
+     *            gaze vector (gaze direction)
      * @param t
      *            up vector
      * @param angle
@@ -40,4 +40,29 @@ public class PerspectiveCamera extends Camera {
 
         return  new Ray(this.e, r.normalized() );
     }
+
+    @Override
+    public String toString() {
+        return "PerspectiveCamera{" +
+                "angle=" + angle +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PerspectiveCamera that = (PerspectiveCamera) o;
+
+        return Double.compare(that.angle, angle) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        long temp = Double.doubleToLongBits(angle);
+        return (int) (temp ^ (temp >>> 32));
+    }
+
 }
