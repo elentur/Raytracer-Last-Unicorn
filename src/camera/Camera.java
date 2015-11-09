@@ -39,7 +39,7 @@ public abstract class Camera {
     public Vector3 w;
 
     /**
-     * Constructor initializes e. g and t.
+     * constructor initializes e. g and t.
      *
      * @param e
      *            eye position
@@ -61,7 +61,7 @@ public abstract class Camera {
     }
 
     /**
-     * Return a beam for certain pixel.
+     * returns a beam for certain pixel.
      *
      * @param w
      *            width of image
