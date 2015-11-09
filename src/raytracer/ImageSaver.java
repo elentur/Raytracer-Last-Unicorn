@@ -125,7 +125,6 @@ public class ImageSaver extends Application {
                 else myPixelWriter.setColor(x, y, Color.BLACK);
             }
         }
-
     }
 
 
