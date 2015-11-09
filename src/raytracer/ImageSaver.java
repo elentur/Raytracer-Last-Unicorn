@@ -196,8 +196,9 @@ public class ImageSaver extends Application {
         root.setTop(menubar);
         root.setCenter(scrollPane);
         root.setBottom(statusPane);
-        final Scene scene = new Scene(root, imgWidth.get() + 10, imgHeight.get() + elementsHeight);
 
+        final Scene scene = new Scene(root, imgWidth.get() + 10, imgHeight.get() + elementsHeight);
+        scene.getStylesheets().add("css/rootStyle.css");
 
         btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
         btnCreate.getItems().addAll(btnNewScene, btnNewCamera,

@@ -86,7 +86,7 @@ public class NewOBJStage extends Stage {
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
         Scene scene = new Scene(borderPane, 600,300);
-
+        scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Import new .obj?");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);

@@ -44,7 +44,6 @@ public class Dialog extends Stage {
         root.getChildren().addAll(lblInfo,btnOK);
 
         Scene scene = new Scene(root, 400,150);
-
         btnOK.translateXProperty().bind(scene.widthProperty().subtract(btnOK.widthProperty()).subtract(20));
         btnOK.translateYProperty().bind(scene.heightProperty().subtract(btnOK.heightProperty()).subtract(20));
         lblInfo.prefWidthProperty().bind(scene.widthProperty().divide(1.5));

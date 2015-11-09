@@ -102,6 +102,7 @@ public class RenderSettingsStage extends Stage {
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
         Scene scene = new Scene(borderPane, 300,400);
+        scene.getStylesheets().add("css/rootStyle.css");
         loadConfig();
         this.setTitle("Render-Settings");
         this.setScene(scene);

@@ -49,8 +49,8 @@ public class Hit implements Serializable {
         Hit hit = (Hit) o;
 
         if (Double.compare(hit.t, t) != 0) return false;
-        if (!ray.equals(hit.ray)) return false;
-        return geo.equals(hit.geo);
+        if (ray != null ? !ray.equals(hit.ray) : hit.ray != null) return false;
+        return !(geo != null ? !geo.equals(hit.geo) : hit.geo != null);
 
     }
 
@@ -60,8 +60,18 @@ public class Hit implements Serializable {
         long temp;
         temp = Double.doubleToLongBits(t);
         result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + ray.hashCode();
-        result = 31 * result + geo.hashCode();
+        result = 31 * result + (ray != null ? ray.hashCode() : 0);
+        result = 31 * result + (geo != null ? geo.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Hit{" +
+                "t=" + t +
+                ", ray=" + ray +
+                ", geo=" + geo +
+                '}';
+    }
+
 }
