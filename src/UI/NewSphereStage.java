@@ -111,7 +111,7 @@ public class NewSphereStage extends Stage {
             if(r <= 0.0) r=1.0;
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Sphere p = new Sphere(center,r,new Color(c.getRed(),c.getGreen(),c.getBlue()));
-            ImageSaver.getWorld().addGeometry(p);
+            ImageSaver.getWorld().geometries.add(p);
 
         }catch(NumberFormatException e){
             System.out.println("ZahlenFehler");

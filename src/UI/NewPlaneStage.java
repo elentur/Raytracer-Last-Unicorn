@@ -115,7 +115,7 @@ public class NewPlaneStage extends Stage {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Plane p = new Plane(a,n.normalized().asNormal(),new Color(c.getRed(),c.getGreen(),c.getBlue()));
-            ImageSaver.getWorld().addGeometry(p);
+            ImageSaver.getWorld().geometries.add(p);
 
         }catch(NumberFormatException e){
             System.out.println("ZahlenFehler");

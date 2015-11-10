@@ -376,7 +376,7 @@ public class ImageSaver extends Application {
     }
 
     /**
-     * Prepares the writableimage for rendering and sets its start-color.
+     * Prepares the writableImage for rendering and sets its start-color.
      */
     private void prepare() {
         writableImage = new WritableImage(imgWidth.get(), imgHeight.get());
@@ -399,8 +399,8 @@ public class ImageSaver extends Application {
      */
     private void draw(final int x, final int y, PixelWriter pixelWriter) {
         if(pixelWriter == null)throw new IllegalArgumentException("pixelWriter must not be null.");
-        if(x <0 || x> imgWidth.get() - 1)throw new IllegalArgumentException("x has to be between 0 an width -1.");
-        if(y <0 || y> imgHeight.get() - 1)throw new IllegalArgumentException("y has to be between 0 an height -1.");
+        if(x <0 || x> imgWidth.get() - 1)throw new IllegalArgumentException("x has to be between 0 and width -1.");
+        if(y <0 || y> imgHeight.get() - 1)throw new IllegalArgumentException("y has to be between 0 and height -1.");
 
         Ray r = camera.rayFor(imgWidth.get(),imgHeight.get(),x,y);
         utils.Color  c = world.hit(r);
@@ -413,7 +413,7 @@ public class ImageSaver extends Application {
     }
 
     /**
-     * The Taskclass for the render-threads.
+     * The Task-class for the render-threads.
      * @param <Void>
      */
     private class RenderTask<Void> extends Task<Void> {

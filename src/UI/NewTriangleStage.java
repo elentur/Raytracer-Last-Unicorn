@@ -120,7 +120,7 @@ public class NewTriangleStage extends Stage {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Triangle p = new Triangle(edgeA,edgeB,edgeC,new Color(c.getRed(),c.getGreen(),c.getBlue()));
-            ImageSaver.getWorld().addGeometry(p);
+            ImageSaver.getWorld().geometries.add(p);
 
         }catch(NumberFormatException e){
             System.out.println("ZahlenFehler");

@@ -35,13 +35,7 @@ public class World implements Serializable {
         this.geometries=new ArrayList<>();
     }
 
-    /**
-     * Adds a Geometry to the List of Geometries of this world.
-     * @param g the Geometry that have to be added.
-     */
-    public void addGeometry(final Geometry g){
-        if(g== null) throw new IllegalArgumentException("g must not be null!");
-    }
+
 
     /**
      *  Checks every Geometry in the scene if it is hit by the given ray.
