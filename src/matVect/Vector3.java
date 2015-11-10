@@ -1,6 +1,7 @@
 package matVect;
 
 /**
+ * This Object represents a 3 dimensional vector and offers relevant operations for a vector.
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class Vector3 {
@@ -183,7 +184,7 @@ public class Vector3 {
         //if (Double.compare(vector3.z,z) != 0) return false;
         //return Double.compare(vector3.magnitude, magnitude) == 0;
         final double difX= vector3.x-x;
-        final double difY= vector3.y-y;
+        final double difY = vector3.y-y;
         final double difZ= vector3.z-z;
         return Math.abs(difX+difY+difZ)<0.00000000000001;
 

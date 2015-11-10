@@ -1,6 +1,7 @@
 package matVect;
 
 /**
+ * Testclass, for the matrix-vector library
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class Main {
@@ -13,13 +14,34 @@ public class Main {
     }
 
     private static void matrixTest() {
-        final Mat3x3 m1 = new Mat3x3(1.0,0.0,0.0,0.0,1.0,0.0,0.0,0.0,1.0);
-        final Mat3x3 m2 = new Mat3x3(1.0,4.0,7.0,2.0,5.0,8.0,3.0,6.0,9.0);
-        final Mat3x3 m3 = new Mat3x3(0.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,0.0);
-        final Mat3x3 m4 = new Mat3x3(3.0,6.0,9.0,2.0,5.0,8.0,1.0,4.0,7.0);
-        final Mat3x3 m5 = new Mat3x3(8.0,8.0,8.0,2.0,5.0,8.0,3.0,6.0,9.0);
-        final Mat3x3 m6 = new Mat3x3(1.0,4.0,7.0,8.0,8.0,8.0,3.0,6.0,9.0);
-        final Mat3x3 m7 = new Mat3x3(1.0,4.0,7.0,2.0,5.0,8.0,8.0,8.0,8.0);
+        final Mat3x3 m1 = new Mat3x3(
+                1.0,0.0,0.0,
+                0.0,1.0,0.0,
+                0.0,0.0,1.0);
+        final Mat3x3 m2 = new Mat3x3(
+                1.0,2.0,3.0,
+                4.0,5.0,6.0,
+                7.0,8.0,9.0);
+        final Mat3x3 m3 = new Mat3x3(
+                0.0,0.0,1.0,
+                0.0,1.0,0.0,
+                1.0,0.0,0.0);
+        final Mat3x3 m4 = new Mat3x3(
+                3.0,2.0,1.0,
+                6.0,5.0,4.0,
+                9.0,8.0,7.0);
+        final Mat3x3 m5 = new Mat3x3(
+                8.0,2.0,3.0,
+                8.0,5.0,6.0,
+                8.0,8.0,9.0);
+        final Mat3x3 m6 = new Mat3x3(
+                1.0,8.0,3.0,
+                4.0,8.0,6.0,
+                7.0,8.0,9.0);
+        final Mat3x3 m7 = new Mat3x3(
+                1.0,2.0,8.0,
+                4.0,5.0,8.0,
+                7.0,8.0,8.0);
         final Vector3 v1 = new Vector3(3.0,2.0,1.0);
         final Vector3 v2 = new Vector3(8.0,8.0,8.0);
         final Point3 p1 = new Point3(3.0,2.0,1.0);

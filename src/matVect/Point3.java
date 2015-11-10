@@ -1,6 +1,7 @@
 package matVect;
 
 /**
+ * This Object represents a 3 dimensional point and offers relevant operations for a point.
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class Point3 {

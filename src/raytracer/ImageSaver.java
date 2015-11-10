@@ -15,8 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -47,27 +45,28 @@ public class ImageSaver extends Application {
 
     /**
      * The Javafx start class.
-     * @see javafx.stage.Stage
+     *
      * @param primaryStage The PrimaryStage of this program.
+     * @see javafx.stage.Stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
 
         primaryStage.setTitle("Image Saver");
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
-
-
+        //render();
     }
 
     /**
      * Initialize the GuiElements and set all necessary listeners.
+     *
      * @param stage The PrimaryStage of this program.
      * @return The Scene for this PrimaryStage.
      */
-    private Scene setScene(Stage stage){
-        if(stage==null) throw new IllegalArgumentException("Stage can't be null");
-        final int elementsHeight =25;
+    private Scene setScene(final Stage stage) {
+        if (stage == null) throw new IllegalArgumentException("Stage can't be null");
+        final int elementsHeight = 25;
         final Menu btnFile = new Menu("File");
         final MenuItem btnSave = new MenuItem("Save");
         final MenuBar menubar = new MenuBar();
@@ -77,7 +76,7 @@ public class ImageSaver extends Application {
         btnFile.getItems().addAll(btnSave);
         menubar.getMenus().addAll(btnFile);
 
-        btnSave.setOnAction(a->save(stage));
+        btnSave.setOnAction(a -> save(stage));
 
         scene.widthProperty().addListener(a -> {
             imgWidth = ((int) scene.getWidth());
@@ -90,24 +89,19 @@ public class ImageSaver extends Application {
         return scene;
     }
 
-    /** This method saves the generated image in a png file, with a name and location, the user defined.
+    /**
+     * This method saves the generated image in a png file, with a name and location, the user defined.
+     *
      * @param stage The PrimaryStage of this program.
      */
-    private void save(Stage stage) {
-        if(stage==null) throw new IllegalArgumentException("Stage can't be null");
+    private void save(final Stage stage) {
+        if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         final FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"),
-                new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.JPG"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));
         final File file = fileChooser.showSaveDialog(stage);
         final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
-        try {  if(file != null && file.getName().contains("png")) ImageIO.write(renderedImage, "png", file);
-            if(file != null && file.getName().contains("jpg")){
-                BufferedImage image = SwingFXUtils.fromFXImage(writableImage, null);
-                BufferedImage imageRGB = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.OPAQUE);
-                Graphics2D graphics = imageRGB.createGraphics();
-                graphics.drawImage(image, 0, 0, null);
-                ImageIO.write(imageRGB, "jpg", file);
-            }
+        try {
+            if (file != null ) ImageIO.write(renderedImage, "png", file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -121,7 +115,6 @@ public class ImageSaver extends Application {
      * Fills the image with the defined color for each pixel.
      */
     private void render() {
-
         writableImage = new WritableImage(imgWidth, imgHeight);
         image.setImage(writableImage);
         final PixelWriter myPixelWriter = writableImage.getPixelWriter();
