@@ -8,6 +8,7 @@ import utils.Hit;
 
 /**
  * This class represents a Plane Object.
+ *
  * @author Robert Dziuba on 25/10/15.
  */
 public class Plane extends Geometry {
@@ -22,12 +23,13 @@ public class Plane extends Geometry {
 
     /**
      * Instantiates a new Plane Object.
+     *
      * @param color of the Plane. Can't be null.
-     * @param a of the Plane. Can't be null.
-     * @param n of the Plane. Can't be null.
+     * @param a     of the Plane. Can't be null.
+     * @param n     of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Color color, final Point3 a, final Normal3 n) {
+    public Plane(final Point3 a, final Normal3 n, final Color color) {
         super(color);
 
         if (a == null) {

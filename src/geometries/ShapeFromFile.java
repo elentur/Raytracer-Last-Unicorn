@@ -28,51 +28,51 @@ public class ShapeFromFile extends Geometry {
     private final List<Normal3> vn;
     private final List<Normal3> vt;
     private final List<String> f;
+
     public ShapeFromFile(final String path, final Color color) {
         super(color);
-        triangles= new ArrayList<>();
-        v= new ArrayList<>();
-        vn= new ArrayList<>();
-        vt= new ArrayList<>();
-        f= new ArrayList<>();
+        triangles = new ArrayList<>();
+        v = new ArrayList<>();
+        vn = new ArrayList<>();
+        vt = new ArrayList<>();
+        f = new ArrayList<>();
         List<Point3> points = new ArrayList<>();
-        if(readFile(path)){
+        if (readFile(path)) {
             try {
-                for(String s: f){
-                        String[] fs = s.split("\\s+");
+                for (String s : f) {
+                    String[] fs = s.split("\\s+");
                     //F�r einfaches f
-                    if(fs[0].matches("^\\d+(\\.\\d+)?") && fs.length ==3) {
+                    if (fs[0].matches("^\\d+(\\.\\d+)?") && fs.length == 3) {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3),color);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), color);
                         triangles.add(tri);
                     }
 
                 }
 
-            }catch(Exception e){
+            } catch (Exception e) {
                 System.out.println("Fehler in der Datein" + points.size());
             }
         }
-
-
 
 
     }
 
     @Override
     public Hit hit(Ray r) {
-        Hit h =null;
-        for (Geometry t : triangles){
+        Hit h = null;
+        for (Geometry t : triangles) {
             Hit hit = t.hit(r);
-            if(h == null ||( hit != null &&  h.t > hit.t)) h = hit;
+            if (h == null || (hit != null && h.t > hit.t)) h = hit;
         }
         return h;
     }
 
     /**
      * Reads an Wavefront obj File and converts it into a group of triangles.
+     *
      * @param source The path of the obj-File
      * @return returns true if the reading progress happened without any failure
      */
@@ -83,31 +83,31 @@ public class ShapeFromFile extends Geometry {
             br = Files.newBufferedReader(path, StandardCharsets.UTF_8);
             String line;
 
-            while ((line=br.readLine()) != null) {
-                if(line.matches("v\\s+.*")) {
+            while ((line = br.readLine()) != null) {
+                if (line.matches("v\\s+.*")) {
                     line = line.substring(1).trim();
                     String[] vs = line.split("\\s+");
                     final double x = Double.parseDouble(vs[0]);
                     final double y = Double.parseDouble(vs[1]);
                     final double z = Double.parseDouble(vs[2]);
                     v.add(new Point3(x, y, z));
-                }else if(line.matches("vn\\s+.*")) {
+                } else if (line.matches("vn\\s+.*")) {
                     line = line.substring(2).trim();
                     String[] vs = line.split("\\s+");
                     final double x = Double.parseDouble(vs[0]);
                     final double y = Double.parseDouble(vs[1]);
                     final double z = Double.parseDouble(vs[2]);
                     vn.add(new Normal3(x, y, z));
-                }else if(line.matches("vt\\s+.*")) {
+                } else if (line.matches("vt\\s+.*")) {
                     line = line.substring(2).trim();
                     String[] vs = line.split("\\s+");
                     final double x = Double.parseDouble(vs[0]);
                     final double y = Double.parseDouble(vs[1]);
                     final double z;
-                    if(vs.length==3) z = Double.parseDouble(vs[2]);
-                    else z=0.0;
+                    if (vs.length == 3) z = Double.parseDouble(vs[2]);
+                    else z = 0.0;
                     vt.add(new Normal3(x, y, z));
-                }else if(line.matches("f\\s+.*")) {
+                } else if (line.matches("f\\s+.*")) {
                     line = line.substring(1).trim();
                     f.add(line);
                 }

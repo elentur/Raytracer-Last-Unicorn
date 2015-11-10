@@ -29,7 +29,7 @@ public class NewOBJStage extends Stage {
     private final ColorPicker cpColorPicker;
     private File file;
 
-    public NewOBJStage(){
+    public NewOBJStage() {
         super();
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
@@ -45,7 +45,7 @@ public class NewOBJStage extends Stage {
         col3.setPercentWidth(25);
         ColumnConstraints col4 = new ColumnConstraints();
         col3.setPercentWidth(25);
-        center.getColumnConstraints().addAll(col1,col2,col3, col4);
+        center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
         final Label lblColorPicker = new Label("Color:");
@@ -55,16 +55,16 @@ public class NewOBJStage extends Stage {
 
         final Button btnOK = new Button("OK");
         btnOK.setPrefWidth(100);
-        btnOK.setOnAction(a->onOK());
+        btnOK.setOnAction(a -> onOK());
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
-        btnCancel.setOnAction(a->onCancel());
+        btnCancel.setOnAction(a -> onCancel());
         final Button btnFile = new Button("Choose File");
         btnFile.setPrefWidth(100);
-        btnFile.setOnAction(a->onLoad(btnOK));
+        btnFile.setOnAction(a -> onLoad(btnOK));
         btnOK.setDisable(true);
 
-        if(ImageSaver.getWorld()==null){
+        if (ImageSaver.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
         }
@@ -73,11 +73,11 @@ public class NewOBJStage extends Stage {
 
 
         top.getChildren().addAll(lblInfo);
-        bottom.getChildren().addAll(btnOK,btnCancel);
-        center.add(lblColorPicker,0,0);
-        center.add(cpColorPicker,1,0);
-        center.add(lblLoad,0,1);
-        center.add(btnFile,1,1);
+        bottom.getChildren().addAll(btnOK, btnCancel);
+        center.add(lblColorPicker, 0, 0);
+        center.add(cpColorPicker, 1, 0);
+        center.add(lblLoad, 0, 1);
+        center.add(btnFile, 1, 1);
 
 
         BorderPane borderPane = new BorderPane();
@@ -85,7 +85,7 @@ public class NewOBJStage extends Stage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600,300);
+        Scene scene = new Scene(borderPane, 600, 300);
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Import new .obj?");
         this.setScene(scene);
@@ -94,26 +94,27 @@ public class NewOBJStage extends Stage {
     }
 
     private void onLoad(Button btnOK) {
-        if(btnOK==null)throw new IllegalArgumentException("btnOk must be not null.");
+        if (btnOK == null) throw new IllegalArgumentException("btnOk must be not null.");
         FileChooser dlg = new FileChooser();
-        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)","*.obj"));
+        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         file = dlg.showOpenDialog(this);
-        if(ImageSaver.getWorld()!=null && file != null){
+        if (ImageSaver.getWorld() != null && file != null) {
             btnOK.setDisable(false);
         }
     }
 
-    private void onCancel(){
+    private void onCancel() {
         this.close();
     }
-    private void onOK(){
-        try{
+
+    private void onOK() {
+        try {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            ShapeFromFile p = new ShapeFromFile(file.toString(),new Color(c.getRed(),c.getGreen(),c.getBlue()));
+            ShapeFromFile p = new ShapeFromFile(file.toString(), new Color(c.getRed(), c.getGreen(), c.getBlue()));
             ImageSaver.getWorld().geometries.add(p);
 
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");
         }
 

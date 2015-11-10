@@ -8,7 +8,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public class Color implements Serializable{
+public class Color implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * represents the Red Color value of this Color object. The Value have to be between 0.0 and 1.0
@@ -25,14 +25,15 @@ public class Color implements Serializable{
 
     /**
      * Generates a Color object that represents a color
+     *
      * @param r represents the Red Color value of this Color object. The Value have to be between 0.0 and 1.0
      * @param g represents the Green Color value of this Color object. The Value have to be between 0.0 and 1.0
      * @param b represents the Blue Color value of this Color object. The Value have to be between 0.0 and 1.0
      */
     public Color(double r, double g, double b) {
-        if (r< 0) throw new IllegalArgumentException("r have to be greater or equal 0!");
-        if (g< 0) throw new IllegalArgumentException("g have to be greater or equal 0!");
-        if (b< 0) throw new IllegalArgumentException("b have to be greater or equal 0!");
+        if (r < 0) throw new IllegalArgumentException("r have to be greater or equal 0!");
+        if (g < 0) throw new IllegalArgumentException("g have to be greater or equal 0!");
+        if (b < 0) throw new IllegalArgumentException("b have to be greater or equal 0!");
         this.r = r;
         this.g = g;
         this.b = b;
@@ -40,45 +41,49 @@ public class Color implements Serializable{
 
     /**
      * Adds a color to this color.
+     *
      * @param c The Color object that has to be added to this color.
      * @return the new Color that results in this addition.
      */
-    public Color add(final Color c){
-        if(c == null) throw new IllegalArgumentException("c must not be null!");
-        return new Color(r+c.r,g+c.g,b+c.b);
+    public Color add(final Color c) {
+        if (c == null) throw new IllegalArgumentException("c must not be null!");
+        return new Color(r + c.r, g + c.g, b + c.b);
     }
 
     /**
      * Subtracts a color from this color.
+     *
      * @param c The Color object that has to be subtracted from this color.
      * @return the new Color that results in this subtraction.
      */
-    public Color sub(final Color c){
-        if(c == null) throw new IllegalArgumentException("c must not be null!");
+    public Color sub(final Color c) {
+        if (c == null) throw new IllegalArgumentException("c must not be null!");
         return new Color(
-                r-c.r<0.0?0.0:r-c.r,
-                g-c.g<0.0?0.0:g-c.g,
-                b-c.b<0.0?0.0:b-c.b);
+                r - c.r < 0.0 ? 0.0 : r - c.r,
+                g - c.g < 0.0 ? 0.0 : g - c.g,
+                b - c.b < 0.0 ? 0.0 : b - c.b);
     }
 
     /**
      * Multiplies a color to this color.
+     *
      * @param c The Color object that has to be multiplied to this color.
      * @return the new Color that results in this multiplication.
      */
-    public Color mul(final Color c){
-        if(c == null) throw new IllegalArgumentException("c must not be null!");
-        return new Color(r*c.r,g*c.g,b*c.b);
+    public Color mul(final Color c) {
+        if (c == null) throw new IllegalArgumentException("c must not be null!");
+        return new Color(r * c.r, g * c.g, b * c.b);
     }
 
     /**
      * Multiplies a scalar to this color.
+     *
      * @param v The scalar that has to be multiplied to this color.
      * @return the new Color that results in this multiplication.
      */
-    public Color mul(final double v){
-        if( v < 0) throw new IllegalArgumentException("v have to be positive!");
-        return new Color(r*v,g*v,b*v);
+    public Color mul(final double v) {
+        if (v < 0) throw new IllegalArgumentException("v have to be positive!");
+        return new Color(r * v, g * v, b * v);
     }
 
     @Override

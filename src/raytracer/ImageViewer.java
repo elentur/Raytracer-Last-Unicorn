@@ -17,8 +17,9 @@ public class ImageViewer extends Application {
 
     /**
      * The Javafx start class.
-     * @see javafx.stage.Stage
+     *
      * @param primaryStage The PrimaryStage of this program.
+     * @see javafx.stage.Stage
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -34,7 +35,9 @@ public class ImageViewer extends Application {
 
     }
 
-    /** This method load an image from file and shows it in its native resolution
+    /**
+     * This method load an image from file and shows it in its native resolution
+     *
      * @param stage The PrimaryStage of this program.
      */
     private Image load(Stage stage) {

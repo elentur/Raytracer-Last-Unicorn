@@ -3,12 +3,15 @@ package utils;
 import matVect.Point3;
 import matVect.Vector3;
 
+import java.io.Serializable;
+
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class Ray {
+public class Ray implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * the origin of the beam
      */
@@ -24,7 +27,7 @@ public class Ray {
      * @param o the origin of the beam
      * @param d the direction of the beam
      */
-    public Ray(final Point3 o,final Vector3 d){
+    public Ray(final Point3 o, final Vector3 d) {
         if (o == null || d == null) {
             throw new IllegalArgumentException("The parameter "
                     + "’o’ and/or d must not be null.");
@@ -39,11 +42,11 @@ public class Ray {
      * @param t the skalar
      * @return a specified point
      */
-    public Point3 at(final double t){
+    public Point3 at(final double t) {
         return this.o.add(this.d.mul(t));
     }
 
-    public double tOf(final Point3 p){
+    public double tOf(final Point3 p) {
         if (p == null) {
             throw new IllegalArgumentException("The parameter "
                     + "’p’ must not be null.");

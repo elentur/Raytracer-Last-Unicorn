@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public class Scene implements Serializable{
+public class Scene implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -24,7 +24,8 @@ public class Scene implements Serializable{
 
     /**
      * Generates a new Scene object.
-     * @param world Represents the World object of this Scene.
+     *
+     * @param world  Represents the World object of this Scene.
      * @param camera Represents the Camera object of this Scene.
      */
     public Scene(final World world, final Camera camera) {
@@ -40,7 +41,6 @@ public class Scene implements Serializable{
     }
 
     /**
-     *
      * @return the Camera object of this Scene.
      */
     public Camera getCamera() {

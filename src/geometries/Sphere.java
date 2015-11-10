@@ -7,6 +7,7 @@ import utils.Hit;
 
 /**
  * This class represents a Sphere Object.
+ *
  * @author Robert Dziuba on 25/10/15.
  */
 public class Sphere extends Geometry {
@@ -21,12 +22,13 @@ public class Sphere extends Geometry {
 
     /**
      * Instantiates a new Sphere Object.
+     *
      * @param color of the Sphere. Can't be null.
-     * @param c of the Sphere. Can't be null.
-     * @param r of the Sphere. Can't be null.
+     * @param c     of the Sphere. Can't be null.
+     * @param r     of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Color color, final Point3 c, double r) {
+    public Sphere(final Point3 c, double r, final Color color) {
         super(color);
         if (c == null) {
             throw new IllegalArgumentException("The c cannot be null!");
@@ -36,7 +38,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public Hit hit(Ray r){
+    public Hit hit(Ray r) {
         if (r == null) {
             throw new IllegalArgumentException("The r cannot be null!");
         }
@@ -44,18 +46,26 @@ public class Sphere extends Geometry {
         // t = (-b +- wurzel b2 - 4 * ac) / 2a
         final double a = r.d.dot(r.d);
         final double b = r.d.dot(r.o.sub(c).mul(2));
-        final double cn = r.o.sub(c).dot(r.o.sub(c))-(this.r * this.r);
+        final double cn = r.o.sub(c).dot(r.o.sub(c)) - (this.r * this.r);
 
         // d = b2 - 4ac
-        final double d = (b*b) - (4 * a * cn);
+        final double d = (b * b) - (4 * a * cn);
 
         if (d > 0) {
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
-            return new Hit(Math.min(t1,t2), r, this);
-        }else if(d == 0){
+            if (t1 >= 0 && t2 >= 0) {
+                return new Hit(Math.min(t1, t2), r, this);
+            } else if (t1 >= 0) {
+                return new Hit(t1, r, this);
+            } else if (t2 >= 0) {
+                return new Hit(t2, r, this);
+            }
+        } else if (d == 0) {
             final double t = -b / (2 * a);
-            return new Hit(t, r, this);
+            if (t >= 0) {
+                return new Hit(t, r, this);
+            }
         }
 
         return null;

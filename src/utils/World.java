@@ -7,17 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * This Class represents the scene. In This class will be all objects and lights be available.
- *
+ * <p>
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
 public class World implements Serializable {
     private static final long serialVersionUID = 1L;
-   /**
-     *represents the background color of the scene.
+    /**
+     * represents the background color of the scene.
      */
     public final Color backgroundColor;
     /**
@@ -26,32 +25,33 @@ public class World implements Serializable {
     public final List<Geometry> geometries;
 
     /**
-     *Generates a new world with predefined Background color
+     * Generates a new world with predefined Background color
+     *
      * @param backgroundColor represents the background color of the scene. The color is from typ Color.
      */
     public World(final Color backgroundColor) {
-        if(backgroundColor== null) throw new IllegalArgumentException("backgroundColor must not be null!");
+        if (backgroundColor == null) throw new IllegalArgumentException("backgroundColor must not be null!");
         this.backgroundColor = backgroundColor;
-        this.geometries=new ArrayList<>();
+        this.geometries = new ArrayList<>();
     }
 
 
-
     /**
-     *  Checks every Geometry in the scene if it is hit by the given ray.
+     * Checks every Geometry in the scene if it is hit by the given ray.
      * Returns the color for the nearest hit or the background color.
+     *
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background color.
      */
-    public Color hit(final Ray r){
-        if(r== null) throw new IllegalArgumentException("r must not be null!");
+    public Color hit(final Ray r) {
+        if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
-        for(Geometry g : geometries){
+        for (Geometry g : geometries) {
             final Hit h = g.hit(r);
-            if(hit == null || (h != null && h.t < hit.t)) hit = h;
+            if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return hit!= null ? hit.geo.color : backgroundColor;
+        return hit != null ? hit.geo.color : backgroundColor;
     }
 
     @Override

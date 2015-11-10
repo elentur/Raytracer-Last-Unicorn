@@ -4,12 +4,15 @@ import matVect.Point3;
 import matVect.Vector3;
 import utils.Ray;
 
+import java.io.Serializable;
+
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public abstract class Camera {
+public abstract class Camera implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * the eye position
      */
@@ -41,12 +44,9 @@ public abstract class Camera {
     /**
      * constructor initializes e. g and t.
      *
-     * @param e
-     *            eye position
-     * @param g
-     *            gaze vector (Blickrichtung)
-     * @param t
-     *            up vector
+     * @param e eye position
+     * @param g gaze vector (Blickrichtung)
+     * @param t up vector
      */
     public Camera(final Point3 e, final Vector3 g, final Vector3 t) {
         this.e = e;
@@ -63,14 +63,10 @@ public abstract class Camera {
     /**
      * returns a beam for certain pixel.
      *
-     * @param w
-     *            width of image
-     * @param h
-     *            height of image
-     * @param x
-     *            x-coordinate of pixel
-     * @param y
-     *            y-coordinate of pixel
+     * @param w width of image
+     * @param h height of image
+     * @param x x-coordinate of pixel
+     * @param y y-coordinate of pixel
      * @return beam for certain pixel
      */
     public abstract Ray rayFor(final int w, final int h, final int x, final int y);

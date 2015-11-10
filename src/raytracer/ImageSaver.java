@@ -118,10 +118,6 @@ public class ImageSaver extends Application {
         ImageSaver.world = world;
     }
 
-    public static Camera getCamera() {
-        return camera;
-    }
-
     public static void setCamera(final Camera camera) {
         ImageSaver.camera = camera;
     }
@@ -138,7 +134,6 @@ public class ImageSaver extends Application {
         loadConfig();
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
-
     }
 
     /**
@@ -198,17 +193,18 @@ public class ImageSaver extends Application {
         root.setBottom(statusPane);
 
         final Scene scene = new Scene(root, imgWidth.get() + 10, imgHeight.get() + elementsHeight);
+
         scene.getStylesheets().add("css/rootStyle.css");
 
         btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
         btnCreate.getItems().addAll(btnNewScene, btnNewCamera,
                 btnNewPlane, btnNewSphere, btnNewCube,
                 btnNewTriangle, btnNewOBJ);
-        btnRendering.getItems().addAll(btnRender,btnStopRender, btnSettings);
+        btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
         menubar.getMenus().addAll(btnFile, btnCreate, btnRendering);
 
         btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
-        btnSaveScene.setOnAction(a -> IO.saveScene(stage, world,camera));
+        btnSaveScene.setOnAction(a -> IO.saveScene(stage, world, camera));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
         btnNewScene.setOnAction(a -> new NewWorldStage());
         btnNewCamera.setOnAction(a -> new NewCameraStage());
@@ -218,7 +214,7 @@ public class ImageSaver extends Application {
         btnNewTriangle.setOnAction(a -> new NewTriangleStage());
         btnNewOBJ.setOnAction(a -> new NewOBJStage());
         btnRender.setOnAction(a -> render());
-        btnStopRender.setOnAction(a->stopRender());
+        btnStopRender.setOnAction(a -> stopRender());
         btnSettings.setOnAction(a -> new RenderSettingsStage());
         actualProgress.addListener(a -> lblTime.setText(setStatus()));
 
@@ -240,7 +236,6 @@ public class ImageSaver extends Application {
         stage.titleProperty().bind(resolution);
         return scene;
     }
-
 
     public static void main(String[] args) {
         launch(args);
@@ -271,9 +266,7 @@ public class ImageSaver extends Application {
 
         }
         return "";
-
     }
-
 
     /**
      * set a breaking variable to stop all render-threads.
@@ -289,13 +282,13 @@ public class ImageSaver extends Application {
         {
 
             stopRender();
-            if(world==null){
+            if (world == null) {
                 Dialog dlg = new Dialog("No Scene created.");
                 dlg.setNewText("There is no Scene to be rendered.");
                 dlg.showAndWait();
                 return;
             }
-            if(camera==null){
+            if (camera == null) {
                 Dialog dlg = new Dialog("No Camera created.");
                 dlg.setNewText("There is no Camera in this scene.");
                 dlg.showAndWait();
@@ -313,13 +306,12 @@ public class ImageSaver extends Application {
                 new Thread(new RenderTask()).run();
 
             }
-
-
         }
     }
 
     /**
      * Generates a render pattern
+     *
      * @param pattern typ of pattern
      * @return paatern array of the renderer
      */
@@ -353,8 +345,8 @@ public class ImageSaver extends Application {
                 }
             }
         } else if (pattern == 1) {
-            tileY = imgHeight.get()/3;
-            tileX =imgWidth.get()/3;
+            tileY = imgHeight.get() / 3;
+            tileX = imgWidth.get() / 3;
 
 
             q = new Point[tileX * tileY];
@@ -369,8 +361,6 @@ public class ImageSaver extends Application {
             for (int i = 0; i < lp.size(); i++) {
                 q[i] = lp.get(i);
             }
-        } else {
-
         }
         return q;
     }
@@ -393,27 +383,30 @@ public class ImageSaver extends Application {
 
     /**
      * Generates for the pixel the specific color.
-     * @param x represents the x coordinate
-     * @param y represents the y coordinate
+     *
+     * @param x           represents the x coordinate
+     * @param y           represents the y coordinate
      * @param pixelWriter represents the pixelwriter of the writableimage
      */
     private void draw(final int x, final int y, PixelWriter pixelWriter) {
-        if(pixelWriter == null)throw new IllegalArgumentException("pixelWriter must not be null.");
-        if(x <0 || x> imgWidth.get() - 1)throw new IllegalArgumentException("x has to be between 0 and width -1.");
-        if(y <0 || y> imgHeight.get() - 1)throw new IllegalArgumentException("y has to be between 0 and height -1.");
+        if (pixelWriter == null) throw new IllegalArgumentException("pixelWriter must not be null.");
+        if (x < 0 || x > imgWidth.get() - 1) throw new IllegalArgumentException("x has to be between 0 and width -1.");
+        if (y < 0 || y > imgHeight.get() - 1)
+            throw new IllegalArgumentException("y has to be between 0 and height -1.");
 
-        Ray r = camera.rayFor(imgWidth.get(),imgHeight.get(),x,y);
-        utils.Color  c = world.hit(r);
+        Ray r = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
+        utils.Color c = world.hit(r);
 
-        if(c.r>1) c = new utils.Color(1.0,c.g,c.b);
-        if(c.g>1) c = new utils.Color(c.r,1.0,c.b);
-        if(c.b>1) c = new utils.Color(c.r,c.g,1.0);
+        if (c.r > 1) c = new utils.Color(1.0, c.g, c.b);
+        if (c.g > 1) c = new utils.Color(c.r, 1.0, c.b);
+        if (c.b > 1) c = new utils.Color(c.r, c.g, 1.0);
 
-        pixelWriter.setColor(x, imgHeight.get() - y - 1, new Color(c.r, c.g, c.b, 1.0));
+        pixelWriter.setColor(x, y, new Color(c.r, c.g, c.b, 1.0));
     }
 
     /**
      * The Task-class for the render-threads.
+     *
      * @param <Void>
      */
     private class RenderTask<Void> extends Task<Void> {
@@ -438,13 +431,11 @@ public class ImageSaver extends Application {
             if (toY < imgHeight.get() && quadrantY == tileY - 1) toY = imgHeight.get();
             if (toX < imgWidth.get() && quadrantX == tileX - 1) toX = imgWidth.get();
 
-
             for (int y = fromY; y < toY; y++) {
                 for (int x = fromX; x < toX; x++) {
-                    if(threadBreak)break ;
-                        actualProgress.set(actualProgress.get() + 1);
-                        draw(x, y, writableImage.getPixelWriter());
-
+                    if (threadBreak) break;
+                    actualProgress.set(actualProgress.get() + 1);
+                    draw(x, y, writableImage.getPixelWriter());
                 }
             }
             return null;
@@ -457,7 +448,5 @@ public class ImageSaver extends Application {
             }
         }
     }
-
-
 }
 

@@ -20,7 +20,6 @@ public class Dialog extends Stage {
     private StringProperty text = new SimpleStringProperty("Info Dialog");
 
 
-
     public void setNewTitle(String title) {
         this.title.set(title);
     }
@@ -29,7 +28,7 @@ public class Dialog extends Stage {
         this.text.set(text);
     }
 
-    public Dialog(String s){
+    public Dialog(String s) {
         super();
         setNewTitle(s);
         Group root = new Group();
@@ -39,11 +38,11 @@ public class Dialog extends Stage {
 
         final Button btnOK = new Button("OK");
         btnOK.setPrefWidth(100);
-        btnOK.setOnAction(a->onOK());
+        btnOK.setOnAction(a -> onOK());
 
-        root.getChildren().addAll(lblInfo,btnOK);
+        root.getChildren().addAll(lblInfo, btnOK);
 
-        Scene scene = new Scene(root, 400,150);
+        Scene scene = new Scene(root, 400, 150);
         btnOK.translateXProperty().bind(scene.widthProperty().subtract(btnOK.widthProperty()).subtract(20));
         btnOK.translateYProperty().bind(scene.heightProperty().subtract(btnOK.heightProperty()).subtract(20));
         lblInfo.prefWidthProperty().bind(scene.widthProperty().divide(1.5));
@@ -57,7 +56,7 @@ public class Dialog extends Stage {
     }
 
 
-    private void onOK(){
+    private void onOK() {
         this.close();
     }
 }

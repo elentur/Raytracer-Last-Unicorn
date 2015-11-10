@@ -4,11 +4,15 @@ import utils.Color;
 import utils.Ray;
 import utils.Hit;
 
+import java.io.Serializable;
+
 /**
  * This abstract class provides a parent for all Geometry Objects
+ *
  * @author Robert Dziuba on 25/10/15.
  */
-public abstract class Geometry {
+public abstract class Geometry implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * The current color of the Geometry child class.
      */
@@ -16,6 +20,7 @@ public abstract class Geometry {
 
     /**
      * Instantiates a new Geometry.
+     *
      * @param color of child class. Can't be null.
      * @throws IllegalArgumentException if the given argument is null.
      */
@@ -28,6 +33,7 @@ public abstract class Geometry {
 
     /**
      * abstract hit method
+     *
      * @param r the ray
      * @return a Hit
      */

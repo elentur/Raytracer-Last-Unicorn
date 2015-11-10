@@ -9,9 +9,10 @@ import utils.Hit;
 
 /**
  * This class represents a Triangle Object.
+ *
  * @ Robert Dziuba on 03.11.15.
  */
-public class Triangle extends Geometry{
+public class Triangle extends Geometry {
     /**
      * The a corner point of the Triangle.
      */
@@ -27,13 +28,14 @@ public class Triangle extends Geometry{
 
     /**
      * Instantiates a new Triangle Object.
-     * @param a corner point of the Sphere. Can't be null.
-     * @param b corner point of the Sphere. Can't be null.
-     * @param c corner point of the Sphere. Can't be null.
+     *
+     * @param a     corner point of the Sphere. Can't be null.
+     * @param b     corner point of the Sphere. Can't be null.
+     * @param c     corner point of the Sphere. Can't be null.
      * @param color of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Triangle(final Point3 a,final Point3 b,final Point3 c,final Color color) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Color color) {
         super(color);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -65,17 +67,23 @@ public class Triangle extends Geometry{
                 a.z - b.z, a.z - c.z, r.d.z
         );
 
-        final double detA = m.determinante;
-        final double detA1 = m.changeCol1(v).determinante;
-        final double detA2 = m.changeCol2(v).determinante;
-        final double detA3 = m.changeCol3(v).determinante;
+        final double detA = m.determinant;
 
+        final double detA1 = m.col1(v).determinant;
         final double beta = detA1 / detA;
-        final double gamma = detA2 / detA;
-        final double t = detA3 / detA;
 
-        if((beta > 0 && gamma > 0 ) && beta + gamma <= 1){
-            return new Hit(t, r, this);
+        if (beta >= 0 || beta <= 1) {
+
+            final double detA2 = m.col2(v).determinant;
+            final double gamma = detA2 / detA;
+
+            if ((beta > 0 && gamma > 0) && beta + gamma <= 1) {
+                final double detA3 = m.col3(v).determinant;
+                final double t = detA3 / detA;
+                return new Hit(t, r, this);
+            }
+
+            return null;
         }
 
         return null;

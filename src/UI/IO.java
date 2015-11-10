@@ -47,7 +47,7 @@ public class IO {
         }
     }
 
-    public static void saveScene(final Stage stage, final World world,  Camera camera) {
+    public static void saveScene(final Stage stage, final World world, Camera camera) {
         if (world == null) {
             Dialog dlg = new Dialog("No Scene!");
             dlg.setNewText("No Scene Created. You must Create a Scene first before you can try to save it.");
@@ -57,13 +57,14 @@ public class IO {
 
         if (camera == null) {
             // default camera
-             camera = new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4) ;
+            camera = new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4);
         }
-        Scene scene = new Scene(world,camera);
+        Scene scene = new Scene(world, camera);
         final FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
-        final File file = fileChooser.showSaveDialog(stage);
+        File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
+            if (!file.getName().endsWith(".ucn")) file = new File(file.getAbsolutePath() + ".ucn");
             Path path = file.toPath();
             try {
                 ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path.toString()));
@@ -103,7 +104,7 @@ public class IO {
                 return;
             }
 
-            if (scene != null){
+            if (scene != null) {
                 ImageSaver.setWorld(scene.getWorld());
                 ImageSaver.setCamera(scene.getCamera());
             }
@@ -121,7 +122,7 @@ public class IO {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] s = line.split(":");
-                input.put(s[0],s[1]);
+                input.put(s[0], s[1]);
             }
             br.close();
         } catch (IOException e) {
@@ -129,14 +130,15 @@ public class IO {
         }
         return input;
     }
-    public static void writeFile(String source,Map<String, String> output) {
+
+    public static void writeFile(String source, Map<String, String> output) {
         Path path = Paths.get(source);
         BufferedWriter br;
 
         try {
             br = Files.newBufferedWriter(path, StandardCharsets.UTF_8);
-            for(String key : output.keySet()){
-                br.write(key +":" +output.get(key));
+            for (String key : output.keySet()) {
+                br.write(key + ":" + output.get(key));
                 br.newLine();
             }
             br.close();

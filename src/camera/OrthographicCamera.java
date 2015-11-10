@@ -14,22 +14,18 @@ public class OrthographicCamera extends Camera {
      * scale factor of the of imagescene
      */
     public final double s;
+
     /**
      * Constructor initializes e. g and t.
      *
-     * @param e
-     *            eye position
-     * @param g
-     *            gaze vector (Blickrichtung)
-     * @param t
-     *            up vector
-     * @param s
-     *            the scale factor
-     *
+     * @param e eye position
+     * @param g gaze vector (Blickrichtung)
+     * @param t up vector
+     * @param s the scale factor
      */
-    public OrthographicCamera(final Point3 e,final Vector3 g,final Vector3 t,final double s) {
+    public OrthographicCamera(final Point3 e, final Vector3 g, final Vector3 t, final double s) {
         super(e, g, t);
-        this.s =s;
+        this.s = s;
 
     }
 
@@ -41,7 +37,7 @@ public class OrthographicCamera extends Camera {
     }
 
     @Override
-    public Ray rayFor(final int w,final int h,final int x,final int y) {
+    public Ray rayFor(final int w, final int h, final int x, final int y) {
         double aspectRatio = (double) w / (double) h;
         double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
         double scalar2 = s * (y - (h - 1) / 2) / (h - 1);

@@ -24,6 +24,7 @@ public class Normal3 implements Serializable {
 
     /**
      * Generates a normal with 3 dimensions;
+     *
      * @param x This Component represent the x-Value of the Normal3 as Double.
      * @param y This Component represent the y-Value of the Normal3 as Double.
      * @param z This Component represent the z-Value of the Normal3 as Double.
@@ -35,49 +36,51 @@ public class Normal3 implements Serializable {
     }
 
 
-
     /**
      * Multiply a Skalar with this Normal and returns the new Normal3.
+     *
      * @param s The Skalar you want to multiply with this Normal3 as Double.
      * @return The new Normal3 of this multiplication.
      */
-    public Normal3 mul(final double s){
+    public Normal3 mul(final double s) {
         final double x = this.x * s;
         final double y = this.y * s;
         final double z = this.z * s;
 
-        return new Normal3(x,y,z);
+        return new Normal3(x, y, z);
 
     }
 
     /**
      * Add a Normal3 with this Normal3 and returns the new Normal3.
+     *
      * @param n The Normal3 you want to add to this Normal3.
      * @return The new Normal3 of this addition.
      */
-    public Normal3 add(final Normal3 n){
-        if(n==null) throw new IllegalArgumentException("Null as parameter");
+    public Normal3 add(final Normal3 n) {
+        if (n == null) throw new IllegalArgumentException("Null as parameter");
         final double x = this.x + n.x;
         final double y = this.y + n.y;
         final double z = this.z + n.z;
 
-        return new Normal3(x,y,z);
+        return new Normal3(x, y, z);
     }
 
     /**
      * Multiply a Vector3 with the Normal3 and returns the Skalar.
+     *
      * @param v The Vector3 you want to multiply with this Normal3.
      * @return The new Skalar of this Skalar product as Double.
      */
-    public double dot(final Vector3 v){
-        if(v==null) throw new IllegalArgumentException("Null as parameter");
-        return ((x*v.x) + (y*v.y) + (z*v.z));
+    public double dot(final Vector3 v) {
+        if (v == null) throw new IllegalArgumentException("Null as parameter");
+        return ((x * v.x) + (y * v.y) + (z * v.z));
 
     }
 
     @Override
     public String toString() {
-        return  "N(" + x + " " +
+        return "N(" + x + " " +
                 y + " " +
                 z + ")";
     }
