@@ -2,6 +2,7 @@ package camera;
 
 import matVect.Point3;
 import matVect.Vector3;
+import utils.Element;
 import utils.Ray;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Camera implements Serializable {
+public abstract class Camera implements Serializable, Element {
     private static final long serialVersionUID = 1L;
     /**
      * the eye position
@@ -40,6 +41,11 @@ public abstract class Camera implements Serializable {
      * w-axis of the local coordinate-system
      */
     public Vector3 w;
+
+    /**
+     * Represents the name of the object
+     */
+    public String name;
 
     /**
      * constructor initializes e. g and t.

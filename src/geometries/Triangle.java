@@ -16,15 +16,15 @@ public class Triangle extends Geometry {
     /**
      * The a corner point of the Triangle.
      */
-    private final Point3 a;
+    public final Point3 a;
     /**
      * The b corner point of the Triangle.
      */
-    private final Point3 b;
+    public final Point3 b;
     /**
      * The c corner point of the Triangle.
      */
-    private final Point3 c;
+    public final Point3 c;
 
     /**
      * Instantiates a new Triangle Object.
@@ -80,7 +80,7 @@ public class Triangle extends Geometry {
             if ((beta > 0 && gamma > 0) && beta + gamma <= 1) {
                 final double detA3 = m.col3(v).determinant;
                 final double t = detA3 / detA;
-                return new Hit(t, r, this);
+               if (t>0) return new Hit(t, r, this);
             }
 
             return null;
@@ -120,4 +120,6 @@ public class Triangle extends Geometry {
         result = 31 * result + (c != null ? c.hashCode() : 0);
         return result;
     }
+
+
 }

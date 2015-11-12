@@ -1,11 +1,13 @@
 package UI;
 
+import geometries.Geometry;
 import geometries.Triangle;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -23,11 +25,13 @@ import utils.Color;
  */
 public class NewTriangleStage extends Stage {
 
-    final NumberTextField[] txtInputs;
+    private final NumberTextField[] txtInputs;
     private final ColorPicker cpColorPicker;
-
-    public NewTriangleStage() {
+    private Triangle t;
+    private final TextField txtName;
+    public NewTriangleStage(Triangle t) {
         super();
+        this.t=t;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -46,7 +50,9 @@ public class NewTriangleStage extends Stage {
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
         final Label lblColorPicker = new Label("Color:");
+        txtName = new TextField();
 
+        final Label lblName = new Label("Name");
         final Label lblInfo = new Label("Do you wish to create a new Triangle?");
 
 
@@ -79,6 +85,8 @@ public class NewTriangleStage extends Stage {
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
         center.add(cpColorPicker, 1, 0);
+        center.add(lblName, 2, 0);
+        center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
         center.add(lblY, 2, 1);
         center.add(lblZ, 3, 1);
@@ -86,6 +94,7 @@ public class NewTriangleStage extends Stage {
         center.add(lblEdgeB, 0, 3);
         center.add(lblEdgeC, 0, 4);
 
+        setValues();
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -99,12 +108,45 @@ public class NewTriangleStage extends Stage {
         this.showAndWait();
     }
 
+    private void setValues() {
+        if (t==null) {
+            int index=1;
+            if(ImageSaver.getWorld()!=null) {
+                for (Geometry g : ImageSaver.getWorld().geometries)
+                    if (g instanceof Triangle) index++;
+            }
+            txtName.setText("Triangle" + index);
+            txtInputs[0].setText("-0.5");
+            txtInputs[1].setText("0.5");
+            txtInputs[2].setText("-3.0");
+            txtInputs[3].setText("0.5");
+            txtInputs[4].setText("0.5");
+            txtInputs[5].setText("-3.0");
+            txtInputs[6].setText("0.5");
+            txtInputs[7].setText("-0.5");
+            txtInputs[8].setText("-3.0");
+        }else{
+            txtName.setText(t.name);
+            txtInputs[0].setText(t.a.x+"");
+            txtInputs[1].setText(t.a.y+"");
+            txtInputs[2].setText(t.a.z+"");
+            txtInputs[3].setText(t.b.x+"");
+            txtInputs[4].setText(t.b.y+"");
+            txtInputs[5].setText(t.b.z+"");
+            txtInputs[6].setText(t.c.x+"");
+            txtInputs[7].setText(t.c.y+"");
+            txtInputs[8].setText(t.c.z+"");
+            cpColorPicker.setValue( new javafx.scene.paint.Color(t.color.r,t.color.g,t.color.b,1));
+        }
+    }
+
     private void onCancel() {
         this.close();
     }
 
     private void onOK() {
         try {
+            if(t!=null)ImageSaver.getWorld().geometries.remove(t);
             Point3 edgeA = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -120,6 +162,22 @@ public class NewTriangleStage extends Stage {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Triangle p = new Triangle(edgeA, edgeB, edgeC, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            p.name = txtName.getText();
+            int index =1;
+            boolean run = false;
+            for(Geometry g :    ImageSaver.getWorld().geometries){
+                if(g.name.equals(p.name) ) run = true;
+            }
+            while(run){
+                int i = index;
+                for(Geometry g :    ImageSaver.getWorld().geometries){
+                    if(g.name == p.name + index ) index++;
+                }
+                if(i==index){
+                    run =false;
+                    p.name = p.name+index;
+                }
+            }
             ImageSaver.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {

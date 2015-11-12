@@ -14,11 +14,11 @@ public class Sphere extends Geometry {
     /**
      * The point of center of the Sphere.
      */
-    private final Point3 c;
+    public final Point3 c;
     /**
      * The radius of the Sphere.
      */
-    private final double r;
+    public final double r;
 
     /**
      * Instantiates a new Sphere Object.
@@ -100,4 +100,6 @@ public class Sphere extends Geometry {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+
 }

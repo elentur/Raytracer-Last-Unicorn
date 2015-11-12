@@ -65,4 +65,5 @@ public class OrthographicCamera extends Camera {
         long temp = Double.doubleToLongBits(s);
         return (int) (temp ^ (temp >>> 32));
     }
+
 }

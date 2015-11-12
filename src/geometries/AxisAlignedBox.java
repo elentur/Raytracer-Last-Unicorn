@@ -16,11 +16,13 @@ public class AxisAlignedBox extends Geometry {
     /**
      * The left bottom far corner of the Axis Aligned Box.
      */
-    private final Point3 lbf;
+    public final Point3 lbf;
     /**
      * The right top near corner of the Axis Aligned Box.
      */
-    private final Point3 run;
+    public final Point3 run;
+
+
 
     /**
      * Instantiates a new Axis Aligned Box Object.
@@ -150,4 +152,6 @@ public class AxisAlignedBox extends Geometry {
         result = 31 * result + (run != null ? run.hashCode() : 0);
         return result;
     }
+
+
 }

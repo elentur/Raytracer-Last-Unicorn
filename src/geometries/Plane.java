@@ -15,11 +15,11 @@ public class Plane extends Geometry {
     /**
      * A known Point.
      */
-    protected final Point3 a;
+    public final Point3 a;
     /**
      * A Normal of the Plane.
      */
-    protected final Normal3 n;
+    public final Normal3 n;
 
     /**
      * Instantiates a new Plane Object.
@@ -85,4 +85,5 @@ public class Plane extends Geometry {
         result = 31 * result + (n != null ? n.hashCode() : 0);
         return result;
     }
+
 }

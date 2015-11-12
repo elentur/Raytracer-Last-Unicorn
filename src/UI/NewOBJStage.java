@@ -111,7 +111,8 @@ public class NewOBJStage extends Stage {
         try {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            ShapeFromFile p = new ShapeFromFile(file.toString(), new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            ShapeFromFile p = new ShapeFromFile(file, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+
             ImageSaver.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
