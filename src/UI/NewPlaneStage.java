@@ -25,7 +25,7 @@ import utils.Color;
  * @author Marcus Bätz
  */
 public class NewPlaneStage extends Stage {
-    private Plane p=null;
+    private Plane p = null;
     final NumberTextField[] txtInputs;
     private final ColorPicker cpColorPicker;
     private final TextField txtName;
@@ -108,34 +108,35 @@ public class NewPlaneStage extends Stage {
     }
 
     public void setValues() {
-        if (p == null){
-            int index=1;
-            if(ImageSaver.getWorld()!=null) {
+        if (p == null) {
+            int index = 1;
+            if (ImageSaver.getWorld() != null) {
                 for (Geometry g : ImageSaver.getWorld().geometries)
                     if (g instanceof Plane) index++;
             }
             txtName.setText("Plane" + index);
             txtInputs[1].setText("-1.0");
             txtInputs[4].setText("1.0");
-        }else{
+        } else {
             txtName.setText(p.name);
-            txtInputs[0].setText(p.a.x+"");
-            txtInputs[1].setText(p.a.y+"");
-            txtInputs[2].setText(p.a.z+"");
-            txtInputs[3].setText(p.n.x+"");
-            txtInputs[4].setText(p.n.y+"");
-            txtInputs[5].setText(p.n.z+"");
-            cpColorPicker.setValue( new javafx.scene.paint.Color(p.color.r,p.color.g,p.color.b,1));
+            txtInputs[0].setText(p.a.x + "");
+            txtInputs[1].setText(p.a.y + "");
+            txtInputs[2].setText(p.a.z + "");
+            txtInputs[3].setText(p.n.x + "");
+            txtInputs[4].setText(p.n.y + "");
+            txtInputs[5].setText(p.n.z + "");
+            cpColorPicker.setValue(new javafx.scene.paint.Color(p.color.r, p.color.g, p.color.b, 1));
         }
 
     }
+
     private void onCancel() {
         this.close();
     }
 
     private void onOK() {
         try {
-            if(p!=null)ImageSaver.getWorld().geometries.remove(p);
+            if (p != null) ImageSaver.getWorld().geometries.remove(p);
 
             Point3 a = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
@@ -150,19 +151,19 @@ public class NewPlaneStage extends Stage {
             Plane p = new Plane(a, n.normalized().asNormal(), new Color(c.getRed(), c.getGreen(), c.getBlue()));
             p.name = txtName.getText();
 
-            int index =1;
+            int index = 1;
             boolean run = false;
-            for(Geometry g :    ImageSaver.getWorld().geometries){
-                if(g.name.equals(p.name) ) run = true;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(p.name)) run = true;
             }
-            while(run){
+            while (run) {
                 int i = index;
-                for(Geometry g :    ImageSaver.getWorld().geometries){
-                    if(g.name == p.name + index ) index++;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
                 }
-                if(i==index){
-                    run =false;
-                    p.name = p.name+index;
+                if (i == index) {
+                    run = false;
+                    p.name = p.name + index;
                 }
             }
             ImageSaver.getWorld().geometries.add(p);

@@ -23,7 +23,6 @@ public class AxisAlignedBox extends Geometry {
     public final Point3 run;
 
 
-
     /**
      * Instantiates a new Axis Aligned Box Object.
      *

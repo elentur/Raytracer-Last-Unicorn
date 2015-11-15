@@ -4,8 +4,8 @@ import matVect.Mat3x3;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
-import utils.Ray;
 import utils.Hit;
+import utils.Ray;
 
 /**
  * This class represents a Triangle Object.
@@ -80,10 +80,9 @@ public class Triangle extends Geometry {
             if ((beta > 0 && gamma > 0) && beta + gamma <= 1) {
                 final double detA3 = m.col3(v).determinant;
                 final double t = detA3 / detA;
-               if (t>0) return new Hit(t, r, this);
+                if (t > 0) return new Hit(t, r, this);
             }
 
-            return null;
         }
 
         return null;

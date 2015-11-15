@@ -1,7 +1,7 @@
 package raytracer;
 
-import UI.*;
 import UI.Dialog;
+import UI.*;
 import camera.Camera;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -210,12 +210,12 @@ public class ImageSaver extends Application {
                 btnNewPlane, btnNewSphere, btnNewCube,
                 btnNewTriangle, btnNewOBJ);
         btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
-        menubar.getMenus().addAll(btnFile,btnEdit, btnCreate, btnRendering);
+        menubar.getMenus().addAll(btnFile, btnEdit, btnCreate, btnRendering);
 
         btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
         btnSaveScene.setOnAction(a -> IO.saveScene(stage, world, camera));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
-        btnObjects.setOnAction(a-> new EditObjects());
+        btnObjects.setOnAction(a -> new EditObjects());
         btnNewScene.setOnAction(a -> new NewWorldStage());
         btnNewCamera.setOnAction(a -> new NewCameraStage(null));
         btnNewPlane.setOnAction(a -> new NewPlaneStage(null));
@@ -244,8 +244,8 @@ public class ImageSaver extends Application {
         resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", imgWidth, " x ", imgHeight));
 
         stage.titleProperty().bind(resolution);
-        scene.setOnKeyPressed(a->{
-            if(a.getCode() == KeyCode.ESCAPE)stopRender();
+        scene.setOnKeyPressed(a -> {
+            if (a.getCode() == KeyCode.ESCAPE) stopRender();
         });
         return scene;
     }
@@ -328,7 +328,7 @@ public class ImageSaver extends Application {
      * @param pattern typ of pattern
      * @return paatern array of the renderer
      */
-    private Point[] newQuadrants(int pattern) {
+    private Point[] newQuadrants(final int pattern) {
         Point[] q = null;
         if (pattern == 0) {
             tileX = 10;
@@ -357,7 +357,7 @@ public class ImageSaver extends Application {
                     count++;
                 }
             }
-        } else if (pattern == 1) {
+        } else {//if (pattern == 1) {
             tileY = imgHeight.get();
             tileX = imgWidth.get();
 
@@ -427,7 +427,7 @@ public class ImageSaver extends Application {
         @Override
         protected Void call() throws Exception {
             int repeate = 1;
-            if (pattern ==1) repeate=300;
+            if (pattern == 1) repeate = 300;
             for (int i = 0; i < repeate; i++) {
 
 

@@ -29,9 +29,10 @@ public class NewTriangleStage extends Stage {
     private final ColorPicker cpColorPicker;
     private Triangle t;
     private final TextField txtName;
+
     public NewTriangleStage(Triangle t) {
         super();
-        this.t=t;
+        this.t = t;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -109,9 +110,9 @@ public class NewTriangleStage extends Stage {
     }
 
     private void setValues() {
-        if (t==null) {
-            int index=1;
-            if(ImageSaver.getWorld()!=null) {
+        if (t == null) {
+            int index = 1;
+            if (ImageSaver.getWorld() != null) {
                 for (Geometry g : ImageSaver.getWorld().geometries)
                     if (g instanceof Triangle) index++;
             }
@@ -125,18 +126,18 @@ public class NewTriangleStage extends Stage {
             txtInputs[6].setText("0.5");
             txtInputs[7].setText("-0.5");
             txtInputs[8].setText("-3.0");
-        }else{
+        } else {
             txtName.setText(t.name);
-            txtInputs[0].setText(t.a.x+"");
-            txtInputs[1].setText(t.a.y+"");
-            txtInputs[2].setText(t.a.z+"");
-            txtInputs[3].setText(t.b.x+"");
-            txtInputs[4].setText(t.b.y+"");
-            txtInputs[5].setText(t.b.z+"");
-            txtInputs[6].setText(t.c.x+"");
-            txtInputs[7].setText(t.c.y+"");
-            txtInputs[8].setText(t.c.z+"");
-            cpColorPicker.setValue( new javafx.scene.paint.Color(t.color.r,t.color.g,t.color.b,1));
+            txtInputs[0].setText(t.a.x + "");
+            txtInputs[1].setText(t.a.y + "");
+            txtInputs[2].setText(t.a.z + "");
+            txtInputs[3].setText(t.b.x + "");
+            txtInputs[4].setText(t.b.y + "");
+            txtInputs[5].setText(t.b.z + "");
+            txtInputs[6].setText(t.c.x + "");
+            txtInputs[7].setText(t.c.y + "");
+            txtInputs[8].setText(t.c.z + "");
+            cpColorPicker.setValue(new javafx.scene.paint.Color(t.color.r, t.color.g, t.color.b, 1));
         }
     }
 
@@ -146,7 +147,7 @@ public class NewTriangleStage extends Stage {
 
     private void onOK() {
         try {
-            if(t!=null)ImageSaver.getWorld().geometries.remove(t);
+            if (t != null) ImageSaver.getWorld().geometries.remove(t);
             Point3 edgeA = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -163,19 +164,19 @@ public class NewTriangleStage extends Stage {
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Triangle p = new Triangle(edgeA, edgeB, edgeC, new Color(c.getRed(), c.getGreen(), c.getBlue()));
             p.name = txtName.getText();
-            int index =1;
+            int index = 1;
             boolean run = false;
-            for(Geometry g :    ImageSaver.getWorld().geometries){
-                if(g.name.equals(p.name) ) run = true;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(p.name)) run = true;
             }
-            while(run){
+            while (run) {
                 int i = index;
-                for(Geometry g :    ImageSaver.getWorld().geometries){
-                    if(g.name == p.name + index ) index++;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
                 }
-                if(i==index){
-                    run =false;
-                    p.name = p.name+index;
+                if (i == index) {
+                    run = false;
+                    p.name = p.name + index;
                 }
             }
             ImageSaver.getWorld().geometries.add(p);

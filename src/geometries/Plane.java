@@ -3,8 +3,8 @@ package geometries;
 import matVect.Normal3;
 import matVect.Point3;
 import utils.Color;
-import utils.Ray;
 import utils.Hit;
+import utils.Ray;
 
 /**
  * This class represents a Plane Object.

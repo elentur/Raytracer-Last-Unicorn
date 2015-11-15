@@ -29,9 +29,10 @@ public class NewSphereStage extends Stage {
     private final ColorPicker cpColorPicker;
     private final TextField txtName;
     private Sphere s;
+
     public NewSphereStage(Sphere s) {
         super();
-        this.s =s;
+        this.s = s;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -109,8 +110,9 @@ public class NewSphereStage extends Stage {
     }
 
     private void setValues() {
-        if(s == null) { int index=1;
-            if(ImageSaver.getWorld()!=null) {
+        if (s == null) {
+            int index = 1;
+            if (ImageSaver.getWorld() != null) {
                 for (Geometry g : ImageSaver.getWorld().geometries)
                     if (g instanceof Sphere) index++;
             }
@@ -120,23 +122,24 @@ public class NewSphereStage extends Stage {
             txtInputs[1].setText("0.0");
             txtInputs[2].setText("-3.0");
             txtInputs[3].setText("0.5");
-        }else{
+        } else {
             txtName.setText(s.name);
-            txtInputs[0].setText(s.c.x+"");
-            txtInputs[1].setText(s.c.y+"");
-            txtInputs[2].setText(s.c.z+"");
-            txtInputs[3].setText(s.r+"");
-            cpColorPicker.setValue( new javafx.scene.paint.Color(s.color.r,s.color.g,s.color.b,1));
+            txtInputs[0].setText(s.c.x + "");
+            txtInputs[1].setText(s.c.y + "");
+            txtInputs[2].setText(s.c.z + "");
+            txtInputs[3].setText(s.r + "");
+            cpColorPicker.setValue(new javafx.scene.paint.Color(s.color.r, s.color.g, s.color.b, 1));
         }
 
     }
+
     private void onCancel() {
         this.close();
     }
 
     private void onOK() {
         try {
-            if(s!=null)ImageSaver.getWorld().geometries.remove(s);
+            if (s != null) ImageSaver.getWorld().geometries.remove(s);
             Point3 center = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -145,20 +148,20 @@ public class NewSphereStage extends Stage {
             if (r <= 0.0) r = 1.0;
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Sphere p = new Sphere(center, r, new Color(c.getRed(), c.getGreen(), c.getBlue()));
-            p.name=txtName.getText();
-            int index =1;
+            p.name = txtName.getText();
+            int index = 1;
             boolean run = false;
-            for(Geometry g :    ImageSaver.getWorld().geometries){
-                if(g.name.equals(p.name) ) run = true;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(p.name)) run = true;
             }
-            while(run){
+            while (run) {
                 int i = index;
-                for(Geometry g :    ImageSaver.getWorld().geometries){
-                    if(g.name == p.name + index ) index++;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
                 }
-                if(i==index){
-                    run =false;
-                    p.name = p.name+index;
+                if (i == index) {
+                    run = false;
+                    p.name = p.name + index;
                 }
             }
             ImageSaver.getWorld().geometries.add(p);

@@ -2,8 +2,8 @@ package geometries;
 
 import utils.Color;
 import utils.Element;
-import utils.Ray;
 import utils.Hit;
+import utils.Ray;
 
 import java.io.Serializable;
 

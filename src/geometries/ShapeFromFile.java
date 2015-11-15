@@ -51,6 +51,19 @@ public class ShapeFromFile extends Geometry {
                         final int p3 = Integer.parseInt(fs[2]) - 1;
                         Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), color);
                         triangles.add(tri);
+                    } //F�r f / v/vt
+                    else {
+                        int[] p = new int[fs.length];
+                        for (int i = 0; i < fs.length; i++) {
+                            String[] ft = fs[i].split("/");
+                            p[i] = Integer.parseInt(ft[0]) - 1;
+                            //VT
+                            //VN
+
+                        }
+                        Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]), color);
+                        triangles.add(tri);
+
                     }
 
                 }

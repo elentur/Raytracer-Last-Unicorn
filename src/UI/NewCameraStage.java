@@ -29,10 +29,11 @@ public class NewCameraStage extends Stage {
     private final RadioButton rbPerspective;
     //final NumberTextField txtParam;
     final NumberTextField[] txtInputs;
-    private  Camera c;
+    private Camera c;
+
     public NewCameraStage(Camera c) {
         super();
-        this.c =c;
+        this.c = c;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -83,7 +84,7 @@ public class NewCameraStage extends Stage {
             }
         });
         lblParam.setWrapText(true);
-       // txtParam = new NumberTextField("0.0");
+        // txtParam = new NumberTextField("0.0");
         txtInputs = new NumberTextField[10];
         //center.add(txtInputs[9], 1, 5);
         for (int i = 0; i < 10; i++) {
@@ -120,28 +121,27 @@ public class NewCameraStage extends Stage {
 
     private void setValues() {
 
-        if(c==null){
+        if (c == null) {
             txtInputs[5].setText("-1.0");
             txtInputs[7].setText("1.0");
             txtInputs[9].setText("45.0");
-        }else{
+        } else {
 
-            txtInputs[0].setText(c.e.x+"");
-            txtInputs[1].setText(c.e.y+"");
-            txtInputs[2].setText(c.e.z+"");
-            txtInputs[3].setText(c.g.x+"");
-            txtInputs[4].setText(c.g.y+"");
-            txtInputs[5].setText(c.g.z+"");
-            txtInputs[6].setText(c.t.x+"");
-            txtInputs[7].setText(c.t.y+"");
-            txtInputs[8].setText(c.t.z+"");
-            if (c instanceof OrthographicCamera){
+            txtInputs[0].setText(c.e.x + "");
+            txtInputs[1].setText(c.e.y + "");
+            txtInputs[2].setText(c.e.z + "");
+            txtInputs[3].setText(c.g.x + "");
+            txtInputs[4].setText(c.g.y + "");
+            txtInputs[5].setText(c.g.z + "");
+            txtInputs[6].setText(c.t.x + "");
+            txtInputs[7].setText(c.t.y + "");
+            txtInputs[8].setText(c.t.z + "");
+            if (c instanceof OrthographicCamera) {
                 rbOrthographic.setSelected(true);
-                txtInputs[9].setText(((OrthographicCamera)c).s+"");
-            }else{
-                txtInputs[9].setText((((PerspectiveCamera)c).angle*(180 / Math.PI))+"");
+                txtInputs[9].setText(((OrthographicCamera) c).s + "");
+            } else {
+                txtInputs[9].setText((((PerspectiveCamera) c).angle * (180 / Math.PI)) + "");
             }
-
 
 
         }
@@ -172,11 +172,11 @@ public class NewCameraStage extends Stage {
                 if (s < 5.0) s = 5.0;
                 double a = s / (180 / Math.PI);
                 cam = new PerspectiveCamera(e, g, t, a);
-                cam.name="Perspective Camera";
+                cam.name = "Perspective Camera";
             } else {
                 if (s < 1.0) s = 1.0;
                 cam = new OrthographicCamera(e, g, t, s);
-                cam.name="Orthographic Camera";
+                cam.name = "Orthographic Camera";
             }
             ImageSaver.setCamera(cam);
 

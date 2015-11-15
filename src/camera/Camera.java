@@ -55,14 +55,18 @@ public abstract class Camera implements Serializable, Element {
      * @param t up vector
      */
     public Camera(final Point3 e, final Vector3 g, final Vector3 t) {
+        if (e == null) throw new IllegalArgumentException("e must not be null");
+        if (g == null) throw new IllegalArgumentException("e must not be null");
+        if (t == null) throw new IllegalArgumentException("e must not be null");
+        if (g.x == 0 && g.y == 0 && g.z == 0) throw new IllegalArgumentException("g must not be (0,0,0)");
+        if (t.x == 0 && t.y == 0 && t.z == 0) throw new IllegalArgumentException("t must not be (0,0,0)");
+
         this.e = e;
         this.g = g;
         this.t = t;
 
         this.w = this.g.normalized().mul(-1.0);
-
         this.u = this.t.x(this.w).normalized();
-
         this.v = this.w.x(this.u).mul(-1);
     }
 
