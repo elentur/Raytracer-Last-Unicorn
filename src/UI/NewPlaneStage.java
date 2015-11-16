@@ -1,11 +1,13 @@
 package UI;
 
+import geometries.Geometry;
 import geometries.Plane;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -23,12 +25,14 @@ import utils.Color;
  * @author Marcus Bätz
  */
 public class NewPlaneStage extends Stage {
-
+    private Plane p = null;
     final NumberTextField[] txtInputs;
     private final ColorPicker cpColorPicker;
+    private final TextField txtName;
 
-    public NewPlaneStage() {
+    public NewPlaneStage(Plane p) {
         super();
+        this.p = p;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -47,7 +51,9 @@ public class NewPlaneStage extends Stage {
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
         final Label lblColorPicker = new Label("Color:");
+        txtName = new TextField();
 
+        final Label lblName = new Label("Name");
         final Label lblInfo = new Label("Do you wish to create a new Plane?");
 
 
@@ -79,12 +85,15 @@ public class NewPlaneStage extends Stage {
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
         center.add(cpColorPicker, 1, 0);
+        center.add(lblName, 2, 0);
+        center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
         center.add(lblY, 2, 1);
         center.add(lblZ, 3, 1);
         center.add(lblTranslate, 0, 2);
         center.add(lblNormal, 0, 3);
 
+        setValues();
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -98,12 +107,37 @@ public class NewPlaneStage extends Stage {
         this.showAndWait();
     }
 
+    public void setValues() {
+        if (p == null) {
+            int index = 1;
+            if (ImageSaver.getWorld() != null) {
+                for (Geometry g : ImageSaver.getWorld().geometries)
+                    if (g instanceof Plane) index++;
+            }
+            txtName.setText("Plane" + index);
+            txtInputs[1].setText("-1.0");
+            txtInputs[4].setText("1.0");
+        } else {
+            txtName.setText(p.name);
+            txtInputs[0].setText(p.a.x + "");
+            txtInputs[1].setText(p.a.y + "");
+            txtInputs[2].setText(p.a.z + "");
+            txtInputs[3].setText(p.n.x + "");
+            txtInputs[4].setText(p.n.y + "");
+            txtInputs[5].setText(p.n.z + "");
+            cpColorPicker.setValue(new javafx.scene.paint.Color(p.color.r, p.color.g, p.color.b, 1));
+        }
+
+    }
+
     private void onCancel() {
         this.close();
     }
 
     private void onOK() {
         try {
+            if (p != null) ImageSaver.getWorld().geometries.remove(p);
+
             Point3 a = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -115,6 +149,23 @@ public class NewPlaneStage extends Stage {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             Plane p = new Plane(a, n.normalized().asNormal(), new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            p.name = txtName.getText();
+
+            int index = 1;
+            boolean run = false;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(p.name)) run = true;
+            }
+            while (run) {
+                int i = index;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
+                }
+                if (i == index) {
+                    run = false;
+                    p.name = p.name + index;
+                }
+            }
             ImageSaver.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {

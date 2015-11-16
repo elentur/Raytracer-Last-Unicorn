@@ -1,7 +1,7 @@
 package raytracer;
 
-import UI.*;
 import UI.Dialog;
+import UI.*;
 import camera.Camera;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -17,6 +17,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -122,6 +123,10 @@ public class ImageSaver extends Application {
         ImageSaver.camera = camera;
     }
 
+    public static Camera getCamera() {
+        return camera;
+    }
+
     /**
      * The Javafx start class.
      *
@@ -132,6 +137,7 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) {
 
         loadConfig();
+
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
     }
@@ -168,6 +174,8 @@ public class ImageSaver extends Application {
         final MenuItem btnSave = new MenuItem("Save Rendered Image");
         final MenuItem btnSaveScene = new MenuItem("Save Scene");
         final MenuItem btnLoadScene = new MenuItem("Load Scene");
+        final Menu btnEdit = new Menu("Edit");
+        final MenuItem btnObjects = new MenuItem("Objects");
         final Menu btnCreate = new Menu("Create");
         final MenuItem btnNewScene = new MenuItem("New Scene");
         final MenuItem btnNewCamera = new MenuItem("New Camera");
@@ -197,21 +205,23 @@ public class ImageSaver extends Application {
         scene.getStylesheets().add("css/rootStyle.css");
 
         btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
+        btnEdit.getItems().addAll(btnObjects);
         btnCreate.getItems().addAll(btnNewScene, btnNewCamera,
                 btnNewPlane, btnNewSphere, btnNewCube,
                 btnNewTriangle, btnNewOBJ);
         btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
-        menubar.getMenus().addAll(btnFile, btnCreate, btnRendering);
+        menubar.getMenus().addAll(btnFile, btnEdit, btnCreate, btnRendering);
 
         btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
         btnSaveScene.setOnAction(a -> IO.saveScene(stage, world, camera));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
+        btnObjects.setOnAction(a -> new EditObjects());
         btnNewScene.setOnAction(a -> new NewWorldStage());
-        btnNewCamera.setOnAction(a -> new NewCameraStage());
-        btnNewPlane.setOnAction(a -> new NewPlaneStage());
-        btnNewSphere.setOnAction(a -> new NewSphereStage());
-        btnNewCube.setOnAction(a -> new NewCubeStage());
-        btnNewTriangle.setOnAction(a -> new NewTriangleStage());
+        btnNewCamera.setOnAction(a -> new NewCameraStage(null));
+        btnNewPlane.setOnAction(a -> new NewPlaneStage(null));
+        btnNewSphere.setOnAction(a -> new NewSphereStage(null));
+        btnNewCube.setOnAction(a -> new NewCubeStage(null));
+        btnNewTriangle.setOnAction(a -> new NewTriangleStage(null));
         btnNewOBJ.setOnAction(a -> new NewOBJStage());
         btnRender.setOnAction(a -> render());
         btnStopRender.setOnAction(a -> stopRender());
@@ -234,6 +244,9 @@ public class ImageSaver extends Application {
         resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", imgWidth, " x ", imgHeight));
 
         stage.titleProperty().bind(resolution);
+        scene.setOnKeyPressed(a -> {
+            if (a.getCode() == KeyCode.ESCAPE) stopRender();
+        });
         return scene;
     }
 
@@ -260,7 +273,7 @@ public class ImageSaver extends Application {
                                 "    Estimated Time: " + (estimatedTime - timeElapsed) + "sec");
             } else {
                 return (
-                        "Percentage done: " + (int) (100 * progress.get()) + "%   " +
+                        "Percentage done: " + (100) + "%   " +
                                 "Total Time: " + timeElapsed + " sec");
             }
 
@@ -315,7 +328,7 @@ public class ImageSaver extends Application {
      * @param pattern typ of pattern
      * @return paatern array of the renderer
      */
-    private Point[] newQuadrants(int pattern) {
+    private Point[] newQuadrants(final int pattern) {
         Point[] q = null;
         if (pattern == 0) {
             tileX = 10;
@@ -344,9 +357,9 @@ public class ImageSaver extends Application {
                     count++;
                 }
             }
-        } else if (pattern == 1) {
-            tileY = imgHeight.get() / 3;
-            tileX = imgWidth.get() / 3;
+        } else {//if (pattern == 1) {
+            tileY = imgHeight.get();
+            tileX = imgWidth.get();
 
 
             q = new Point[tileX * tileY];
@@ -413,29 +426,35 @@ public class ImageSaver extends Application {
 
         @Override
         protected Void call() throws Exception {
-            int bHeight = imgHeight.get() / tileY;
-            int bWidth = imgWidth.get() / tileX;
-            if (bWidth == 0) bWidth = 1;
-            if (bHeight == 0) bHeight = 1;
-            final int quadrantX = quadrant[quadrantCounter].x;
-            final int quadrantY = quadrant[quadrantCounter].y;
-            quadrantCounter++;
+            int repeate = 1;
+            if (pattern == 1) repeate = 300;
+            for (int i = 0; i < repeate; i++) {
 
 
-            final int fromX = quadrantX * bWidth;
-            int toX = (quadrantX + 1) * bWidth;
-            final int fromY = quadrantY * bHeight;
-            int toY = (quadrantY + 1) * bHeight;
-            if (toY > imgHeight.get()) toY = imgHeight.get();
-            if (toX > imgWidth.get()) toX = imgWidth.get();
-            if (toY < imgHeight.get() && quadrantY == tileY - 1) toY = imgHeight.get();
-            if (toX < imgWidth.get() && quadrantX == tileX - 1) toX = imgWidth.get();
+                int bHeight = imgHeight.get() / tileY;
+                int bWidth = imgWidth.get() / tileX;
+                if (bWidth == 0) bWidth = 1;
+                if (bHeight == 0) bHeight = 1;
+                final int quadrantX = quadrant[quadrantCounter].x;
+                final int quadrantY = quadrant[quadrantCounter].y;
+                quadrantCounter++;
 
-            for (int y = fromY; y < toY; y++) {
-                for (int x = fromX; x < toX; x++) {
-                    if (threadBreak) break;
-                    actualProgress.set(actualProgress.get() + 1);
-                    draw(x, y, writableImage.getPixelWriter());
+
+                final int fromX = quadrantX * bWidth;
+                int toX = (quadrantX + 1) * bWidth;
+                final int fromY = quadrantY * bHeight;
+                int toY = (quadrantY + 1) * bHeight;
+                if (toY > imgHeight.get()) toY = imgHeight.get();
+                if (toX > imgWidth.get()) toX = imgWidth.get();
+                if (toY < imgHeight.get() && quadrantY == tileY - 1) toY = imgHeight.get();
+                if (toX < imgWidth.get() && quadrantX == tileX - 1) toX = imgWidth.get();
+
+                for (int y = fromY; y < toY; y++) {
+                    for (int x = fromX; x < toX; x++) {
+                        if (threadBreak) break;
+                        actualProgress.set(actualProgress.get() + 1);
+                        draw(x, y, writableImage.getPixelWriter());
+                    }
                 }
             }
             return null;

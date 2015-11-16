@@ -1,11 +1,13 @@
 package UI;
 
 import geometries.AxisAlignedBox;
+import geometries.Geometry;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -13,7 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
-import matVect.Vector3;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -24,11 +25,14 @@ import utils.Color;
  */
 public class NewCubeStage extends Stage {
 
-    final NumberTextField[] txtInputs;
+    private final NumberTextField[] txtInputs;
     private final ColorPicker cpColorPicker;
+    private AxisAlignedBox b;
+    private final TextField txtName;
 
-    public NewCubeStage() {
+    public NewCubeStage(AxisAlignedBox b) {
         super();
+        this.b = b;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -47,7 +51,9 @@ public class NewCubeStage extends Stage {
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
         final Label lblColorPicker = new Label("Color:");
+        txtName = new TextField();
 
+        final Label lblName = new Label("Name");
         final Label lblInfo = new Label("Do you wish to create a new Plane?");
 
 
@@ -81,12 +87,15 @@ public class NewCubeStage extends Stage {
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
         center.add(cpColorPicker, 1, 0);
+        center.add(lblName, 2, 0);
+        center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
         center.add(lblY, 2, 1);
         center.add(lblZ, 3, 1);
         center.add(lblRun, 0, 2);
         center.add(lblLbf, 0, 3);
 
+        setValues();
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -100,12 +109,39 @@ public class NewCubeStage extends Stage {
         this.showAndWait();
     }
 
+    private void setValues() {
+        if (b == null) {
+            int index = 1;
+            if (ImageSaver.getWorld() != null) {
+                for (Geometry g : ImageSaver.getWorld().geometries)
+                    if (g instanceof AxisAlignedBox) index++;
+            }
+            txtName.setText("Axis Aligned Box" + index);
+            txtInputs[0].setText("0.5");
+            txtInputs[1].setText("1.0");
+            txtInputs[2].setText("0.5");
+            txtInputs[3].setText("-0.5");
+            txtInputs[4].setText("0.0");
+            txtInputs[5].setText("-0.5");
+        } else {
+            txtName.setText(b.name);
+            txtInputs[0].setText(b.run.x + "");
+            txtInputs[1].setText(b.run.y + "");
+            txtInputs[2].setText(b.run.z + "");
+            txtInputs[3].setText(b.lbf.x + "");
+            txtInputs[4].setText(b.lbf.y + "");
+            txtInputs[5].setText(b.lbf.z + "");
+            cpColorPicker.setValue(new javafx.scene.paint.Color(b.color.r, b.color.g, b.color.b, 1));
+        }
+    }
+
     private void onCancel() {
         this.close();
     }
 
     private void onOK() {
         try {
+            if (b != null) ImageSaver.getWorld().geometries.remove(b);
             Point3 run = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -120,6 +156,22 @@ public class NewCubeStage extends Stage {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
             AxisAlignedBox p = new AxisAlignedBox(run, lbf, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            p.name = txtName.getText();
+            int index = 1;
+            boolean run1 = false;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(p.name)) run1 = true;
+            }
+            while (run1) {
+                int i = index;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
+                }
+                if (i == index) {
+                    run1 = false;
+                    p.name = p.name + index;
+                }
+            }
             ImageSaver.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {

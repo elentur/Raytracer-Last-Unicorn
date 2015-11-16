@@ -2,8 +2,8 @@ package geometries;
 
 import matVect.Point3;
 import utils.Color;
-import utils.Ray;
 import utils.Hit;
+import utils.Ray;
 
 /**
  * This class represents a Sphere Object.
@@ -14,24 +14,27 @@ public class Sphere extends Geometry {
     /**
      * The point of center of the Sphere.
      */
-    private final Point3 c;
+    public final Point3 c;
     /**
      * The radius of the Sphere.
      */
-    private final double r;
+    public final double r;
 
     /**
      * Instantiates a new Sphere Object.
      *
      * @param color of the Sphere. Can't be null.
      * @param c     of the Sphere. Can't be null.
-     * @param r     of the Sphere. Can't be null.
+     * @param r     of the Sphere. Greater 0.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Sphere(final Point3 c, double r, final Color color) {
         super(color);
         if (c == null) {
             throw new IllegalArgumentException("The c cannot be null!");
+        }
+        if (r <= 0) {
+            throw new IllegalArgumentException("The r cannot be 0 or lower!");
         }
         this.c = c;
         this.r = r;
@@ -64,6 +67,7 @@ public class Sphere extends Geometry {
         } else if (d == 0) {
             final double t = -b / (2 * a);
             if (t >= 0) {
+
                 return new Hit(t, r, this);
             }
         }
@@ -100,4 +104,6 @@ public class Sphere extends Geometry {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+
 }

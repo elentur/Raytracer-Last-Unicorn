@@ -2,6 +2,7 @@ package camera;
 
 import matVect.Point3;
 import matVect.Vector3;
+import utils.Element;
 import utils.Ray;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Camera implements Serializable {
+public abstract class Camera implements Serializable, Element {
     private static final long serialVersionUID = 1L;
     /**
      * the eye position
@@ -42,6 +43,11 @@ public abstract class Camera implements Serializable {
     public Vector3 w;
 
     /**
+     * Represents the name of the object
+     */
+    public String name;
+
+    /**
      * constructor initializes e. g and t.
      *
      * @param e eye position
@@ -49,14 +55,18 @@ public abstract class Camera implements Serializable {
      * @param t up vector
      */
     public Camera(final Point3 e, final Vector3 g, final Vector3 t) {
+        if (e == null) throw new IllegalArgumentException("e must not be null");
+        if (g == null) throw new IllegalArgumentException("e must not be null");
+        if (t == null) throw new IllegalArgumentException("e must not be null");
+        if (g.x == 0 && g.y == 0 && g.z == 0) throw new IllegalArgumentException("g must not be (0,0,0)");
+        if (t.x == 0 && t.y == 0 && t.z == 0) throw new IllegalArgumentException("t must not be (0,0,0)");
+
         this.e = e;
         this.g = g;
         this.t = t;
 
         this.w = this.g.normalized().mul(-1.0);
-
         this.u = this.t.x(this.w).normalized();
-
         this.v = this.w.x(this.u).mul(-1);
     }
 

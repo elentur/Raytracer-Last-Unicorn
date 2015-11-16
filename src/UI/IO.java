@@ -37,6 +37,7 @@ public class IO {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         if (writableImage == null) throw new IllegalArgumentException("WritableImage must not be null.");
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PNG files (*.png)", "*.PNG"));
         final File file = fileChooser.showSaveDialog(stage);
         final RenderedImage renderedImage = SwingFXUtils.fromFXImage(writableImage, null);
@@ -50,6 +51,7 @@ public class IO {
     public static void saveScene(final Stage stage, final World world, Camera camera) {
         if (world == null) {
             Dialog dlg = new Dialog("No Scene!");
+
             dlg.setNewText("No Scene Created. You must Create a Scene first before you can try to save it.");
             dlg.showAndWait();
             return;
@@ -61,6 +63,7 @@ public class IO {
         }
         Scene scene = new Scene(world, camera);
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
         File file = fileChooser.showSaveDialog(stage);
         if (file != null) {
@@ -81,6 +84,7 @@ public class IO {
     public static void loadScene(final Stage stage) {
 
         final FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
         final File file = fileChooser.showOpenDialog(stage);
         if (file != null) {

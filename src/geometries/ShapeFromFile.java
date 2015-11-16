@@ -8,6 +8,7 @@ import utils.Hit;
 import utils.Ray;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -28,16 +29,18 @@ public class ShapeFromFile extends Geometry {
     private final List<Normal3> vn;
     private final List<Normal3> vt;
     private final List<String> f;
+    private final String name;
 
-    public ShapeFromFile(final String path, final Color color) {
+    public ShapeFromFile(final File path, final Color color) {
         super(color);
+        name = path.getName();
         triangles = new ArrayList<>();
         v = new ArrayList<>();
         vn = new ArrayList<>();
         vt = new ArrayList<>();
         f = new ArrayList<>();
         List<Point3> points = new ArrayList<>();
-        if (readFile(path)) {
+        if (readFile(path.toString())) {
             try {
                 for (String s : f) {
                     String[] fs = s.split("\\s+");
@@ -48,6 +51,19 @@ public class ShapeFromFile extends Geometry {
                         final int p3 = Integer.parseInt(fs[2]) - 1;
                         Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), color);
                         triangles.add(tri);
+                    } //F�r f / v/vt
+                    else {
+                        int[] p = new int[fs.length];
+                        for (int i = 0; i < fs.length; i++) {
+                            String[] ft = fs[i].split("/");
+                            p[i] = Integer.parseInt(ft[0]) - 1;
+                            //VT
+                            //VN
+
+                        }
+                        Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]), color);
+                        triangles.add(tri);
+
                     }
 
                 }
@@ -119,4 +135,5 @@ public class ShapeFromFile extends Geometry {
         }
         return true;
     }
+
 }

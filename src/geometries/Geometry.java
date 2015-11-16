@@ -1,8 +1,9 @@
 package geometries;
 
 import utils.Color;
-import utils.Ray;
+import utils.Element;
 import utils.Hit;
+import utils.Ray;
 
 import java.io.Serializable;
 
@@ -11,12 +12,18 @@ import java.io.Serializable;
  *
  * @author Robert Dziuba on 25/10/15.
  */
-public abstract class Geometry implements Serializable {
+public abstract class Geometry implements Serializable, Element {
     private static final long serialVersionUID = 1L;
     /**
      * The current color of the Geometry child class.
      */
     public final Color color;
+
+    /**
+     * Represents the name of the object.
+     */
+    public String name;
+
 
     /**
      * Instantiates a new Geometry.

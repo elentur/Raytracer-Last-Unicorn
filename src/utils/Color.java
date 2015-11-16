@@ -30,7 +30,7 @@ public class Color implements Serializable {
      * @param g represents the Green Color value of this Color object. The Value have to be between 0.0 and 1.0
      * @param b represents the Blue Color value of this Color object. The Value have to be between 0.0 and 1.0
      */
-    public Color(double r, double g, double b) {
+    public Color(final double r, final double g, final double b) {
         if (r < 0) throw new IllegalArgumentException("r have to be greater or equal 0!");
         if (g < 0) throw new IllegalArgumentException("g have to be greater or equal 0!");
         if (b < 0) throw new IllegalArgumentException("b have to be greater or equal 0!");

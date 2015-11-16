@@ -25,13 +25,15 @@ import raytracer.ImageSaver;
  * @author Marcus Bätz
  */
 public class NewCameraStage extends Stage {
-    final RadioButton rbOrthographic;
-    final RadioButton rbPerspective;
-    final NumberTextField txtParam;
+    private final RadioButton rbOrthographic;
+    private final RadioButton rbPerspective;
+    //final NumberTextField txtParam;
     final NumberTextField[] txtInputs;
+    private Camera c;
 
-    public NewCameraStage() {
+    public NewCameraStage(Camera c) {
         super();
+        this.c = c;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -82,10 +84,10 @@ public class NewCameraStage extends Stage {
             }
         });
         lblParam.setWrapText(true);
-        txtParam = new NumberTextField("0.0");
-        txtInputs = new NumberTextField[9];
-        center.add(txtParam, 1, 5);
-        for (int i = 0; i < 9; i++) {
+        // txtParam = new NumberTextField("0.0");
+        txtInputs = new NumberTextField[10];
+        //center.add(txtInputs[9], 1, 5);
+        for (int i = 0; i < 10; i++) {
             txtInputs[i] = new NumberTextField("0.0");
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 2);
         }
@@ -103,6 +105,7 @@ public class NewCameraStage extends Stage {
         center.add(lblOrientation, 0, 4);
         center.add(lblParam, 0, 5);
 
+        setValues();
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -114,6 +117,34 @@ public class NewCameraStage extends Stage {
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
+    }
+
+    private void setValues() {
+
+        if (c == null) {
+            txtInputs[5].setText("-1.0");
+            txtInputs[7].setText("1.0");
+            txtInputs[9].setText("45.0");
+        } else {
+
+            txtInputs[0].setText(c.e.x + "");
+            txtInputs[1].setText(c.e.y + "");
+            txtInputs[2].setText(c.e.z + "");
+            txtInputs[3].setText(c.g.x + "");
+            txtInputs[4].setText(c.g.y + "");
+            txtInputs[5].setText(c.g.z + "");
+            txtInputs[6].setText(c.t.x + "");
+            txtInputs[7].setText(c.t.y + "");
+            txtInputs[8].setText(c.t.z + "");
+            if (c instanceof OrthographicCamera) {
+                rbOrthographic.setSelected(true);
+                txtInputs[9].setText(((OrthographicCamera) c).s + "");
+            } else {
+                txtInputs[9].setText((((PerspectiveCamera) c).angle * (180 / Math.PI)) + "");
+            }
+
+
+        }
     }
 
     private void onCancel() {
@@ -135,15 +166,17 @@ public class NewCameraStage extends Stage {
                     Double.parseDouble(txtInputs[6].getText()),
                     Double.parseDouble(txtInputs[7].getText()),
                     Double.parseDouble(txtInputs[8].getText()));
-            double s = Double.parseDouble(txtParam.getText());
+            double s = Double.parseDouble(txtInputs[9].getText());
             if (rbPerspective.isSelected()) {
                 if (s > 90.0) s = 90.0;
                 if (s < 5.0) s = 5.0;
                 double a = s / (180 / Math.PI);
                 cam = new PerspectiveCamera(e, g, t, a);
+                cam.name = "Perspective Camera";
             } else {
                 if (s < 1.0) s = 1.0;
                 cam = new OrthographicCamera(e, g, t, s);
+                cam.name = "Orthographic Camera";
             }
             ImageSaver.setCamera(cam);
 
