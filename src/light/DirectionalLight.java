@@ -20,12 +20,12 @@ public class DirectionalLight extends Light {
 
     @Override
     public boolean illuminates(Point3 point) {
-        return false;
+        return true;
     }
 
     @Override
     public Vector3 directionFrom(Point3 point) {
-        return null;
+        return direction.mul(-1).normalized();
     }
 
     @Override

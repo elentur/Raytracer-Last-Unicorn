@@ -1,5 +1,7 @@
 package material;
 
+import light.Light;
+import matVect.Point3;
 import utils.Color;
 import utils.Hit;
 import utils.World;
@@ -19,7 +21,21 @@ public class LambertMaterial extends Material {
 
     @Override
     public Color colorFor(Hit hit, World world) {
-        return null;
+
+        Color basicColor = new Color(0, 0, 0);
+
+        for (Light light : world.lights) {
+            Point3 h = hit.ray.at(hit.t);
+            if (light.illuminates(h)) {
+                basicColor = basicColor.add(
+                        light.color.mul(color)
+                                .mul(Math.max(0, hit.n.dot(light.directionFrom(h).normalized()))
+                                )
+                );
+            }
+        }
+
+        return color.mul(world.ambientLight).add(basicColor);
     }
 
     @Override
@@ -28,7 +44,6 @@ public class LambertMaterial extends Material {
                 "material=" + color +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
