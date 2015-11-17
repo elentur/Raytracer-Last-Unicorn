@@ -26,9 +26,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
-import material.SingleColorMaterial;
-import utils.*;
+import material.LambertMaterial;
 import utils.Color;
+import utils.Ray;
+import utils.World;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class ImageSaver extends Application {
     private void testScene(){
         world = new World(new Color(0,0,0),new Color(1,1,1));
         camera = new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new SingleColorMaterial(new Color(1,0,0)));
+        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
         world.geometries.add(obj);
     }
 
