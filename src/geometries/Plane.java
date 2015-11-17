@@ -2,7 +2,7 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
-import utils.Color;
+import material.Material;
 import utils.Hit;
 import utils.Ray;
 
@@ -24,13 +24,13 @@ public class Plane extends Geometry {
     /**
      * Instantiates a new Plane Object.
      *
-     * @param color of the Plane. Can't be null.
+     * @param material of the Plane. Can't be null.
      * @param a     of the Plane. Can't be null.
      * @param n     of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Point3 a, final Normal3 n, final Color color) {
-        super(color);
+    public Plane(final Point3 a, final Normal3 n, final Material material) {
+        super(material);
 
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -54,7 +54,7 @@ public class Plane extends Geometry {
 
         if (nenner != 0) {
             final double t = n.dot(a.sub(r.o)) / nenner;
-            if (t > 0) return new Hit(t, r, this);
+            if (t > 0) return new Hit(t,n, r, this);
         }
         return null;
     }

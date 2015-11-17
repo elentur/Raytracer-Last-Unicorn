@@ -1,6 +1,7 @@
 package utils;
 
 import geometries.Geometry;
+import matVect.Normal3;
 
 import java.io.Serializable;
 
@@ -24,6 +25,10 @@ public class Hit implements Serializable {
      * represents the Geometry that has a hit with this Ray.
      */
     public final Geometry geo;
+    /**
+     * represents the Normal of the intersection.
+     */
+    public final Normal3 n;
 
     /**
      * Generates a Hit object that represents the hit Geometry, the Ray that hit the Geometry and the smallest
@@ -33,10 +38,12 @@ public class Hit implements Serializable {
      * @param ray the Ray that hit this Geometry.
      * @param geo the Geometry that is hit by that Ray.
      */
-    public Hit(final double t, final Ray ray, final Geometry geo) {
+    public Hit(final double t, Normal3 n, final Ray ray, final Geometry geo) {
         if (ray == null) throw new IllegalArgumentException("ray must not be null!");
         if (geo == null) throw new IllegalArgumentException("geo must not be null!");
+        if (n == null) throw new IllegalArgumentException("n must not be null!");
         this.t = t;
+        this.n =n;
         this.ray = ray;
         this.geo = geo;
     }

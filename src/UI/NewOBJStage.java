@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import material.SingleColorMaterial;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -111,7 +112,7 @@ public class NewOBJStage extends Stage {
         try {
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            ShapeFromFile p = new ShapeFromFile(file, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            ShapeFromFile p = new ShapeFromFile(file, new SingleColorMaterial(new Color(c.getRed(), c.getGreen(), c.getBlue())));
 
             ImageSaver.getWorld().geometries.add(p);
 

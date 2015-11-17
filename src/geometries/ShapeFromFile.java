@@ -3,6 +3,7 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
+import material.Material;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -31,8 +32,8 @@ public class ShapeFromFile extends Geometry {
     private final List<String> f;
     private final String name;
 
-    public ShapeFromFile(final File path, final Color color) {
-        super(color);
+    public ShapeFromFile(final File path, final Material material) {
+        super(material);
         name = path.getName();
         triangles = new ArrayList<>();
         v = new ArrayList<>();
@@ -49,7 +50,7 @@ public class ShapeFromFile extends Geometry {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), color);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material);
                         triangles.add(tri);
                     } //F�r f / v/vt
                     else {
@@ -61,7 +62,7 @@ public class ShapeFromFile extends Geometry {
                             //VN
 
                         }
-                        Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]), color);
+                        Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]), material);
                         triangles.add(tri);
 
                     }

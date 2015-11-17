@@ -2,7 +2,7 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
-import utils.Color;
+import material.Material;
 import utils.Hit;
 import utils.Ray;
 
@@ -26,13 +26,13 @@ public class AxisAlignedBox extends Geometry {
     /**
      * Instantiates a new Axis Aligned Box Object.
      *
-     * @param color of the Axis Aligned Box. Can't be null.
+     * @param material of the Axis Aligned Box. Can't be null.
      * @param lbf   of the Axis Aligned Box. Can't be null.
      * @param run   of the Axis Aligned Box. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public AxisAlignedBox(final Point3 run, final Point3 lbf, final Color color) {
-        super(color);
+    public AxisAlignedBox(final Point3 run, final Point3 lbf, final Material material) {
+        super(material);
         if (lbf == null) {
             throw new IllegalArgumentException("The lbf cannot be null!");
         }
@@ -55,33 +55,33 @@ public class AxisAlignedBox extends Geometry {
         planes[0] = new Plane( // front layer
                 run,
                 new Normal3(0, 0, 1),
-                color
+                material
         );
         planes[1] = new Plane( // back layer
                 lbf,
                 new Normal3(0, 0, -1),
-                color
+                material
         );
         planes[2] = new Plane( // left layer
                 lbf,
                 new Normal3(-1, 0, 0),
-                color
+                material
         );
         planes[3] = new Plane( // right layer
                 run,
                 new Normal3(1, 0, 0),
-                color
+                material
         );
         planes[4] = new Plane( // up layer
                 run,
                 new Normal3(0, 1, 0),
-                color
+                material
 
         );
         planes[5] = new Plane( // down layer
                 lbf,
                 new Normal3(0, -1, 0),
-                color
+                material
         );
 
         Hit max = null;
@@ -94,7 +94,7 @@ public class AxisAlignedBox extends Geometry {
                 // calculates the ray that intersects the selected layers
                 final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
                 if (max == null || t > max.t) {
-                    max = new Hit(t, r, this);
+                    max = new Hit(t,plane.n, r, this);
                 }
             }
         }

@@ -71,7 +71,7 @@ public class EditObjects extends Stage {
             if (!(e instanceof Camera)) {
                 if (e instanceof Plane) {
                     Plane p1 = (Plane) e;
-                    Plane p = new Plane(p1.a, p1.n, p1.color);
+                    Plane p = new Plane(p1.a, p1.n, p1.material);
                     p.name = p1.name;
                     p = (Plane) nameTest(p);
 
@@ -79,21 +79,21 @@ public class EditObjects extends Stage {
                     //  l.getItems().add(p);
                 } else if (e instanceof Sphere) {
                     Sphere s1 = (Sphere) e;
-                    Sphere s = new Sphere(s1.c, s1.r, s1.color);
+                    Sphere s = new Sphere(s1.c, s1.r, s1.material);
                     s.name = s1.name;
                     s = (Sphere) nameTest(s);
                     ImageSaver.getWorld().geometries.add(s);
                     //  l.getItems().add(s);
                 } else if (e instanceof AxisAlignedBox) {
                     AxisAlignedBox b1 = (AxisAlignedBox) e;
-                    AxisAlignedBox b = new AxisAlignedBox(b1.run, b1.lbf, b1.color);
+                    AxisAlignedBox b = new AxisAlignedBox(b1.run, b1.lbf, b1.material);
                     b.name = b1.name;
                     b = (AxisAlignedBox) nameTest(b);
                     ImageSaver.getWorld().geometries.add(b);
                     //  l.getItems().add(b);
                 } else if (e instanceof Triangle) {
                     Triangle t1 = (Triangle) e;
-                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.color);
+                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material);
                     t.name = t1.name;
                     t = (Triangle) nameTest(t);
                     ImageSaver.getWorld().geometries.add(t);

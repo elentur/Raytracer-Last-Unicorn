@@ -1,7 +1,8 @@
 package geometries;
 
+import matVect.Normal3;
 import matVect.Point3;
-import utils.Color;
+import material.Material;
 import utils.Hit;
 import utils.Ray;
 
@@ -20,16 +21,17 @@ public class Sphere extends Geometry {
      */
     public final double r;
 
+
     /**
      * Instantiates a new Sphere Object.
      *
-     * @param color of the Sphere. Can't be null.
+     * @param material of the Sphere. Can't be null.
      * @param c     of the Sphere. Can't be null.
      * @param r     of the Sphere. Greater 0.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Point3 c, double r, final Color color) {
-        super(color);
+    public Sphere(final Point3 c, double r, final Material material) {
+        super(material);
         if (c == null) {
             throw new IllegalArgumentException("The c cannot be null!");
         }
@@ -55,20 +57,26 @@ public class Sphere extends Geometry {
         final double d = (b * b) - (4 * a * cn);
 
         if (d > 0) {
+
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
             if (t1 >= 0 && t2 >= 0) {
-                return new Hit(Math.min(t1, t2), r, this);
+                //TODO statt c - r.at(t)*-1 -> r.at(t)-c
+                Normal3 n = this.c.sub(r.at(Math.min(t1, t2))).mul(-1).normalized().asNormal();
+                return new Hit(Math.min(t1, t2),n, r, this);
             } else if (t1 >= 0) {
-                return new Hit(t1, r, this);
+                Normal3 n = this.c.sub(r.at(t1)).mul(-1).normalized().asNormal();
+                return new Hit(t1,n, r, this);
             } else if (t2 >= 0) {
-                return new Hit(t2, r, this);
+                Normal3 n = this.c.sub(r.at(t2)).mul(-1).normalized().asNormal();
+                return new Hit(t2,n, r, this);
             }
         } else if (d == 0) {
             final double t = -b / (2 * a);
+            Normal3 n = this.c.sub(r.at(t)).mul(-1).normalized().asNormal();
             if (t >= 0) {
 
-                return new Hit(t, r, this);
+                return new Hit(t,n, r, this);
             }
         }
 
@@ -80,6 +88,7 @@ public class Sphere extends Geometry {
         return "Sphere{" +
                 "c=" + c +
                 ", r=" + r +
+                '}'+"material=" + material +
                 '}';
     }
 

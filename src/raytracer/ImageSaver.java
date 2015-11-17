@@ -3,6 +3,9 @@ package raytracer;
 import UI.Dialog;
 import UI.*;
 import camera.Camera;
+import camera.PerspectiveCamera;
+import geometries.Geometry;
+import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -20,10 +23,12 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import utils.Ray;
-import utils.World;
+import matVect.Point3;
+import matVect.Vector3;
+import material.SingleColorMaterial;
+import utils.*;
+import utils.Color;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -32,7 +37,7 @@ import java.util.Map;
 
 /**
  * This program generates a black image witch a red diagonal line. This picture can be saved as a png.
- * To achieve this the program generates an empty image and fill it pixel by pixel with the right color.
+ * To achieve this the program generates an empty image and fill it pixel by pixel with the right material.
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class ImageSaver extends Application {
@@ -127,6 +132,13 @@ public class ImageSaver extends Application {
         return camera;
     }
 
+    private void testScene(){
+        world = new World(new Color(0,0,0),new Color(1,1,1));
+        camera = new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new SingleColorMaterial(new Color(1,0,0)));
+        world.geometries.add(obj);
+    }
+
     /**
      * The Javafx start class.
      *
@@ -137,6 +149,7 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) {
 
         loadConfig();
+        testScene();
 
         primaryStage.setScene(setScene(primaryStage));
         primaryStage.show();
@@ -379,7 +392,7 @@ public class ImageSaver extends Application {
     }
 
     /**
-     * Prepares the writableImage for rendering and sets its start-color.
+     * Prepares the writableImage for rendering and sets its start-material.
      */
     private void prepare() {
         writableImage = new WritableImage(imgWidth.get(), imgHeight.get());
@@ -387,7 +400,7 @@ public class ImageSaver extends Application {
         final PixelWriter pixelWriter = writableImage.getPixelWriter();
         for (int x = 0; x < imgWidth.get(); x++) {
             for (int y = 0; y < imgHeight.get(); y++) {
-                pixelWriter.setColor(x, y, Color.MIDNIGHTBLUE);
+                pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
             }
         }
         image.setImage(writableImage);
@@ -395,7 +408,7 @@ public class ImageSaver extends Application {
     }
 
     /**
-     * Generates for the pixel the specific color.
+     * Generates for the pixel the specific material.
      *
      * @param x           represents the x coordinate
      * @param y           represents the y coordinate
@@ -414,7 +427,7 @@ public class ImageSaver extends Application {
         if (c.g > 1) c = new utils.Color(c.r, 1.0, c.b);
         if (c.b > 1) c = new utils.Color(c.r, c.g, 1.0);
 
-        pixelWriter.setColor(x, y, new Color(c.r, c.g, c.b, 1.0));
+        pixelWriter.setColor(x, y, new javafx.scene.paint.Color(c.r, c.g, c.b, 1.0));
     }
 
     /**

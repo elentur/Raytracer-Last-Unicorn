@@ -1,9 +1,10 @@
 package geometries;
 
 import matVect.Mat3x3;
+import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
-import utils.Color;
+import material.Material;
 import utils.Hit;
 import utils.Ray;
 
@@ -26,17 +27,22 @@ public class Triangle extends Geometry {
      */
     public final Point3 c;
 
+    public final Normal3 na;
+    public final Normal3 nb;
+    public final Normal3 nc;
+
+
     /**
      * Instantiates a new Triangle Object.
      *
      * @param a     corner point of the Sphere. Can't be null.
      * @param b     corner point of the Sphere. Can't be null.
      * @param c     corner point of the Sphere. Can't be null.
-     * @param color of the Sphere. Can't be null.
+     * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Color color) {
-        super(color);
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material) {
+        super(material);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
         }
@@ -49,6 +55,10 @@ public class Triangle extends Geometry {
         this.a = a;
         this.b = b;
         this.c = c;
+        //TODO nur ein n
+        this.na = a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1);
+        this.nb =this.na;
+        this.nc = this.na;
     }
 
     @Override
@@ -80,7 +90,10 @@ public class Triangle extends Geometry {
             if ((beta > 0 && gamma > 0) && beta + gamma <= 1) {
                 final double detA3 = m.col3(v).determinant;
                 final double t = detA3 / detA;
-                if (t > 0) return new Hit(t, r, this);
+                if (t > 0){
+                    Normal3 n = na.add((nb.add(na.mul(-1))).mul(beta)).add((nc.add(na.mul(-1))).mul(gamma));
+                    return new Hit(t,n, r, this);
+                }
             }
 
         }

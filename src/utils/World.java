@@ -1,6 +1,7 @@
 package utils;
 
 import geometries.Geometry;
+import light.Light;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,29 +20,41 @@ public class World implements Serializable {
      * represents the background color of the scene.
      */
     public final Color backgroundColor;
+
+    /**
+     * represents the ambientLight color of the scene.
+     */
+    public final Color ambientLight;
     /**
      * A List of Geometries in the scene.
      */
     public final List<Geometry> geometries;
 
     /**
-     * Generates a new world with predefined Background color
-     *
-     * @param backgroundColor represents the background color of the scene. The color is from typ Color.
+     * A List of Lights in the scene.
      */
-    public World(final Color backgroundColor) {
+    public final List<Light> lights;
+
+    /**
+     * Generates a new world with predefined Background material
+     *
+     * @param backgroundColor represents the background material of the scene. The material is from typ Color.
+     */
+    public World(final Color backgroundColor, final Color ambientLight) {
         if (backgroundColor == null) throw new IllegalArgumentException("backgroundColor must not be null!");
         this.backgroundColor = backgroundColor;
         this.geometries = new ArrayList<>();
+        this.lights = new ArrayList<>();
+        this.ambientLight=ambientLight;
     }
 
 
     /**
      * Checks every Geometry in the scene if it is hit by the given ray.
-     * Returns the color for the nearest hit or the background color.
+     * Returns the material for the nearest hit or the background material.
      *
      * @param r the Ray that the scene have to check all geometries for a hit with it.
-     * @return Color-object of the nearest Geometry that ist hit or of the background color.
+     * @return Color-object of the nearest Geometry that ist hit or of the background material.
      */
     public Color hit(final Ray r) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
@@ -51,7 +64,7 @@ public class World implements Serializable {
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return hit != null ? hit.geo.color : backgroundColor;
+        return hit != null ? hit.geo.material.colorFor(hit,this) : backgroundColor;
     }
 
     @Override

@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
+import material.SingleColorMaterial;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -125,7 +126,7 @@ public class NewPlaneStage extends Stage {
             txtInputs[3].setText(p.n.x + "");
             txtInputs[4].setText(p.n.y + "");
             txtInputs[5].setText(p.n.z + "");
-            cpColorPicker.setValue(new javafx.scene.paint.Color(p.color.r, p.color.g, p.color.b, 1));
+          // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
         }
 
     }
@@ -148,7 +149,7 @@ public class NewPlaneStage extends Stage {
                     Double.parseDouble(txtInputs[5].getText()));
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            Plane p = new Plane(a, n.normalized().asNormal(), new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            Plane p = new Plane(a, n.normalized().asNormal(), new SingleColorMaterial(new Color(c.getRed(), c.getGreen(), c.getBlue())));
             p.name = txtName.getText();
 
             int index = 1;

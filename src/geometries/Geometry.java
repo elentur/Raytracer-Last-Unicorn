@@ -1,6 +1,6 @@
 package geometries;
 
-import utils.Color;
+import material.Material;
 import utils.Element;
 import utils.Hit;
 import utils.Ray;
@@ -15,9 +15,9 @@ import java.io.Serializable;
 public abstract class Geometry implements Serializable, Element {
     private static final long serialVersionUID = 1L;
     /**
-     * The current color of the Geometry child class.
+     * The current material of the Geometry child class.
      */
-    public final Color color;
+    public final Material material;
 
     /**
      * Represents the name of the object.
@@ -28,14 +28,14 @@ public abstract class Geometry implements Serializable, Element {
     /**
      * Instantiates a new Geometry.
      *
-     * @param color of child class. Can't be null.
+     * @param material of child class. Can't be null.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Geometry(final Color color) {
-        if (color == null) {
-            throw new IllegalArgumentException("The Color cannot be null!");
+    public Geometry(final Material material) {
+        if (material == null) {
+            throw new IllegalArgumentException("The Material cannot be null!");
         }
-        this.color = color;
+        this.material = material;
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class Geometry implements Serializable, Element {
     @Override
     public String toString() {
         return "Geometry{" +
-                "color=" + color +
+                "material=" + material +
                 '}';
     }
 
@@ -60,12 +60,12 @@ public abstract class Geometry implements Serializable, Element {
 
         Geometry geometry = (Geometry) o;
 
-        return !(color != null ? !color.equals(geometry.color) : geometry.color != null);
+        return !(material != null ? !material.equals(geometry.material) : geometry.material != null);
 
     }
 
     @Override
     public int hashCode() {
-        return color != null ? color.hashCode() : 0;
+        return material != null ? material.hashCode() : 0;
     }
 }

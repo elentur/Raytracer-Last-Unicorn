@@ -24,7 +24,7 @@ public class Color implements Serializable {
     public final double b;
 
     /**
-     * Generates a Color object that represents a color
+     * Generates a Color object that represents a material
      *
      * @param r represents the Red Color value of this Color object. The Value have to be between 0.0 and 1.0
      * @param g represents the Green Color value of this Color object. The Value have to be between 0.0 and 1.0
@@ -40,9 +40,9 @@ public class Color implements Serializable {
     }
 
     /**
-     * Adds a color to this color.
+     * Adds a material to this material.
      *
-     * @param c The Color object that has to be added to this color.
+     * @param c The Color object that has to be added to this material.
      * @return the new Color that results in this addition.
      */
     public Color add(final Color c) {
@@ -51,9 +51,9 @@ public class Color implements Serializable {
     }
 
     /**
-     * Subtracts a color from this color.
+     * Subtracts a material from this material.
      *
-     * @param c The Color object that has to be subtracted from this color.
+     * @param c The Color object that has to be subtracted from this material.
      * @return the new Color that results in this subtraction.
      */
     public Color sub(final Color c) {
@@ -65,9 +65,9 @@ public class Color implements Serializable {
     }
 
     /**
-     * Multiplies a color to this color.
+     * Multiplies a material to this material.
      *
-     * @param c The Color object that has to be multiplied to this color.
+     * @param c The Color object that has to be multiplied to this material.
      * @return the new Color that results in this multiplication.
      */
     public Color mul(final Color c) {
@@ -76,9 +76,9 @@ public class Color implements Serializable {
     }
 
     /**
-     * Multiplies a scalar to this color.
+     * Multiplies a scalar to this material.
      *
-     * @param v The scalar that has to be multiplied to this color.
+     * @param v The scalar that has to be multiplied to this material.
      * @return the new Color that results in this multiplication.
      */
     public Color mul(final double v) {

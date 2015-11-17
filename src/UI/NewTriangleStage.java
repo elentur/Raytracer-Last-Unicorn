@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
+import material.SingleColorMaterial;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -137,7 +138,7 @@ public class NewTriangleStage extends Stage {
             txtInputs[6].setText(t.c.x + "");
             txtInputs[7].setText(t.c.y + "");
             txtInputs[8].setText(t.c.z + "");
-            cpColorPicker.setValue(new javafx.scene.paint.Color(t.color.r, t.color.g, t.color.b, 1));
+           // cpColorPicker.setValue(new javafx.scene.paint.Color(t.material.r, t.material.g, t.material.b, 1));
         }
     }
 
@@ -162,7 +163,7 @@ public class NewTriangleStage extends Stage {
                     Double.parseDouble(txtInputs[8].getText()));
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            Triangle p = new Triangle(edgeA, edgeB, edgeC, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            Triangle p = new Triangle(edgeA, edgeB, edgeC,new SingleColorMaterial( new Color(c.getRed(), c.getGreen(), c.getBlue())));
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

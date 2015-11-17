@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
+import material.SingleColorMaterial;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -128,7 +129,7 @@ public class NewSphereStage extends Stage {
             txtInputs[1].setText(s.c.y + "");
             txtInputs[2].setText(s.c.z + "");
             txtInputs[3].setText(s.r + "");
-            cpColorPicker.setValue(new javafx.scene.paint.Color(s.color.r, s.color.g, s.color.b, 1));
+           // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
 
     }
@@ -147,7 +148,7 @@ public class NewSphereStage extends Stage {
             double r = Double.parseDouble(txtInputs[3].getText());
             if (r <= 0.0) r = 1.0;
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            Sphere p = new Sphere(center, r, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            Sphere p = new Sphere(center, r, new SingleColorMaterial(new Color(c.getRed(), c.getGreen(), c.getBlue())));
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

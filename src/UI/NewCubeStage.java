@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
+import material.SingleColorMaterial;
 import raytracer.ImageSaver;
 import utils.Color;
 
@@ -131,7 +132,7 @@ public class NewCubeStage extends Stage {
             txtInputs[3].setText(b.lbf.x + "");
             txtInputs[4].setText(b.lbf.y + "");
             txtInputs[5].setText(b.lbf.z + "");
-            cpColorPicker.setValue(new javafx.scene.paint.Color(b.color.r, b.color.g, b.color.b, 1));
+           // cpColorPicker.setValue(new javafx.scene.paint.Color(b.material.r, b.material.g, b.material.b, 1));
         }
     }
 
@@ -155,7 +156,7 @@ public class NewCubeStage extends Stage {
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);
 
             javafx.scene.paint.Color c = cpColorPicker.getValue();
-            AxisAlignedBox p = new AxisAlignedBox(run, lbf, new Color(c.getRed(), c.getGreen(), c.getBlue()));
+            AxisAlignedBox p = new AxisAlignedBox(run, lbf, new SingleColorMaterial( new Color(c.getRed(), c.getGreen(), c.getBlue())));
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;

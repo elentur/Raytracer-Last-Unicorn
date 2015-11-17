@@ -8,10 +8,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import raytracer.ImageSaver;
+import utils.Color;
 import utils.World;
 
 /**
@@ -42,7 +42,7 @@ public class NewWorldStage extends Stage {
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
 
-        cpColorPicker = new ColorPicker(Color.BLACK);
+        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.BLACK);
         final Label lblColorPicker = new Label("Background-Color:");
 
         top.getChildren().addAll(lblInfo);
@@ -68,8 +68,8 @@ public class NewWorldStage extends Stage {
     }
 
     private void onOK() {
-        final Color c = cpColorPicker.getValue();
-        final World world = new World(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()));
+        final javafx.scene.paint.Color c = cpColorPicker.getValue();
+        final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()), new Color(0.2,0.2,0.2));
         ImageSaver.setWorld(world);
         this.close();
     }
