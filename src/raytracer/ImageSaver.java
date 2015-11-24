@@ -4,8 +4,7 @@ import UI.Dialog;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.Geometry;
-import geometries.Sphere;
+import geometries.*;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -24,8 +23,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import light.Light;
+import light.PointLight;
+import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
+import material.LambertMaterial;
+import material.OrenNayarMaterial;
+import material.PhongMaterial;
 import material.SingleColorMaterial;
 import utils.*;
 import utils.Color;
@@ -132,11 +137,35 @@ public class ImageSaver extends Application {
         return camera;
     }
 
-    private void testScene(){
-        world = new World(new Color(0,0,0),new Color(1,1,1));
+    /*private void testScene(){
+        world = new World(new Color(0,0,0),new Color(0.1,0.1,0.1));
         camera = new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new SingleColorMaterial(new Color(1,0,0)));
+        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
+        Light light = new PointLight(new Color(1,1,1), new Point3(5,5,5));
         world.geometries.add(obj);
+        world.lights.add(light);
+    }*/
+
+    private void testScene(){
+        world = new World(new Color(0,0,0),new Color(0.0,0.0,0.0));
+        camera = new PerspectiveCamera(new Point3(0,0,2),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        Light light = new PointLight(new Color(1,1,1), new Point3(0,0,10));
+        world.geometries.add( new Sphere(
+                new Point3(-1.5,0,-3),
+                0.5,
+                new LambertMaterial(new Color(1,0,0))
+        ));
+        world.geometries.add( new Sphere(
+                new Point3(0,0,-3),
+                0.5,
+                new OrenNayarMaterial(new Color(1,0,0),0.3)
+        ));
+        world.geometries.add( new Sphere(
+                new Point3(1.5,0,-3),
+                0.5,
+                new OrenNayarMaterial(new Color(1,0,0),0.6)
+        ));
+        world.lights.add(light);
     }
 
     /**
