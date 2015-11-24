@@ -100,7 +100,8 @@ public class Sphere extends Geometry {
         Sphere sphere = (Sphere) o;
 
         if (Double.compare(sphere.r, r) != 0) return false;
-        return !(c != null ? !c.equals(sphere.c) : sphere.c != null);
+         if(!c.equals(sphere.c)) return false;
+        return material.equals(sphere.material) && name.equals(sphere.name);
 
     }
 
@@ -108,11 +109,9 @@ public class Sphere extends Geometry {
     public int hashCode() {
         int result;
         long temp;
-        result = c != null ? c.hashCode() : 0;
+        result = c.hashCode();
         temp = Double.doubleToLongBits(r);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
-
-
 }

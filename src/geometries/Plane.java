@@ -75,7 +75,8 @@ public class Plane extends Geometry {
         Plane plane = (Plane) o;
 
         if (a != null ? !a.equals(plane.a) : plane.a != null) return false;
-        return !(n != null ? !n.equals(plane.n) : plane.n != null);
+        if (n != null ? !n.equals(plane.n) : plane.n != null) return false;
+        return material.equals(plane.material) && name.equals(plane.name);
 
     }
 

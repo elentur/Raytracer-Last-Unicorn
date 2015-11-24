@@ -22,6 +22,7 @@ import utils.World;
 public class NewWorldStage extends Stage {
 
     private final ColorPicker cpColorPicker;
+    private final ColorPicker cpAmbientColor;
 
     public NewWorldStage() {
         super();
@@ -44,11 +45,14 @@ public class NewWorldStage extends Stage {
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.BLACK);
         final Label lblColorPicker = new Label("Background-Color:");
-
+        final Label lblAmbient = new Label ("Ambientlight-Color");
+        cpAmbientColor = new ColorPicker(new javafx.scene.paint.Color(0.15,0.15,0.15,1));
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
         center.add(cpColorPicker, 1, 0);
+        center.add(lblAmbient, 0, 1);
+        center.add(cpAmbientColor, 1, 1);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
@@ -69,7 +73,8 @@ public class NewWorldStage extends Stage {
 
     private void onOK() {
         final javafx.scene.paint.Color c = cpColorPicker.getValue();
-        final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()), new Color(0.2,0.2,0.2));
+        final javafx.scene.paint.Color a = cpAmbientColor.getValue();
+        final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()),new Color(a.getRed(), a.getGreen(), a.getBlue()));
         ImageSaver.setWorld(world);
         this.close();
     }

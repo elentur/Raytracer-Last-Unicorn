@@ -5,5 +5,6 @@ package utils;
  *
  * @author Marcus Bätz
  */
-public interface Element {
+public abstract class Element {
+    public String name;
 }

@@ -59,6 +59,7 @@ public class World implements Serializable {
     public Color hit(final Ray r) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
+
         for (Geometry g : geometries) {
             final Hit h = g.hit(r);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;

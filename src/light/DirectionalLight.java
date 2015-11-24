@@ -42,7 +42,7 @@ public class DirectionalLight extends Light {
 
         DirectionalLight that = (DirectionalLight) o;
 
-        return !(direction != null ? !direction.equals(that.direction) : that.direction != null);
+        return !(direction != null ? !direction.equals(that.direction)&& name.equals(that.name) : that.direction != null);
 
     }
 
