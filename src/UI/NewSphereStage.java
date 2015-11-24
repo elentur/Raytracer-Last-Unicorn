@@ -5,7 +5,6 @@ import geometries.Sphere;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -13,21 +12,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import matVect.Point3;
-import material.SingleColorMaterial;
 import raytracer.ImageSaver;
-import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class NewSphereStage extends Stage {
+public class NewSphereStage extends NewGeoStage {
 
     private final NumberTextField[] txtInputs;
-    private final ColorPicker cpColorPicker;
     private final TextField txtName;
     private Sphere s;
 
@@ -50,8 +45,9 @@ public class NewSphereStage extends Stage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
-        final Label lblColorPicker = new Label("Color:");
+        final Button btnMaterial = new Button("new Material");
+        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
 
@@ -87,7 +83,7 @@ public class NewSphereStage extends Stage {
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
-        center.add(cpColorPicker, 1, 0);
+        center.add(btnMaterial, 1, 0);
         center.add(lblName, 2, 0);
         center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
@@ -129,6 +125,7 @@ public class NewSphereStage extends Stage {
             txtInputs[1].setText(s.c.y + "");
             txtInputs[2].setText(s.c.z + "");
             txtInputs[3].setText(s.r + "");
+            material = s.material;
            // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
 
@@ -147,8 +144,7 @@ public class NewSphereStage extends Stage {
                     Double.parseDouble(txtInputs[2].getText()));
             double r = Double.parseDouble(txtInputs[3].getText());
             if (r <= 0.0) r = 1.0;
-            javafx.scene.paint.Color c = cpColorPicker.getValue();
-            Sphere p = new Sphere(center, r, new SingleColorMaterial(new Color(c.getRed(), c.getGreen(), c.getBlue())));
+            Sphere p = new Sphere(center, r, material);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

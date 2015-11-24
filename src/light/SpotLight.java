@@ -52,7 +52,7 @@ public class SpotLight extends Light {
 
         if (Double.compare(spotLight.halfAngle, halfAngle) != 0) return false;
         if (position != null ? !position.equals(spotLight.position) : spotLight.position != null) return false;
-        return !(direction != null ? !direction.equals(spotLight.direction) : spotLight.direction != null);
+        return !(direction != null ? !direction.equals(spotLight.direction)&& name.equals(spotLight.name)  : spotLight.direction != null);
 
     }
 

@@ -4,8 +4,6 @@ import UI.Dialog;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.Geometry;
-import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -24,6 +22,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import light.Light;
+import light.PointLight;
 import matVect.Point3;
 import matVect.Vector3;
 import material.LambertMaterial;
@@ -68,6 +68,8 @@ public class ImageSaver extends Application {
      */
     private WritableImage writableImage;
 
+   // public static Set<Triangle> fTriangle = new HashSet<>();
+
 
     /**
      * The ImageView where the image is shown.
@@ -100,6 +102,7 @@ public class ImageSaver extends Application {
      * represent the last quadrant that is actually rendered.
      */
     private int quadrantCounter;
+
     /**
      * represent the maximum pixels that have to be rendered.
      */
@@ -133,11 +136,25 @@ public class ImageSaver extends Application {
         return camera;
     }
 
+
+
     private void testScene(){
-        world = new World(new Color(0,0,0),new Color(1,1,1));
-        camera = new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
-        world.geometries.add(obj);
+        world = new World(new Color(0,0,0),new Color(0.0,0.0,0.0));
+        // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
+        Light light = new PointLight(new Color(1,1,1),new Point3(4,4,4));
+        light.name = "Pointlight1";
+        //camera = new PerspectiveCamera(new Point3(0,5,100),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        camera = new PerspectiveCamera(new Point3(4,4,4),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4);
+        //camera = new PerspectiveCamera(new Point3(3,3,3),new Vector3(-3,-3,-3), new Vector3(0,1,0), Math.PI/4);
+       // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
+        //Geometry obj = new AxisAlignedBox(new Point3(0.5,1,0.5),new Point3(-0.5,0,-0.5), new LambertMaterial(new Color(0,0,1)));
+        //Geometry obj = new Plane(new Point3(0,-1,0), new Normal3(0,1,0), new LambertMaterial(new Color(0,1,0)));
+        //Geometry obj = new Triangle(new Point3(-0.5,0.5,-3),new Point3(0.5,0.5,-3),new Point3(0.5,-0.5,-3), new LambertMaterial(new Color(1,0,1)));
+        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\IdeaProjects\\CG1\\src\\obj\\cube.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
+        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\karren.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
+        world.lights.add(light);
+       // world.geometries.add(obj);
+        world.geometries.add(new geometries.Sphere( new Point3(1,1,1), 0.5, new LambertMaterial(new Color(0,1,0))));
     }
 
     /**
@@ -150,9 +167,11 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) {
 
         loadConfig();
-        testScene();
+     //   testScene();
 
         primaryStage.setScene(setScene(primaryStage));
+
+        primaryStage.setOnCloseRequest(a-> stopRender() );
         primaryStage.show();
     }
 
@@ -193,6 +212,7 @@ public class ImageSaver extends Application {
         final Menu btnCreate = new Menu("Create");
         final MenuItem btnNewScene = new MenuItem("New Scene");
         final MenuItem btnNewCamera = new MenuItem("New Camera");
+        final MenuItem btnNewLight = new MenuItem("New Light");
         final MenuItem btnNewPlane = new MenuItem("Add new Plane");
         final MenuItem btnNewSphere = new MenuItem("Add new Sphere");
         final MenuItem btnNewCube = new MenuItem("Add new Cube");
@@ -220,7 +240,7 @@ public class ImageSaver extends Application {
 
         btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
         btnEdit.getItems().addAll(btnObjects);
-        btnCreate.getItems().addAll(btnNewScene, btnNewCamera,
+        btnCreate.getItems().addAll(btnNewScene, btnNewCamera,btnNewLight,
                 btnNewPlane, btnNewSphere, btnNewCube,
                 btnNewTriangle, btnNewOBJ);
         btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
@@ -232,11 +252,12 @@ public class ImageSaver extends Application {
         btnObjects.setOnAction(a -> new EditObjects());
         btnNewScene.setOnAction(a -> new NewWorldStage());
         btnNewCamera.setOnAction(a -> new NewCameraStage(null));
+        btnNewLight.setOnAction(a -> new NewLightStage(null));
         btnNewPlane.setOnAction(a -> new NewPlaneStage(null));
         btnNewSphere.setOnAction(a -> new NewSphereStage(null));
         btnNewCube.setOnAction(a -> new NewCubeStage(null));
         btnNewTriangle.setOnAction(a -> new NewTriangleStage(null));
-        btnNewOBJ.setOnAction(a -> new NewOBJStage());
+        btnNewOBJ.setOnAction(a -> new NewOBJStage(null));
         btnRender.setOnAction(a -> render());
         btnStopRender.setOnAction(a -> stopRender());
         btnSettings.setOnAction(a -> new RenderSettingsStage());
@@ -283,12 +304,12 @@ public class ImageSaver extends Application {
             if (actualProgress.get() < maxProgress.get()) {
                 return (
                         "Percentage done: " + (int) (100 * progress.get()) + "%   " +
-                                "Time Elapsed: " + timeElapsed + " sec" +
-                                "    Estimated Time: " + (estimatedTime - timeElapsed) + "sec");
+                                "Time Elapsed: " + timeElapsed/60 +":" + timeElapsed%60 + " sec" +
+                                "    Estimated Time: " + (estimatedTime - timeElapsed)/60 +":" + (estimatedTime - timeElapsed)%60 + "sec");
             } else {
                 return (
                         "Percentage done: " + (100) + "%   " +
-                                "Total Time: " + timeElapsed + " sec");
+                                "Total Time: " + timeElapsed/60 +":" + timeElapsed%60  + " sec");
             }
 
         }
@@ -401,6 +422,7 @@ public class ImageSaver extends Application {
         final PixelWriter pixelWriter = writableImage.getPixelWriter();
         for (int x = 0; x < imgWidth.get(); x++) {
             for (int y = 0; y < imgHeight.get(); y++) {
+
                 pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
             }
         }

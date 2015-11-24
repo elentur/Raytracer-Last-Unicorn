@@ -1,11 +1,13 @@
 package geometries;
 
 
+import UI.Dialog;
 import matVect.Normal3;
 import matVect.Point3;
 import material.Material;
-import utils.Color;
+import raytracer.ImageSaver;
 import utils.Hit;
+import utils.Octree;
 import utils.Ray;
 
 import java.io.BufferedReader;
@@ -24,17 +26,19 @@ import java.util.List;
  * @author Marcus Baetz
  */
 public class ShapeFromFile extends Geometry {
-
-    private final List<Geometry> triangles;
+    public final  File file;
+    public final List<Geometry> triangles;
     private final List<Point3> v;
     private final List<Normal3> vn;
     private final List<Normal3> vt;
     private final List<String> f;
-    private final String name;
+    private final Octree octree;
+    private int rekDeep=10;
 
     public ShapeFromFile(final File path, final Material material) {
         super(material);
-        name = path.getName();
+        this.file =  path;
+        name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
         v = new ArrayList<>();
         vn = new ArrayList<>();
@@ -55,38 +59,80 @@ public class ShapeFromFile extends Geometry {
                     } //F�r f / v/vt
                     else {
                         int[] p = new int[fs.length];
+                        int[] t = new int[fs.length];
+                        int[] n = new int[fs.length];
                         for (int i = 0; i < fs.length; i++) {
                             String[] ft = fs[i].split("/");
-                            p[i] = Integer.parseInt(ft[0]) - 1;
-                            //VT
-                            //VN
-
+                            try {
+                                p[i] = Integer.parseInt(ft[0]) - 1;
+                                t[i] = !ft[1].equals("")?Integer.parseInt(ft[1]) - 1:-1;
+                                n[i] = ft.length==3?Integer.parseInt(ft[2]) - 1:-1;
+                            }catch(NumberFormatException e){
+                                System.out.println("Fehler");
+                            }
                         }
-                        Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]), material);
-                        triangles.add(tri);
+                        if(n[0]!=-1){
+                            Triangle  tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
+                                    vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
+                                    material);
+                            triangles.add(tri);
+                        }else{
+                            Triangle  tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
+                                    material);
+                            triangles.add(tri);
+                        }
+
+
 
                     }
 
                 }
 
             } catch (Exception e) {
-                System.out.println("Fehler in der Datein" + points.size());
-            }
-        }
+                Dialog dlg = new Dialog("Failure in File!");
 
+                dlg.setNewText("The File is not a true Wavefront obj or corrupted.");
+                dlg.showAndWait();
+            }
+
+        }
+        octree = new Octree(triangles);
+       // System.out.println(ImageSaver.fTriangle.size());
 
     }
 
     @Override
     public Hit hit(Ray r) {
-        Hit h = null;
+       /* Hit h = null;
+        if(octree !=null){
+            if(octree.box.hit(r) == null) return null;
+        }
         for (Geometry t : triangles) {
             Hit hit = t.hit(r);
             if (h == null || (hit != null && h.t > hit.t)) h = hit;
         }
-        return h;
+        return h;*/
+        return octree.hit(r);
     }
+    private String nameTest(String n) {
+        int index = 1;
+        boolean run = false;
+            for (Geometry g : ImageSaver.getWorld().geometries) {
+                if (g.name.equals(n)) run = true;
+            }
+            while (run) {
+                int i = index;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == n + index) index++;
+                }
+                if (i == index) {
+                    run = false;
+                    return n + index;
+                }
+            }
 
+        return n;
+    }
     /**
      * Reads an Wavefront obj File and converts it into a group of triangles.
      *

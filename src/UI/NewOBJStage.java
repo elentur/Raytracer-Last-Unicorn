@@ -4,7 +4,6 @@ import geometries.ShapeFromFile;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -12,10 +11,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
-import material.SingleColorMaterial;
 import raytracer.ImageSaver;
-import utils.Color;
 
 import java.io.File;
 
@@ -24,14 +20,14 @@ import java.io.File;
  *
  * @author Marcus Bätz
  */
-public class NewOBJStage extends Stage {
+public class NewOBJStage extends NewGeoStage {
 
-
-    private final ColorPicker cpColorPicker;
+    private final Button btnOK;
     private File file;
-
-    public NewOBJStage() {
+    private final ShapeFromFile sff;
+    public NewOBJStage(ShapeFromFile sff) {
         super();
+        this.sff =sff;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -48,13 +44,14 @@ public class NewOBJStage extends Stage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
-        final Label lblColorPicker = new Label("Color:");
+        final Button btnMaterial = new Button("new Material");
+        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        final Label lblColorPicker = new Label("Material:");
 
         final Label lblInfo = new Label("Do you wish to load and add a .Obj file?");
 
 
-        final Button btnOK = new Button("OK");
+        btnOK = new Button("OK");
         btnOK.setPrefWidth(100);
         btnOK.setOnAction(a -> onOK());
         final Button btnCancel = new Button("Cancel");
@@ -76,11 +73,11 @@ public class NewOBJStage extends Stage {
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
-        center.add(cpColorPicker, 1, 0);
+        center.add(btnMaterial, 1, 0);
         center.add(lblLoad, 0, 1);
         center.add(btnFile, 1, 1);
 
-
+        setValues();
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -93,8 +90,19 @@ public class NewOBJStage extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
     }
+    public void setValues() {
+        if (sff == null) {
 
+        } else {
+            btnOK.setDisable(false);
+            material = sff.material;
+            file = sff.file;
+            // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
+        }
+
+    }
     private void onLoad(Button btnOK) {
+
         if (btnOK == null) throw new IllegalArgumentException("btnOk must be not null.");
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
@@ -111,8 +119,8 @@ public class NewOBJStage extends Stage {
     private void onOK() {
         try {
 
-            javafx.scene.paint.Color c = cpColorPicker.getValue();
-            ShapeFromFile p = new ShapeFromFile(file, new SingleColorMaterial(new Color(c.getRed(), c.getGreen(), c.getBlue())));
+            if (sff != null) ImageSaver.getWorld().geometries.remove(sff);
+            ShapeFromFile p = new ShapeFromFile(file,material);
 
             ImageSaver.getWorld().geometries.add(p);
 

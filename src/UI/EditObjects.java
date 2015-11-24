@@ -15,6 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import light.DirectionalLight;
+import light.Light;
+import light.PointLight;
+import light.SpotLight;
 import raytracer.ImageSaver;
 import utils.Element;
 
@@ -59,7 +63,7 @@ public class EditObjects extends Stage {
         borderPane.setPadding(new Insets(20));
         Scene scene = new Scene(borderPane, 380, 400);
         scene.getStylesheets().add("css/rootStyle.css");
-        this.setTitle("Create new Camera?");
+        this.setTitle("ObjectFinder?");
         this.setScene(scene);
         this.initModality(Modality.WINDOW_MODAL);
         this.show();
@@ -98,6 +102,27 @@ public class EditObjects extends Stage {
                     t = (Triangle) nameTest(t);
                     ImageSaver.getWorld().geometries.add(t);
                     // l.getItems().add(t);
+                }else if (e instanceof PointLight) {
+                    PointLight pl = (PointLight) e;
+                    PointLight p = new PointLight(pl.color, pl.position);
+                    p.name = pl.name;
+                    p = (PointLight) nameTest(p);
+                    ImageSaver.getWorld().lights.add(p);
+                    // l.getItems().add(t);
+                }else if (e instanceof DirectionalLight) {
+                    DirectionalLight pl = (DirectionalLight) e;
+                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction);
+                    p.name = pl.name;
+                    p = (DirectionalLight) nameTest(p);
+                    ImageSaver.getWorld().lights.add(p);
+                    // l.getItems().add(t);
+                }else if (e instanceof SpotLight) {
+                    SpotLight pl = (SpotLight) e;
+                    SpotLight p = new SpotLight(pl.color, pl.position,pl.direction,pl.halfAngle);
+                    p.name = pl.name;
+                    p = (SpotLight) nameTest(p);
+                    ImageSaver.getWorld().lights.add(p);
+                    // l.getItems().add(t);
                 }
             }
 
@@ -111,6 +136,7 @@ public class EditObjects extends Stage {
         ol.clear();
         ol.addAll(ImageSaver.getWorld().geometries);
         ol.add(ImageSaver.getCamera());
+        ol.addAll(ImageSaver.getWorld().lights);
         l.setItems(ol);
         for (int i = 0; i < l.getItems().size(); i++) {
             l.getSelectionModel().select(i);
@@ -119,24 +145,43 @@ public class EditObjects extends Stage {
 
     }
 
-    private Geometry nameTest(Geometry p) {
+    private Element nameTest(Element p) {
         int index = 1;
         boolean run = false;
-        Geometry g1 = p;
-        for (Geometry g : ImageSaver.getWorld().geometries) {
-            if (g.name.equals(p.name)) run = true;
-        }
-        while (run) {
-            int i = index;
+        if(p instanceof Geometry) {
+            Geometry g1 = (Geometry) p;
             for (Geometry g : ImageSaver.getWorld().geometries) {
-                if (g.name == p.name + index) index++;
+                if (g.name.equals(p.name)) run = true;
             }
-            if (i == index) {
-                run = false;
-                g1.name = p.name + index;
+            while (run) {
+                int i = index;
+                for (Geometry g : ImageSaver.getWorld().geometries) {
+                    if (g.name == p.name + index) index++;
+                }
+                if (i == index) {
+                    run = false;
+                    g1.name = p.name + index;
+                }
             }
+            return g1;
+        }else{
+            Light l1 = (Light) p;
+            for (Light l : ImageSaver.getWorld().lights) {
+                if (l.name.equals(p.name)) run = true;
+            }
+            while (run) {
+                int i = index;
+                for (Light l : ImageSaver.getWorld().lights) {
+                    if (l.name == p.name + index) index++;
+                }
+                if (i == index) {
+                    run = false;
+                    l1.name = p.name + index;
+                }
+            }
+            return l1;
         }
-        return g1;
+
     }
 
     private void fillCenter(ListView<Element> t) {
@@ -154,8 +199,7 @@ public class EditObjects extends Stage {
 
                         if (this.getItem() != null) {
                             String name = "";
-                            if (this.getItem() instanceof Geometry) name = ((Geometry) this.getItem()).name;
-                            else name = ((Camera) this.getItem()).name;
+                           name = this.getItem().name;
                             if (selected) {
                                 text = (name + "\n\t" + this.getItem().toString());
                             } else {
@@ -172,8 +216,7 @@ public class EditObjects extends Stage {
                         if (item != null) {
                             if (text == "") {
                                 String name = "";
-                                if (this.getItem() instanceof Geometry) name = ((Geometry) this.getItem()).name;
-                                else name = ((Camera) this.getItem()).name;
+                                 name =  this.getItem().name;
                                 text = name;
                             }
                             setText(text);
@@ -189,14 +232,17 @@ public class EditObjects extends Stage {
             list.addAll(ImageSaver.getWorld().geometries);
         }
         if (ImageSaver.getCamera() != null) list.add(ImageSaver.getCamera());
+        if (ImageSaver.getWorld() != null) {
+            list.addAll(ImageSaver.getWorld().lights);
+        }
     }
 
     private void onDelete(ListView<Element> t) {
         ObservableList<Element> sel = t.getSelectionModel().getSelectedItems();
         for (Element e : sel) {
             if (e instanceof Camera) ImageSaver.setCamera(null);
-            else ImageSaver.getWorld().geometries.remove(e);
-            //  t.getItems().remove(e);
+            else if (e instanceof Geometry) ImageSaver.getWorld().geometries.remove(e);
+            else ImageSaver.getWorld().lights.remove(e);
         }
         refreshList(t);
 
@@ -215,6 +261,8 @@ public class EditObjects extends Stage {
         else if (e instanceof Plane) new NewPlaneStage((Plane) e);
         else if (e instanceof AxisAlignedBox) new NewCubeStage((AxisAlignedBox) e);
         else if (e instanceof Triangle) new NewTriangleStage((Triangle) e);
+        else if (e instanceof ShapeFromFile) new NewOBJStage((ShapeFromFile) e);
+        else if (e instanceof Light) new NewLightStage((Light) e);
         refreshList(t);
 
 

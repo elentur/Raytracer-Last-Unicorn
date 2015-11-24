@@ -5,7 +5,6 @@ import geometries.Triangle;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -13,21 +12,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import matVect.Point3;
-import material.SingleColorMaterial;
 import raytracer.ImageSaver;
-import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class NewTriangleStage extends Stage {
+public class NewTriangleStage extends NewGeoStage {
 
     private final NumberTextField[] txtInputs;
-    private final ColorPicker cpColorPicker;
     private Triangle t;
     private final TextField txtName;
 
@@ -50,8 +45,10 @@ public class NewTriangleStage extends Stage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
-        final Label lblColorPicker = new Label("Color:");
+        final Button btnMaterial = new Button("new Material");
+        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        final Label lblColorPicker = new Label("Material:");
+
         txtName = new TextField();
 
         final Label lblName = new Label("Name");
@@ -86,7 +83,7 @@ public class NewTriangleStage extends Stage {
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
-        center.add(cpColorPicker, 1, 0);
+        center.add(btnMaterial, 1, 0);
         center.add(lblName, 2, 0);
         center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
@@ -138,6 +135,7 @@ public class NewTriangleStage extends Stage {
             txtInputs[6].setText(t.c.x + "");
             txtInputs[7].setText(t.c.y + "");
             txtInputs[8].setText(t.c.z + "");
+            material = t.material;
            // cpColorPicker.setValue(new javafx.scene.paint.Color(t.material.r, t.material.g, t.material.b, 1));
         }
     }
@@ -162,8 +160,8 @@ public class NewTriangleStage extends Stage {
                     Double.parseDouble(txtInputs[7].getText()),
                     Double.parseDouble(txtInputs[8].getText()));
 
-            javafx.scene.paint.Color c = cpColorPicker.getValue();
-            Triangle p = new Triangle(edgeA, edgeB, edgeC,new SingleColorMaterial( new Color(c.getRed(), c.getGreen(), c.getBlue())));
+
+            Triangle p = new Triangle(edgeA, edgeB, edgeC,material);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

@@ -41,7 +41,9 @@ public class Triangle extends Geometry {
      * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c,
+                    final Normal3 na, final Normal3 nb, final Normal3 nc,
+             final Material material) {
         super(material);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -56,9 +58,20 @@ public class Triangle extends Geometry {
         this.b = b;
         this.c = c;
         //TODO nur ein n
-        this.na = a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1);
-        this.nb =this.na;
-        this.nc = this.na;
+        this.na = na;
+        /*
+        Spezifiziere Normale an den Eckpunkten
+         */
+        this.nb =nb;
+        this.nc = nc;
+    }
+
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material) {
+        this(a,b,c,
+                a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
+                a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
+                a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
+                material);
     }
 
     @Override
@@ -82,16 +95,16 @@ public class Triangle extends Geometry {
         final double detA1 = m.col1(v).determinant;
         final double beta = detA1 / detA;
 
-        if (beta >= 0 || beta <= 1) {
+        if (beta >= 0 && beta <= 1) {
 
             final double detA2 = m.col2(v).determinant;
             final double gamma = detA2 / detA;
 
-            if ((beta > 0 && gamma > 0) && beta + gamma <= 1) {
+            if ( gamma > 0 && beta + gamma <= 1) {
                 final double detA3 = m.col3(v).determinant;
                 final double t = detA3 / detA;
                 if (t > 0){
-                    Normal3 n = na.add((nb.add(na.mul(-1))).mul(beta)).add((nc.add(na.mul(-1))).mul(gamma));
+                    Normal3 n = na.mul(1- beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
                     return new Hit(t,n, r, this);
                 }
             }
@@ -120,7 +133,8 @@ public class Triangle extends Geometry {
 
         if (a != null ? !a.equals(triangle.a) : triangle.a != null) return false;
         if (b != null ? !b.equals(triangle.b) : triangle.b != null) return false;
-        return !(c != null ? !c.equals(triangle.c) : triangle.c != null);
+        if (c != null ? !c.equals(triangle.c) : triangle.c != null) return false;
+        return material.equals(triangle.material) && name.equals(triangle.name);
 
     }
 

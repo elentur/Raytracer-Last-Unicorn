@@ -140,7 +140,8 @@ public class AxisAlignedBox extends Geometry {
         AxisAlignedBox that = (AxisAlignedBox) o;
 
         if (lbf != null ? !lbf.equals(that.lbf) : that.lbf != null) return false;
-        return !(run != null ? !run.equals(that.run) : that.run != null);
+        if (run != null ? !run.equals(that.run) : that.run != null)return false;
+        return material.equals(that.material) && name.equals(that.name);
 
     }
 

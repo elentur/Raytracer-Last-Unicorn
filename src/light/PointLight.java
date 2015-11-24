@@ -5,27 +5,38 @@ import matVect.Vector3;
 import utils.Color;
 
 /**
+ * PointLight Represents a Lightsource that has a position and illuminates in
+ * all directions equal.
  * Created by Marcus Baetz on 17.11.2015.
  *
  * @author Marcus Bätz
  */
 public class PointLight extends Light {
-
+    /**
+     * Represents the position of the Light
+     */
     public final Point3 position;
 
-    public PointLight(Color color, Point3 position) {
+    /**
+     * Generates a new
+     * @param color Represents the color of the light
+     * @param position Represents the position of the light
+     */
+    public PointLight(final Color color, final Point3 position) {
         super(color);
+        if(position==null) throw new IllegalArgumentException("position must not be null ");
         this.position = position;
     }
 
+
     @Override
     public boolean illuminates(Point3 point) {
-        return false;
+        return true;
     }
 
     @Override
     public Vector3 directionFrom(Point3 point) {
-        return null;
+        return position.sub(point).normalized();
     }
 
     @Override
@@ -42,7 +53,7 @@ public class PointLight extends Light {
 
         PointLight that = (PointLight) o;
 
-        return !(position != null ? !position.equals(that.position) : that.position != null);
+        return !(position != null ? !position.equals(that.position) && name.equals(that.name) : that.position != null);
 
     }
 

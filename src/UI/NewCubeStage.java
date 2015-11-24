@@ -5,7 +5,6 @@ import geometries.Geometry;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -13,21 +12,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import matVect.Point3;
-import material.SingleColorMaterial;
 import raytracer.ImageSaver;
-import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class NewCubeStage extends Stage {
+public class NewCubeStage extends NewGeoStage {
 
     private final NumberTextField[] txtInputs;
-    private final ColorPicker cpColorPicker;
     private AxisAlignedBox b;
     private final TextField txtName;
 
@@ -50,8 +45,10 @@ public class NewCubeStage extends Stage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.LIGHTGRAY);
-        final Label lblColorPicker = new Label("Color:");
+        final Button btnMaterial = new Button("new Material");
+        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        final Label lblColorPicker = new Label("Material:");
+
         txtName = new TextField();
 
         final Label lblName = new Label("Name");
@@ -87,7 +84,7 @@ public class NewCubeStage extends Stage {
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
-        center.add(cpColorPicker, 1, 0);
+        center.add(btnMaterial, 1, 0);
         center.add(lblName, 2, 0);
         center.add(txtName, 3, 0);
         center.add(lblX, 1, 1);
@@ -132,6 +129,7 @@ public class NewCubeStage extends Stage {
             txtInputs[3].setText(b.lbf.x + "");
             txtInputs[4].setText(b.lbf.y + "");
             txtInputs[5].setText(b.lbf.z + "");
+            material = b.material;
            // cpColorPicker.setValue(new javafx.scene.paint.Color(b.material.r, b.material.g, b.material.b, 1));
         }
     }
@@ -155,8 +153,7 @@ public class NewCubeStage extends Stage {
             if (run.y < lbf.y) run = new Point3(run.x, lbf.y + 1.0, run.z);
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);
 
-            javafx.scene.paint.Color c = cpColorPicker.getValue();
-            AxisAlignedBox p = new AxisAlignedBox(run, lbf, new SingleColorMaterial( new Color(c.getRed(), c.getGreen(), c.getBlue())));
+            AxisAlignedBox p = new AxisAlignedBox(run, lbf,material);
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;
