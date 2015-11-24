@@ -15,7 +15,7 @@ public class DirectionalLight extends Light {
 
     public DirectionalLight(Color color, Vector3 direction) {
         super(color);
-        this.direction = direction;
+        this.direction = direction.normalized();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class DirectionalLight extends Light {
 
     @Override
     public Vector3 directionFrom(Point3 point) {
-        return direction.mul(-1).normalized();
+        return direction.mul(-1);
     }
 
     @Override

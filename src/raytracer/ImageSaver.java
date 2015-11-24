@@ -29,6 +29,7 @@ import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
 import material.LambertMaterial;
+import material.OrenNayarMaterial;
 import material.PhongMaterial;
 import material.SingleColorMaterial;
 import utils.*;
@@ -146,29 +147,23 @@ public class ImageSaver extends Application {
     }*/
 
     private void testScene(){
-        world = new World(new Color(0,0,0),new Color(0.1,0.1,0.1));
-        camera = new PerspectiveCamera(new Point3(4,4,4),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4);
-        Light light = new PointLight(new Color(1,1,1), new Point3(8,4,0));
-        world.geometries.add( new Plane(
-                new Point3(0,0,0),
-                new Normal3(0,1,0),
-                new LambertMaterial(new Color(0,1,0))
+        world = new World(new Color(0,0,0),new Color(0.0,0.0,0.0));
+        camera = new PerspectiveCamera(new Point3(0,0,2),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        Light light = new PointLight(new Color(1,1,1), new Point3(0,0,10));
+        world.geometries.add( new Sphere(
+                new Point3(-1.5,0,-3),
+                0.5,
+                new LambertMaterial(new Color(1,0,0))
         ));
         world.geometries.add( new Sphere(
-                new Point3(1,1,1),
+                new Point3(0,0,-3),
                 0.5,
-                new PhongMaterial(new Color(1,0,0),new Color(1,1,1),8)
+                new OrenNayarMaterial(new Color(1,0,0),0.3)
         ));
-        world.geometries.add( new AxisAlignedBox(
-                new Point3(-0.5,1.5,1.5),
-                new Point3(-1.5,0.5,0.5),
-                new PhongMaterial(new Color(1,0,1),new Color(1,1,1),8)
-        ));
-        world.geometries.add( new Triangle(
-                new Point3(0,0,-1),
-                new Point3(1,0,-1),
-                new Point3(1,1,-1),
-                new LambertMaterial(new Color(1,1,0))
+        world.geometries.add( new Sphere(
+                new Point3(1.5,0,-3),
+                0.5,
+                new OrenNayarMaterial(new Color(1,0,0),0.6)
         ));
         world.lights.add(light);
     }

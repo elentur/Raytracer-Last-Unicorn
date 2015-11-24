@@ -8,32 +8,66 @@ import utils.Hit;
 import utils.World;
 
 /**
- * Created by Marcus Baetz on 17.11.2015.
+ * This class represents a PhongMaterial.
  *
- * @author Marcus Bätz
+ * @author Robert Dziuba 17/11/2015
  */
 public class PhongMaterial extends Material {
 
+    /**
+     * The color of the diffusely reflecting surfaces.
+     */
     public final Color diffuse;
 
+    /**
+     * The color of our reflection.
+     */
     public final Color specular;
 
+    /**
+     * The value to change the size of the highlight.
+     * The larger exponent, the smaller will be the highlight.
+     */
     public final int exponent;
 
-    public PhongMaterial(Color diffuse, Color specular, int exponent) {
+    /**
+     * Instantiates a new PhongMaterial Object.
+     *
+     * @param diffuse of the Material. Can't be null.
+     * @param specular of the Material. Can't be null.
+     * @param exponent of the Material. Muss be bigger zero.
+     * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
+     */
+    public PhongMaterial(final Color diffuse, final Color specular, final int exponent) {
+        if (diffuse == null) {
+            throw new IllegalArgumentException("The diffuse cannot be null!");
+        }
+        if (specular == null) {
+            throw new IllegalArgumentException("The specular cannot be null!");
+        }
+        if (exponent > 0) {
+            throw new IllegalArgumentException("The angle must be bigger than 0!");
+        }
         this.diffuse = diffuse;
         this.specular = specular;
         this.exponent = exponent;
     }
 
     @Override
-    public Color colorFor(Hit hit, World world) {
+    public Color colorFor(final Hit hit, final World world) {
+        if (hit == null) {
+            throw new IllegalArgumentException("The hit cannot be null!");
+        }
+        if (world == null) {
+            throw new IllegalArgumentException("The world cannot be null!");
+        }
 
         Color basicColor = new Color(0, 0, 0);
-        Vector3 e = hit.ray.d.mul(-1).normalized();
+        final Vector3 e = hit.ray.d.mul(-1).normalized();
+        final Point3 h = hit.ray.at(hit.t);
 
         for (Light light : world.lights) {
-            Point3 h = hit.ray.at(hit.t);
+
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
             if (light.illuminates(h)) {
@@ -71,15 +105,15 @@ public class PhongMaterial extends Material {
         PhongMaterial that = (PhongMaterial) o;
 
         if (exponent != that.exponent) return false;
-        if (diffuse != null ? !diffuse.equals(that.diffuse) : that.diffuse != null) return false;
-        return !(specular != null ? !specular.equals(that.specular) : that.specular != null);
+        if (!diffuse.equals(that.diffuse)) return false;
+        return specular.equals(that.specular);
 
     }
 
     @Override
     public int hashCode() {
-        int result = diffuse != null ? diffuse.hashCode() : 0;
-        result = 31 * result + (specular != null ? specular.hashCode() : 0);
+        int result = diffuse.hashCode();
+        result = 31 * result + specular.hashCode();
         result = 31 * result + exponent;
         return result;
     }
