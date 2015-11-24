@@ -16,11 +16,6 @@ import utils.World;
 public class OrenNayarMaterial extends Material{
 
     /**
-     * The color of the material.
-     */
-    public final Color color;
-
-    /**
      * The roughness of the material
      */
     public final double rough_sq;
@@ -33,13 +28,12 @@ public class OrenNayarMaterial extends Material{
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public OrenNayarMaterial(final Color color, final double roughness) {
-        if (color == null) {
-            throw new IllegalArgumentException("The hit cannot be null!");
-        }
+        super(color);
+
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }
-        this.color = color;
+
         this.rough_sq = roughness*roughness;
     }
 
@@ -73,6 +67,10 @@ public class OrenNayarMaterial extends Material{
         double c2 = 0.45f * ( rough_sq / ( rough_sq + 0.09 ) );
         double c3  = (1.0 / 8.0) * ( rough_sq / ( rough_sq + 0.09 ) );
 
+        //Simple Variant
+        /*
+        final Point3 h = hit.ray.at(hit.t);
+        final Vector3 v = hit.ray.o.sub(h).normalized();*/
 
         for (Light light : world.lights) {
 
@@ -100,18 +98,29 @@ public class OrenNayarMaterial extends Material{
 
 
                 basicColor = basicColor.add(
-                        color.mul(Math.max( 0.0, hit.n.dot(l) ) * ( c1 + a + b ))
+                        diffuse.mul(Math.max( 0.0, hit.n.dot(l) ) * ( c1 + a + b ))
                 );
+                //simple variant
+                /*
+                final Vector3 l = light.directionFrom(h).normalized();
+                final double alpha    = Math.max( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
+                final double beta     = Math.min( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
+                final double a = 1-0.5*(rough_sq/(rough_sq+0.57));
+                final double b = 0.45*(rough_sq/(rough_sq+0.09));
+                basicColor = basicColor.add(light.color.mul(diffuse).mul(Math.max(0, hit.n.dot(l))).mul(
+                        a+b*Math.max( 0.0, hit.n.dot(l) )* Math.sin(alpha)*Math.tan(beta)
+                ));*/
+
             }
         }
 
-        return color.mul(world.ambientLight).add(basicColor);
+        return diffuse.mul(world.ambientLight).add(basicColor);
     }
 
     @Override
     public String toString() {
         return "OrenNayarMaterial{" +
-                "color=" + color +
+                "color=" + diffuse +
                 ", rough_sq=" + rough_sq +
                 '}';
     }
@@ -124,7 +133,7 @@ public class OrenNayarMaterial extends Material{
         OrenNayarMaterial that = (OrenNayarMaterial) o;
 
         if (Double.compare(that.rough_sq, rough_sq) != 0) return false;
-        return color.equals(that.color);
+        return diffuse.equals(that.diffuse);
 
     }
 
@@ -132,7 +141,7 @@ public class OrenNayarMaterial extends Material{
     public int hashCode() {
         int result;
         long temp;
-        result = color.hashCode();
+        result = diffuse.hashCode();
         temp = Double.doubleToLongBits(rough_sq);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;

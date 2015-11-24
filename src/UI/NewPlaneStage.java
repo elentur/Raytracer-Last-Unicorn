@@ -45,7 +45,7 @@ public class NewPlaneStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -124,7 +124,7 @@ public class NewPlaneStage extends NewGeoStage {
             txtInputs[3].setText(p.n.x + "");
             txtInputs[4].setText(p.n.y + "");
             txtInputs[5].setText(p.n.z + "");
-            material = p.material;
+            material.set(p.material);
           // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
         }
 
@@ -148,7 +148,7 @@ public class NewPlaneStage extends NewGeoStage {
                     Double.parseDouble(txtInputs[5].getText()));
 
 
-            Plane p = new Plane(a, n.normalized().asNormal(), material);
+            Plane p = new Plane(a, n.normalized().asNormal(), material.get());
             p.name = txtName.getText();
 
             int index = 1;

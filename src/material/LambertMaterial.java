@@ -13,17 +13,14 @@ import utils.World;
  * @author Marcus Bätz
  */
 public class LambertMaterial extends Material {
-    /**
-     *  Represents the Color of the Lambert material
-     */
-    public final Color color;
+
 
     /**
      * Generates a new Lambert material with the given color
      * @param color Represents the Color of the Lambert material
      */
     public LambertMaterial(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
@@ -32,17 +29,17 @@ public class LambertMaterial extends Material {
         for(Light light: world.lights){
             final Point3 p = hit.ray.at(hit.t);
             if(light.illuminates(p)){
-                c= c.add(light.color.mul(color).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
+                c= c.add(light.color.mul(diffuse).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
             }
         }
 
-        return color.mul(world.ambientLight).add(c);
+        return diffuse.mul(world.ambientLight).add(c);
     }
 
     @Override
     public String toString() {
         return "LambertMaterial{" +
-                "material=" + color +
+                "material=" + diffuse +
                 '}';
     }
 
@@ -54,12 +51,12 @@ public class LambertMaterial extends Material {
 
         LambertMaterial that = (LambertMaterial) o;
 
-        return !(color != null ? !color.equals(that.color) : that.color != null);
+        return !(diffuse != null ? !diffuse.equals(that.diffuse) : that.diffuse != null);
 
     }
 
     @Override
     public int hashCode() {
-        return color != null ? color.hashCode() : 0;
+        return diffuse != null ? diffuse.hashCode() : 0;
     }
 }

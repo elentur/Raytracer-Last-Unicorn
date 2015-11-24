@@ -44,7 +44,7 @@ public class NewOBJStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -95,7 +95,7 @@ public class NewOBJStage extends NewGeoStage {
 
         } else {
             btnOK.setDisable(false);
-            material = sff.material;
+            material.set(sff.material);
             file = sff.file;
             // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
         }
@@ -120,7 +120,7 @@ public class NewOBJStage extends NewGeoStage {
         try {
 
             if (sff != null) ImageSaver.getWorld().geometries.remove(sff);
-            ShapeFromFile p = new ShapeFromFile(file,material);
+            ShapeFromFile p = new ShapeFromFile(file,material.get());
 
             ImageSaver.getWorld().geometries.add(p);
 

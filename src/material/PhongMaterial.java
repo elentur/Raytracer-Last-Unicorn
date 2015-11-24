@@ -14,10 +14,7 @@ import utils.World;
  */
 public class PhongMaterial extends Material {
 
-    /**
-     * The color of the diffusely reflecting surfaces.
-     */
-    public final Color diffuse;
+
 
     /**
      * The color of our reflection.
@@ -39,16 +36,13 @@ public class PhongMaterial extends Material {
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public PhongMaterial(final Color diffuse, final Color specular, final int exponent) {
-        if (diffuse == null) {
-            throw new IllegalArgumentException("The diffuse cannot be null!");
-        }
+        super(diffuse);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
-        if (exponent > 0) {
-            throw new IllegalArgumentException("The angle must be bigger than 0!");
+        if (exponent <= 0) {
+            throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
-        this.diffuse = diffuse;
         this.specular = specular;
         this.exponent = exponent;
     }

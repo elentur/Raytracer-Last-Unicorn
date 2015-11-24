@@ -10,10 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import material.LambertMaterial;
-import material.Material;
-import material.PhongMaterial;
-import material.SingleColorMaterial;
+import material.*;
 
 /**
  * Created by Marcus Baetz on 23.11.2015.
@@ -24,6 +21,8 @@ public class NewMaterialStage extends Stage {
 
     private final ColorPicker cpColorPicker;
     private final ColorPicker cpSpec;
+    private final ChoiceBox<String> chbMaterial;
+    private final Slider sldExp;
     public NewMaterialStage(NewGeoStage st) {
         super();
         final HBox bottom = new HBox(20);
@@ -39,11 +38,11 @@ public class NewMaterialStage extends Stage {
         cpSpec = new ColorPicker(javafx.scene.paint.Color.WHITE);
         final Label lblSpec = new Label("Specular:");
 
-        ChoiceBox<String> chbMaterial = new ChoiceBox<>();
+         chbMaterial = new ChoiceBox<>();
         final Label lblMaterial = new Label("Choose Material:");
         chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material","Oren-Nayar", "Phong-Material");
         chbMaterial.getSelectionModel().select(1);
-        Slider sldExp = new Slider();
+        sldExp = new Slider();
         sldExp.setMin(1);
         sldExp.setMax(256);
         sldExp.setValue(64);
@@ -92,7 +91,7 @@ public class NewMaterialStage extends Stage {
         center.add(lblExp, 0, 3);
         center.add(sldExp, 1, 3);
 
-
+        setValues(st);
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(top);
         borderPane.setBottom(bottom);
@@ -106,7 +105,29 @@ public class NewMaterialStage extends Stage {
         this.showAndWait();
     }
 
+    public void setValues(NewGeoStage st) {
+    if(st.material!= null){
+        if(st.material.get() instanceof SingleColorMaterial){
+            SingleColorMaterial m = (SingleColorMaterial)st.material.get();
+            chbMaterial.getSelectionModel().select(0);
 
+        }if(st.material.get() instanceof LambertMaterial){
+            LambertMaterial m = (LambertMaterial)st.material.get();
+            chbMaterial.getSelectionModel().select(1);
+        }if(st.material.get() instanceof OrenNayarMaterial){
+            OrenNayarMaterial m = (OrenNayarMaterial)st.material.get();
+            chbMaterial.getSelectionModel().select(2);
+            sldExp.setValue(Math.sqrt(m.rough_sq));
+        }if(st.material.get() instanceof PhongMaterial){
+            PhongMaterial m = (PhongMaterial)st.material.get();
+            chbMaterial.getSelectionModel().select(3);
+            cpSpec.setValue( new Color( m.specular.r,m.specular.g,m.specular.b,1));
+            sldExp.setValue(m.exponent);
+        }
+        cpColorPicker.setValue( new Color( st.material.get().diffuse.r,st.material.get().diffuse.g,st.material.get().diffuse.b,1));
+    }
+
+    }
     private void onCancel() {
         this.close();
     }
@@ -117,11 +138,11 @@ public class NewMaterialStage extends Stage {
         }else if(typ == 1){
             material = new LambertMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()));
         }else if(typ == 2){
-           // material = new OrenNayarMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),exp);
+            material = new OrenNayarMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),exp);
         }else if(typ == 3){
             material = new PhongMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),new utils.Color(s.getRed(),s.getGreen(),s.getBlue()),exp);
         }
-        if(material!=null)stage.material = material;
+        if(material!=null)stage.material.set(material);
 
         this.close();
     }

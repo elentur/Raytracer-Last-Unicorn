@@ -45,7 +45,7 @@ public class NewTriangleStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -135,7 +135,7 @@ public class NewTriangleStage extends NewGeoStage {
             txtInputs[6].setText(t.c.x + "");
             txtInputs[7].setText(t.c.y + "");
             txtInputs[8].setText(t.c.z + "");
-            material = t.material;
+            material.set(t.material);
            // cpColorPicker.setValue(new javafx.scene.paint.Color(t.material.r, t.material.g, t.material.b, 1));
         }
     }
@@ -161,7 +161,7 @@ public class NewTriangleStage extends NewGeoStage {
                     Double.parseDouble(txtInputs[8].getText()));
 
 
-            Triangle p = new Triangle(edgeA, edgeB, edgeC,material);
+            Triangle p = new Triangle(edgeA, edgeB, edgeC,material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

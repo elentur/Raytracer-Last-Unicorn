@@ -139,13 +139,13 @@ public class NewLightStage extends Stage {
                 txtInputs[2].setText(l.position.z +"");
             }else if(light instanceof DirectionalLight){
                 DirectionalLight l = (DirectionalLight)light;
-                chbLight.getSelectionModel().select(1);
+                chbLight.getSelectionModel().select(0);
                 txtInputs[3].setText(l.direction.x +"");
                 txtInputs[4].setText(l.direction.y +"");
                 txtInputs[5].setText(l.direction.z +"");
             }else{
                 SpotLight l = (SpotLight)light;
-                chbLight.getSelectionModel().select(1);
+                chbLight.getSelectionModel().select(2);
                 txtInputs[0].setText(l.position.x +"");
                 txtInputs[1].setText(l.position.y +"");
                 txtInputs[2].setText(l.position.z +"");

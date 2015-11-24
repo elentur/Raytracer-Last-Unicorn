@@ -28,6 +28,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.LambertMaterial;
 import utils.Color;
+import utils.HDRFilter;
 import utils.Ray;
 import utils.World;
 
@@ -42,6 +43,8 @@ import java.util.Map;
  * Created by Marcus Baetz on 07.10.2015.
  */
 public class ImageSaver extends Application {
+
+    private HDRFilter hdrFilter;
     /**
      * threadBreak exits all Threads.
      */
@@ -63,6 +66,11 @@ public class ImageSaver extends Application {
      * Represents the number of Cores.
      */
     public static int cores = 1;
+    /**
+     * Represents if hdr Render.
+     */
+    public static boolean hdr = false;
+
     /**
      * The Image in that the program draw.
      */
@@ -182,7 +190,7 @@ public class ImageSaver extends Application {
         Map<String, String> input = IO.readFile("settings.cfg");
         if (input.size() > 0) {
             try {
-
+                hdr = input.get("hdr").equals("true");
                 cores = Integer.parseInt(input.get("cores"));
                 pattern = Integer.parseInt(input.get("pattern"));
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
@@ -349,6 +357,7 @@ public class ImageSaver extends Application {
             threadBreak = false;
             quadrantCounter = 0;
             quadrant = newQuadrants(pattern);
+            if(hdr)hdrFilter =new HDRFilter(imgWidth.getValue(),imgHeight.getValue());
 
             for (int i = 0; i < cores; i++) {
                 new Thread(new RenderTask()).run();
@@ -445,12 +454,16 @@ public class ImageSaver extends Application {
 
         Ray r = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
         utils.Color c = world.hit(r);
-
+        if(hdr)hdrFilter.filter(c, x,y);
         if (c.r > 1) c = new utils.Color(1.0, c.g, c.b);
         if (c.g > 1) c = new utils.Color(c.r, 1.0, c.b);
         if (c.b > 1) c = new utils.Color(c.r, c.g, 1.0);
 
+
         pixelWriter.setColor(x, y, new javafx.scene.paint.Color(c.r, c.g, c.b, 1.0));
+
+            if(hdr && actualProgress.get()>= maxProgress.get())pixelWriter= hdrFilter.getImage(pixelWriter);
+
     }
 
     /**

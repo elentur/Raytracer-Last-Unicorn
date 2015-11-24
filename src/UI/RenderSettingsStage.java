@@ -22,6 +22,7 @@ import java.util.Map;
 public class RenderSettingsStage extends Stage {
 
     final CheckBox chkMultithreading;
+    final CheckBox chkHDRRendering;
     final CheckBox chkKeepRatio;
     final ChoiceBox<String> chbCores;
     final ChoiceBox<String> chbPattern;
@@ -60,6 +61,7 @@ public class RenderSettingsStage extends Stage {
         btnCancel.setOnAction(a -> onCancel());
 
         chkMultithreading = new CheckBox("Multithreading");
+        chkHDRRendering = new CheckBox("HDR-Rendering");
         chkKeepRatio = new CheckBox("Keep Ratio");
         chbCores = new ChoiceBox<>();
         chbPattern = new ChoiceBox<>();
@@ -68,6 +70,7 @@ public class RenderSettingsStage extends Stage {
         txtHeight = new NumberTextField("0.0");
         final Label lblWidth = new Label("width");
         final Label lblHeight = new Label("height");
+
         final Label lblRenderPattern = new Label("Render-Pattern");
 
         for (int i = 0; i < Runtime.getRuntime().availableProcessors(); i++) {
@@ -80,6 +83,7 @@ public class RenderSettingsStage extends Stage {
 
         chkKeepRatio.setOnAction(a -> aspectration = Double.parseDouble(txtWidth.getText()) / Double.parseDouble(txtHeight.getText()));
         center.add(chkMultithreading, 0, 0, 2, 1);
+        center.add(chkHDRRendering, 2, 0, 2, 1);
         center.add(chbCores, 0, 1, 2, 1);
         center.add(lblRenderPattern, 0, 2, 2, 1);
         center.add(chbPattern, 0, 3, 2, 1);
@@ -131,6 +135,7 @@ public class RenderSettingsStage extends Stage {
         if (input.size() > 0) {
             try {
                 chkMultithreading.setSelected(input.get("multithreading").equals("true"));
+                chkHDRRendering.setSelected(input.get("hdr").equals("true"));
                 chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores")));
                 chbPattern.getSelectionModel().select(Integer.parseInt(input.get("pattern")));
                 txtWidth.setText(input.get("width"));
@@ -145,6 +150,7 @@ public class RenderSettingsStage extends Stage {
     private void saveConfig() {
         Map<String, String> output = new HashMap<>();
         output.put("multithreading", chkMultithreading.isSelected() + "");
+        output.put("hdr", chkHDRRendering.isSelected() + "");
         output.put("cores", chbCores.getSelectionModel().getSelectedIndex() + "");
         output.put("pattern", chbPattern.getSelectionModel().getSelectedIndex() + "");
         output.put("width", txtWidth.getText());
@@ -169,6 +175,7 @@ public class RenderSettingsStage extends Stage {
         } else {
             ImageSaver.cores = 1;
         }
+        ImageSaver.hdr = chkHDRRendering.isSelected();
         ImageSaver.pattern = chbPattern.getSelectionModel().getSelectedIndex();
         this.close();
     }

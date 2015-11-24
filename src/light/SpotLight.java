@@ -43,7 +43,7 @@ public class SpotLight extends Light {
         if (direction == null) {
             throw new IllegalArgumentException("The direction cannot be null!");
         }
-        if (halfAngle >= 0 && halfAngle <= 90) {
+        if (halfAngle < 0 || halfAngle > 90) {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
 

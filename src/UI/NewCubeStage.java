@@ -45,7 +45,7 @@ public class NewCubeStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -101,7 +101,7 @@ public class NewCubeStage extends NewGeoStage {
         borderPane.setPadding(new Insets(20));
         Scene scene = new Scene(borderPane, 600, 300);
         scene.getStylesheets().add("css/rootStyle.css");
-        this.setTitle("Create new Plane?");
+        this.setTitle("Create new Cube?");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
@@ -129,7 +129,7 @@ public class NewCubeStage extends NewGeoStage {
             txtInputs[3].setText(b.lbf.x + "");
             txtInputs[4].setText(b.lbf.y + "");
             txtInputs[5].setText(b.lbf.z + "");
-            material = b.material;
+            material.set(b.material);
            // cpColorPicker.setValue(new javafx.scene.paint.Color(b.material.r, b.material.g, b.material.b, 1));
         }
     }
@@ -153,7 +153,7 @@ public class NewCubeStage extends NewGeoStage {
             if (run.y < lbf.y) run = new Point3(run.x, lbf.y + 1.0, run.z);
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);
 
-            AxisAlignedBox p = new AxisAlignedBox(run, lbf,material);
+            AxisAlignedBox p = new AxisAlignedBox(run, lbf,material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;
