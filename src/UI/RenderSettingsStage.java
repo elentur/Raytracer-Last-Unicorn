@@ -162,14 +162,14 @@ public class RenderSettingsStage extends Stage {
         int height = (int) Double.parseDouble(txtHeight.getText());
         if (width < 0) width = 0;
         if (height < 0) height = 0;
-        ImageSaver.imgWidth.set(width);
-        ImageSaver.imgHeight.set(height);
+        ImageSaver.raytracer.imgWidth.set(width);
+        ImageSaver.raytracer.imgHeight.set(height);
         if (chkMultithreading.isSelected()) {
-            ImageSaver.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
+            ImageSaver.raytracer.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
         } else {
-            ImageSaver.cores = 1;
+            ImageSaver.raytracer.cores = 1;
         }
-        ImageSaver.pattern = chbPattern.getSelectionModel().getSelectedIndex();
+        ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
         this.close();
     }
 }

@@ -61,7 +61,7 @@ public class NewCubeStage extends NewGeoStage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -110,8 +110,8 @@ public class NewCubeStage extends NewGeoStage {
     private void setValues() {
         if (b == null) {
             int index = 1;
-            if (ImageSaver.getWorld() != null) {
-                for (Geometry g : ImageSaver.getWorld().geometries)
+            if (ImageSaver.raytracer.getWorld() != null) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries)
                     if (g instanceof AxisAlignedBox) index++;
             }
             txtName.setText("Axis Aligned Box" + index);
@@ -140,7 +140,7 @@ public class NewCubeStage extends NewGeoStage {
 
     private void onOK() {
         try {
-            if (b != null) ImageSaver.getWorld().geometries.remove(b);
+            if (b != null) ImageSaver.raytracer.getWorld().geometries.remove(b);
             Point3 run = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -157,12 +157,12 @@ public class NewCubeStage extends NewGeoStage {
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;
-            for (Geometry g : ImageSaver.getWorld().geometries) {
+            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run1 = true;
             }
             while (run1) {
                 int i = index;
-                for (Geometry g : ImageSaver.getWorld().geometries) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -170,7 +170,7 @@ public class NewCubeStage extends NewGeoStage {
                     p.name = p.name + index;
                 }
             }
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

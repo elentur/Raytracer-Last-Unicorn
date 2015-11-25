@@ -75,7 +75,7 @@ public class NewWorldStage extends Stage {
         final javafx.scene.paint.Color c = cpColorPicker.getValue();
         final javafx.scene.paint.Color a = cpAmbientColor.getValue();
         final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()),new Color(a.getRed(), a.getGreen(), a.getBlue()));
-        ImageSaver.setWorld(world);
+        ImageSaver.raytracer.setWorld(world);
         this.close();
     }
 }

@@ -61,7 +61,7 @@ public class NewTriangleStage extends NewGeoStage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -110,8 +110,8 @@ public class NewTriangleStage extends NewGeoStage {
     private void setValues() {
         if (t == null) {
             int index = 1;
-            if (ImageSaver.getWorld() != null) {
-                for (Geometry g : ImageSaver.getWorld().geometries)
+            if (ImageSaver.raytracer.getWorld() != null) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries)
                     if (g instanceof Triangle) index++;
             }
             txtName.setText("Triangle" + index);
@@ -146,7 +146,7 @@ public class NewTriangleStage extends NewGeoStage {
 
     private void onOK() {
         try {
-            if (t != null) ImageSaver.getWorld().geometries.remove(t);
+            if (t != null) ImageSaver.raytracer.getWorld().geometries.remove(t);
             Point3 edgeA = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -165,12 +165,12 @@ public class NewTriangleStage extends NewGeoStage {
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;
-            for (Geometry g : ImageSaver.getWorld().geometries) {
+            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.getWorld().geometries) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -178,7 +178,7 @@ public class NewTriangleStage extends NewGeoStage {
                     p.name = p.name + index;
                 }
             }
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

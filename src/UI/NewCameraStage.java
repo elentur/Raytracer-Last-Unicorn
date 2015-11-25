@@ -178,7 +178,7 @@ public class NewCameraStage extends Stage {
                 cam = new OrthographicCamera(e, g, t, s);
                 cam.name = "Orthographic Camera";
             }
-            ImageSaver.setCamera(cam);
+            ImageSaver.raytracer.setCamera(cam);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

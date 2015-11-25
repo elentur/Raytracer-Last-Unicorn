@@ -74,7 +74,6 @@ public class NewLightStage extends Stage {
 
         final Label lblPosition = new Label("Position");
         final Label lblDirection = new Label("Direction");
-        final Label lblEdgeC = new Label("Edge C");
         final Label lblX = new Label("x");
         final Label lblY = new Label("y");
         final Label lblZ = new Label("z");
@@ -119,8 +118,8 @@ public class NewLightStage extends Stage {
     private void setValues() {
         if (light == null) {
             int index = 1;
-            if (ImageSaver.getWorld() != null) {
-                for (Light l : ImageSaver.getWorld().lights)
+            if (ImageSaver.raytracer.getWorld() != null) {
+                for (Light l : ImageSaver.raytracer.getWorld().lights)
                     if (l instanceof PointLight) index++;
             }
             txtName.setText("Pointlight" + index);
@@ -166,7 +165,7 @@ public class NewLightStage extends Stage {
     }
     private void onOK( Color c, int typ, int angle ) {
         try {
-            if (light != null) ImageSaver.getWorld().lights.remove(light);
+            if (light != null) ImageSaver.raytracer.getWorld().lights.remove(light);
             Point3 pos = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -187,12 +186,12 @@ public class NewLightStage extends Stage {
             l.name = txtName.getText();
             int index = 1;
             boolean run = false;
-            for (Light li : ImageSaver.getWorld().lights) {
+            for (Light li : ImageSaver.raytracer.getWorld().lights) {
                 if (li.name.equals(l.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Light li : ImageSaver.getWorld().lights) {
+                for (Light li : ImageSaver.raytracer.getWorld().lights) {
                     if (li.name == li.name + index) index++;
                 }
                 if (i == index) {
@@ -201,7 +200,7 @@ public class NewLightStage extends Stage {
                 }
             }
 
-            ImageSaver.getWorld().lights.add(l);
+            ImageSaver.raytracer.getWorld().lights.add(l);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

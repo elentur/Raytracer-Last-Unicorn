@@ -117,12 +117,12 @@ public class ShapeFromFile extends Geometry {
     private String nameTest(String n) {
         int index = 1;
         boolean run = false;
-            for (Geometry g : ImageSaver.getWorld().geometries) {
+            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(n)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.getWorld().geometries) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                     if (g.name == n + index) index++;
                 }
                 if (i == index) {
