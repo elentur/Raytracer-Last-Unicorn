@@ -13,7 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import matVect.Point3;
+import material.LambertMaterial;
 import raytracer.ImageSaver;
+import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
@@ -119,6 +121,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setText("0.0");
             txtInputs[2].setText("-3.0");
             txtInputs[3].setText("0.5");
+            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setText(s.c.x + "");

@@ -14,7 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import matVect.Point3;
 import matVect.Vector3;
+import material.LambertMaterial;
 import raytracer.ImageSaver;
+import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
@@ -116,6 +118,7 @@ public class NewPlaneStage extends NewGeoStage {
             txtName.setText("Plane" + index);
             txtInputs[1].setText("-1.0");
             txtInputs[4].setText("1.0");
+            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
         } else {
             txtName.setText(p.name);
             txtInputs[0].setText(p.a.x + "");

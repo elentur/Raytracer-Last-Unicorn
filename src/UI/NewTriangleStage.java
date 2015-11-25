@@ -13,7 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import matVect.Point3;
+import material.LambertMaterial;
 import raytracer.ImageSaver;
+import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
@@ -124,6 +126,7 @@ public class NewTriangleStage extends NewGeoStage {
             txtInputs[6].setText("0.5");
             txtInputs[7].setText("-0.5");
             txtInputs[8].setText("-3.0");
+            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
         } else {
             txtName.setText(t.name);
             txtInputs[0].setText(t.a.x + "");

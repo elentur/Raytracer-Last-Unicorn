@@ -71,7 +71,11 @@ public class NewLightStage extends Stage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-
+        if (ImageSaver.getWorld() == null) {
+            lblInfo.setText("No Scene Created!");
+            lblInfo.setTextFill(javafx.scene.paint.Color.RED);
+            btnOK.setDisable(true);
+        }
         final Label lblPosition = new Label("Position");
         final Label lblDirection = new Label("Direction");
         final Label lblEdgeC = new Label("Edge C");
