@@ -3,6 +3,7 @@ package light;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
+import utils.World;
 
 /**
  * Created by Marcus Baetz on 17.11.2015.
@@ -19,7 +20,7 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public boolean illuminates(Point3 point) {
+    public boolean illuminates(final Point3 point, final World world) {
         return true;
     }
 

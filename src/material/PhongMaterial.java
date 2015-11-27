@@ -64,7 +64,7 @@ public class PhongMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h)) {
+            if (light.illuminates(h, world)) {
                 basicColor = basicColor.add(
                         light.color.mul(diffuse)
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))

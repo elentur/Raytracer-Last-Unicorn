@@ -3,6 +3,7 @@ package light;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
+import utils.World;
 
 /**
  * This class represents a SpotLight.
@@ -53,7 +54,7 @@ public class SpotLight extends Light {
     }
 
     @Override
-    public boolean illuminates(final Point3 point) {
+    public boolean illuminates(final Point3 point, final World world) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }

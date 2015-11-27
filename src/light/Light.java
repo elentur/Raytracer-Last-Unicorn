@@ -4,6 +4,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
 import utils.Element;
+import utils.World;
 
 import java.io.Serializable;
 
@@ -26,9 +27,10 @@ public abstract class Light extends Element implements Serializable {
     /**
      * Returns if whether or not a given point is illuminated.
      * @param point The point for which we have to check if it is illuminated
+     * @param world The world object for the shadow calculation
      * @return Returns if a point is illuminated
      */
-    public abstract boolean illuminates(Point3 point);
+    public abstract boolean illuminates(Point3 point, World world);
 
     /**
      * Returns a Vector that shows from the illuminated point to the Lightsourc

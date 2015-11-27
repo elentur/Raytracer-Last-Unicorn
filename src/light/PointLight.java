@@ -1,8 +1,12 @@
 package light;
 
+import geometries.Geometry;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
+import utils.Hit;
+import utils.Ray;
+import utils.World;
 
 /**
  * PointLight Represents a Lightsource that has a position and illuminates in
@@ -30,7 +34,21 @@ public class PointLight extends Light {
 
 
     @Override
-    public boolean illuminates(Point3 point) {
+    public boolean illuminates(final Point3 point, final World world) {
+
+        final Ray r = new Ray(point, directionFrom(point));
+
+        final double tl = r.tOf(position);
+
+        for (final Geometry g : world.geometries) {
+
+            final Hit h = g.hit(r);
+            if ((h != null && h.t > 0 && h.t < tl)) {
+                System.out.println(g);
+                return false;
+            }
+        }
+
         return true;
     }
 

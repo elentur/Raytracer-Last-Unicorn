@@ -28,7 +28,7 @@ public class LambertMaterial extends Material {
         Color c = new Color(0,0,0);
         for(Light light: world.lights){
             final Point3 p = hit.ray.at(hit.t);
-            if(light.illuminates(p)){
+            if(light.illuminates(p,world)){
                 c= c.add(light.color.mul(diffuse).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
             }
         }

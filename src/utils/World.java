@@ -58,6 +58,12 @@ public class World implements Serializable {
      */
     public Color hit(final Ray r) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
+        Hit hit = lowestHit(r);
+
+        return hit != null ? hit.geo.material.colorFor(hit,this) : backgroundColor;
+    }
+
+    public Hit lowestHit(final Ray r){
         Hit hit = null;
 
         for (Geometry g : geometries) {
@@ -65,7 +71,7 @@ public class World implements Serializable {
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return hit != null ? hit.geo.material.colorFor(hit,this) : backgroundColor;
+        return hit;
     }
 
     @Override

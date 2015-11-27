@@ -74,7 +74,7 @@ public class OrenNayarMaterial extends Material{
 
         for (Light light : world.lights) {
 
-            if (light.illuminates(h)) {
+            if (light.illuminates(h, world)) {
 
                 final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha    = Math.max( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
