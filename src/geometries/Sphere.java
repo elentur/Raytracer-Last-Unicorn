@@ -56,28 +56,22 @@ public class Sphere extends Geometry {
         // d = b2 - 4ac
         final double d = (b * b) - (4 * a * cn);
 
+        double t = -1;
+
         if (d > 0) {
 
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
-            if (t1 >= 0 && t2 >= 0) {
-                //TODO statt c - r.at(t)*-1 -> r.at(t)-c
-                Normal3 n = this.c.sub(r.at(Math.min(t1, t2))).mul(-1).normalized().asNormal();
-                return new Hit(Math.min(t1, t2),n, r, this);
-            } else if (t1 >= 0) {
-                Normal3 n = this.c.sub(r.at(t1)).mul(-1).normalized().asNormal();
-                return new Hit(t1,n, r, this);
-            } else if (t2 >= 0) {
-                Normal3 n = this.c.sub(r.at(t2)).mul(-1).normalized().asNormal();
-                return new Hit(t2,n, r, this);
-            }
-        } else if (d == 0) {
-            final double t = -b / (2 * a);
-            Normal3 n = this.c.sub(r.at(t)).mul(-1).normalized().asNormal();
-            if (t >= 0) {
 
-                return new Hit(t,n, r, this);
-            }
+            t = Math.min(t1, t2);
+
+        } else if (d == 0) {
+            t = -b / (2 * a);
+        }
+
+        if(t >= 0){
+            Normal3 n = this.c.sub(r.at(t)).mul(-1).normalized().asNormal();
+            return new Hit(t, n, r, this);
         }
 
         return null;
@@ -100,7 +94,7 @@ public class Sphere extends Geometry {
         Sphere sphere = (Sphere) o;
 
         if (Double.compare(sphere.r, r) != 0) return false;
-         if(!c.equals(sphere.c)) return false;
+        if(!c.equals(sphere.c)) return false;
         return material.equals(sphere.material) && name.equals(sphere.name);
 
     }

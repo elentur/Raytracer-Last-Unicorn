@@ -1,8 +1,11 @@
 package light;
 
+import geometries.Geometry;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
+import utils.Hit;
+import utils.Ray;
 import utils.World;
 
 /**
@@ -48,6 +51,10 @@ public class SpotLight extends Light {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
 
+
+        System.out.println(direction);
+        System.out.println(direction.normalized());
+
         this.position = position;
         this.direction = direction.normalized();
         this.halfAngle = halfAngle;
@@ -58,7 +65,30 @@ public class SpotLight extends Light {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
-        return Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle;
+
+        if (world == null) {
+            throw new IllegalArgumentException("The world cannot be null!");
+        }
+
+        if(Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
+
+            final Ray r = new Ray(point, directionFrom(point));
+
+            final double tl = r.tOf(position);
+
+            for (final Geometry g : world.geometries) {
+
+                final Hit h = g.hit(r);
+                if ((h != null && h.t > 0 && h.t < tl)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
+        return false;
     }
 
     @Override

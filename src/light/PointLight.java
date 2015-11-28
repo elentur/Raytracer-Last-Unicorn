@@ -35,6 +35,12 @@ public class PointLight extends Light {
 
     @Override
     public boolean illuminates(final Point3 point, final World world) {
+        if (point == null) {
+            throw new IllegalArgumentException("The point cannot be null!");
+        }
+        if (world == null) {
+            throw new IllegalArgumentException("The world cannot be null!");
+        }
 
         final Ray r = new Ray(point, directionFrom(point));
 
@@ -44,7 +50,6 @@ public class PointLight extends Light {
 
             final Hit h = g.hit(r);
             if ((h != null && h.t > 0 && h.t < tl)) {
-                System.out.println(g);
                 return false;
             }
         }
