@@ -51,10 +51,6 @@ public class SpotLight extends Light {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
 
-
-        System.out.println(direction);
-        System.out.println(direction.normalized());
-
         this.position = position;
         this.direction = direction.normalized();
         this.halfAngle = halfAngle;
