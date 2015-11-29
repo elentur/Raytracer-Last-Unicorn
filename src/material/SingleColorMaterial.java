@@ -5,20 +5,24 @@ import utils.Hit;
 import utils.World;
 
 /**
- * Created by Marcus Baetz on 17.11.2015.
+ * This class represents a SingleColorMaterial.
  *
- * @author Marcus Bätz
+ * @author Andreas Kiauka 17.11.2015
  */
 public class SingleColorMaterial extends Material {
 
 
-
+    /**
+     * Instantiates a new SingleColorMaterial Object.
+     *
+     * @param color of the Material. Can't be null.
+     */
     public SingleColorMaterial(Color color) {
         super(color);
     }
 
     @Override
-    public Color colorFor(Hit hit, World world) {
+    public Color colorFor(final Hit hit, final World world) {
         if(hit == null){
             throw new IllegalArgumentException("hit must not be null");
         }
