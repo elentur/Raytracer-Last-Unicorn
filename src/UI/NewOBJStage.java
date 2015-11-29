@@ -64,7 +64,7 @@ public class NewOBJStage extends NewGeoStage {
         btnFile.setOnAction(a -> onLoad(btnOK));
         btnOK.setDisable(true);
 
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
         }
@@ -109,7 +109,7 @@ public class NewOBJStage extends NewGeoStage {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         file = dlg.showOpenDialog(this);
-        if (ImageSaver.getWorld() != null && file != null) {
+        if (ImageSaver.raytracer.getWorld() != null && file != null) {
             btnOK.setDisable(false);
         }
     }
@@ -121,10 +121,10 @@ public class NewOBJStage extends NewGeoStage {
     private void onOK() {
         try {
 
-            if (sff != null) ImageSaver.getWorld().geometries.remove(sff);
+            if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
             ShapeFromFile p = new ShapeFromFile(file,material.get());
 
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

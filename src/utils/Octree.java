@@ -6,17 +6,16 @@ import geometries.Triangle;
 import matVect.Point3;
 import material.SingleColorMaterial;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Created by Marcus Baetz on 17.11.2015.
  *
  * @author Marcus Bätz
  */
-public class Octree {
+public class Octree implements Serializable {
+    private static final long serialVersionUID = 1L;
     public AxisAlignedBox box;
 
     private List<Geometry> g;
@@ -53,7 +52,7 @@ public class Octree {
             if (t.a.y > runY) runY = t.a.y;
             if (t.a.z > runZ) runZ = t.a.z;
 
-            if (t.b.x > runX) runY = t.b.x;
+            if (t.b.x > runX) runX = t.b.x;
             if (t.b.y > runY) runY = t.b.y;
             if (t.b.z > runZ) runZ = t.b.z;
 
@@ -85,9 +84,8 @@ public class Octree {
 
     private void generateOctrees() {
         box = new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new Color(0, 0, 0)));
-        // System.out.println(box);
-        Set<Geometry> used = new HashSet<>();
-         final double e = 0.0;
+
+         final double e = 0.0000001;
         if (g.size() > 500) {
             subtrees = new Octree[8];
             octreeList = new ArrayList[8];
@@ -95,7 +93,6 @@ public class Octree {
                 octreeList[i] = new ArrayList<>();
 
                 double newRunX, newRunY, newRunZ, newLbfX, newLbfY, newLbfZ;
-
 
                 if (i == 0 || i == 1 || i == 3 || i == 5) {
                     newRunX = runX - ((runX - lbfX) / 2.0);
@@ -118,30 +115,8 @@ public class Octree {
                     newRunZ = runZ;
                     newLbfZ = lbfZ + ((runZ - lbfZ) / 2.0);
                 }
-                double sizeX= newRunX-newLbfX;
-                double sizeY= newRunY-newLbfY;
-                double sizeZ= newRunZ-newLbfZ;
-                Point3 a = new Point3(newRunX,newRunY,newRunZ);
-                Point3 b = new Point3(newLbfX,newLbfY,newLbfZ);
-                double size= a.sub(b).magnitude; //Math.sqrt(Math.sqrt(sizeX*sizeX + sizeY * sizeY) +sizeZ*sizeZ);
-             //   AxisAlignedBox b = new AxisAlignedBox(new Point3(newRunX,newRunY,newRunZ), new Point3(newLbfX,newLbfY,newLbfZ),new SingleColorMaterial(new Color(0,0,0)));
-                for (Geometry geo : g) {
-                    Triangle t = (Triangle) geo;
-
-
-                   /* if ((newLbfX <= t.a.x && t.a.x <= newRunX + e) &&
-                            (newLbfY <= t.a.y + e && t.a.y <= newRunY + e) &&
-                            (newLbfZ <= t.a.z + e && t.a.z <= newRunZ + e)) {
-                        octreeList[i].add(t);
-                    } else if ((newLbfX <= t.b.x + e && t.b.x <= newRunX + e) &&
-                            (newLbfY <= t.b.y + e && t.b.y <= newRunY + e) &&
-                            (newLbfZ <= t.b.z + e && t.b.z <= newRunZ + e)) {
-                        octreeList[i].add(t);
-                    } else if ((newLbfX <= t.c.x + e && t.c.x <= newRunX + e) &&
-                            (newLbfY <= t.c.y + e && t.c.y <= newRunY + e) &&
-                            (newLbfZ <= t.c.z + e && t.c.z <= newRunZ + e)) {
-                        octreeList[i].add(t);
-                    }*/
+                for (Iterator<Geometry> geo = g.iterator(); geo.hasNext();){
+                    Triangle t = (Triangle) geo.next();
                     if ((newLbfX <= t.a.x && t.a.x <= newRunX + e) &&
                             (newLbfY <= t.a.y + e && t.a.y <= newRunY + e) &&
                             (newLbfZ <= t.a.z + e && t.a.z <= newRunZ + e)&&
@@ -151,14 +126,12 @@ public class Octree {
                             (newLbfX <= t.c.x + e && t.c.x <= newRunX + e) &&
                             (newLbfY <= t.c.y + e && t.c.y <= newRunY + e) &&
                             (newLbfZ <= t.c.z + e && t.c.z <= newRunZ + e)) {
-                        used.add(t);
+                        geo.remove();
                         octreeList[i].add(t);
                     }
 
                 }
-                    g.removeAll(used);
                     subtrees[i] = new Octree(octreeList[i], newRunX, newRunY, newRunZ, newLbfX, newLbfY, newLbfZ);
-                    //subtrees[i] = new Octree(octreeList[i]);
 
 
             }

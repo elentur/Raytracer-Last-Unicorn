@@ -136,7 +136,7 @@ public class RenderSettingsStage extends Stage {
             try {
                 chkMultithreading.setSelected(input.get("multithreading").equals("true"));
                 chkHDRRendering.setSelected(input.get("hdr").equals("true"));
-                chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores")));
+                chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores"))-1);
                 chbPattern.getSelectionModel().select(Integer.parseInt(input.get("pattern")));
                 txtWidth.setText(input.get("width"));
                 txtHeight.setText(input.get("height"));
@@ -151,7 +151,7 @@ public class RenderSettingsStage extends Stage {
         Map<String, String> output = new HashMap<>();
         output.put("multithreading", chkMultithreading.isSelected() + "");
         output.put("hdr", chkHDRRendering.isSelected() + "");
-        output.put("cores", chbCores.getSelectionModel().getSelectedIndex() + "");
+        output.put("cores", (chbCores.getSelectionModel().getSelectedIndex() +1) + "");
         output.put("pattern", chbPattern.getSelectionModel().getSelectedIndex() + "");
         output.put("width", txtWidth.getText());
         output.put("height", txtHeight.getText());
@@ -168,15 +168,15 @@ public class RenderSettingsStage extends Stage {
         int height = (int) Double.parseDouble(txtHeight.getText());
         if (width < 0) width = 0;
         if (height < 0) height = 0;
-        ImageSaver.imgWidth.set(width);
-        ImageSaver.imgHeight.set(height);
+        ImageSaver.raytracer.imgWidth.set(width);
+        ImageSaver.raytracer.imgHeight.set(height);
         if (chkMultithreading.isSelected()) {
-            ImageSaver.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
+            ImageSaver.raytracer.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
         } else {
-            ImageSaver.cores = 1;
+            ImageSaver.raytracer.cores = 1;
         }
-        ImageSaver.hdr = chkHDRRendering.isSelected();
-        ImageSaver.pattern = chbPattern.getSelectionModel().getSelectedIndex();
+        ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
+        ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
         this.close();
     }
 }

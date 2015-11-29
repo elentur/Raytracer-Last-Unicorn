@@ -1,16 +1,25 @@
 package UI;
 
+import camera.PerspectiveCamera;
+import geometries.Sphere;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import light.PointLight;
+import matVect.Point3;
+import matVect.Vector3;
 import material.*;
+import raytracer.Raytracer;
+import utils.World;
 
 /**
  * Created by Marcus Baetz on 23.11.2015.
@@ -23,6 +32,8 @@ public class NewMaterialStage extends Stage {
     private final ColorPicker cpSpec;
     private final ChoiceBox<String> chbMaterial;
     private final Slider sldExp;
+    private final ImageView img;
+    private final Raytracer matTracer = new Raytracer(false);
     public NewMaterialStage(NewGeoStage st) {
         super();
         final HBox bottom = new HBox(20);
@@ -37,6 +48,8 @@ public class NewMaterialStage extends Stage {
         final Label lblColorPicker = new Label("Difuse:");
         cpSpec = new ColorPicker(javafx.scene.paint.Color.WHITE);
         final Label lblSpec = new Label("Specular:");
+        img = new ImageView();
+        setUpTracer(st);
 
          chbMaterial = new ChoiceBox<>();
         final Label lblMaterial = new Label("Choose Material:");
@@ -68,15 +81,19 @@ public class NewMaterialStage extends Stage {
                 sldExp.setMax(256);
                 sldExp.setValue(64);
             }
+            setMaterial(st);
         });
-
+        sldExp.valueProperty().addListener(a-> setMaterial(st));
+        cpSpec.valueProperty().addListener(a-> setMaterial(st));
+        cpColorPicker.valueProperty().addListener(a-> setMaterial(st));
 
         final Button btnOK = new Button("OK");
         btnOK.setPrefWidth(100);
-        btnOK.setOnAction(a -> onOK( st, cpColorPicker.getValue(),cpSpec.getValue(),chbMaterial.getSelectionModel().getSelectedIndex(),(int)sldExp.getValue()));
+        btnOK.setOnAction(a -> onOK( st));
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
+
 
 
 
@@ -84,6 +101,7 @@ public class NewMaterialStage extends Stage {
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblMaterial, 0, 0);
         center.add(chbMaterial, 1, 0);
+        center.add(img, 2, 0,2,2);
         center.add(lblColorPicker, 0, 1);
         center.add(cpColorPicker, 1, 1);
         center.add(lblSpec, 0, 2);
@@ -103,6 +121,21 @@ public class NewMaterialStage extends Stage {
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
+    }
+
+    private void setUpTracer(NewGeoStage st) {
+        matTracer.setWorld(new World(new utils.Color(0,0,0),new utils.Color(0,0,0)));
+        matTracer.setCamera(new PerspectiveCamera(new Point3(0,0,0),new Vector3(0,0,-1), new Vector3(0,1,0),Math.PI/4));
+        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1,1,1), new Point3(0.5,0.5,0)));
+        matTracer.getWorld().backImg = new Image("img/matBack.png",80,80, false, false, false);
+        matTracer.getWorld().geometries.add(new Sphere(new Point3(0,0,-1.5),0.5,st.material.get() ));
+        st.material.addListener(a->{
+            matTracer.getWorld().geometries.clear();
+            matTracer.getWorld().geometries.add(new Sphere(new Point3(0,0,-1.5),0.5,st.material.get() ));
+            matTracer.render(img);
+        });
+        matTracer.render(img);
+
     }
 
     public void setValues(NewGeoStage st) {
@@ -131,7 +164,17 @@ public class NewMaterialStage extends Stage {
     private void onCancel() {
         this.close();
     }
-    private void onOK(NewGeoStage stage,Color c, Color s, int typ, int exp ) {
+    private void onOK(NewGeoStage stage ) {
+        setMaterial(stage);
+
+        this.close();
+    }
+
+    private void setMaterial(NewGeoStage stage) {
+        int typ = chbMaterial.getSelectionModel().getSelectedIndex();
+        Color c= cpColorPicker.getValue();
+        Color s = cpSpec.getValue();
+        double exp = sldExp.getValue();
         Material material=null;
         if(typ == 0){
             material = new SingleColorMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()));
@@ -140,10 +183,8 @@ public class NewMaterialStage extends Stage {
         }else if(typ == 2){
             material = new OrenNayarMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),exp);
         }else if(typ == 3){
-            material = new PhongMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),new utils.Color(s.getRed(),s.getGreen(),s.getBlue()),exp);
+            material = new PhongMaterial(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),new utils.Color(s.getRed(),s.getGreen(),s.getBlue()),(int)exp);
         }
         if(material!=null)stage.material.set(material);
-
-        this.close();
     }
 }

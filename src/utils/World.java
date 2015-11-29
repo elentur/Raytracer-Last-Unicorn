@@ -1,6 +1,7 @@
 package utils;
 
 import geometries.Geometry;
+import javafx.scene.image.Image;
 import light.Light;
 
 import java.io.Serializable;
@@ -35,6 +36,8 @@ public class World implements Serializable {
      */
     public final List<Light> lights;
 
+    public Image backImg;
+
     /**
      * Generates a new world with predefined Background material
      *
@@ -56,7 +59,7 @@ public class World implements Serializable {
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background material.
      */
-    public Color hit(final Ray r) {
+    public Color hit(final Ray r, int x , int y) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
 
@@ -64,8 +67,14 @@ public class World implements Serializable {
             final Hit h = g.hit(r);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
-
-        return hit != null ? hit.geo.material.colorFor(hit,this) : backgroundColor;
+        Color back;
+        if(backImg!= null){
+           javafx.scene.paint.Color c =  backImg.getPixelReader().getColor(x,y);
+             back = new Color(c.getRed(),c.getGreen(),c.getBlue());
+        }else {
+            back = backgroundColor;
+        }
+        return hit != null ? hit.geo.material.colorFor(hit,this) : back;
     }
 
     @Override
