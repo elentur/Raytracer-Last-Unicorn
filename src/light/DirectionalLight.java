@@ -7,10 +7,13 @@ import utils.Color;
 /**
  * Created by Marcus Baetz on 17.11.2015.
  *
- * @author Marcus Bätz
+ * @author Andreas Kiauka
  */
 public class DirectionalLight extends Light {
 
+    /**
+     * the direction of the light
+     */
     public final Vector3 direction;
 
     public DirectionalLight(Color color, Vector3 direction) {
@@ -20,12 +23,21 @@ public class DirectionalLight extends Light {
 
     @Override
     public boolean illuminates(Point3 point) {
+
+        if (point == null) {
+            throw new IllegalArgumentException("The point must not be null.");
+
+        }
         return true;
     }
 
     @Override
     public Vector3 directionFrom(Point3 point) {
-        return direction.mul(-1);
+        if (point == null) {
+            throw new IllegalArgumentException("The point must not be null.");
+
+        }
+        return direction.mul(-1).normalized();
     }
 
     @Override
