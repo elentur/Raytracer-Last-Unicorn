@@ -13,10 +13,18 @@ import java.io.Serializable;
  */
 public abstract class Material implements Serializable{
 
+
     private static final long serialVersionUID = 1L;
 
+    /**
+     * the color of the material;
+     */
     public final Color diffuse;
 
+    /**
+     *
+     * @param diffuse the color of the material
+     */
     public Material(final Color diffuse) {
         if (diffuse == null) {
             throw new IllegalArgumentException("Diffuse cannot be null!");

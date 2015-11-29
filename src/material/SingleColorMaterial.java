@@ -19,6 +19,12 @@ public class SingleColorMaterial extends Material {
 
     @Override
     public Color colorFor(Hit hit, World world) {
+        if(hit == null){
+            throw new IllegalArgumentException("hit must not be null");
+        }
+        if(world == null){
+            throw new IllegalArgumentException("world must not be null");
+        }
         return diffuse;
     }
 
