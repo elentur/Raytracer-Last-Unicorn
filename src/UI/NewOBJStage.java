@@ -85,7 +85,7 @@ public class NewOBJStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, 300);
+        Scene scene = new Scene(borderPane, 600,  borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Import new .obj?");
         this.setScene(scene);

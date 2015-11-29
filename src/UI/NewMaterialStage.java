@@ -144,20 +144,26 @@ public class NewMaterialStage extends Stage {
             SingleColorMaterial m = (SingleColorMaterial)st.material.get();
             chbMaterial.getSelectionModel().select(0);
 
+            cpColorPicker.setValue( new Color( m.diffuse.r,m.diffuse.g,m.diffuse.b,1));
         }if(st.material.get() instanceof LambertMaterial){
             LambertMaterial m = (LambertMaterial)st.material.get();
             chbMaterial.getSelectionModel().select(1);
+
+            cpColorPicker.setValue( new Color( m.diffuse.r,m.diffuse.g,m.diffuse.b,1));
         }if(st.material.get() instanceof OrenNayarMaterial){
             OrenNayarMaterial m = (OrenNayarMaterial)st.material.get();
             chbMaterial.getSelectionModel().select(2);
+
+            cpColorPicker.setValue( new Color( m.diffuse.r,m.diffuse.g,m.diffuse.b,1));
             sldExp.setValue(Math.sqrt(m.rough_sq));
         }if(st.material.get() instanceof PhongMaterial){
             PhongMaterial m = (PhongMaterial)st.material.get();
             chbMaterial.getSelectionModel().select(3);
+
+            cpColorPicker.setValue( new Color( m.diffuse.r,m.diffuse.g,m.diffuse.b,1));
             cpSpec.setValue( new Color( m.specular.r,m.specular.g,m.specular.b,1));
             sldExp.setValue(m.exponent);
         }
-        cpColorPicker.setValue( new Color( st.material.get().diffuse.r,st.material.get().diffuse.g,st.material.get().diffuse.b,1));
     }
 
     }

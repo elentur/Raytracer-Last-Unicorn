@@ -99,7 +99,7 @@ public class NewPlaneStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, 300);
+        Scene scene = new Scene(borderPane, 600,  borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Plane?");
         this.setScene(scene);
