@@ -1,5 +1,7 @@
 package UI;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.stage.Stage;
 import material.LambertMaterial;
 import material.Material;
@@ -12,5 +14,6 @@ import utils.Color;
  */
 public class NewGeoStage extends Stage {
 
-    public Material material = new LambertMaterial(new Color(0.5,0.5,0.5));
+    public ObjectProperty<Material> material =new SimpleObjectProperty<>(this, "materialProperty",new LambertMaterial(new Color(0.5, 0.5,0.5)));
+
 }

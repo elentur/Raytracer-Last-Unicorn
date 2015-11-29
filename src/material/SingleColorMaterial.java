@@ -11,21 +11,21 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
-    public final Color color;
+
 
     public SingleColorMaterial(Color color) {
-        this.color = color;
+        super(color);
     }
 
     @Override
     public Color colorFor(Hit hit, World world) {
-        return null;
+        return diffuse;
     }
 
     @Override
     public String toString() {
         return "SingleColorMaterial{" +
-                "material=" + color +
+                "material=" + diffuse +
                 '}';
     }
 
@@ -36,12 +36,12 @@ public class SingleColorMaterial extends Material {
 
         SingleColorMaterial that = (SingleColorMaterial) o;
 
-        return !(color != null ? !color.equals(that.color) : that.color != null);
+        return !(diffuse != null ? !diffuse.equals(that.diffuse) : that.diffuse != null);
 
     }
 
     @Override
     public int hashCode() {
-        return color != null ? color.hashCode() : 0;
+        return diffuse != null ? diffuse.hashCode() : 0;
     }
 }

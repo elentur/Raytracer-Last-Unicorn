@@ -11,7 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
+import material.LambertMaterial;
 import raytracer.ImageSaver;
+import utils.Color;
 
 import java.io.File;
 
@@ -44,7 +46,7 @@ public class NewOBJStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -62,7 +64,7 @@ public class NewOBJStage extends NewGeoStage {
         btnFile.setOnAction(a -> onLoad(btnOK));
         btnOK.setDisable(true);
 
-        if (ImageSaver.raytracer.getWorld() == null) {
+        if (ImageSaver.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
         }
@@ -92,10 +94,10 @@ public class NewOBJStage extends NewGeoStage {
     }
     public void setValues() {
         if (sff == null) {
-
+            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
         } else {
             btnOK.setDisable(false);
-            material = sff.material;
+            material.set(sff.material);
             file = sff.file;
             // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
         }
@@ -107,7 +109,7 @@ public class NewOBJStage extends NewGeoStage {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         file = dlg.showOpenDialog(this);
-        if (ImageSaver.raytracer.getWorld() != null && file != null) {
+        if (ImageSaver.getWorld() != null && file != null) {
             btnOK.setDisable(false);
         }
     }
@@ -119,10 +121,10 @@ public class NewOBJStage extends NewGeoStage {
     private void onOK() {
         try {
 
-            if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
-            ShapeFromFile p = new ShapeFromFile(file,material);
+            if (sff != null) ImageSaver.getWorld().geometries.remove(sff);
+            ShapeFromFile p = new ShapeFromFile(file,material.get());
 
-            ImageSaver.raytracer.getWorld().geometries.add(p);
+            ImageSaver.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

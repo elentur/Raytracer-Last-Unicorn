@@ -13,7 +13,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import matVect.Point3;
+import material.LambertMaterial;
 import raytracer.ImageSaver;
+import utils.Color;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
@@ -45,7 +47,7 @@ public class NewSphereStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new Button("new Material");
+        final Button btnMaterial = new MaterialButton(this);
         btnMaterial.setOnAction(a-> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
@@ -119,13 +121,14 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setText("0.0");
             txtInputs[2].setText("-3.0");
             txtInputs[3].setText("0.5");
+            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setText(s.c.x + "");
             txtInputs[1].setText(s.c.y + "");
             txtInputs[2].setText(s.c.z + "");
             txtInputs[3].setText(s.r + "");
-            material = s.material;
+            material.set(s.material);
            // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
 
@@ -144,7 +147,7 @@ public class NewSphereStage extends NewGeoStage {
                     Double.parseDouble(txtInputs[2].getText()));
             double r = Double.parseDouble(txtInputs[3].getText());
             if (r <= 0.0) r = 1.0;
-            Sphere p = new Sphere(center, r, material);
+            Sphere p = new Sphere(center, r, material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

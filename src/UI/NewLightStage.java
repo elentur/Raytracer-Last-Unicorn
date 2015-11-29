@@ -71,7 +71,11 @@ public class NewLightStage extends Stage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-
+        if (ImageSaver.getWorld() == null) {
+            lblInfo.setText("No Scene Created!");
+            lblInfo.setTextFill(javafx.scene.paint.Color.RED);
+            btnOK.setDisable(true);
+        }
         final Label lblPosition = new Label("Position");
         final Label lblDirection = new Label("Direction");
         final Label lblX = new Label("x");
@@ -138,13 +142,13 @@ public class NewLightStage extends Stage {
                 txtInputs[2].setText(l.position.z +"");
             }else if(light instanceof DirectionalLight){
                 DirectionalLight l = (DirectionalLight)light;
-                chbLight.getSelectionModel().select(1);
+                chbLight.getSelectionModel().select(0);
                 txtInputs[3].setText(l.direction.x +"");
                 txtInputs[4].setText(l.direction.y +"");
                 txtInputs[5].setText(l.direction.z +"");
             }else{
                 SpotLight l = (SpotLight)light;
-                chbLight.getSelectionModel().select(1);
+                chbLight.getSelectionModel().select(2);
                 txtInputs[0].setText(l.position.x +"");
                 txtInputs[1].setText(l.position.y +"");
                 txtInputs[2].setText(l.position.z +"");

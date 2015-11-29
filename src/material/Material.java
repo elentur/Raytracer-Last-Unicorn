@@ -12,7 +12,17 @@ import java.io.Serializable;
  * @author Marcus Bätz
  */
 public abstract class Material implements Serializable{
+
     private static final long serialVersionUID = 1L;
+
+    public final Color diffuse;
+
+    public Material(final Color diffuse) {
+        if (diffuse == null) {
+            throw new IllegalArgumentException("Diffuse cannot be null!");
+        }
+        this.diffuse = diffuse;
+    }
 
     /**
      * Returns the right illuminated color for the hit point
