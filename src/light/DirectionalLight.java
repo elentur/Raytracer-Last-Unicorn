@@ -16,28 +16,37 @@ public class DirectionalLight extends Light {
      */
     public final Vector3 direction;
 
-    public DirectionalLight(Color color, Vector3 direction) {
+    /**
+     *  Instantiates a new DirectionalLight Object.
+     *
+     * @param color of the Light. Can't be null.
+     * @param direction of the Light. Can't be null.
+     * @throws IllegalArgumentException if one of the given arguments are null.
+     */
+    public DirectionalLight(final Color color, final Vector3 direction) {
         super(color);
+        if (color == null) {
+            throw new IllegalArgumentException("The color cannot be null!");
+        }
+        if (direction == null) {
+            throw new IllegalArgumentException("The direction cannot be null!");
+        }
+
         this.direction = direction.normalized();
     }
 
     @Override
-    public boolean illuminates(Point3 point) {
-
-        if (point == null) {
-            throw new IllegalArgumentException("The point must not be null.");
-
-        }
+    public boolean illuminates(final Point3 point) {
         return true;
     }
 
     @Override
-    public Vector3 directionFrom(Point3 point) {
+    public Vector3 directionFrom(final Point3 point) {
         if (point == null) {
             throw new IllegalArgumentException("The point must not be null.");
 
         }
-        return direction.mul(-1).normalized();
+        return direction.mul(-1);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SingleColorMaterial extends Material {
      *
      * @param color of the Material. Can't be null.
      */
-    public SingleColorMaterial(Color color) {
+    public SingleColorMaterial(final Color color) {
         super(color);
     }
 
