@@ -27,8 +27,8 @@ public class AxisAlignedBox extends Geometry {
      * Instantiates a new Axis Aligned Box Object.
      *
      * @param material of the Axis Aligned Box. Can't be null.
-     * @param lbf   of the Axis Aligned Box. Can't be null.
-     * @param run   of the Axis Aligned Box. Can't be null.
+     * @param lbf      of the Axis Aligned Box. Can't be null.
+     * @param run      of the Axis Aligned Box. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public AxisAlignedBox(final Point3 run, final Point3 lbf, final Material material) {
@@ -94,7 +94,7 @@ public class AxisAlignedBox extends Geometry {
                 // calculates the ray that intersects the selected layers
                 final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
                 if (max == null || t > max.t) {
-                    max = new Hit(t,plane.n, r, this);
+                    max = new Hit(t, plane.n, r, this);
                 }
             }
         }
@@ -140,7 +140,7 @@ public class AxisAlignedBox extends Geometry {
         AxisAlignedBox that = (AxisAlignedBox) o;
 
         if (lbf != null ? !lbf.equals(that.lbf) : that.lbf != null) return false;
-        if (run != null ? !run.equals(that.run) : that.run != null)return false;
+        if (run != null ? !run.equals(that.run) : that.run != null) return false;
         return material.equals(that.material) && name.equals(that.name);
 
     }

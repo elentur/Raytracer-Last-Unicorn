@@ -26,18 +26,18 @@ import java.util.List;
  * @author Marcus Baetz
  */
 public class ShapeFromFile extends Geometry {
-    public final  File file;
+    public final File file;
     public final List<Geometry> triangles;
     private final List<Point3> v;
     private final List<Normal3> vn;
     private final List<Normal3> vt;
     private final List<String> f;
     private final Octree octree;
-    private int rekDeep=10;
+    private int rekDeep = 10;
 
     public ShapeFromFile(final File path, final Material material) {
         super(material);
-        this.file =  path;
+        this.file = path;
         name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
         v = new ArrayList<>();
@@ -65,23 +65,22 @@ public class ShapeFromFile extends Geometry {
                             String[] ft = fs[i].split("/");
                             try {
                                 p[i] = Integer.parseInt(ft[0]) - 1;
-                                t[i] = !ft[1].equals("")?Integer.parseInt(ft[1]) - 1:-1;
-                                n[i] = ft.length==3?Integer.parseInt(ft[2]) - 1:-1;
-                            }catch(NumberFormatException e){
+                                t[i] = !ft[1].equals("") ? Integer.parseInt(ft[1]) - 1 : -1;
+                                n[i] = ft.length == 3 ? Integer.parseInt(ft[2]) - 1 : -1;
+                            } catch (NumberFormatException e) {
                                 System.out.println("Fehler");
                             }
                         }
-                        if(n[0]!=-1){
-                            Triangle  tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
+                        if (n[0] != -1) {
+                            Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
                                     material);
                             triangles.add(tri);
-                        }else{
-                            Triangle  tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
+                        } else {
+                            Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     material);
                             triangles.add(tri);
                         }
-
 
 
                     }
@@ -97,7 +96,7 @@ public class ShapeFromFile extends Geometry {
 
         }
         octree = new Octree(triangles);
-       // System.out.println(ImageSaver.fTriangle.size());
+        // System.out.println(ImageSaver.fTriangle.size());
 
     }
 
@@ -114,25 +113,27 @@ public class ShapeFromFile extends Geometry {
         return h;*/
         return octree.hit(r);
     }
+
     private String nameTest(String n) {
         int index = 1;
         boolean run = false;
+        for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+            if (g.name.equals(n)) run = true;
+        }
+        while (run) {
+            int i = index;
             for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
-                if (g.name.equals(n)) run = true;
+                if (g.name == n + index) index++;
             }
-            while (run) {
-                int i = index;
-                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
-                    if (g.name == n + index) index++;
-                }
-                if (i == index) {
-                    run = false;
-                    return n + index;
-                }
+            if (i == index) {
+                run = false;
+                return n + index;
             }
+        }
 
         return n;
     }
+
     /**
      * Reads an Wavefront obj File and converts it into a group of triangles.
      *

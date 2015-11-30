@@ -36,23 +36,23 @@ public class ImageSaver extends Application {
     public final static Raytracer raytracer = new Raytracer(true);
 
 
-    private void testScene(){
-        raytracer.setWorld( new World(new Color(0,0,0),new Color(0.0,0.0,0.0)));
+    private void testScene() {
+        raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
         // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
-        Light light = new PointLight(new Color(1,1,1),new Point3(4,4,4));
+        Light light = new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4));
         light.name = "Pointlight1";
         //camera = new PerspectiveCamera(new Point3(0,5,100),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        raytracer.setCamera(new PerspectiveCamera(new Point3(4,4,4),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4));
+        raytracer.setCamera(new PerspectiveCamera(new Point3(4, 4, 4), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4));
         //camera = new PerspectiveCamera(new Point3(3,3,3),new Vector3(-3,-3,-3), new Vector3(0,1,0), Math.PI/4);
-       // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
+        // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
         //Geometry obj = new AxisAlignedBox(new Point3(0.5,1,0.5),new Point3(-0.5,0,-0.5), new LambertMaterial(new Color(0,0,1)));
         //Geometry obj = new Plane(new Point3(0,-1,0), new Normal3(0,1,0), new LambertMaterial(new Color(0,1,0)));
         //Geometry obj = new Triangle(new Point3(-0.5,0.5,-3),new Point3(0.5,0.5,-3),new Point3(0.5,-0.5,-3), new LambertMaterial(new Color(1,0,1)));
         //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\IdeaProjects\\CG1\\src\\obj\\cube.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
         //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\karren.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
         raytracer.getWorld().lights.add(light);
-       // world.geometries.add(obj);
-        raytracer.getWorld().geometries.add(new geometries.Sphere( new Point3(1,1,1), 0.5, new LambertMaterial(new Color(0,1,0))));
+        // world.geometries.add(obj);
+        raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
     }
 
     /**
@@ -65,14 +65,13 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) {
 
 
-     //   testScene();
+        //   testScene();
 
         primaryStage.setScene(setScene(primaryStage));
 
-        primaryStage.setOnCloseRequest(a-> raytracer.stopRender() );
+        primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
         primaryStage.show();
     }
-
 
 
     /**
@@ -91,7 +90,7 @@ public class ImageSaver extends Application {
         final Menu btnEdit = new Menu("Edit");
         final MenuItem btnObjects = new MenuItem("Objects");
         final Menu btnCreate = new Menu("Create");
-        final MenuItem btnNewScene = new MenuItem("New Scene");
+        //final MenuItem btnNewScene = new MenuItem("New Scene");
         final MenuItem btnNewCamera = new MenuItem("New Camera");
         final MenuItem btnNewLight = new MenuItem("New Light");
         final MenuItem btnNewPlane = new MenuItem("Add new Plane");
@@ -121,7 +120,7 @@ public class ImageSaver extends Application {
 
         btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
         btnEdit.getItems().addAll(btnObjects);
-        btnCreate.getItems().addAll(btnNewScene, btnNewCamera,btnNewLight,
+        btnCreate.getItems().addAll( btnNewCamera, btnNewLight,
                 btnNewPlane, btnNewSphere, btnNewCube,
                 btnNewTriangle, btnNewOBJ);
         btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
@@ -133,7 +132,7 @@ public class ImageSaver extends Application {
         btnSaveScene.setOnAction(a -> IO.saveScene(stage, raytracer.getWorld(), raytracer.getCamera()));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
         btnObjects.setOnAction(a -> new EditObjects());
-        btnNewScene.setOnAction(a -> new NewWorldStage());
+      //  btnNewScene.setOnAction(a -> new NewWorldStage());
         btnNewCamera.setOnAction(a -> new NewCameraStage(null));
         btnNewLight.setOnAction(a -> new NewLightStage(null));
         btnNewPlane.setOnAction(a -> new NewPlaneStage(null));

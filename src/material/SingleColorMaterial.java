@@ -5,20 +5,27 @@ import utils.Hit;
 import utils.World;
 
 /**
- * Created by Marcus Baetz on 17.11.2015.
+ * Generates a material with no attributes representing only a color
+ * Created by Andreas Kiauka on 21.11.2015.
  *
- * @author Marcus Bätz
+ * @author Andreas Kiauka
  */
 public class SingleColorMaterial extends Material {
 
 
-
-    public SingleColorMaterial(Color color) {
+    /**
+     * Generates a SinglColor Object with the given Color
+     *
+     * @param color
+     */
+    public SingleColorMaterial(final Color color) {
         super(color);
     }
 
     @Override
-    public Color colorFor(Hit hit, World world) {
+    public Color colorFor(final Hit hit, final World world) {
+        if (hit == null) throw new IllegalArgumentException("hit must not be null ");
+        if (world == null) throw new IllegalArgumentException("world must not be null ");
         return diffuse;
     }
 

@@ -48,7 +48,7 @@ public class NewSphereStage extends NewGeoStage {
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -100,7 +100,7 @@ public class NewSphereStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600,  borderPane.getHeight());
+        Scene scene = new Scene(borderPane, 600, borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Sphere?");
         this.setScene(scene);
@@ -121,7 +121,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setText("0.0");
             txtInputs[2].setText("-3.0");
             txtInputs[3].setText("0.5");
-            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
+            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setText(s.c.x + "");
@@ -129,7 +129,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[2].setText(s.c.z + "");
             txtInputs[3].setText(s.r + "");
             material.set(s.material);
-           // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
+            // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
 
     }

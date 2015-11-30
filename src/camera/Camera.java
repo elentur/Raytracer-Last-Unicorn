@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Camera  extends Element implements Serializable {
+public abstract class Camera extends Element implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
      * the eye position

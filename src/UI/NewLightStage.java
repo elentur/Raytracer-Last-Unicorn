@@ -30,9 +30,10 @@ public class NewLightStage extends Stage {
     private final TextField txtName;
     private final ChoiceBox<String> chbLight;
     private final Slider sldAngle;
+
     public NewLightStage(Light l) {
         super();
-        this.light=l;
+        this.light = l;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -58,8 +59,7 @@ public class NewLightStage extends Stage {
         sldAngle.disableProperty().bind(chbLight.getSelectionModel().selectedIndexProperty().isEqualTo(2).not());
 
         final Label lblExp = new Label();
-        lblExp.textProperty().bind(Bindings.concat("Angle: ").concat(Bindings.format("%.0f",sldAngle.valueProperty()).concat("°")));
-
+        lblExp.textProperty().bind(Bindings.concat("Angle: ").concat(Bindings.format("%.0f", sldAngle.valueProperty()).concat("°")));
 
 
         final Button btnOK = new Button("OK");
@@ -67,7 +67,7 @@ public class NewLightStage extends Stage {
         btnOK.setOnAction(a -> onOK(
                 cpColorPicker.getValue(),
                 chbLight.getSelectionModel().getSelectedIndex(),
-                (int)sldAngle.getValue()));
+                (int) sldAngle.getValue()));
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
@@ -86,7 +86,6 @@ public class NewLightStage extends Stage {
             txtInputs[i] = new NumberTextField("0.0");
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 3);
         }
-
 
 
         top.getChildren().addAll(lblInfo);
@@ -134,40 +133,42 @@ public class NewLightStage extends Stage {
             txtInputs[4].setText("-5.0");
             txtInputs[4].setText("-10.0");
         } else {
-            if(light instanceof PointLight){
-                PointLight l = (PointLight)light;
+            if (light instanceof PointLight) {
+                PointLight l = (PointLight) light;
                 chbLight.getSelectionModel().select(1);
-                txtInputs[0].setText(l.position.x +"");
-                txtInputs[1].setText(l.position.y +"");
-                txtInputs[2].setText(l.position.z +"");
-            }else if(light instanceof DirectionalLight){
-                DirectionalLight l = (DirectionalLight)light;
+                txtInputs[0].setText(l.position.x + "");
+                txtInputs[1].setText(l.position.y + "");
+                txtInputs[2].setText(l.position.z + "");
+            } else if (light instanceof DirectionalLight) {
+                DirectionalLight l = (DirectionalLight) light;
                 chbLight.getSelectionModel().select(0);
-                txtInputs[3].setText(l.direction.x +"");
-                txtInputs[4].setText(l.direction.y +"");
-                txtInputs[5].setText(l.direction.z +"");
-            }else{
-                SpotLight l = (SpotLight)light;
+                txtInputs[3].setText(l.direction.x + "");
+                txtInputs[4].setText(l.direction.y + "");
+                txtInputs[5].setText(l.direction.z + "");
+            } else {
+                SpotLight l = (SpotLight) light;
                 chbLight.getSelectionModel().select(2);
-                txtInputs[0].setText(l.position.x +"");
-                txtInputs[1].setText(l.position.y +"");
-                txtInputs[2].setText(l.position.z +"");
-                txtInputs[3].setText(l.direction.x +"");
-                txtInputs[4].setText(l.direction.y +"");
-                txtInputs[5].setText(l.direction.z +"");
-                sldAngle.setValue( (int)(l.halfAngle * (180 / Math.PI)));
+                txtInputs[0].setText(l.position.x + "");
+                txtInputs[1].setText(l.position.y + "");
+                txtInputs[2].setText(l.position.z + "");
+                txtInputs[3].setText(l.direction.x + "");
+                txtInputs[4].setText(l.direction.y + "");
+                txtInputs[5].setText(l.direction.z + "");
+                sldAngle.setValue((int) (l.halfAngle * (180 / Math.PI)));
 
             }
-            Color c = new Color(light.color.r,light.color.g,light.color.b,1);
+            Color c = new Color(light.color.r, light.color.g, light.color.b, 1);
             cpColorPicker.setValue(c);
             txtName.setText(light.name);
         }
 
     }
+
     private void onCancel() {
         this.close();
     }
-    private void onOK( Color c, int typ, int angle ) {
+
+    private void onOK(Color c, int typ, int angle) {
         try {
             if (light != null) ImageSaver.raytracer.getWorld().lights.remove(light);
             Point3 pos = new Point3(
@@ -178,14 +179,14 @@ public class NewLightStage extends Stage {
                     Double.parseDouble(txtInputs[3].getText()),
                     Double.parseDouble(txtInputs[4].getText()),
                     Double.parseDouble(txtInputs[5].getText()));
-            Light l=null;
-            if(typ==0){
-                l= new DirectionalLight(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),dir);
-            }else if(typ==2){
-                double a = sldAngle.getValue()/(180 / Math.PI);
-                l= new SpotLight(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),pos,dir,a);
-            }else{
-                l= new PointLight(new utils.Color(c.getRed(),c.getGreen(),c.getBlue()),pos);
+            Light l = null;
+            if (typ == 0) {
+                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir);
+            } else if (typ == 2) {
+                double a = sldAngle.getValue() / (180 / Math.PI);
+                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a);
+            } else {
+                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos);
             }
             l.name = txtName.getText();
             int index = 1;

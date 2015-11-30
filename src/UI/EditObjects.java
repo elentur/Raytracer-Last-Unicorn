@@ -102,23 +102,23 @@ public class EditObjects extends Stage {
                     t = (Triangle) nameTest(t);
                     ImageSaver.raytracer.getWorld().geometries.add(t);
                     // l.getItems().add(t);
-                }else if (e instanceof PointLight) {
+                } else if (e instanceof PointLight) {
                     PointLight pl = (PointLight) e;
                     PointLight p = new PointLight(pl.color, pl.position);
                     p.name = pl.name;
                     p = (PointLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
-                }else if (e instanceof DirectionalLight) {
+                } else if (e instanceof DirectionalLight) {
                     DirectionalLight pl = (DirectionalLight) e;
                     DirectionalLight p = new DirectionalLight(pl.color, pl.direction);
                     p.name = pl.name;
                     p = (DirectionalLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
-                }else if (e instanceof SpotLight) {
+                } else if (e instanceof SpotLight) {
                     SpotLight pl = (SpotLight) e;
-                    SpotLight p = new SpotLight(pl.color, pl.position,pl.direction,pl.halfAngle);
+                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle);
                     p.name = pl.name;
                     p = (SpotLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
@@ -148,7 +148,7 @@ public class EditObjects extends Stage {
     private Element nameTest(Element p) {
         int index = 1;
         boolean run = false;
-        if(p instanceof Geometry) {
+        if (p instanceof Geometry) {
             Geometry g1 = (Geometry) p;
             for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
@@ -164,7 +164,7 @@ public class EditObjects extends Stage {
                 }
             }
             return g1;
-        }else{
+        } else {
             Light l1 = (Light) p;
             for (Light l : ImageSaver.raytracer.getWorld().lights) {
                 if (l.name.equals(p.name)) run = true;
@@ -199,7 +199,7 @@ public class EditObjects extends Stage {
 
                         if (this.getItem() != null) {
                             String name = "";
-                           name = this.getItem().name;
+                            name = this.getItem().name;
                             if (selected) {
                                 text = (name + "\n\t" + this.getItem().toString());
                             } else {
@@ -216,7 +216,7 @@ public class EditObjects extends Stage {
                         if (item != null) {
                             if (text == "") {
                                 String name = "";
-                                 name =  this.getItem().name;
+                                name = this.getItem().name;
                                 text = name;
                             }
                             setText(text);

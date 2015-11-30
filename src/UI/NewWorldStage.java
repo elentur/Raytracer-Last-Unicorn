@@ -45,8 +45,8 @@ public class NewWorldStage extends Stage {
 
         cpColorPicker = new ColorPicker(javafx.scene.paint.Color.BLACK);
         final Label lblColorPicker = new Label("Background-Color:");
-        final Label lblAmbient = new Label ("Ambientlight-Color");
-        cpAmbientColor = new ColorPicker(new javafx.scene.paint.Color(0.15,0.15,0.15,1));
+        final Label lblAmbient = new Label("Ambientlight-Color");
+        cpAmbientColor = new ColorPicker(new javafx.scene.paint.Color(0.15, 0.15, 0.15, 1));
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
         center.add(lblColorPicker, 0, 0);
@@ -74,7 +74,7 @@ public class NewWorldStage extends Stage {
     private void onOK() {
         final javafx.scene.paint.Color c = cpColorPicker.getValue();
         final javafx.scene.paint.Color a = cpAmbientColor.getValue();
-        final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()),new Color(a.getRed(), a.getGreen(), a.getBlue()));
+        final World world = new World(new Color(c.getRed(), c.getGreen(), c.getBlue()), new Color(a.getRed(), a.getGreen(), a.getBlue()));
         ImageSaver.raytracer.setWorld(world);
         this.close();
     }

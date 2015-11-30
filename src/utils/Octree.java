@@ -7,7 +7,9 @@ import matVect.Point3;
 import material.SingleColorMaterial;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Marcus Baetz on 17.11.2015.
@@ -85,7 +87,7 @@ public class Octree implements Serializable {
     private void generateOctrees() {
         box = new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new Color(0, 0, 0)));
 
-         final double e = 0.0000001;
+        final double e = 0.0000001;
         if (g.size() > 500) {
             subtrees = new Octree[8];
             octreeList = new ArrayList[8];
@@ -115,14 +117,14 @@ public class Octree implements Serializable {
                     newRunZ = runZ;
                     newLbfZ = lbfZ + ((runZ - lbfZ) / 2.0);
                 }
-                for (Iterator<Geometry> geo = g.iterator(); geo.hasNext();){
+                for (Iterator<Geometry> geo = g.iterator(); geo.hasNext(); ) {
                     Triangle t = (Triangle) geo.next();
                     if ((newLbfX <= t.a.x && t.a.x <= newRunX + e) &&
                             (newLbfY <= t.a.y + e && t.a.y <= newRunY + e) &&
-                            (newLbfZ <= t.a.z + e && t.a.z <= newRunZ + e)&&
+                            (newLbfZ <= t.a.z + e && t.a.z <= newRunZ + e) &&
                             (newLbfX <= t.b.x + e && t.b.x <= newRunX + e) &&
                             (newLbfY <= t.b.y + e && t.b.y <= newRunY + e) &&
-                            (newLbfZ <= t.b.z + e && t.b.z <= newRunZ + e)&&
+                            (newLbfZ <= t.b.z + e && t.b.z <= newRunZ + e) &&
                             (newLbfX <= t.c.x + e && t.c.x <= newRunX + e) &&
                             (newLbfY <= t.c.y + e && t.c.y <= newRunY + e) &&
                             (newLbfZ <= t.c.z + e && t.c.z <= newRunZ + e)) {
@@ -131,7 +133,7 @@ public class Octree implements Serializable {
                     }
 
                 }
-                    subtrees[i] = new Octree(octreeList[i], newRunX, newRunY, newRunZ, newLbfX, newLbfY, newLbfZ);
+                subtrees[i] = new Octree(octreeList[i], newRunX, newRunY, newRunZ, newLbfX, newLbfY, newLbfZ);
 
 
             }

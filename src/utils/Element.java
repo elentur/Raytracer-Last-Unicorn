@@ -7,7 +7,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Element implements  Serializable{
+public abstract class Element implements Serializable {
     private static final long serialVersionUID = 1L;
     public String name;
 }

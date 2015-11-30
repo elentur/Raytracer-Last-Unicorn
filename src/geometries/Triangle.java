@@ -35,15 +35,15 @@ public class Triangle extends Geometry {
     /**
      * Instantiates a new Triangle Object.
      *
-     * @param a     corner point of the Sphere. Can't be null.
-     * @param b     corner point of the Sphere. Can't be null.
-     * @param c     corner point of the Sphere. Can't be null.
+     * @param a        corner point of the Sphere. Can't be null.
+     * @param b        corner point of the Sphere. Can't be null.
+     * @param c        corner point of the Sphere. Can't be null.
      * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Triangle(final Point3 a, final Point3 b, final Point3 c,
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
-             final Material material) {
+                    final Material material) {
         super(material);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -62,12 +62,12 @@ public class Triangle extends Geometry {
         /*
         Spezifiziere Normale an den Eckpunkten
          */
-        this.nb =nb;
+        this.nb = nb;
         this.nc = nc;
     }
 
     public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material) {
-        this(a,b,c,
+        this(a, b, c,
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
@@ -100,12 +100,12 @@ public class Triangle extends Geometry {
             final double detA2 = m.col2(v).determinant;
             final double gamma = detA2 / detA;
 
-            if ( gamma > 0 && beta + gamma <= 1) {
+            if (gamma > 0 && beta + gamma <= 1) {
                 final double detA3 = m.col3(v).determinant;
                 final double t = detA3 / detA;
-                if (t > 0){
-                    Normal3 n = na.mul(1- beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
-                    return new Hit(t,n, r, this);
+                if (t > 0) {
+                    Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
+                    return new Hit(t, n, r, this);
                 }
             }
 

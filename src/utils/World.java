@@ -48,7 +48,7 @@ public class World implements Serializable {
         this.backgroundColor = backgroundColor;
         this.geometries = new ArrayList<>();
         this.lights = new ArrayList<>();
-        this.ambientLight=ambientLight;
+        this.ambientLight = ambientLight;
     }
 
 
@@ -59,7 +59,7 @@ public class World implements Serializable {
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background material.
      */
-    public Color hit(final Ray r, int x , int y) {
+    public Color hit(final Ray r, int x, int y) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
 
@@ -68,13 +68,13 @@ public class World implements Serializable {
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
         Color back;
-        if(backImg!= null){
-           javafx.scene.paint.Color c =  backImg.getPixelReader().getColor(x,y);
-             back = new Color(c.getRed(),c.getGreen(),c.getBlue());
-        }else {
+        if (backImg != null) {
+            javafx.scene.paint.Color c = backImg.getPixelReader().getColor(x, y);
+            back = new Color(c.getRed(), c.getGreen(), c.getBlue());
+        } else {
             back = backgroundColor;
         }
-        return hit != null ? hit.geo.material.colorFor(hit,this) : back;
+        return hit != null ? hit.geo.material.colorFor(hit, this) : back;
     }
 
     @Override

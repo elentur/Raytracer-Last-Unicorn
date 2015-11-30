@@ -10,10 +10,10 @@ import utils.World;
 /**
  * This class represents a OrenNayarMaterial.
  * The lighting model of Oren-Nayar is suitable to describe rough or coarse materials, like fabric, sand or stone.
- *
+ * <p>
  * Created by Robert Dziuba on 24.11.15.
  */
-public class OrenNayarMaterial extends Material{
+public class OrenNayarMaterial extends Material {
 
     /**
      * The roughness of the material
@@ -23,7 +23,7 @@ public class OrenNayarMaterial extends Material{
     /**
      * Instantiates a new SpotLight Object.
      *
-     * @param color of the Material. Can't be null.
+     * @param color     of the Material. Can't be null.
      * @param roughness of the Material. Can't be under 0.0 and over 1.0.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
@@ -34,7 +34,7 @@ public class OrenNayarMaterial extends Material{
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }
 
-        this.rough_sq = roughness*roughness;
+        this.rough_sq = roughness * roughness;
     }
 
     /*
@@ -62,10 +62,10 @@ public class OrenNayarMaterial extends Material{
         //x = v - n * dot( v, n )
         final Vector3 x = v.sub(hit.n).mul(hit.n.dot(v));
 
-        final double c1 = 1.0 - 0.5 * ( rough_sq / ( rough_sq + 0.33 ) );
+        final double c1 = 1.0 - 0.5 * (rough_sq / (rough_sq + 0.33));
 
-        double c2 = 0.45f * ( rough_sq / ( rough_sq + 0.09 ) );
-        double c3  = (1.0 / 8.0) * ( rough_sq / ( rough_sq + 0.09 ) );
+        double c2 = 0.45f * (rough_sq / (rough_sq + 0.09));
+        double c3 = (1.0 / 8.0) * (rough_sq / (rough_sq + 0.09));
 
         //Simple Variant
         /*
@@ -77,28 +77,27 @@ public class OrenNayarMaterial extends Material{
             if (light.illuminates(h)) {
 
                 final Vector3 l = light.directionFrom(h).normalized();
-                final double alpha    = Math.max( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
-                final double beta     = Math.min( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
+                final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
+                final double beta = Math.min(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
 
                 //y = l - n * dot( l, n )
                 final Vector3 y = l.sub(hit.n).mul(l.dot(hit.n));
                 final double gamma = x.dot(y);
 
-                if( gamma >= 0 ) {
-                    c2 *= Math.sin( alpha );
-                }
-                else {
-                    c2 *= ( Math.sin( alpha ) - Math.pow( (2 * beta) / Math.PI, 3 ) );
+                if (gamma >= 0) {
+                    c2 *= Math.sin(alpha);
+                } else {
+                    c2 *= (Math.sin(alpha) - Math.pow((2 * beta) / Math.PI, 3));
                 }
 
-                c3 *= Math.pow( ( 4.0 * alpha * beta ) / (Math.PI * Math.PI), 2 );
+                c3 *= Math.pow((4.0 * alpha * beta) / (Math.PI * Math.PI), 2);
 
-                final double a = gamma * c2 * Math.tan( beta );
-                final double b= (1 - Math.abs( gamma )) * c3 * Math.tan( (alpha + beta) / 2.0 );
+                final double a = gamma * c2 * Math.tan(beta);
+                final double b = (1 - Math.abs(gamma)) * c3 * Math.tan((alpha + beta) / 2.0);
 
 
                 basicColor = basicColor.add(
-                        diffuse.mul(Math.max( 0.0, hit.n.dot(l) ) * ( c1 + a + b ))
+                        diffuse.mul(Math.max(0.0, hit.n.dot(l)) * (c1 + a + b))
                 );
                 //simple variant
                 /*

@@ -26,8 +26,8 @@ public class Sphere extends Geometry {
      * Instantiates a new Sphere Object.
      *
      * @param material of the Sphere. Can't be null.
-     * @param c     of the Sphere. Can't be null.
-     * @param r     of the Sphere. Greater 0.
+     * @param c        of the Sphere. Can't be null.
+     * @param r        of the Sphere. Greater 0.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Sphere(final Point3 c, double r, final Material material) {
@@ -63,20 +63,20 @@ public class Sphere extends Geometry {
             if (t1 >= 0 && t2 >= 0) {
                 //TODO statt c - r.at(t)*-1 -> r.at(t)-c
                 Normal3 n = this.c.sub(r.at(Math.min(t1, t2))).mul(-1).normalized().asNormal();
-                return new Hit(Math.min(t1, t2),n, r, this);
+                return new Hit(Math.min(t1, t2), n, r, this);
             } else if (t1 >= 0) {
                 Normal3 n = this.c.sub(r.at(t1)).mul(-1).normalized().asNormal();
-                return new Hit(t1,n, r, this);
+                return new Hit(t1, n, r, this);
             } else if (t2 >= 0) {
                 Normal3 n = this.c.sub(r.at(t2)).mul(-1).normalized().asNormal();
-                return new Hit(t2,n, r, this);
+                return new Hit(t2, n, r, this);
             }
         } else if (d == 0) {
             final double t = -b / (2 * a);
             Normal3 n = this.c.sub(r.at(t)).mul(-1).normalized().asNormal();
             if (t >= 0) {
 
-                return new Hit(t,n, r, this);
+                return new Hit(t, n, r, this);
             }
         }
 
@@ -88,7 +88,7 @@ public class Sphere extends Geometry {
         return "Sphere{" +
                 "c=" + c +
                 ", r=" + r +
-                '}'+"material=" + material +
+                '}' + "material=" + material +
                 '}';
     }
 
@@ -100,7 +100,7 @@ public class Sphere extends Geometry {
         Sphere sphere = (Sphere) o;
 
         if (Double.compare(sphere.r, r) != 0) return false;
-         if(!c.equals(sphere.c)) return false;
+        if (!c.equals(sphere.c)) return false;
         return material.equals(sphere.material) && name.equals(sphere.name);
 
     }
