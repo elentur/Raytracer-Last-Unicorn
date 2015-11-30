@@ -9,10 +9,8 @@ public class HDRFilter {
     private final int[] colorBuffer;
     private double  maxHDR=0;
     private final int width;
-    private final int height;
     public HDRFilter(int width, int height){
         this.width=width;
-        this.height=height;
        colorBuffer = new int[width*height*3];
     }
     public void filter(Color c,int x, int y) {
@@ -26,8 +24,10 @@ public class HDRFilter {
 
     public void getImage(byte[] imageData){
         double hdr = 1.0/maxHDR;
-        for (int i = 0; i < colorBuffer.length; i++) {
-                imageData[i] = (byte)(colorBuffer[i]*hdr);
+        if(hdr<1) {
+            for (int i = 0; i < colorBuffer.length; i++) {
+                imageData[i] = (byte) (colorBuffer[i] * hdr);
+            }
         }
     }
 
