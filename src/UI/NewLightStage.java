@@ -113,7 +113,9 @@ public class NewLightStage extends Stage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 700, 400);
+        Scene scene = new Scene(borderPane);
+        this.minWidthProperty().bind(borderPane.widthProperty());
+        this.minHeightProperty().bind(borderPane.heightProperty());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Material");
         this.setScene(scene);

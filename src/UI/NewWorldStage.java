@@ -59,7 +59,9 @@ public class NewWorldStage extends Stage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 400, 200);
+        Scene scene = new Scene(borderPane);
+        this.minWidthProperty().bind(borderPane.widthProperty());
+        this.minHeightProperty().bind(borderPane.heightProperty());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Scene?");
         this.setScene(scene);

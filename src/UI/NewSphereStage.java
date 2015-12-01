@@ -100,7 +100,9 @@ public class NewSphereStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, borderPane.getHeight());
+        Scene scene = new Scene(borderPane);
+        this.minWidthProperty().bind(borderPane.widthProperty());
+        this.minHeightProperty().bind(borderPane.heightProperty());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Sphere?");
         this.setScene(scene);
