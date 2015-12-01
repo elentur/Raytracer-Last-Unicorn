@@ -39,8 +39,8 @@ public class SpotLight extends Light {
      * @param halfAngle of the Light. Can't be under 0 and over 90 degrees.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public SpotLight(final Color color, final Point3 position, final Vector3 direction, final double halfAngle) {
-        super(color);
+    public SpotLight(final Color color, final Point3 position, final Vector3 direction, final double halfAngle, final boolean castShadow) {
+        super(color,castShadow);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }

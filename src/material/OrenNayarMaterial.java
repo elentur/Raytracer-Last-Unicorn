@@ -5,6 +5,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
 import utils.Hit;
+import utils.Tracer;
 import utils.World;
 
 /**
@@ -46,7 +47,7 @@ public class OrenNayarMaterial extends Material {
      */
 
     @Override
-    public Color colorFor(final Hit hit, final World world) {
+    public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
         if (hit == null) {
             throw new IllegalArgumentException("The hit cannot be null!");
         }

@@ -20,9 +20,12 @@ public abstract class Light extends Element implements Serializable {
      * Represents the Color of the Light
      */
     public final Color color;
+    public final boolean castsShadow;
 
-    public Light(Color color) {
+    public Light(final Color color, final boolean castShadow) {
+        if(color == null) throw new IllegalArgumentException("color must not be null");
         this.color = color;
+        this.castsShadow =castShadow;
     }
 
     /**

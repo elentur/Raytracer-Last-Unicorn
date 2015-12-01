@@ -26,8 +26,8 @@ public class DirectionalLight extends Light {
      * @param color     The Color of the Light
      * @param direction The direction of the light
      */
-    public DirectionalLight(final Color color, final Vector3 direction) {
-        super(color);
+    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow) {
+        super(color,castShadow);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
         this.direction = direction.normalized();
     }

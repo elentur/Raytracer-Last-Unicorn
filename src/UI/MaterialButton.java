@@ -37,7 +37,7 @@ public class MaterialButton extends Button {
     private void setUpTracer(NewGeoStage st) {
        // matTracer.setWorld(new World(new utils.Color(0, 0, 0), new utils.Color(0, 0, 0)));
         matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4));
-        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0)));
+        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false));
         matTracer.getWorld().backImg = new Image("img/matBack.png", 80, 80, false, false, false);
         matTracer.getWorld().geometries.add(new Sphere(new Point3(0, 0, -1.5), 0.5, st.material.get()));
         st.material.addListener(a -> {

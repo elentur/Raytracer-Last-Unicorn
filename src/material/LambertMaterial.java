@@ -4,6 +4,7 @@ import light.Light;
 import matVect.Point3;
 import utils.Color;
 import utils.Hit;
+import utils.Tracer;
 import utils.World;
 
 /**
@@ -25,7 +26,7 @@ public class LambertMaterial extends Material {
     }
 
     @Override
-    public Color colorFor(final Hit hit, final World world) {
+    public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
         if (hit == null) throw new IllegalArgumentException("hit must not be null ");
         if (world == null) throw new IllegalArgumentException("world must not be null ");
         Color c = new Color(0, 0, 0);
