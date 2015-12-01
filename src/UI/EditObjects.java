@@ -104,21 +104,21 @@ public class EditObjects extends Stage {
                     // l.getItems().add(t);
                 } else if (e instanceof PointLight) {
                     PointLight pl = (PointLight) e;
-                    PointLight p = new PointLight(pl.color, pl.position);
+                    PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow);
                     p.name = pl.name;
                     p = (PointLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof DirectionalLight) {
                     DirectionalLight pl = (DirectionalLight) e;
-                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction);
+                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow);
                     p.name = pl.name;
                     p = (DirectionalLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof SpotLight) {
                     SpotLight pl = (SpotLight) e;
-                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle);
+                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow);
                     p.name = pl.name;
                     p = (SpotLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);

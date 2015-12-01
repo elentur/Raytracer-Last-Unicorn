@@ -74,7 +74,8 @@ public class World implements Serializable {
         } else {
             back = backgroundColor;
         }
-        return hit != null ? hit.geo.material.colorFor(hit, this) : back;
+
+        return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer()) : back;
     }
 
     @Override

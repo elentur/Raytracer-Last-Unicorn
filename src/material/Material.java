@@ -2,6 +2,7 @@ package material;
 
 import utils.Color;
 import utils.Hit;
+import utils.Tracer;
 import utils.World;
 
 import java.io.Serializable;
@@ -29,7 +30,9 @@ public abstract class Material implements Serializable {
      *
      * @param hit   The Hit-Object for the hit Point
      * @param world The WorldObject for this scene
+     * @param tracer calculates the color
      * @return the Color-Object for the hit point
      */
-    public abstract Color colorFor(Hit hit, World world);
+    public abstract Color colorFor(final Hit hit, final World world, final Tracer tracer);
+
 }

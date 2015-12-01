@@ -30,6 +30,7 @@ public class NewLightStage extends Stage {
     private final TextField txtName;
     private final ChoiceBox<String> chbLight;
     private final Slider sldAngle;
+    private final CheckBox chkShadows;
 
     public NewLightStage(Light l) {
         super();
@@ -55,6 +56,7 @@ public class NewLightStage extends Stage {
         sldAngle.setMin(1);
         sldAngle.setMax(90);
         sldAngle.setValue(45);
+        chkShadows = new CheckBox("Cast Shadows");
 
         sldAngle.disableProperty().bind(chbLight.getSelectionModel().selectedIndexProperty().isEqualTo(2).not());
 
@@ -103,6 +105,7 @@ public class NewLightStage extends Stage {
         center.add(lblDirection, 0, 4);
         center.add(lblExp, 0, 5);
         center.add(sldAngle, 1, 5);
+        center.add(chkShadows,0,6);
 
         setValues();
         BorderPane borderPane = new BorderPane();
@@ -139,12 +142,14 @@ public class NewLightStage extends Stage {
                 txtInputs[0].setText(l.position.x + "");
                 txtInputs[1].setText(l.position.y + "");
                 txtInputs[2].setText(l.position.z + "");
+                chkShadows.setSelected(l.castsShadow);
             } else if (light instanceof DirectionalLight) {
                 DirectionalLight l = (DirectionalLight) light;
                 chbLight.getSelectionModel().select(0);
                 txtInputs[3].setText(l.direction.x + "");
                 txtInputs[4].setText(l.direction.y + "");
                 txtInputs[5].setText(l.direction.z + "");
+                chkShadows.setSelected(l.castsShadow);
             } else {
                 SpotLight l = (SpotLight) light;
                 chbLight.getSelectionModel().select(2);
@@ -154,6 +159,7 @@ public class NewLightStage extends Stage {
                 txtInputs[3].setText(l.direction.x + "");
                 txtInputs[4].setText(l.direction.y + "");
                 txtInputs[5].setText(l.direction.z + "");
+                chkShadows.setSelected(l.castsShadow);
                 sldAngle.setValue((int) (l.halfAngle * (180 / Math.PI)));
 
             }
@@ -181,12 +187,12 @@ public class NewLightStage extends Stage {
                     Double.parseDouble(txtInputs[5].getText()));
             Light l = null;
             if (typ == 0) {
-                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir);
+                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected());
             } else if (typ == 2) {
                 double a = sldAngle.getValue() / (180 / Math.PI);
-                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a);
+                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a,chkShadows.isSelected());
             } else {
-                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos);
+                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos,chkShadows.isSelected());
             }
             l.name = txtName.getText();
             int index = 1;

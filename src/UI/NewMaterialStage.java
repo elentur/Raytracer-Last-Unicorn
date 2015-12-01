@@ -29,6 +29,7 @@ public class NewMaterialStage extends Stage {
 
     private final ColorPicker cpColorPicker;
     private final ColorPicker cpSpec;
+    private final ColorPicker cpRef;
     private final ChoiceBox<String> chbMaterial;
     private final Slider sldExp;
     private final ImageView img;
@@ -48,12 +49,14 @@ public class NewMaterialStage extends Stage {
         final Label lblColorPicker = new Label("Difuse:");
         cpSpec = new ColorPicker(javafx.scene.paint.Color.WHITE);
         final Label lblSpec = new Label("Specular:");
+        final Label lblRef = new Label("Reflection-color:");
+        cpRef = new ColorPicker(javafx.scene.paint.Color.BLACK);
         img = new ImageView();
         setUpTracer(st);
 
         chbMaterial = new ChoiceBox<>();
         final Label lblMaterial = new Label("Choose Material:");
-        chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material", "Oren-Nayar", "Phong-Material");
+        chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material", "Oren-Nayar", "Phong-Material", "Reflective-Material");
         chbMaterial.getSelectionModel().select(1);
         sldExp = new Slider();
         sldExp.setMin(1);
@@ -64,7 +67,8 @@ public class NewMaterialStage extends Stage {
         sldExp.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).or(
                 chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(2)
         ).not());
-        cpSpec.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).not());
+        cpSpec.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).not().and(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not()));
+        cpRef.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not());
         final Label lblExp = new Label();
         lblExp.textProperty().bind(Bindings.concat("Exponent: ").concat(Bindings.format("%.0f", sldExp.valueProperty())));
 
@@ -105,6 +109,8 @@ public class NewMaterialStage extends Stage {
         center.add(cpSpec, 1, 2);
         center.add(lblExp, 0, 3);
         center.add(sldExp, 1, 3);
+        center.add(lblRef, 0, 4);
+        center.add(cpRef, 1, 4);
 
         setValues(st);
         BorderPane borderPane = new BorderPane();
@@ -123,7 +129,7 @@ public class NewMaterialStage extends Stage {
     private void setUpTracer(NewGeoStage st) {
        // matTracer.setWorld(new World(new utils.Color(0, 0, 0), new utils.Color(0, 0, 0)));
         matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4));
-        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0)));
+        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false));
         matTracer.getWorld().backImg = new Image("img/matBack.png", 80, 80, false, false, false);
         matTracer.getWorld().geometries.add(new Sphere(new Point3(0, 0, -1.5), 0.5, st.material.get()));
         st.material.addListener(a -> {
@@ -164,6 +170,14 @@ public class NewMaterialStage extends Stage {
                 cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
                 sldExp.setValue(m.exponent);
             }
+            if (st.material.get() instanceof ReflectiveMaterial) {
+                ReflectiveMaterial m = (ReflectiveMaterial) st.material.get();
+                chbMaterial.getSelectionModel().select(4);
+                cpColorPicker.setValue(new Color(m.diffuse.r, m.diffuse.g, m.diffuse.b, 1));
+                cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
+                cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
+                sldExp.setValue(m.exponent);
+            }
         }
 
     }
@@ -182,6 +196,7 @@ public class NewMaterialStage extends Stage {
         int typ = chbMaterial.getSelectionModel().getSelectedIndex();
         Color c = cpColorPicker.getValue();
         Color s = cpSpec.getValue();
+        Color r = cpRef.getValue();
         double exp = sldExp.getValue();
         Material material = null;
         if (typ == 0) {
@@ -192,6 +207,8 @@ public class NewMaterialStage extends Stage {
             material = new OrenNayarMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), exp);
         } else if (typ == 3) {
             material = new PhongMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()), (int) exp);
+        }else if (typ == 4) {
+            material = new ReflectiveMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp);
         }
         if (material != null) stage.material.set(material);
     }

@@ -1,7 +1,6 @@
 package raytracer;
 
 import UI.*;
-import camera.PerspectiveCamera;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,13 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.Light;
-import light.PointLight;
-import matVect.Point3;
-import matVect.Vector3;
-import material.LambertMaterial;
-import utils.Color;
-import utils.World;
 
 
 /**
@@ -37,7 +29,7 @@ public class ImageSaver extends Application {
 
 
     private void testScene() {
-        raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
+      /*  raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
         // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
         Light light = new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4));
         light.name = "Pointlight1";
@@ -53,6 +45,7 @@ public class ImageSaver extends Application {
         raytracer.getWorld().lights.add(light);
         // world.geometries.add(obj);
         raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
+    */
     }
 
     /**
