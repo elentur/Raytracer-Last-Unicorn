@@ -57,20 +57,29 @@ public class Sphere extends Geometry {
         final double d = (b * b) - (4 * a * cn);
 
         double t = -1;
+        // change the normal if we are inside the sphere.
+        int nDir = -1;
 
         if (d > 0) {
 
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
 
-            t = Math.min(t1, t2);
-
+            if(t1 >= 0 && t2 >=0) {
+                t = Math.min(t1, t2);
+            }else if(t1 >= 0){
+                t = t1;
+                nDir = 1;
+            }else if(t2 >= 0){
+                t = t2;
+                nDir = 1;
+            }
         } else if (d == 0) {
             t = -b / (2 * a);
         }
 
         if(t >= 0){
-            Normal3 n = this.c.sub(r.at(t)).mul(-1).normalized().asNormal();
+            Normal3 n = this.c.sub(r.at(t)).mul(nDir).normalized().asNormal();
             return new Hit(t, n, r, this);
         }
 

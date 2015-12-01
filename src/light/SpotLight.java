@@ -67,22 +67,23 @@ public class SpotLight extends Light {
         }
 
         if(Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
+            if(castsShadow) {
 
-            final Ray r = new Ray(point, directionFrom(point));
+                final Ray r = new Ray(point, directionFrom(point));
 
-            final double tl = r.tOf(position);
+                final double tl = r.tOf(position);
 
-            for (final Geometry g : world.geometries) {
+                for (final Geometry g : world.geometries) {
 
-                final Hit h = g.hit(r);
-                if ((h != null && h.t > 0 && h.t < tl)) {
-                    return false;
+                    final Hit h = g.hit(r);
+                    if ((h != null && h.t >= 0.0001 && h.t < tl)) {
+                        return false;
+                    }
                 }
             }
 
             return true;
         }
-
 
         return false;
     }

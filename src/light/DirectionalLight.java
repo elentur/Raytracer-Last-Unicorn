@@ -41,16 +41,17 @@ public class DirectionalLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        final Ray r = new Ray(point, directionFrom(point));
+        if(castsShadow) {
+            final Ray r = new Ray(point, directionFrom(point));
 
-        for (final Geometry g : world.geometries) {
+            for (final Geometry g : world.geometries) {
 
-            final Hit h = g.hit(r);
-            if ((h != null && h.t > 0)) {
-                return false;
+                final Hit h = g.hit(r);
+                if ((h != null && h.t >= 0.0001)) {
+                    return false;
+                }
             }
         }
-
         return true;
     }
 
