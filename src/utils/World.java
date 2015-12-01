@@ -3,6 +3,7 @@ package utils;
 import geometries.Geometry;
 import javafx.scene.image.Image;
 import light.Light;
+import raytracer.ImageSaver;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class World implements Serializable {
             back = backgroundColor;
         }
 
-        return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer()) : back;
+        return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer(ImageSaver.raytracer.recursionDepth)) : back;
     }
 
     @Override

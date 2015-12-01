@@ -88,6 +88,12 @@ public class Raytracer {
      * represents the render progress in a range between 0.0 and 1.0.
      */
     public final DoubleProperty progress = new SimpleDoubleProperty(0);
+
+    /**
+     * represent the recursion depth of the reflection.
+     */
+    public int recursionDepth = 0;
+
     /**
      * represents the start time of the render process.
      */
@@ -143,6 +149,7 @@ public class Raytracer {
                 pattern = Integer.parseInt(input.get("pattern"));
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
                 imgHeight.set((int) (Double.parseDouble(input.get("height"))));
+                recursionDepth = (int) (Double.parseDouble(input.get("recursion")));
                 Color back = new Color(Double.parseDouble(input.get("backgroundColorRed")),
                         Double.parseDouble(input.get("backgroundColorGreen")),
                         Double.parseDouble(input.get("backgroundColorBlue")));

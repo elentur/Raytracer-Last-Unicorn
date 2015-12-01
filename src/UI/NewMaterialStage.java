@@ -66,6 +66,8 @@ public class NewMaterialStage extends Stage {
 
         sldExp.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).or(
                 chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(2)
+        ).or(
+                chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4)
         ).not());
         cpSpec.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).not().and(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not()));
         cpRef.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not());

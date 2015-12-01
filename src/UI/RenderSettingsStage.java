@@ -34,6 +34,7 @@ public class RenderSettingsStage extends Stage {
     private double aspectration = 0;
     private final ColorPicker cpColorPicker;
     private final ColorPicker cpAmbientColor;
+    private final NumberTextField txtRecursion;
 
     public RenderSettingsStage() {
         super();
@@ -77,6 +78,8 @@ public class RenderSettingsStage extends Stage {
         txtHeight = new NumberTextField("0.0");
         final Label lblWidth = new Label("width");
         final Label lblHeight = new Label("height");
+        final Label lblRecursion = new Label("Recursion Depth");
+        txtRecursion = new NumberTextField("0.0");
 
         final Label lblRenderPattern = new Label("Render-Pattern");
 
@@ -104,6 +107,8 @@ public class RenderSettingsStage extends Stage {
         center.add(txtWidth, 1, 7);
         center.add(txtHeight, 1, 8);
         center.add(chkKeepRatio, 2, 7, 2, 1);
+        center.add(lblRecursion, 2, 1, 1, 1);
+        center.add(txtRecursion, 2, 2, 1, 1);
 
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
@@ -172,6 +177,7 @@ public class RenderSettingsStage extends Stage {
                 chbPattern.getSelectionModel().select(Integer.parseInt(input.get("pattern")));
                 txtWidth.setText(input.get("width"));
                 txtHeight.setText(input.get("height"));
+                txtRecursion.setText(input.get("recursion"));
             } catch (Exception e) {
                 System.out.println("ladefehler");
             }
@@ -193,6 +199,7 @@ public class RenderSettingsStage extends Stage {
         output.put("ambientColorBlue", cpAmbientColor.getValue().getBlue()+"");
         output.put("width", txtWidth.getText());
         output.put("height", txtHeight.getText());
+        output.put("recursion", txtRecursion.getText());
         IO.writeFile("settings.cfg", output);
     }
 
@@ -215,7 +222,7 @@ public class RenderSettingsStage extends Stage {
         }
         ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
         ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
-
+        ImageSaver.raytracer.recursionDepth = (int) Double.parseDouble(txtRecursion.getText());
         utils.Color back = new utils.Color(
                 cpColorPicker.getValue().getRed(),
                 cpColorPicker.getValue().getGreen(),
