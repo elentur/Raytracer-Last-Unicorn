@@ -11,6 +11,7 @@ import java.io.Serializable;
 /**
  * The Abstract Class of Lights
  * Created by Marcus Baetz on 17.11.2015.
+ *
  * @author Marcus Bätz
  */
 public abstract class Light extends Element implements Serializable {
@@ -26,6 +27,7 @@ public abstract class Light extends Element implements Serializable {
 
     /**
      * Returns if whether or not a given point is illuminated.
+     *
      * @param point The point for which we have to check if it is illuminated
      * @param world The world object for the shadow calculation
      * @return Returns if a point is illuminated
@@ -34,6 +36,7 @@ public abstract class Light extends Element implements Serializable {
 
     /**
      * Returns a Vector that shows from the illuminated point to the Lightsourc
+     *
      * @param point the illuminated point
      * @return a normalized Vector3
      */

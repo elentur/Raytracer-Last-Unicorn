@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Material implements Serializable{
+public abstract class Material implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,8 @@ public abstract class Material implements Serializable{
 
     /**
      * Returns the right illuminated color for the hit point
-     * @param hit The Hit-Object for the hit Point
+     *
+     * @param hit   The Hit-Object for the hit Point
      * @param world The WorldObject for this scene
      * @return the Color-Object for the hit point
      */

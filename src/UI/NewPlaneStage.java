@@ -48,7 +48,7 @@ public class NewPlaneStage extends NewGeoStage {
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -63,7 +63,7 @@ public class NewPlaneStage extends NewGeoStage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -99,7 +99,7 @@ public class NewPlaneStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, 300);
+        Scene scene = new Scene(borderPane, 600, borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Plane?");
         this.setScene(scene);
@@ -111,14 +111,14 @@ public class NewPlaneStage extends NewGeoStage {
     public void setValues() {
         if (p == null) {
             int index = 1;
-            if (ImageSaver.getWorld() != null) {
-                for (Geometry g : ImageSaver.getWorld().geometries)
+            if (ImageSaver.raytracer.getWorld() != null) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries)
                     if (g instanceof Plane) index++;
             }
             txtName.setText("Plane" + index);
             txtInputs[1].setText("-1.0");
             txtInputs[4].setText("1.0");
-            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
+            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
         } else {
             txtName.setText(p.name);
             txtInputs[0].setText(p.a.x + "");
@@ -128,7 +128,7 @@ public class NewPlaneStage extends NewGeoStage {
             txtInputs[4].setText(p.n.y + "");
             txtInputs[5].setText(p.n.z + "");
             material.set(p.material);
-          // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
+            // cpColorPicker.setValue(new javafx.scene.paint.Color(p.material.r, p.material.g, p.material.b, 1));
         }
 
     }
@@ -139,7 +139,7 @@ public class NewPlaneStage extends NewGeoStage {
 
     private void onOK() {
         try {
-            if (p != null) ImageSaver.getWorld().geometries.remove(p);
+            if (p != null) ImageSaver.raytracer.getWorld().geometries.remove(p);
 
             Point3 a = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
@@ -156,12 +156,12 @@ public class NewPlaneStage extends NewGeoStage {
 
             int index = 1;
             boolean run = false;
-            for (Geometry g : ImageSaver.getWorld().geometries) {
+            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.getWorld().geometries) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -169,7 +169,7 @@ public class NewPlaneStage extends NewGeoStage {
                     p.name = p.name + index;
                 }
             }
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

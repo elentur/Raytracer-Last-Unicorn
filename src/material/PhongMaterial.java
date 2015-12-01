@@ -15,7 +15,6 @@ import utils.World;
 public class PhongMaterial extends Material {
 
 
-
     /**
      * The color of our reflection.
      */
@@ -30,7 +29,7 @@ public class PhongMaterial extends Material {
     /**
      * Instantiates a new PhongMaterial Object.
      *
-     * @param diffuse of the Material. Can't be null.
+     * @param diffuse  of the Material. Can't be null.
      * @param specular of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
@@ -73,7 +72,7 @@ public class PhongMaterial extends Material {
                         specular
                                 .mul(light.color)
                                 .mul(Math.pow(
-                                        Math.max(0,rl.dot(e)),exponent)
+                                        Math.max(0, rl.dot(e)), exponent)
                                 )
                 );
             }

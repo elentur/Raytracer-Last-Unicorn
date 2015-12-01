@@ -48,7 +48,7 @@ public class NewSphereStage extends NewGeoStage {
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -64,7 +64,7 @@ public class NewSphereStage extends NewGeoStage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -100,7 +100,7 @@ public class NewSphereStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, 300);
+        Scene scene = new Scene(borderPane, 600, borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Create new Sphere?");
         this.setScene(scene);
@@ -111,8 +111,8 @@ public class NewSphereStage extends NewGeoStage {
     private void setValues() {
         if (s == null) {
             int index = 1;
-            if (ImageSaver.getWorld() != null) {
-                for (Geometry g : ImageSaver.getWorld().geometries)
+            if (ImageSaver.raytracer.getWorld() != null) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries)
                     if (g instanceof Sphere) index++;
             }
             txtName.setText("Sphere" + index);
@@ -121,7 +121,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setText("0.0");
             txtInputs[2].setText("-3.0");
             txtInputs[3].setText("0.5");
-            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
+            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setText(s.c.x + "");
@@ -129,7 +129,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[2].setText(s.c.z + "");
             txtInputs[3].setText(s.r + "");
             material.set(s.material);
-           // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
+            // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
 
     }
@@ -140,7 +140,7 @@ public class NewSphereStage extends NewGeoStage {
 
     private void onOK() {
         try {
-            if (s != null) ImageSaver.getWorld().geometries.remove(s);
+            if (s != null) ImageSaver.raytracer.getWorld().geometries.remove(s);
             Point3 center = new Point3(
                     Double.parseDouble(txtInputs[0].getText()),
                     Double.parseDouble(txtInputs[1].getText()),
@@ -151,12 +151,12 @@ public class NewSphereStage extends NewGeoStage {
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;
-            for (Geometry g : ImageSaver.getWorld().geometries) {
+            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.getWorld().geometries) {
+                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -164,7 +164,7 @@ public class NewSphereStage extends NewGeoStage {
                     p.name = p.name + index;
                 }
             }
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

@@ -33,8 +33,8 @@ public class SpotLight extends Light {
     /**
      * Instantiates a new SpotLight Object.
      *
-     * @param color of the Light. Can't be null.
-     * @param position of the Light. Can't be null.
+     * @param color     of the Light. Can't be null.
+     * @param position  of the Light. Can't be null.
      * @param direction of the Light. Can't be null.
      * @param halfAngle of the Light. Can't be under 0 and over 90 degrees.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.

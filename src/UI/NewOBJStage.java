@@ -27,9 +27,10 @@ public class NewOBJStage extends NewGeoStage {
     private final Button btnOK;
     private File file;
     private final ShapeFromFile sff;
+
     public NewOBJStage(ShapeFromFile sff) {
         super();
-        this.sff =sff;
+        this.sff = sff;
         final HBox bottom = new HBox(20);
         final HBox top = new HBox(20);
         final GridPane center = new GridPane();
@@ -47,7 +48,7 @@ public class NewOBJStage extends NewGeoStage {
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a-> new NewMaterialStage(this));
+        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         final Label lblInfo = new Label("Do you wish to load and add a .Obj file?");
@@ -64,7 +65,7 @@ public class NewOBJStage extends NewGeoStage {
         btnFile.setOnAction(a -> onLoad(btnOK));
         btnOK.setDisable(true);
 
-        if (ImageSaver.getWorld() == null) {
+        if (ImageSaver.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
         }
@@ -85,16 +86,17 @@ public class NewOBJStage extends NewGeoStage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 600, 300);
+        Scene scene = new Scene(borderPane, 600, borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         this.setTitle("Import new .obj?");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
     }
+
     public void setValues() {
         if (sff == null) {
-            material.set(new LambertMaterial(new Color(0.5,0.5,0.5)));
+            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
         } else {
             btnOK.setDisable(false);
             material.set(sff.material);
@@ -103,13 +105,14 @@ public class NewOBJStage extends NewGeoStage {
         }
 
     }
+
     private void onLoad(Button btnOK) {
 
         if (btnOK == null) throw new IllegalArgumentException("btnOk must be not null.");
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         file = dlg.showOpenDialog(this);
-        if (ImageSaver.getWorld() != null && file != null) {
+        if (ImageSaver.raytracer.getWorld() != null && file != null) {
             btnOK.setDisable(false);
         }
     }
@@ -121,10 +124,10 @@ public class NewOBJStage extends NewGeoStage {
     private void onOK() {
         try {
 
-            if (sff != null) ImageSaver.getWorld().geometries.remove(sff);
-            ShapeFromFile p = new ShapeFromFile(file,material.get());
+            if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
+            ShapeFromFile p = new ShapeFromFile(file, material.get());
 
-            ImageSaver.getWorld().geometries.add(p);
+            ImageSaver.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

@@ -9,16 +9,26 @@ import utils.Ray;
 import utils.World;
 
 /**
- * Created by Marcus Baetz on 17.11.2015.
+ * Generates a LightSource equal to a PointLight with a nearly infinite distance
+ * Created by Andreas Kiauka on 21.11.2015.
  *
- * @author Marcus Bätz
+ * @author Andreas Kiauka
  */
 public class DirectionalLight extends Light {
-
+    /**
+     * Represents the direction of the light
+     */
     public final Vector3 direction;
 
-    public DirectionalLight(Color color, Vector3 direction) {
+    /**
+     * Generates a Directional Light with given LightColor and direction
+     *
+     * @param color     The Color of the Light
+     * @param direction The direction of the light
+     */
+    public DirectionalLight(final Color color, final Vector3 direction) {
         super(color);
+        if (direction == null) throw new IllegalArgumentException("direction must not be null ");
         this.direction = direction.normalized();
     }
 
@@ -45,7 +55,8 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public Vector3 directionFrom(Point3 point) {
+    public Vector3 directionFrom(final Point3 point) {
+        if (point == null) throw new IllegalArgumentException("point must not be null ");
         return direction.mul(-1);
     }
 

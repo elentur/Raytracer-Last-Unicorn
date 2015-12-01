@@ -43,7 +43,7 @@ public class Hit implements Serializable {
         if (geo == null) throw new IllegalArgumentException("geo must not be null!");
         if (n == null) throw new IllegalArgumentException("n must not be null!");
         this.t = t;
-        this.n =n;
+        this.n = n;
         this.ray = ray;
         this.geo = geo;
     }

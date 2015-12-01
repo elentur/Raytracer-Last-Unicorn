@@ -109,8 +109,8 @@ public class IO {
             }
 
             if (scene != null) {
-                ImageSaver.setWorld(scene.getWorld());
-                ImageSaver.setCamera(scene.getCamera());
+                ImageSaver.raytracer.setWorld(scene.getWorld());
+                ImageSaver.raytracer.setCamera(scene.getCamera());
             }
 
 

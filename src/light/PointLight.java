@@ -23,12 +23,13 @@ public class PointLight extends Light {
 
     /**
      * Generates a new
-     * @param color Represents the color of the light
+     *
+     * @param color    Represents the color of the light
      * @param position Represents the position of the light
      */
     public PointLight(final Color color, final Point3 position) {
         super(color);
-        if(position==null) throw new IllegalArgumentException("position must not be null ");
+        if (position == null) throw new IllegalArgumentException("position must not be null ");
         this.position = position;
     }
 
@@ -59,6 +60,7 @@ public class PointLight extends Light {
 
     @Override
     public Vector3 directionFrom(Point3 point) {
+        if (point == null) throw new IllegalArgumentException("point must not be null ");
         return position.sub(point).normalized();
     }
 

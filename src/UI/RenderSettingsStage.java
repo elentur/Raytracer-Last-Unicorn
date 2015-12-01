@@ -7,9 +7,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import raytracer.ImageSaver;
+import utils.World;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,16 +23,17 @@ import java.util.Map;
  */
 public class RenderSettingsStage extends Stage {
 
-    final CheckBox chkMultithreading;
-    final CheckBox chkHDRRendering;
-    final CheckBox chkKeepRatio;
-    final ChoiceBox<String> chbCores;
-    final ChoiceBox<String> chbPattern;
-    final ChoiceBox<String> chbResolution;
-    final NumberTextField txtWidth;
-    final NumberTextField txtHeight;
-    double aspectration = 0;
-
+    private final CheckBox chkMultithreading;
+    private final CheckBox chkHDRRendering;
+    private final CheckBox chkKeepRatio;
+    private final ChoiceBox<String> chbCores;
+    private final ChoiceBox<String> chbPattern;
+    private final ChoiceBox<String> chbResolution;
+    private final NumberTextField txtWidth;
+    private final NumberTextField txtHeight;
+    private double aspectration = 0;
+    private final ColorPicker cpColorPicker;
+    private final ColorPicker cpAmbientColor;
 
     public RenderSettingsStage() {
         super();
@@ -52,6 +55,10 @@ public class RenderSettingsStage extends Stage {
 
         final Label lblInfo = new Label("Render-Settings");
 
+        cpColorPicker = new ColorPicker(javafx.scene.paint.Color.BLACK);
+        final Label lblColorPicker = new Label("Background-Color:");
+        final Label lblAmbient = new Label("Ambientlight-Color");
+        cpAmbientColor = new ColorPicker(new javafx.scene.paint.Color(0.15, 0.15, 0.15, 1));
 
         final Button btnOK = new Button("OK");
         btnOK.setPrefWidth(100);
@@ -87,12 +94,16 @@ public class RenderSettingsStage extends Stage {
         center.add(chbCores, 0, 1, 2, 1);
         center.add(lblRenderPattern, 0, 2, 2, 1);
         center.add(chbPattern, 0, 3, 2, 1);
-        center.add(chbResolution, 0, 4, 2, 1);
-        center.add(lblWidth, 0, 5, 1, 1);
-        center.add(lblHeight, 0, 6, 1, 1);
-        center.add(txtWidth, 1, 5);
-        center.add(txtHeight, 1, 6);
-        center.add(chkKeepRatio, 2, 5, 2, 1);
+        center.add(lblColorPicker, 0, 4,2,1);
+        center.add(cpColorPicker, 2, 4,2,1);
+        center.add(lblAmbient, 0, 5,2,1);
+        center.add(cpAmbientColor, 2, 5,2,1);
+        center.add(chbResolution, 0, 6, 2, 1);
+        center.add(lblWidth, 0, 7, 1, 1);
+        center.add(lblHeight, 0, 8, 1, 1);
+        center.add(txtWidth, 1, 7);
+        center.add(txtHeight, 1, 8);
+        center.add(chkKeepRatio, 2, 7, 2, 1);
 
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
@@ -105,7 +116,7 @@ public class RenderSettingsStage extends Stage {
         borderPane.setBottom(bottom);
         borderPane.setCenter(center);
         borderPane.setPadding(new Insets(20));
-        Scene scene = new Scene(borderPane, 300, 400);
+        Scene scene = new Scene(borderPane, 300, borderPane.getHeight());
         scene.getStylesheets().add("css/rootStyle.css");
         loadConfig();
         this.setTitle("Render-Settings");
@@ -134,9 +145,28 @@ public class RenderSettingsStage extends Stage {
         Map<String, String> input = IO.readFile("settings.cfg");
         if (input.size() > 0) {
             try {
+                if (ImageSaver.raytracer.getWorld() == null) {
+                    cpColorPicker.setValue(new Color(Double.parseDouble(input.get("backgroundColorRed")),
+                            Double.parseDouble(input.get("backgroundColorGreen")),
+                            Double.parseDouble(input.get("backgroundColorBlue")),
+                            1));
+                    cpAmbientColor.setValue(new Color(Double.parseDouble(input.get("ambientColorRed")),
+                            Double.parseDouble(input.get("ambientColorGreen")),
+                            Double.parseDouble(input.get("ambientColorBlue")),
+                            1));
+                }else{
+                    cpColorPicker.setValue(new Color(ImageSaver.raytracer.getWorld().backgroundColor.r,
+                            ImageSaver.raytracer.getWorld().backgroundColor.g,
+                            ImageSaver.raytracer.getWorld().backgroundColor.b,
+                            1));
+                    cpAmbientColor.setValue(new Color(ImageSaver.raytracer.getWorld().ambientLight.r,
+                            ImageSaver.raytracer.getWorld().ambientLight.g,
+                            ImageSaver.raytracer.getWorld().ambientLight.b,
+                            1));
+                }
                 chkMultithreading.setSelected(input.get("multithreading").equals("true"));
                 chkHDRRendering.setSelected(input.get("hdr").equals("true"));
-                chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores")));
+                chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores")) - 1);
                 chbPattern.getSelectionModel().select(Integer.parseInt(input.get("pattern")));
                 txtWidth.setText(input.get("width"));
                 txtHeight.setText(input.get("height"));
@@ -151,8 +181,14 @@ public class RenderSettingsStage extends Stage {
         Map<String, String> output = new HashMap<>();
         output.put("multithreading", chkMultithreading.isSelected() + "");
         output.put("hdr", chkHDRRendering.isSelected() + "");
-        output.put("cores", chbCores.getSelectionModel().getSelectedIndex() + "");
+        output.put("cores", (chbCores.getSelectionModel().getSelectedIndex() + 1) + "");
         output.put("pattern", chbPattern.getSelectionModel().getSelectedIndex() + "");
+        output.put("backgroundColorRed", cpColorPicker.getValue().getRed()+"");
+        output.put("backgroundColorGreen", cpColorPicker.getValue().getGreen()+"");
+        output.put("backgroundColorBlue", cpColorPicker.getValue().getBlue()+"");
+        output.put("ambientColorRed", cpAmbientColor.getValue().getRed()+"");
+        output.put("ambientColorGreen", cpAmbientColor.getValue().getGreen()+"");
+        output.put("ambientColorBlue", cpAmbientColor.getValue().getBlue()+"");
         output.put("width", txtWidth.getText());
         output.put("height", txtHeight.getText());
         IO.writeFile("settings.cfg", output);
@@ -168,15 +204,28 @@ public class RenderSettingsStage extends Stage {
         int height = (int) Double.parseDouble(txtHeight.getText());
         if (width < 0) width = 0;
         if (height < 0) height = 0;
-        ImageSaver.imgWidth.set(width);
-        ImageSaver.imgHeight.set(height);
+        ImageSaver.raytracer.imgWidth.set(width);
+        ImageSaver.raytracer.imgHeight.set(height);
         if (chkMultithreading.isSelected()) {
-            ImageSaver.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
+            ImageSaver.raytracer.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
         } else {
-            ImageSaver.cores = 1;
+            ImageSaver.raytracer.cores = 1;
         }
-        ImageSaver.hdr = chkHDRRendering.isSelected();
-        ImageSaver.pattern = chbPattern.getSelectionModel().getSelectedIndex();
+        ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
+        ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
+
+        utils.Color back = new utils.Color(
+                cpColorPicker.getValue().getRed(),
+                cpColorPicker.getValue().getGreen(),
+                cpColorPicker.getValue().getBlue());
+        utils.Color ambient = new utils.Color(
+                cpAmbientColor.getValue().getRed(),
+                cpAmbientColor.getValue().getGreen(),
+                cpAmbientColor.getValue().getBlue());
+        World w = ImageSaver.raytracer.getWorld();
+        ImageSaver.raytracer.setWorld(new World(back, ambient));
+        ImageSaver.raytracer.getWorld().lights.addAll(w.lights);
+        ImageSaver.raytracer.getWorld().geometries.addAll(w.geometries);
         this.close();
     }
 }

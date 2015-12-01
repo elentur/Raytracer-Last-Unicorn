@@ -20,8 +20,6 @@ public abstract class Geometry extends Element implements Serializable {
     public final Material material;
 
 
-
-
     /**
      * Instantiates a new Geometry.
      *
