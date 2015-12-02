@@ -67,13 +67,13 @@ public class Sphere extends Geometry {
 
             if(t1 >= 0 && t2 >=0) {
                 t = Math.min(t1, t2);
-            }else if(t1 >= 0){
+            }/*else if(t1 >= 0){
                 t = t1;
-                nDir = 1;
+                nDir = -1;
             }else if(t2 >= 0){
                 t = t2;
-                nDir = 1;
-            }
+                nDir = -1;
+            }*/
         } else if (d == 0) {
             t = -b / (2 * a);
         }

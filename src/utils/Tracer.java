@@ -1,9 +1,6 @@
 package utils;
 
 import geometries.Geometry;
-import matVect.Point3;
-import matVect.Vector3;
-import raytracer.ImageSaver;
 
 /**
  * Created by Marcus Baetz on 01.12.2015.

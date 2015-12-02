@@ -52,8 +52,9 @@ public class ReflectiveMaterial extends Material {
                                 .mul(Math.pow(
                                         Math.max(0, rl.dot(e)), exponent)
                                 )
-                ).add(reflection.mul(tracer.reflection(refRay,world)));
+                );
             }
+            basicColor = basicColor.add(reflection.mul(tracer.reflection(refRay,world)));
         }
 
         return diffuse.mul(world.ambientLight).add(basicColor);

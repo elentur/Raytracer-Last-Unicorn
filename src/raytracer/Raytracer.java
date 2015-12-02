@@ -93,6 +93,10 @@ public class Raytracer {
      * represent the recursion depth of the reflection.
      */
     public int recursionDepth = 0;
+    /**
+     * represents the index of Refraction of the empty room of the scene
+     */
+    public double iOR=1.0003;
 
     /**
      * represents the start time of the render process.
@@ -150,6 +154,7 @@ public class Raytracer {
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
                 imgHeight.set((int) (Double.parseDouble(input.get("height"))));
                 recursionDepth = (int) (Double.parseDouble(input.get("recursion")));
+                iOR=(Double.parseDouble(input.get("ior")));
                 Color back = new Color(Double.parseDouble(input.get("backgroundColorRed")),
                         Double.parseDouble(input.get("backgroundColorGreen")),
                         Double.parseDouble(input.get("backgroundColorBlue")));

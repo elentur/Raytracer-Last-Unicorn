@@ -35,6 +35,7 @@ public class RenderSettingsStage extends Stage {
     private final ColorPicker cpColorPicker;
     private final ColorPicker cpAmbientColor;
     private final NumberTextField txtRecursion;
+    private final NumberTextField txtIOR;
 
     public RenderSettingsStage() {
         super();
@@ -76,6 +77,8 @@ public class RenderSettingsStage extends Stage {
         chbResolution = new ChoiceBox<>();
         txtWidth = new NumberTextField("0.0");
         txtHeight = new NumberTextField("0.0");
+        txtIOR = new NumberTextField("1.0003");
+        Label lblIOR = new Label("Global IOR");
         final Label lblWidth = new Label("width");
         final Label lblHeight = new Label("height");
         final Label lblRecursion = new Label("Recursion Depth");
@@ -93,22 +96,24 @@ public class RenderSettingsStage extends Stage {
 
         chkKeepRatio.setOnAction(a -> aspectration = Double.parseDouble(txtWidth.getText()) / Double.parseDouble(txtHeight.getText()));
         center.add(chkMultithreading, 0, 0, 2, 1);
-        center.add(chkHDRRendering, 2, 0, 2, 1);
+        center.add(chkHDRRendering, 1, 0, 2, 1);
         center.add(chbCores, 0, 1, 2, 1);
         center.add(lblRenderPattern, 0, 2, 2, 1);
         center.add(chbPattern, 0, 3, 2, 1);
-        center.add(lblColorPicker, 0, 4,2,1);
-        center.add(cpColorPicker, 2, 4,2,1);
-        center.add(lblAmbient, 0, 5,2,1);
-        center.add(cpAmbientColor, 2, 5,2,1);
+        center.add(lblColorPicker, 0, 4,1,1);
+        center.add(cpColorPicker, 1, 4,2,1);
+        center.add(lblAmbient, 0, 5,1,1);
+        center.add(cpAmbientColor, 1, 5,2,1);
         center.add(chbResolution, 0, 6, 2, 1);
-        center.add(lblWidth, 0, 7, 1, 1);
-        center.add(lblHeight, 0, 8, 1, 1);
+        center.add(lblWidth, 0, 7);
+        center.add(lblHeight, 0, 8);
         center.add(txtWidth, 1, 7);
         center.add(txtHeight, 1, 8);
         center.add(chkKeepRatio, 2, 7, 2, 1);
-        center.add(lblRecursion, 2, 1, 1, 1);
-        center.add(txtRecursion, 2, 2, 1, 1);
+        center.add(lblRecursion, 1, 1, 1, 1);
+        center.add(txtRecursion, 1, 2, 1, 1);
+        center.add(lblIOR, 2, 1, 1, 1);
+        center.add(txtIOR, 2, 2, 1, 1);
 
         top.getChildren().addAll(lblInfo);
         bottom.getChildren().addAll(btnOK, btnCancel);
@@ -178,6 +183,7 @@ public class RenderSettingsStage extends Stage {
                 txtWidth.setText(input.get("width"));
                 txtHeight.setText(input.get("height"));
                 txtRecursion.setText(input.get("recursion"));
+                txtIOR.setText(input.get("ior"));
             } catch (Exception e) {
                 System.out.println("ladefehler");
             }
@@ -200,6 +206,7 @@ public class RenderSettingsStage extends Stage {
         output.put("width", txtWidth.getText());
         output.put("height", txtHeight.getText());
         output.put("recursion", txtRecursion.getText());
+        output.put("ior", txtIOR.getText());
         IO.writeFile("settings.cfg", output);
     }
 
@@ -223,6 +230,7 @@ public class RenderSettingsStage extends Stage {
         ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
         ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
         ImageSaver.raytracer.recursionDepth = (int) Double.parseDouble(txtRecursion.getText());
+        ImageSaver.raytracer.iOR = Double.parseDouble(txtRecursion.getText());
         utils.Color back = new utils.Color(
                 cpColorPicker.getValue().getRed(),
                 cpColorPicker.getValue().getGreen(),

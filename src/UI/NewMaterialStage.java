@@ -33,6 +33,7 @@ public class NewMaterialStage extends Stage {
     private final ChoiceBox<String> chbMaterial;
     private final Slider sldExp;
     private final ImageView img;
+    private final NumberTextField txtIOR;
     private final Raytracer matTracer = new Raytracer(false);
 
     public NewMaterialStage(NewGeoStage st) {
@@ -53,24 +54,23 @@ public class NewMaterialStage extends Stage {
         cpRef = new ColorPicker(javafx.scene.paint.Color.BLACK);
         img = new ImageView();
         setUpTracer(st);
-
+        txtIOR = new NumberTextField("1.33");
         chbMaterial = new ChoiceBox<>();
         final Label lblMaterial = new Label("Choose Material:");
-        chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material", "Oren-Nayar", "Phong-Material", "Reflective-Material");
+        chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material", "Oren-Nayar", "Phong-Material", "Reflective-Material", "Transparent-Material");
         chbMaterial.getSelectionModel().select(1);
         sldExp = new Slider();
         sldExp.setMin(1);
         sldExp.setMax(256);
         sldExp.setValue(64);
+        final Label lblIOR = new Label("IOR");
+        txtIOR.visibleProperty().bind((chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(5)));
 
-
-        sldExp.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).or(
-                chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(2)
-        ).or(
-                chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4)
+        sldExp.visibleProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(0).or(
+                chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(1)
         ).not());
-        cpSpec.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).not().and(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not()));
-        cpRef.disableProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).not());
+        cpSpec.visibleProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(3).or(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4)).or(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(5)));
+        cpRef.visibleProperty().bind(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(4).or(chbMaterial.getSelectionModel().selectedIndexProperty().isEqualTo(5)));
         final Label lblExp = new Label();
         lblExp.textProperty().bind(Bindings.concat("Exponent: ").concat(Bindings.format("%.0f", sldExp.valueProperty())));
 
@@ -80,7 +80,7 @@ public class NewMaterialStage extends Stage {
                 sldExp.setMin(0);
                 sldExp.setMax(1);
                 sldExp.setValue(0.5);
-            } else {
+            }else {
                 lblExp.textProperty().bind(Bindings.concat("Exponent: ").concat(Bindings.format("%.0f", sldExp.valueProperty())));
                 sldExp.setMin(1);
                 sldExp.setMax(256);
@@ -113,6 +113,8 @@ public class NewMaterialStage extends Stage {
         center.add(sldExp, 1, 3);
         center.add(lblRef, 0, 4);
         center.add(cpRef, 1, 4);
+        center.add(lblIOR, 0, 5);
+        center.add(txtIOR, 1, 5);
 
         setValues(st);
         BorderPane borderPane = new BorderPane();
@@ -181,6 +183,14 @@ public class NewMaterialStage extends Stage {
                 cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
                 cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
                 sldExp.setValue(m.exponent);
+            } if (st.material.get() instanceof TransparentMaterial) {
+                TransparentMaterial m = (TransparentMaterial) st.material.get();
+                chbMaterial.getSelectionModel().select(5);
+                cpColorPicker.setValue(new Color(m.diffuse.r, m.diffuse.g, m.diffuse.b, 1));
+                cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
+                cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
+                sldExp.setValue(m.exponent);
+                txtIOR.setText(m.iOR+"");
             }
         }
 
@@ -213,6 +223,8 @@ public class NewMaterialStage extends Stage {
             material = new PhongMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()), (int) exp);
         }else if (typ == 4) {
             material = new ReflectiveMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp);
+        }else if (typ ==5) {
+            material = new TransparentMaterial( new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp, Double.parseDouble(txtIOR.getText()));
         }
         if (material != null) stage.material.set(material);
     }
