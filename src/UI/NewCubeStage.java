@@ -79,7 +79,7 @@ public class NewCubeStage extends NewGeoStage {
         final Label lblZ = new Label("z");
         txtInputs = new NumberTextField[6];
         for (int i = 0; i < 6; i++) {
-            txtInputs[i] = new NumberTextField("0.0");
+            txtInputs[i] = new NumberTextField(0.0);
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 2);
         }
 
@@ -119,21 +119,21 @@ public class NewCubeStage extends NewGeoStage {
                     if (g instanceof AxisAlignedBox) index++;
             }
             txtName.setText("Axis Aligned Box" + index);
-            txtInputs[0].setText("0.5");
-            txtInputs[1].setText("1.0");
-            txtInputs[2].setText("0.5");
-            txtInputs[3].setText("-0.5");
-            txtInputs[4].setText("0.0");
-            txtInputs[5].setText("-0.5");
+            txtInputs[0].setNumber(0.5);
+            txtInputs[1].setNumber(1.0);
+            txtInputs[2].setNumber(0.5);
+            txtInputs[3].setNumber(-0.5);
+            txtInputs[4].setNumber(0.0);
+            txtInputs[5].setNumber(-0.5);
             material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
         } else {
             txtName.setText(b.name);
-            txtInputs[0].setText(b.run.x + "");
-            txtInputs[1].setText(b.run.y + "");
-            txtInputs[2].setText(b.run.z + "");
-            txtInputs[3].setText(b.lbf.x + "");
-            txtInputs[4].setText(b.lbf.y + "");
-            txtInputs[5].setText(b.lbf.z + "");
+            txtInputs[0].setNumber(b.run.x);
+            txtInputs[1].setNumber(b.run.y);
+            txtInputs[2].setNumber(b.run.z);
+            txtInputs[3].setNumber(b.lbf.x);
+            txtInputs[4].setNumber(b.lbf.y);
+            txtInputs[5].setNumber(b.lbf.z);
             material.set(b.material);
             // cpColorPicker.setValue(new javafx.scene.paint.Color(b.material.r, b.material.g, b.material.b, 1));
         }
@@ -147,13 +147,13 @@ public class NewCubeStage extends NewGeoStage {
         try {
             if (b != null) ImageSaver.raytracer.getWorld().geometries.remove(b);
             Point3 run = new Point3(
-                    Double.parseDouble(txtInputs[0].getText()),
-                    Double.parseDouble(txtInputs[1].getText()),
-                    Double.parseDouble(txtInputs[2].getText()));
+                    txtInputs[0].getDouble(),
+                    txtInputs[1].getDouble(),
+                    txtInputs[2].getDouble());
             Point3 lbf = new Point3(
-                    Double.parseDouble(txtInputs[3].getText()),
-                    Double.parseDouble(txtInputs[4].getText()),
-                    Double.parseDouble(txtInputs[5].getText()));
+                    txtInputs[3].getDouble(),
+                    txtInputs[4].getDouble(),
+                    txtInputs[5].getDouble());
             if (run.x < lbf.x) run = new Point3(lbf.x + 1.0, run.y, run.z);
             if (run.y < lbf.y) run = new Point3(run.x, lbf.y + 1.0, run.z);
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);

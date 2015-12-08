@@ -85,7 +85,7 @@ public class NewLightStage extends Stage {
         final Label lblZ = new Label("z");
         txtInputs = new NumberTextField[6];
         for (int i = 0; i < 6; i++) {
-            txtInputs[i] = new NumberTextField("0.0");
+            txtInputs[i] = new NumberTextField(0.0);
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 3);
         }
 
@@ -133,34 +133,34 @@ public class NewLightStage extends Stage {
             txtName.setText("Pointlight" + index);
 
 
-            txtInputs[1].setText("5.0");
-            txtInputs[2].setText("10.0");
-            txtInputs[4].setText("-5.0");
-            txtInputs[4].setText("-10.0");
+            txtInputs[1].setNumber(5.0);
+            txtInputs[2].setNumber(10.0);
+            txtInputs[4].setNumber(-5.0);
+            txtInputs[4].setNumber(-10.0);
         } else {
             if (light instanceof PointLight) {
                 PointLight l = (PointLight) light;
                 chbLight.getSelectionModel().select(1);
-                txtInputs[0].setText(l.position.x + "");
-                txtInputs[1].setText(l.position.y + "");
-                txtInputs[2].setText(l.position.z + "");
+                txtInputs[0].setNumber(l.position.x);
+                txtInputs[1].setNumber(l.position.y);
+                txtInputs[2].setNumber(l.position.z);
                 chkShadows.setSelected(l.castsShadow);
             } else if (light instanceof DirectionalLight) {
                 DirectionalLight l = (DirectionalLight) light;
                 chbLight.getSelectionModel().select(0);
-                txtInputs[3].setText(l.direction.x + "");
-                txtInputs[4].setText(l.direction.y + "");
-                txtInputs[5].setText(l.direction.z + "");
+                txtInputs[3].setNumber(l.direction.x);
+                txtInputs[4].setNumber(l.direction.y);
+                txtInputs[5].setNumber(l.direction.z);
                 chkShadows.setSelected(l.castsShadow);
             } else {
                 SpotLight l = (SpotLight) light;
                 chbLight.getSelectionModel().select(2);
-                txtInputs[0].setText(l.position.x + "");
-                txtInputs[1].setText(l.position.y + "");
-                txtInputs[2].setText(l.position.z + "");
-                txtInputs[3].setText(l.direction.x + "");
-                txtInputs[4].setText(l.direction.y + "");
-                txtInputs[5].setText(l.direction.z + "");
+                txtInputs[0].setNumber(l.position.x);
+                txtInputs[1].setNumber(l.position.y);
+                txtInputs[2].setNumber(l.position.z);
+                txtInputs[3].setNumber(l.direction.x);
+                txtInputs[4].setNumber(l.direction.y);
+                txtInputs[5].setNumber(l.direction.z);
                 chkShadows.setSelected(l.castsShadow);
                 sldAngle.setValue((int) (l.halfAngle * (180 / Math.PI)));
 
@@ -180,13 +180,13 @@ public class NewLightStage extends Stage {
         try {
             if (light != null) ImageSaver.raytracer.getWorld().lights.remove(light);
             Point3 pos = new Point3(
-                    Double.parseDouble(txtInputs[0].getText()),
-                    Double.parseDouble(txtInputs[1].getText()),
-                    Double.parseDouble(txtInputs[2].getText()));
+                    txtInputs[0].getDouble(),
+                    txtInputs[1].getDouble(),
+                    txtInputs[2].getDouble());
             Vector3 dir = new Vector3(
-                    Double.parseDouble(txtInputs[3].getText()),
-                    Double.parseDouble(txtInputs[4].getText()),
-                    Double.parseDouble(txtInputs[5].getText()));
+                    txtInputs[3].getDouble(),
+                    txtInputs[4].getDouble(),
+                    txtInputs[5].getDouble());
             Light l = null;
             if (typ == 0) {
                 l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected());

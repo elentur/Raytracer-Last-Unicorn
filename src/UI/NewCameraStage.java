@@ -88,7 +88,7 @@ public class NewCameraStage extends Stage {
         txtInputs = new NumberTextField[10];
         //center.add(txtInputs[9], 1, 5);
         for (int i = 0; i < 10; i++) {
-            txtInputs[i] = new NumberTextField("0.0");
+            txtInputs[i] = new NumberTextField(0.0);
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 2);
         }
 
@@ -124,25 +124,25 @@ public class NewCameraStage extends Stage {
     private void setValues() {
 
         if (c == null) {
-            txtInputs[5].setText("-1.0");
-            txtInputs[7].setText("1.0");
-            txtInputs[9].setText("45.0");
+            txtInputs[5].setNumber(-1.0);
+            txtInputs[7].setNumber(1.0);
+            txtInputs[9].setNumber(45);
         } else {
 
-            txtInputs[0].setText(c.e.x + "");
-            txtInputs[1].setText(c.e.y + "");
-            txtInputs[2].setText(c.e.z + "");
-            txtInputs[3].setText(c.g.x + "");
-            txtInputs[4].setText(c.g.y + "");
-            txtInputs[5].setText(c.g.z + "");
-            txtInputs[6].setText(c.t.x + "");
-            txtInputs[7].setText(c.t.y + "");
-            txtInputs[8].setText(c.t.z + "");
+            txtInputs[0].setNumber(c.e.x );
+            txtInputs[1].setNumber(c.e.y );
+            txtInputs[2].setNumber(c.e.z );
+            txtInputs[3].setNumber(c.g.x );
+            txtInputs[4].setNumber(c.g.y );
+            txtInputs[5].setNumber(c.g.z );
+            txtInputs[6].setNumber(c.t.x );
+            txtInputs[7].setNumber(c.t.y );
+            txtInputs[8].setNumber(c.t.z );
             if (c instanceof OrthographicCamera) {
                 rbOrthographic.setSelected(true);
-                txtInputs[9].setText(((OrthographicCamera) c).s + "");
+                txtInputs[9].setNumber(((OrthographicCamera) c).s );
             } else {
-                txtInputs[9].setText((((PerspectiveCamera) c).angle * (180 / Math.PI)) + "");
+                txtInputs[9].setNumber((((PerspectiveCamera) c).angle * (180 / Math.PI)) );
             }
 
 
@@ -155,20 +155,20 @@ public class NewCameraStage extends Stage {
 
     private void onOK() {
         try {
-            Camera cam = null;
+            Camera cam;
             Point3 e = new Point3(
-                    Double.parseDouble(txtInputs[0].getText()),
-                    Double.parseDouble(txtInputs[1].getText()),
-                    Double.parseDouble(txtInputs[2].getText()));
+                    txtInputs[0].getDouble(),
+                    txtInputs[1].getDouble(),
+                    txtInputs[2].getDouble());
             Vector3 g = new Vector3(
-                    Double.parseDouble(txtInputs[3].getText()),
-                    Double.parseDouble(txtInputs[4].getText()),
-                    Double.parseDouble(txtInputs[5].getText()));
+                    txtInputs[3].getDouble(),
+                    txtInputs[4].getDouble(),
+                    txtInputs[5].getDouble());
             Vector3 t = new Vector3(
-                    Double.parseDouble(txtInputs[6].getText()),
-                    Double.parseDouble(txtInputs[7].getText()),
-                    Double.parseDouble(txtInputs[8].getText()));
-            double s = Double.parseDouble(txtInputs[9].getText());
+                    txtInputs[6].getDouble(),
+                    txtInputs[7].getDouble(),
+                    txtInputs[8].getDouble());
+            double s = txtInputs[9].getInteger();
             if (rbPerspective.isSelected()) {
                 if (s > 90.0) s = 90.0;
                 if (s < 5.0) s = 5.0;

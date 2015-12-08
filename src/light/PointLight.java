@@ -52,6 +52,7 @@ public class PointLight extends Light {
 
                 final Hit h = g.hit(r);
                 if ((h != null && h.t >= 0.0001 && h.t < tl)) {
+
                     return false;
                 }
             }

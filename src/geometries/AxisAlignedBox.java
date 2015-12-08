@@ -85,16 +85,26 @@ public class AxisAlignedBox extends Geometry {
         );
 
         Hit max = null;
+/*
+falls in würfel
+ */
+        if(comp(r.o,0.000001)){
+            for (final Plane plane : planes) {
+                final Hit h = plane.hit(r);
+                if ( (h != null  && h.t >0.000001) &&(max == null || ( h.t < max.t))) max = h;
+            }
+           // if (max!= null) max = new Hit(max.t,max.n.mul(-1),max.ray,max.geo);
+        }else {
+            for (final Plane plane : planes) {
+                // Finds all layers whose normals shows to the viewer.
+                final double condition = r.o.sub(plane.a).normalized().dot(plane.n);
 
-        for (final Plane plane : planes) {
-            // Finds all layers whose normals shows to the viewer.
-            final double condition = r.o.sub(plane.a).dot(plane.n);
-
-            if (condition > 0) {
-                // calculates the ray that intersects the selected layers
-                final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
-                if (max == null || t > max.t) {
-                    max = new Hit(t, plane.n, r, this);
+                if (condition > 0) {
+                    // calculates the ray that intersects the selected layers
+                    final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
+                    if (max == null || t > max.t) {
+                        max = new Hit(t, plane.n, r, this);
+                    }
                 }
             }
         }
@@ -111,18 +121,21 @@ public class AxisAlignedBox extends Geometry {
     private Hit comparison(final Hit hit) {
         if (hit != null) {
             final Point3 p = hit.ray.at(hit.t);
-            final double e = 0.00000000001;
 
-            if ((lbf.x <= p.x + e && p.x <= run.x + e) &&
-                    (lbf.y <= p.y + e && p.y <= run.y + e) &&
-                    (lbf.z <= p.z + e && p.z <= run.z + e)
-                    )
+            final double e = 0.00000000001;
+            if (comp(p,e))
                 return hit;
         }
 
         return null;
     }
+private boolean comp(final Point3 p, final double e){
 
+    return (lbf.x <= p.x + e && p.x <= run.x + e) &&
+            (lbf.y <= p.y + e && p.y <= run.y + e) &&
+            (lbf.z <= p.z + e && p.z <= run.z + e);
+
+}
     @Override
     public String toString() {
         return "AxisAlignedBox{" +

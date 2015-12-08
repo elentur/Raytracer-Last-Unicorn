@@ -54,7 +54,7 @@ public class NewMaterialStage extends Stage {
         cpRef = new ColorPicker(javafx.scene.paint.Color.BLACK);
         img = new ImageView();
         setUpTracer(st);
-        txtIOR = new NumberTextField("1.33");
+        txtIOR = new NumberTextField(1.33);
         chbMaterial = new ChoiceBox<>();
         final Label lblMaterial = new Label("Choose Material:");
         chbMaterial.getItems().addAll("SingleColor-Material", "Lambert-Material", "Oren-Nayar", "Phong-Material", "Reflective-Material", "Transparent-Material");
@@ -190,7 +190,7 @@ public class NewMaterialStage extends Stage {
                 cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
                 cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
                 sldExp.setValue(m.exponent);
-                txtIOR.setText(m.iOR+"");
+                txtIOR.setNumber(m.iOR);
             }
         }
 
@@ -224,7 +224,7 @@ public class NewMaterialStage extends Stage {
         }else if (typ == 4) {
             material = new ReflectiveMaterial(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp);
         }else if (typ ==5) {
-            material = new TransparentMaterial( new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp, Double.parseDouble(txtIOR.getText()));
+            material = new TransparentMaterial( new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp, txtIOR.getDouble());
         }
         if (material != null) stage.material.set(material);
     }

@@ -75,14 +75,14 @@ public class RenderSettingsStage extends Stage {
         chbCores = new ChoiceBox<>();
         chbPattern = new ChoiceBox<>();
         chbResolution = new ChoiceBox<>();
-        txtWidth = new NumberTextField("0.0");
-        txtHeight = new NumberTextField("0.0");
-        txtIOR = new NumberTextField("1.0003");
+        txtWidth = new NumberTextField(640);
+        txtHeight = new NumberTextField(480);
+        txtIOR = new NumberTextField(1.0003);
         Label lblIOR = new Label("Global IOR");
         final Label lblWidth = new Label("width");
         final Label lblHeight = new Label("height");
         final Label lblRecursion = new Label("Recursion Depth");
-        txtRecursion = new NumberTextField("0.0");
+        txtRecursion = new NumberTextField(3);
 
         final Label lblRenderPattern = new Label("Render-Pattern");
 
@@ -94,7 +94,7 @@ public class RenderSettingsStage extends Stage {
         chbPattern.getSelectionModel().select(0);
         chbResolution.getItems().addAll("320x240", "640x480", "1024x768", "1280x720", "1920x1080");
 
-        chkKeepRatio.setOnAction(a -> aspectration = Double.parseDouble(txtWidth.getText()) / Double.parseDouble(txtHeight.getText()));
+        chkKeepRatio.setOnAction(a -> aspectration = txtWidth.getDouble()/ txtHeight.getDouble());
         center.add(chkMultithreading, 0, 0, 2, 1);
         center.add(chkHDRRendering, 1, 0, 2, 1);
         center.add(chbCores, 0, 1, 2, 1);
@@ -139,16 +139,17 @@ public class RenderSettingsStage extends Stage {
 
     private void setResolution() {
         String[] s = chbResolution.getSelectionModel().getSelectedItem().split("x");
-        txtWidth.setText(s[0] + ".0");
-        txtHeight.setText(s[1] + ".0");
+        txtWidth.setNumber(s[0]);
+        txtHeight.setNumber(s[1]);
     }
 
-    private void keepRation(TextField txt) {
+    private void keepRation(NumberTextField txt) {
         if (chkKeepRatio.isSelected()) {
             if (txt.equals(txtWidth)) {
-                txtHeight.setText((Double.parseDouble(txt.getText()) / aspectration) + "");
+                txtHeight.setNumber( txtWidth.getInteger()/aspectration);
+
             } else {
-                txtWidth.setText((Double.parseDouble(txt.getText()) * aspectration) + "");
+                txtWidth.setNumber( txtHeight.getInteger()*aspectration);
             }
         }
     }
@@ -180,10 +181,10 @@ public class RenderSettingsStage extends Stage {
                 chkHDRRendering.setSelected(input.get("hdr").equals("true"));
                 chbCores.getSelectionModel().select(Integer.parseInt(input.get("cores")) - 1);
                 chbPattern.getSelectionModel().select(Integer.parseInt(input.get("pattern")));
-                txtWidth.setText(input.get("width"));
-                txtHeight.setText(input.get("height"));
-                txtRecursion.setText(input.get("recursion"));
-                txtIOR.setText(input.get("ior"));
+                txtWidth.setNumber(input.get("width"));
+                txtHeight.setNumber(input.get("height"));
+                txtRecursion.setNumber(input.get("recursion"));
+                txtIOR.setNumber(input.get("ior"));
             } catch (Exception e) {
                 System.out.println("ladefehler");
             }
@@ -203,10 +204,10 @@ public class RenderSettingsStage extends Stage {
         output.put("ambientColorRed", cpAmbientColor.getValue().getRed()+"");
         output.put("ambientColorGreen", cpAmbientColor.getValue().getGreen()+"");
         output.put("ambientColorBlue", cpAmbientColor.getValue().getBlue()+"");
-        output.put("width", txtWidth.getText());
-        output.put("height", txtHeight.getText());
-        output.put("recursion", txtRecursion.getText());
-        output.put("ior", txtIOR.getText());
+        output.put("width", txtWidth.getInteger()+"");
+        output.put("height", txtHeight.getInteger()+"");
+        output.put("recursion", txtRecursion.getDouble()+"");
+        output.put("ior", txtIOR.getDouble()+"");
         IO.writeFile("settings.cfg", output);
     }
 
@@ -216,8 +217,8 @@ public class RenderSettingsStage extends Stage {
 
     private void onOK() {
         saveConfig();
-        int width = (int) Double.parseDouble(txtWidth.getText());
-        int height = (int) Double.parseDouble(txtHeight.getText());
+        int width = txtWidth.getInteger();
+        int height = txtHeight.getInteger();
         if (width < 0) width = 0;
         if (height < 0) height = 0;
         ImageSaver.raytracer.imgWidth.set(width);
@@ -229,8 +230,8 @@ public class RenderSettingsStage extends Stage {
         }
         ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
         ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
-        ImageSaver.raytracer.recursionDepth = (int) Double.parseDouble(txtRecursion.getText());
-        ImageSaver.raytracer.iOR = Double.parseDouble(txtRecursion.getText());
+        ImageSaver.raytracer.recursionDepth = txtRecursion.getInteger();
+        ImageSaver.raytracer.iOR = txtIOR.getDouble();
         utils.Color back = new utils.Color(
                 cpColorPicker.getValue().getRed(),
                 cpColorPicker.getValue().getGreen(),

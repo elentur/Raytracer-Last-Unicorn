@@ -65,25 +65,45 @@ public class Sphere extends Geometry {
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
 
-            if(t1 >= 0 && t2 >=0) {
+            if(t1 >0.00001 && t2 > 0.00001) {
                 t = Math.min(t1, t2);
-            }/*else if(t1 >= 0){
+            }else if(t1 > 0.00001){
                 t = t1;
-                nDir = -1;
-            }else if(t2 >= 0){
+                nDir = 1;
+               // System.out.println("t1");
+            }else if(t2 > 0.00001){
                 t = t2;
-                nDir = -1;
-            }*/
+                nDir = 1;
+               // System.out.println("t2");
+            }
         } else if (d == 0) {
             t = -b / (2 * a);
         }
 
-        if(t >= 0){
+        if(t >= 0.00001){
             Normal3 n = this.c.sub(r.at(t)).mul(nDir).normalized().asNormal();
             return new Hit(t, n, r, this);
         }
 
-        return null;
+        /*Vector3 l = c.sub(r.o);
+        double s = l.dot(r.d.normalized());
+        double l2 = l.dot(l);
+        double r2 = this.r*this.r;
+        if(s < 0 && l2 > r2) return null;
+        double m2 = l2 -s*s;
+        if(m2> r2) return null;
+        double q= Math.sqrt(r2-m2);
+        double t = s-q;
+        Normal3 n = r.at(t).sub(this.c).normalized().asNormal();
+        if(l2 -0.00001<r2){
+            t = s+q;
+            n = r.at(t).sub(this.c).normalized().asNormal();
+        }
+
+        if(t > 0){
+            return new Hit(t, n, r, this);
+        }*/
+      return null;
     }
 
     @Override
