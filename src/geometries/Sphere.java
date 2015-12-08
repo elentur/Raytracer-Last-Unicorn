@@ -2,7 +2,9 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
+import matVect.Vector3;
 import material.Material;
+import texture.TexCoord2;
 import utils.Hit;
 import utils.Ray;
 
@@ -80,7 +82,12 @@ public class Sphere extends Geometry {
 
         if(t >= 0){
             Normal3 n = this.c.sub(r.at(t)).mul(nDir).normalized().asNormal();
-            return new Hit(t, n, r, this);
+
+            final double u = 0.5 - Math.atan2(n.z,n.x)/(2*Math.PI);
+
+            final double v = 0.5 - 2.0 * (Math.asin(n.y)/(2*Math.PI));
+
+            return new Hit(t, n, r, this, new TexCoord2(u,v));
         }
 
         return null;

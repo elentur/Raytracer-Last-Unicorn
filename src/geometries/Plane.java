@@ -2,7 +2,9 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
+import matVect.Vector3;
 import material.Material;
+import texture.TexCoord2;
 import utils.Hit;
 import utils.Ray;
 
@@ -54,7 +56,22 @@ public class Plane extends Geometry {
 
         if (nenner != 0) {
             final double t = n.dot(a.sub(r.o)) / nenner;
-            if (t > 0) return new Hit(t, n, r, this);
+            Point3 p = r.at(t);
+
+            Vector3 uv = a.sub(p);
+
+            double l = uv.magnitude;
+
+            double u = Math.abs(p.x*l);
+            double v = Math.abs(p.z*l);
+
+            u = u-(int)u;
+            v = v-(int)v;
+
+            System.out.println(u);
+            System.out.println(v);
+
+            if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
         }
         return null;
     }

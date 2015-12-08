@@ -54,7 +54,7 @@ public class ShapeFromFile extends Geometry {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material,0,0,0);
                         triangles.add(tri);
                     } //F�r f / v/vt
                     else {
@@ -74,11 +74,11 @@ public class ShapeFromFile extends Geometry {
                         if (n[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
-                                    material);
+                                    material,0,0,0);
                             triangles.add(tri);
                         } else {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
-                                    material);
+                                    material,0,0,0);
                             triangles.add(tri);
                         }
 

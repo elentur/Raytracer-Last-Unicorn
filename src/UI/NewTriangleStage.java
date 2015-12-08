@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import matVect.Point3;
 import material.LambertMaterial;
 import raytracer.ImageSaver;
+import texture.SingleColorTexture;
 import utils.Color;
 
 /**
@@ -128,7 +129,7 @@ public class NewTriangleStage extends NewGeoStage {
             txtInputs[6].setText("0.5");
             txtInputs[7].setText("-0.5");
             txtInputs[8].setText("-3.0");
-            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             txtName.setText(t.name);
             txtInputs[0].setText(t.a.x + "");
@@ -166,7 +167,7 @@ public class NewTriangleStage extends NewGeoStage {
                     Double.parseDouble(txtInputs[8].getText()));
 
 
-            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get());
+            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),0,0,0);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

@@ -13,6 +13,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import material.LambertMaterial;
 import raytracer.ImageSaver;
+import texture.SingleColorTexture;
 import utils.Color;
 
 import java.io.File;
@@ -98,7 +99,7 @@ public class NewOBJStage extends NewGeoStage {
 
     public void setValues() {
         if (sff == null) {
-            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             btnOK.setDisable(false);
             material.set(sff.material);

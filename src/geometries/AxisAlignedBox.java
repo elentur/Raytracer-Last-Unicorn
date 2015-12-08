@@ -3,6 +3,7 @@ package geometries;
 import matVect.Normal3;
 import matVect.Point3;
 import material.Material;
+import texture.TexCoord2;
 import utils.Hit;
 import utils.Ray;
 
@@ -94,7 +95,7 @@ public class AxisAlignedBox extends Geometry {
                 // calculates the ray that intersects the selected layers
                 final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
                 if (max == null || t > max.t) {
-                    max = new Hit(t, plane.n, r, this);
+                    max = new Hit(t, plane.n, r, this, new TexCoord2(0,0));
                 }
             }
         }

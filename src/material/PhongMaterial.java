@@ -3,6 +3,7 @@ package material;
 import light.Light;
 import matVect.Point3;
 import matVect.Vector3;
+import texture.Texture;
 import utils.Color;
 import utils.Hit;
 import utils.Tracer;
@@ -30,13 +31,13 @@ public class PhongMaterial extends Material {
     /**
      * Instantiates a new PhongMaterial Object.
      *
-     * @param diffuse  of the Material. Can't be null.
+     * @param texture  of the Material. Can't be null.
      * @param specular of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public PhongMaterial(final Color diffuse, final Color specular, final int exponent) {
-        super(diffuse);
+    public PhongMaterial(final Texture texture, final Color specular, final int exponent) {
+        super(texture);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
@@ -66,7 +67,7 @@ public class PhongMaterial extends Material {
             Vector3 rl = l.reflectedOn(hit.n);
             if (light.illuminates(h, world)) {
                 basicColor = basicColor.add(
-                        light.color.mul(diffuse)
+                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
                                 )
                 ).add(
@@ -79,13 +80,13 @@ public class PhongMaterial extends Material {
             }
         }
 
-        return diffuse.mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
     @Override
     public String toString() {
         return "PhongMaterial{" +
-                "diffuse=" + diffuse +
+                "texture=" + texture +
                 ", specular=" + specular +
                 ", exponent=" + exponent +
                 '}';
@@ -99,14 +100,14 @@ public class PhongMaterial extends Material {
         PhongMaterial that = (PhongMaterial) o;
 
         if (exponent != that.exponent) return false;
-        if (!diffuse.equals(that.diffuse)) return false;
+        if (!texture.equals(that.texture)) return false;
         return specular.equals(that.specular);
 
     }
 
     @Override
     public int hashCode() {
-        int result = diffuse.hashCode();
+        int result = texture.hashCode();
         result = 31 * result + specular.hashCode();
         result = 31 * result + exponent;
         return result;

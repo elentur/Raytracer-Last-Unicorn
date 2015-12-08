@@ -5,6 +5,7 @@ import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
 import raytracer.ImageSaver;
+import texture.Texture;
 import utils.*;
 
 /**
@@ -17,8 +18,8 @@ public class TransparentMaterial extends Material {
     public final Color specular;
     public final  Color reflection;
     public final  int exponent;
-    public TransparentMaterial(final Color diffuse, final  Color specular, final  Color reflection, final  int exponent, double indexOfRefraction) {
-        super(diffuse);
+    public TransparentMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent, double indexOfRefraction) {
+        super(texture);
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
@@ -74,10 +75,12 @@ public class TransparentMaterial extends Material {
                 }else {
                     basicColor = basicColor.add(tracer.reflection(ref1Ray, world).mul(r)).add(tracer.reflection(ref2Ray, world).mul(t));
                 }
-            if(!(diffuse.r ==0 && diffuse.g==0 && diffuse.b ==0))basicColor =  basicColor.mul(diffuse);
+            if(!(texture.getColor(hit.texCoord.u,hit.texCoord.v).r ==0 &&
+                    texture.getColor(hit.texCoord.u,hit.texCoord.v).g==0 &&
+                    texture.getColor(hit.texCoord.u,hit.texCoord.v).b ==0))basicColor =  basicColor.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v));
             if (light.illuminates(p, world)) {
                 basicColor = basicColor.add(
-                        light.color.mul(diffuse)
+                        light.color.mul(texture.getColor(0,0))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
                                 )
                 ).add(

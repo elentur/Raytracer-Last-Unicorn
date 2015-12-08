@@ -1,5 +1,6 @@
 package material;
 
+import texture.Texture;
 import utils.Color;
 import utils.Hit;
 import utils.Tracer;
@@ -16,13 +17,13 @@ public abstract class Material implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public final Color diffuse;
+    public final Texture texture;
 
-    public Material(final Color diffuse) {
-        if (diffuse == null) {
-            throw new IllegalArgumentException("Diffuse cannot be null!");
+    public Material(final Texture texture) {
+        if (texture == null) {
+            throw new IllegalArgumentException("Texture cannot be null!");
         }
-        this.diffuse = diffuse;
+        this.texture = texture;
     }
 
     /**

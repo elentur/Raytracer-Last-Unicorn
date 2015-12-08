@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import matVect.Point3;
 import material.LambertMaterial;
 import raytracer.ImageSaver;
+import texture.SingleColorTexture;
 import utils.Color;
 
 /**
@@ -125,7 +126,7 @@ public class NewCubeStage extends NewGeoStage {
             txtInputs[3].setText("-0.5");
             txtInputs[4].setText("0.0");
             txtInputs[5].setText("-0.5");
-            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             txtName.setText(b.name);
             txtInputs[0].setText(b.run.x + "");

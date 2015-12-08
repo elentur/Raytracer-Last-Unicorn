@@ -1,6 +1,11 @@
 package raytracer;
 
 import UI.*;
+import camera.Camera;
+import camera.PerspectiveCamera;
+import geometries.Geometry;
+import geometries.Plane;
+import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -12,6 +17,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import light.Light;
+import light.PointLight;
+import matVect.Normal3;
+import matVect.Point3;
+import matVect.Vector3;
+import material.*;
+import texture.ImageTexture;
+import texture.SingleColorTexture;
+import utils.Color;
+import utils.World;
 
 
 /**
@@ -46,6 +61,36 @@ public class ImageSaver extends Application {
         // world.geometries.add(obj);
         raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
     */
+
+        World world = new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0));
+        raytracer.setWorld(world);
+
+        Light light = new PointLight(new Color(1,1,1),new Point3(0,5,10), true);
+        light.name = "Pointlight1";
+        world.lights.add(light);
+
+        Camera camera = new PerspectiveCamera(new Point3(0,4,4),new Vector3(0,-1,-1), new Vector3(0,1,0), Math.PI/4);
+        raytracer.setCamera(camera);
+
+        /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
+        world.geometries.add(sphere);*/
+
+        Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new ReflectiveMaterial(
+                new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                new Color(1,1,1),
+                new Color(0.5,0.5,0.5),
+                64
+        ));
+        world.geometries.add(sphere);
+
+        Geometry plane  = new Plane(new Point3(0,0,0),new Normal3(0,1,0), new ReflectiveMaterial(
+                new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/checker.png"),
+                new Color(1,1,1),
+                new Color(0.5,0.5,0.5),
+                64
+        ));
+        world.geometries.add(plane);
+
     }
 
     /**
@@ -58,7 +103,7 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) {
 
 
-        //   testScene();
+        testScene();
 
         primaryStage.setScene(setScene(primaryStage));
 
