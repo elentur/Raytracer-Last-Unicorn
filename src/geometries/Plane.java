@@ -68,9 +68,6 @@ public class Plane extends Geometry {
             u = u-(int)u;
             v = v-(int)v;
 
-            System.out.println(u);
-            System.out.println(v);
-
             if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
         }
         return null;

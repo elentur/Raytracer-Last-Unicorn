@@ -15,7 +15,7 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
-    final Texture texture;
+    final public Texture texture;
 
     /**
      * Generates a SinglColor Object with the given texture
