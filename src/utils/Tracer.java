@@ -35,16 +35,12 @@ public class Tracer {
 
         return world.backgroundColor;
     }
-
+/*
     public Color refraction(Ray reflectionRay,World world, boolean in){
         this.in = !in;
         if(recursionDepth > 0) {
             recursionDepth--;
-            Hit hit = null;
-            for (Geometry g : world.geometries) {
-                final Hit h = g.hit(reflectionRay);
-                if (hit == null || (h != null && h.t < hit.t && h.t > 0.0001)) hit = h;
-            }
+            Hit hit =  world.hit(reflectionRay,0,0);
 
             if(hit != null && hit.t > 0.0001){
                 return hit.geo.material.colorFor(hit, world,this);
@@ -53,5 +49,5 @@ public class Tracer {
 
 
         return world.backgroundColor;
-    }
+    }*/
 }

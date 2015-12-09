@@ -88,7 +88,7 @@ public class AxisAlignedBox extends Geometry {
 /*
 falls in würfel
  */
-        if(comp(r.o,0.000001)){
+      if(comp(r.o,0.000001)){
             for (final Plane plane : planes) {
                 final Hit h = plane.hit(r);
                 if ( (h != null  && h.t >0.000001) &&(max == null || ( h.t < max.t))) max = h;

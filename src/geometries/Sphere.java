@@ -65,7 +65,7 @@ public class Sphere extends Geometry {
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
 
-            if(t1 >0.00001 && t2 > 0.00001) {
+          /*  if(t1 >0.00001 && t2 > 0.00001) {
                 t = Math.min(t1, t2);
             }else if(t1 > 0.00001){
                 t = t1;
@@ -75,13 +75,27 @@ public class Sphere extends Geometry {
                 t = t2;
                 nDir = 1;
                // System.out.println("t2");
+            }*/
+
+            if(t2 < 0.00001 && t1 < 0.00001){
+                t = Math.max(t1, t2);
+            }
+            if(t2 > 0.00001&& t1 >0.00001){
+                t = Math.min(t1,t2);
+            }
+            if(t2 > 0.00001 && t1 <0.00001){
+                t = t2;
+            }
+
+            if(t2 < 0.00001 && t1 > 0.00001){
+                t = t1;
             }
         } else if (d == 0) {
             t = -b / (2 * a);
         }
 
         if(t >= 0.00001){
-            Normal3 n = this.c.sub(r.at(t)).mul(nDir).normalized().asNormal();
+            Normal3 n =  r.at(t).sub(this.c).normalized().asNormal();
             return new Hit(t, n, r, this);
         }
 
