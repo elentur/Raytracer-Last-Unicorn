@@ -20,6 +20,7 @@ import light.Light;
 import light.PointLight;
 import light.SpotLight;
 import raytracer.ImageSaver;
+import texture.TexCoord2;
 import utils.Element;
 
 /**
@@ -97,7 +98,7 @@ public class EditObjects extends Stage {
                     //  l.getItems().add(b);
                 } else if (e instanceof Triangle) {
                     Triangle t1 = (Triangle) e;
-                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material,0,0,0);
+                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
                     t.name = t1.name;
                     t = (Triangle) nameTest(t);
                     ImageSaver.raytracer.getWorld().geometries.add(t);

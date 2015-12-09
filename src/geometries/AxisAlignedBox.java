@@ -95,7 +95,11 @@ public class AxisAlignedBox extends Geometry {
                 // calculates the ray that intersects the selected layers
                 final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
                 if (max == null || t > max.t) {
-                    max = new Hit(t, plane.n, r, this, new TexCoord2(0,0));
+                    final Point3 p = r.at(t);
+                    final double v = p.x;
+                    final double u = p.z;
+
+                    max = new Hit(t, plane.n, r, this, new TexCoord2(u,v));
                 }
             }
         }

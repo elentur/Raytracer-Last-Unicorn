@@ -56,17 +56,11 @@ public class Plane extends Geometry {
 
         if (nenner != 0) {
             final double t = n.dot(a.sub(r.o)) / nenner;
-            Point3 p = r.at(t);
 
-            Vector3 uv = a.sub(p);
+            final Point3 p = r.at(t);
 
-            double l = uv.magnitude;
-
-            double u = Math.abs(p.x*l);
-            double v = Math.abs(p.z*l);
-
-            u = u-(int)u;
-            v = v-(int)v;
+            final double v = p.x;
+            final double u = p.z;
 
             if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
         }

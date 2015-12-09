@@ -16,6 +16,7 @@ import matVect.Point3;
 import material.LambertMaterial;
 import raytracer.ImageSaver;
 import texture.SingleColorTexture;
+import texture.TexCoord2;
 import utils.Color;
 
 /**
@@ -167,7 +168,7 @@ public class NewTriangleStage extends NewGeoStage {
                     Double.parseDouble(txtInputs[8].getText()));
 
 
-            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),0,0,0);
+            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;
