@@ -24,6 +24,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.*;
 import texture.ImageTexture;
+import texture.InterpolatedImageTexture;
 import texture.SingleColorTexture;
 import texture.TexCoord2;
 import utils.Color;
@@ -66,23 +67,20 @@ public class ImageSaver extends Application {
         World world = new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0));
         raytracer.setWorld(world);
 
-        Light light1 = new SpotLight(new Color(1,1,1),new Point3(5,50,20),new Vector3(0,-10,1),90,true);
-        light1.name = "DirectionalLight1";
+
         Light light2 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
         light2.name = "Pointlight1";
-        world.lights.add(light1);
         world.lights.add(light2);
 
-        Camera camera = new PerspectiveCamera(new Point3(2,2,2),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(2,2,4),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
         world.geometries.add(sphere);*/
 
-        /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new ReflectiveMaterial(
+        /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new PhongMaterial(
                 new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
                 new Color(1,1,1),
-                new Color(0.5,0.5,0.5),
                 64
         ));
         world.geometries.add(sphere);*/
@@ -103,11 +101,11 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        Geometry box = new AxisAlignedBox(
+        /*Geometry box = new AxisAlignedBox(
                 new Point3(0.5,1.0,0.5),
                 new Point3(-0.5,0.0,-0.5),
                 new ReflectiveMaterial(
-                        /*new SingleColorTexture(new Color(1,0,0)),*/
+                        *//*new SingleColorTexture(new Color(1,0,0)),*//*
                         new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
                     new Color(1,1,1),
                     new Color(0.5,0.5,0.5),
@@ -115,16 +113,16 @@ public class ImageSaver extends Application {
                 )
         );
 
-        world.geometries.add(box);
+        world.geometries.add(box);*/
 
-       /*Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new ReflectiveMaterial(
-                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/checker.png"),
+       Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new ReflectiveMaterial(
+                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/checker_small.png"),
                 new Color(1,1,1),
                 new Color(0.5,0.5,0.5),
                 64
         ));
 
-        world.geometries.add(plane);*/
+        world.geometries.add(plane);
     }
 
     /**
