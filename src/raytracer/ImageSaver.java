@@ -72,18 +72,27 @@ public class ImageSaver extends Application {
         light2.name = "Pointlight1";
         world.lights.add(light2);
 
-        Camera camera = new PerspectiveCamera(new Point3(2,2,4),new Vector3(-1,-1,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(-5,5,5),new Vector3(1,-1,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
         world.geometries.add(sphere);*/
 
-        /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new PhongMaterial(
-                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+        Geometry sphere  = new Sphere(new Point3(1.5,0,0), 1, new ReflectiveMaterial(
+                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
                 new Color(1,1,1),
+                new Color(0.5,0.5,0.5),
                 64
         ));
-        world.geometries.add(sphere);*/
+        world.geometries.add(sphere);
+
+        Geometry sphere2  = new Sphere(new Point3(-1.5,0,0), 1, new ReflectiveMaterial(
+                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                new Color(1,1,1),
+                new Color(0.5,0.5,0.5),
+                64
+        ));
+        world.geometries.add(sphere2);
 
 
         /*Geometry triangle  = new Triangle(
@@ -115,11 +124,9 @@ public class ImageSaver extends Application {
 
         world.geometries.add(box);*/
 
-       Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new ReflectiveMaterial(
-                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/checker_small.png"),
-                new Color(1,1,1),
-                new Color(0.5,0.5,0.5),
-                64
+       Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
+                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/sterne.jpg"),
+                0.6
         ));
 
         world.geometries.add(plane);
