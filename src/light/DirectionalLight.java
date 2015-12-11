@@ -25,6 +25,7 @@ public class DirectionalLight extends Light {
      *
      * @param color     The Color of the Light
      * @param direction The direction of the light
+     * @param castShadow Shadows on or of
      */
     public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow) {
         super(color,castShadow);

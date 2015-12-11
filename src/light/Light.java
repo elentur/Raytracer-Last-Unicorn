@@ -35,7 +35,7 @@ public abstract class Light extends Element implements Serializable {
      * @param world The world object for the shadow calculation
      * @return Returns if a point is illuminated
      */
-    public abstract boolean illuminates(Point3 point, World world);
+    public abstract boolean illuminates(final Point3 point, final World world);
 
     /**
      * Returns a Vector that shows from the illuminated point to the Lightsourc
@@ -43,5 +43,5 @@ public abstract class Light extends Element implements Serializable {
      * @param point the illuminated point
      * @return a normalized Vector3
      */
-    public abstract Vector3 directionFrom(Point3 point);
+    public abstract Vector3 directionFrom(final Point3 point);
 }

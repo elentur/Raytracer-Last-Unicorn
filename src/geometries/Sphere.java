@@ -26,8 +26,8 @@ public class Sphere extends Geometry {
      * Instantiates a new Sphere Object.
      *
      * @param material of the Sphere. Can't be null.
-     * @param c     of the Sphere. Can't be null.
-     * @param r     of the Sphere. Greater 0.
+     * @param c        of the Sphere. Can't be null.
+     * @param r        of the Sphere. Greater 0.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Sphere(final Point3 c, double r, final Material material) {
@@ -58,44 +58,23 @@ public class Sphere extends Geometry {
 
         double t = -1;
         // change the normal if we are inside the sphere.
-        int nDir = -1;
 
         if (d > 0) {
-
             final double t1 = (-b + Math.sqrt(d)) / (2 * a);
             final double t2 = (-b - Math.sqrt(d)) / (2 * a);
-
-          /*  if(t1 >0.00001 && t2 > 0.00001) {
+            if (t1 > 0.00001 && t2 > 0.00001) {
                 t = Math.min(t1, t2);
-            }else if(t1 > 0.00001){
+            } else if (t1 > 0.00001) {
                 t = t1;
-                nDir = 1;
-               // System.out.println("t1");
-            }else if(t2 > 0.00001){
+            } else if (t2 > 0.00001) {
                 t = t2;
-                nDir = 1;
-               // System.out.println("t2");
-            }*/
-
-            if(t2 < 0.00001 && t1 < 0.00001){
-                t = Math.max(t1, t2);
-            }
-            if(t2 > 0.00001&& t1 >0.00001){
-                t = Math.min(t1,t2);
-            }
-            if(t2 > 0.00001 && t1 <0.00001){
-                t = t2;
-            }
-
-            if(t2 < 0.00001 && t1 > 0.00001){
-                t = t1;
             }
         } else if (d == 0) {
             t = -b / (2 * a);
         }
 
-        if(t >= 0.00001){
-            Normal3 n =  r.at(t).sub(this.c).normalized().asNormal();
+        if (t >= 0.00001) {
+            Normal3 n = r.at(t).sub(this.c).normalized().asNormal();
             return new Hit(t, n, r, this);
         }
 
@@ -117,7 +96,7 @@ public class Sphere extends Geometry {
         if(t > 0){
             return new Hit(t, n, r, this);
         }*/
-      return null;
+        return null;
     }
 
     @Override
@@ -125,7 +104,7 @@ public class Sphere extends Geometry {
         return "Sphere{" +
                 "c=" + c +
                 ", r=" + r +
-                '}'+"material=" + material +
+                '}' + "material=" + material +
                 '}';
     }
 
@@ -137,7 +116,7 @@ public class Sphere extends Geometry {
         Sphere sphere = (Sphere) o;
 
         if (Double.compare(sphere.r, r) != 0) return false;
-        if(!c.equals(sphere.c)) return false;
+        if (!c.equals(sphere.c)) return false;
         return material.equals(sphere.material) && name.equals(sphere.name);
 
     }
