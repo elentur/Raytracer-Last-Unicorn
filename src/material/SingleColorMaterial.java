@@ -1,5 +1,7 @@
 package material;
 
+import texture.SingleColorTexture;
+import texture.Texture;
 import utils.Color;
 import utils.Hit;
 import utils.Tracer;
@@ -13,27 +15,34 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
+    final public Texture texture;
 
     /**
-     * Generates a SinglColor Object with the given Color
+     * Generates a SinglColor Object with the given texture
      *
-     * @param color
+     * @param texture
      */
-    public SingleColorMaterial(final Color color) {
-        super(color);
+
+    public SingleColorMaterial(final Texture texture) {
+        super(texture);
+        if(texture == null){
+            throw new IllegalArgumentException("texture must not be null");
+        }
+        this.texture = texture;
     }
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
         if (hit == null) throw new IllegalArgumentException("hit must not be null ");
         if (world == null) throw new IllegalArgumentException("world must not be null ");
-        return diffuse;
+
+        return texture.getColor(hit.texCoord.u,hit.texCoord.v);
     }
 
     @Override
     public String toString() {
         return "SingleColorMaterial{" +
-                "material=" + diffuse +
+                "material=" + texture +
                 '}';
     }
 
@@ -44,12 +53,12 @@ public class SingleColorMaterial extends Material {
 
         SingleColorMaterial that = (SingleColorMaterial) o;
 
-        return !(diffuse != null ? !diffuse.equals(that.diffuse) : that.diffuse != null);
+        return !(texture != null ? !texture.equals(that.texture) : that.texture != null);
 
     }
 
     @Override
     public int hashCode() {
-        return diffuse != null ? diffuse.hashCode() : 0;
+        return texture != null ? texture.hashCode() : 0;
     }
 }

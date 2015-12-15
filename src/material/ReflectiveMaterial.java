@@ -3,6 +3,7 @@ package material;
 import light.Light;
 import matVect.Point3;
 import matVect.Vector3;
+import texture.Texture;
 import utils.*;
 
 /**
@@ -26,13 +27,13 @@ public class ReflectiveMaterial extends Material {
 
     /**
      * A Material what represents any reflectiv materials
-     * @param diffuse  of the Material. Can't be null.
+     * @param texture  of the Material. Can't be null.
      * @param specular of the Material. Can't be null.
      * @param reflection of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      */
-    public ReflectiveMaterial(final Color diffuse, final  Color specular, final  Color reflection, final  int exponent) {
-        super(diffuse);
+    public ReflectiveMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent) {
+        super(texture);
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
@@ -59,7 +60,7 @@ public class ReflectiveMaterial extends Material {
             Vector3 rl = l.reflectedOn(hit.n);
             if (light.illuminates(h, world)) {
                 basicColor = basicColor.add(
-                        light.color.mul(diffuse)
+                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
                                 )
                 ).add(
@@ -73,6 +74,6 @@ public class ReflectiveMaterial extends Material {
             basicColor = basicColor.add(reflection.mul(tracer.reflection(refRay,world)));
         }
 
-        return diffuse.mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 }

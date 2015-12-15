@@ -2,6 +2,7 @@ package utils;
 
 import geometries.Geometry;
 import matVect.Normal3;
+import texture.TexCoord2;
 
 import java.io.Serializable;
 
@@ -31,21 +32,29 @@ public class Hit implements Serializable {
     public final Normal3 n;
 
     /**
+     * represents the coordinate of the texture.
+     */
+    public final TexCoord2 texCoord;
+
+    /**
      * Generates a Hit object that represents the hit Geometry, the Ray that hit the Geometry and the smallest
      * intersect between Ray and Geometry.
      *
      * @param t   the smallest intersect between Ray and Geometry.
      * @param ray the Ray that hit this Geometry.
      * @param geo the Geometry that is hit by that Ray.
+     * @param texCoord the coordinate ot the texture.
      */
-    public Hit(final double t, Normal3 n, final Ray ray, final Geometry geo) {
+    public Hit(final double t, Normal3 n, final Ray ray, final Geometry geo, final TexCoord2 texCoord) {
         if (ray == null) throw new IllegalArgumentException("ray must not be null!");
         if (geo == null) throw new IllegalArgumentException("geo must not be null!");
         if (n == null) throw new IllegalArgumentException("n must not be null!");
+        if (texCoord == null) throw new IllegalArgumentException("texCoord must not be null!");
         this.t = t;
         this.n = n;
         this.ray = ray;
         this.geo = geo;
+        this.texCoord = texCoord;
     }
 
 

@@ -3,6 +3,7 @@ package material;
 import light.Light;
 import matVect.Point3;
 import matVect.Vector3;
+import texture.Texture;
 import utils.Color;
 import utils.Hit;
 import utils.Tracer;
@@ -24,12 +25,12 @@ public class OrenNayarMaterial extends Material {
     /**
      * Instantiates a new SpotLight Object.
      *
-     * @param color     of the Material. Can't be null.
+     * @param texture     of the Material. Can't be null.
      * @param roughness of the Material. Can't be under 0.0 and over 1.0.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public OrenNayarMaterial(final Color color, final double roughness) {
-        super(color);
+    public OrenNayarMaterial(final Texture texture, final double roughness) {
+        super(texture);
 
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
@@ -98,7 +99,7 @@ public class OrenNayarMaterial extends Material {
 
 
                 basicColor = basicColor.add(
-                        diffuse.mul(Math.max(0.0, hit.n.dot(l)) * (c1 + a + b))
+                        texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(Math.max(0.0, hit.n.dot(l)) * (c1 + a + b))
                 );
                 //simple variant
                 /*
@@ -114,13 +115,13 @@ public class OrenNayarMaterial extends Material {
             }
         }
 
-        return diffuse.mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
     @Override
     public String toString() {
         return "OrenNayarMaterial{" +
-                "color=" + diffuse +
+                "color=" + texture +
                 ", rough_sq=" + rough_sq +
                 '}';
     }
@@ -133,7 +134,7 @@ public class OrenNayarMaterial extends Material {
         OrenNayarMaterial that = (OrenNayarMaterial) o;
 
         if (Double.compare(that.rough_sq, rough_sq) != 0) return false;
-        return diffuse.equals(that.diffuse);
+        return texture.equals(that.texture);
 
     }
 
@@ -141,7 +142,7 @@ public class OrenNayarMaterial extends Material {
     public int hashCode() {
         int result;
         long temp;
-        result = diffuse.hashCode();
+        result = texture.hashCode();
         temp = Double.doubleToLongBits(rough_sq);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;

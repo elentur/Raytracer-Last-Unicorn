@@ -5,6 +5,7 @@ import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
 import material.Material;
+import texture.TexCoord2;
 import utils.Hit;
 import utils.Ray;
 
@@ -31,6 +32,10 @@ public class Triangle extends Geometry {
     public final Normal3 nb;
     public final Normal3 nc;
 
+    private final TexCoord2 texCoordA;
+    private final TexCoord2 texCoordB;
+    private final TexCoord2 texCoordC;
+
 
     /**
      * Instantiates a new Triangle Object.
@@ -43,7 +48,8 @@ public class Triangle extends Geometry {
      */
     public Triangle(final Point3 a, final Point3 b, final Point3 c,
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
-                    final Material material) {
+                    final Material material,
+                    final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC) {
         super(material);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -64,14 +70,19 @@ public class Triangle extends Geometry {
          */
         this.nb = nb;
         this.nc = nc;
+
+        this.texCoordA = texCoordA;
+        this.texCoordB = texCoordB;
+        this.texCoordC = texCoordC;
     }
 
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC) {
         this(a, b, c,
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
-                material);
+                material,
+                texCoordA, texCoordB, texCoordC);
     }
 
     @Override
@@ -82,7 +93,7 @@ public class Triangle extends Geometry {
 
         // M x = V
 
-        final Vector3 v = new Vector3(a.x - r.o.x, a.y - r.o.y, a.z - r.o.z);
+        final Vector3 vec = new Vector3(a.x - r.o.x, a.y - r.o.y, a.z - r.o.z);
 
         final Mat3x3 m = new Mat3x3(
                 a.x - b.x, a.x - c.x, r.d.x,
@@ -92,20 +103,26 @@ public class Triangle extends Geometry {
 
         final double detA = m.determinant;
 
-        final double detA1 = m.col1(v).determinant;
+        final double detA1 = m.col1(vec).determinant;
         final double beta = detA1 / detA;
 
         if (beta >= 0 && beta <= 1) {
 
-            final double detA2 = m.col2(v).determinant;
+            final double detA2 = m.col2(vec).determinant;
             final double gamma = detA2 / detA;
 
             if (gamma > 0 && beta + gamma <= 1) {
-                final double detA3 = m.col3(v).determinant;
+                final double detA3 = m.col3(vec).determinant;
                 final double t = detA3 / detA;
                 if (t > 0) {
                     Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
-                    return new Hit(t, n, r, this);
+
+                    final Point3 p = r.at(t);
+
+                    final double u = texCoordA.u*(1 - beta - gamma) +  texCoordB.u * beta + texCoordC.u * gamma;
+                    final double v = texCoordA.v*(1 - beta - gamma) +  texCoordB.v * beta + texCoordC.v * gamma;
+
+                    return new Hit(t, n, r, this, new TexCoord2(u,v));
                 }
             }
 

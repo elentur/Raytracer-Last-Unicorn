@@ -5,6 +5,7 @@ import geometries.Geometry;
 import geometries.Triangle;
 import matVect.Point3;
 import material.SingleColorMaterial;
+import texture.SingleColorTexture;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class Octree implements Serializable {
     }
 
     private void generateOctrees() {
-        box = new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new Color(0, 0, 0)));
+        box = new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))));
 
         final double e = 0.0000001;
         if (g.size() > 500) {

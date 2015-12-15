@@ -16,6 +16,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.LambertMaterial;
 import raytracer.ImageSaver;
+import texture.SingleColorTexture;
 import utils.Color;
 
 /**
@@ -120,7 +121,7 @@ public class NewPlaneStage extends NewGeoStage {
             txtName.setText("Plane" + index);
             txtInputs[1].setNumber(-1.0);
             txtInputs[4].setNumber(1.0);
-            material.set(new LambertMaterial(new Color(0.5, 0.5, 0.5)));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             txtName.setText(p.name);
             txtInputs[0].setNumber(p.a.x);
