@@ -79,7 +79,7 @@ public class ImageSaver extends Application {
         world.geometries.add(sphere);*/
 
         Geometry sphere  = new Sphere(new Point3(1.5,0,0), 1, new ReflectiveMaterial(
-                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                new InterpolatedImageTexture("texture/world.jpg"),
                 new Color(1,1,1),
                 new Color(0.5,0.5,0.5),
                 64
@@ -87,7 +87,7 @@ public class ImageSaver extends Application {
         world.geometries.add(sphere);
 
         Geometry sphere2  = new Sphere(new Point3(-1.5,0,0), 1, new ReflectiveMaterial(
-                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                new ImageTexture("texture/world.jpg"),
                 new Color(1,1,1),
                 new Color(0.5,0.5,0.5),
                 64
@@ -125,7 +125,7 @@ public class ImageSaver extends Application {
         world.geometries.add(box);*/
 
        Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
-                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/sterne.jpg"),
+                new InterpolatedImageTexture("texture/sterne.jpg"),
                 0.6
         ));
 
