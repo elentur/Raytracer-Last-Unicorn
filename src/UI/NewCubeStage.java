@@ -159,7 +159,7 @@ public class NewCubeStage extends NewGeoStage {
             if (run.y < lbf.y) run = new Point3(run.x, lbf.y + 1.0, run.z);
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);
 
-            AxisAlignedBox p = new AxisAlignedBox(run, lbf, material.get());
+            AxisAlignedBox p = new AxisAlignedBox(material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;

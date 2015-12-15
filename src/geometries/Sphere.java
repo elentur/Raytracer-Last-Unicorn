@@ -28,20 +28,12 @@ public class Sphere extends Geometry {
      * Instantiates a new Sphere Object.
      *
      * @param material of the Sphere. Can't be null.
-     * @param c        of the Sphere. Can't be null.
-     * @param r        of the Sphere. Greater 0.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Point3 c, double r, final Material material) {
+    public Sphere(final Material material) {
         super(material);
-        if (c == null) {
-            throw new IllegalArgumentException("The c cannot be null!");
-        }
-        if (r <= 0) {
-            throw new IllegalArgumentException("The r cannot be 0 or lower!");
-        }
-        this.c = c;
-        this.r = r;
+        this.c = new Point3(0,0,0);
+        this.r = 1;
     }
 
     @Override

@@ -150,7 +150,7 @@ public class NewSphereStage extends NewGeoStage {
                     txtInputs[2].getDouble());
             double r = txtInputs[3].getDouble();
             if (r <= 0.0) r = 1.0;
-            Sphere p = new Sphere(center, r, material.get());
+            Sphere p = new Sphere(material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

@@ -86,7 +86,7 @@ public class Octree implements Serializable {
     }
 
     private void generateOctrees() {
-        box = new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))));
+        box = null;//new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))));
 
         final double e = 0.0000001;
         if (g.size() > 500) {
