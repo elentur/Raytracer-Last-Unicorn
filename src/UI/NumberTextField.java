@@ -91,6 +91,7 @@ public class NumberTextField extends TextField {
      * Tries to parse the user input to a number according to the provided
      * NumberFormat
      */
+
     private void parseAndFormatInput() {
         try {
             String input = getText();
