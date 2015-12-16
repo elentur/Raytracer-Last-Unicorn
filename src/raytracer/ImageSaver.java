@@ -3,7 +3,9 @@ package raytracer;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.*;
+import geometries.AxisAlignedBox;
+import geometries.Geometry;
+import geometries.Node;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,19 +17,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.DirectionalLight;
 import light.Light;
 import light.PointLight;
-import light.SpotLight;
-import matVect.Normal3;
 import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
-import material.*;
+import material.ReflectiveMaterial;
 import texture.ImageTexture;
-import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
-import texture.TexCoord2;
 import utils.Color;
 import utils.World;
 
@@ -76,7 +72,7 @@ public class ImageSaver extends Application {
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,-2,4),new Vector3(0,0.5,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,2,4),new Vector3(0,-0.5,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
@@ -117,16 +113,24 @@ public class ImageSaver extends Application {
         Geometry geo = new AxisAlignedBox(
                 new ReflectiveMaterial(
                         new ImageTexture("texture/world.jpg"),
-                        /*new ImageTexture("texture/world.jpg"),*/
                     new Color(1,1,1),
                     new Color(0.5,0.5,0.5),
                     64
                 )
         );
+       /* Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
+                new ReflectiveMaterial(
+                        new SingleColorTexture(new Color(0.5,0.5,0.5)),
+                        new Color(1,1,1),
+                        new Color(0.5,0.5,0.5),
+                        64
+                )
+        );*/
 
         Transform t = new Transform();
 
         t = t.rotateY(Math.PI/4);
+        t=t.scale(1,1,1);
 
         Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
 

@@ -1,14 +1,10 @@
 package geometries;
 
-import matVect.Normal3;
 import matVect.Point3;
 import matVect.Transform;
 import material.Material;
-import texture.TexCoord2;
 import utils.Hit;
 import utils.Ray;
-
-import java.util.HashSet;
 
 /**
  * This class represents a AxisAlignedBox Object.
@@ -51,7 +47,7 @@ public class AxisAlignedBox extends Geometry {
         faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p); // front site
         faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p); // back site
 
-        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p); // left site
+        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p); // left site
         faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p); // right site
 
     }
