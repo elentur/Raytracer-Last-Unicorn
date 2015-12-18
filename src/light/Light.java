@@ -1,5 +1,6 @@
 package light;
 
+import geometries.Geometry;
 import matVect.Point3;
 import matVect.Vector3;
 import utils.Color;
@@ -35,7 +36,7 @@ public abstract class Light extends Element implements Serializable {
      * @param world The world object for the shadow calculation
      * @return Returns if a point is illuminated
      */
-    public abstract boolean illuminates(final Point3 point, final World world);
+    public abstract boolean illuminates(final Point3 point, final World world, final Geometry geo);
 
     /**
      * Returns a Vector that shows from the illuminated point to the Lightsourc

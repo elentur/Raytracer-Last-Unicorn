@@ -154,7 +154,7 @@ public class NewPlaneStage extends NewGeoStage {
                     txtInputs[5].getDouble());
 
 
-            Plane p = new Plane(material.get());
+            Plane p = new Plane(material.get(),true,true);
             p.name = txtName.getText();
 
             int index = 1;

@@ -77,7 +77,7 @@ public class TransparentMaterial extends Material {
 
             Vector3 l = light.directionFrom(p);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(p, world)) {
+            if (light.illuminates(p, world,hit.geo)) {
                 basicColor = basicColor.add(
                         light.color.mul(texture.getColor(0,0))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))

@@ -35,7 +35,7 @@ public class LambertMaterial extends Material {
         Color c = new Color(0, 0, 0);
         for (Light light : world.lights) {
             final Point3 p = hit.ray.at(hit.t);
-            if(light.illuminates(p,world)){
+            if(light.illuminates(p,world,hit.geo)){
                 c = c.add(light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
             }
         }

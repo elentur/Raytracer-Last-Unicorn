@@ -58,7 +58,7 @@ public class SpotLight extends Light {
     }
 
     @Override
-    public boolean illuminates(final Point3 point, final World world) {
+    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -68,7 +68,7 @@ public class SpotLight extends Light {
         }
 
         if(Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
-            if(castsShadow) {
+            if(castsShadow && geo.reciveShadows) {
 
                 final Ray r = new Ray(point, directionFrom(point));
 

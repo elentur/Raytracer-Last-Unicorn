@@ -128,7 +128,7 @@ public class NewOBJStage extends NewGeoStage {
         try {
 
             if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
-            ShapeFromFile p = new ShapeFromFile(file, material.get());
+            ShapeFromFile p = new ShapeFromFile(file, material.get(),true,true);
 
             ImageSaver.raytracer.getWorld().geometries.add(p);
 

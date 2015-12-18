@@ -168,7 +168,7 @@ public class NewTriangleStage extends NewGeoStage {
                     txtInputs[8].getDouble());
 
 
-            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
+            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),true,true);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

@@ -34,12 +34,12 @@ public class AxisAlignedBox extends Geometry {
      * @param material of the Axis Aligned Box. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public AxisAlignedBox(final Material material) {
-        super(material);
+    public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows) {
+        super(material,reciveShadows, castShadows);
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 
-        Plane p = new Plane(material);
+        Plane p = new Plane(material,reciveShadows,castShadows);
 
         faces[0] = new Node(new Transform().translate(0,run.y,0),p); // up site
         faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p); // down site

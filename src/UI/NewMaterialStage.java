@@ -138,10 +138,10 @@ public class NewMaterialStage extends Stage {
         matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4));
         matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false));
         matTracer.getWorld().backImg = new Image("img/matBack.png", 80, 80, false, false, false);
-        matTracer.getWorld().geometries.add(new Sphere(st.material.get()));
+        matTracer.getWorld().geometries.add(new Sphere(st.material.get(),true,true));
         st.material.addListener(a -> {
             matTracer.getWorld().geometries.clear();
-            matTracer.getWorld().geometries.add(new Sphere(st.material.get()));
+            matTracer.getWorld().geometries.add(new Sphere(st.material.get(),true,true));
             matTracer.render(img);
         });
         matTracer.render(img);

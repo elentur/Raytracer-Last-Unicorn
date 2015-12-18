@@ -2,7 +2,6 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
-import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
 import utils.Hit;
@@ -30,8 +29,8 @@ public class Sphere extends Geometry {
      * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Material material) {
-        super(material);
+    public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows) {
+        super(material,reciveShadows,castShadows);
         this.c = new Point3(0,0,0);
         this.r = 1;
     }

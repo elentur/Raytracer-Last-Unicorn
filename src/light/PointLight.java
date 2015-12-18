@@ -36,7 +36,7 @@ public class PointLight extends Light {
 
 
     @Override
-    public boolean illuminates(final Point3 point, final World world) {
+    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -44,7 +44,7 @@ public class PointLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if(castsShadow) {
+        if(castsShadow&& geo.reciveShadows) {
             final Ray r = new Ray(point, directionFrom(point));
 
             final double tl = r.tOf(position);
@@ -52,7 +52,7 @@ public class PointLight extends Light {
             for (final Geometry g : world.geometries) {
 
                 final Hit h = g.hit(r);
-                if ((h != null && h.t >= 0.0001 && h.t < tl)) {
+                if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
 
                     return false;
                 }
