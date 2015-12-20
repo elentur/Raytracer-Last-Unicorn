@@ -20,6 +20,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Marcus Baetz on 25.11.2015.
@@ -335,8 +336,17 @@ public class Raytracer {
         if (y < 0 || y > imgHeight.get() - 1)
             throw new IllegalArgumentException("y has to be between 0 and height -1.");
 
-        Ray r = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
-        utils.Color c = world.hit(r, x, y);
+        Set<Ray> rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
+
+        utils.Color raysColor = new Color(0,0,0);
+
+        for(Ray r : rays) {
+            raysColor.mul(world.hit(r, x, y));
+        }
+
+        //utils.Color c = new Color(raysColor.r / rays.size(), raysColor.r / rays.size(), raysColor.r / rays.size());
+
+        utils.Color c = raysColor;
 
         if (hdr) hdrFilter.filter(c, x, y);
         if (c.r > 1) c = new utils.Color(1.0, c.g, c.b);

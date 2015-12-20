@@ -23,6 +23,7 @@ import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
 import material.ReflectiveMaterial;
+import sampling.SamplingPattern;
 import texture.ImageTexture;
 import utils.Color;
 import utils.World;
@@ -72,8 +73,10 @@ public class ImageSaver extends Application {
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,2,4),new Vector3(0,-0.5,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,2,4),new Vector3(0,-0.5,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(1,1));
         raytracer.setCamera(camera);
+
+
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
         world.geometries.add(sphere);*/

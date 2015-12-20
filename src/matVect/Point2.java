@@ -1,4 +1,4 @@
-package material;
+package matVect;
 
 /**
  * Created by roberto on 20/12/15.
