@@ -9,10 +9,12 @@ import geometries.Geometry;
  */
 public class Tracer {
 
-    private int recursionDepth = 0;
+    public int recursionDepth = 0;
+    public boolean in;
 
     public Tracer(int recursionDepth) {
         this.recursionDepth = recursionDepth;
+        this.in = true;
     }
 
     public Color reflection(Ray reflectionRay,World world){
@@ -30,6 +32,22 @@ public class Tracer {
             }
         }
 
+
         return world.backgroundColor;
     }
+/*
+    public Color refraction(Ray reflectionRay,World world, boolean in){
+        this.in = !in;
+        if(recursionDepth > 0) {
+            recursionDepth--;
+            Hit hit =  world.hit(reflectionRay,0,0);
+
+            if(hit != null && hit.t > 0.0001){
+                return hit.geo.material.colorFor(hit, world,this);
+            }
+        }
+
+
+        return world.backgroundColor;
+    }*/
 }

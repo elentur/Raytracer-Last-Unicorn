@@ -79,7 +79,7 @@ public class NewSphereStage extends NewGeoStage {
         final Label lblZ = new Label("z");
         txtInputs = new NumberTextField[4];
         for (int i = 0; i < 4; i++) {
-            txtInputs[i] = new NumberTextField("0.0");
+            txtInputs[i] = new NumberTextField(0.0);
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 2);
         }
 
@@ -120,17 +120,17 @@ public class NewSphereStage extends NewGeoStage {
             }
             txtName.setText("Sphere" + index);
 
-            txtInputs[0].setText("0.0");
-            txtInputs[1].setText("0.0");
-            txtInputs[2].setText("-3.0");
-            txtInputs[3].setText("0.5");
+            txtInputs[0].setNumber(0.0);
+            txtInputs[1].setNumber(0.0);
+            txtInputs[2].setNumber(-3.0);
+            txtInputs[3].setNumber(0.5);
             material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             txtName.setText(s.name);
-            txtInputs[0].setText(s.c.x + "");
-            txtInputs[1].setText(s.c.y + "");
-            txtInputs[2].setText(s.c.z + "");
-            txtInputs[3].setText(s.r + "");
+            txtInputs[0].setNumber(s.c.x);
+            txtInputs[1].setNumber(s.c.y);
+            txtInputs[2].setNumber(s.c.z);
+            txtInputs[3].setNumber(s.r);
             material.set(s.material);
             // cpColorPicker.setValue(new javafx.scene.paint.Color(s.material.r, s.material.g, s.material.b, 1));
         }
@@ -145,12 +145,12 @@ public class NewSphereStage extends NewGeoStage {
         try {
             if (s != null) ImageSaver.raytracer.getWorld().geometries.remove(s);
             Point3 center = new Point3(
-                    Double.parseDouble(txtInputs[0].getText()),
-                    Double.parseDouble(txtInputs[1].getText()),
-                    Double.parseDouble(txtInputs[2].getText()));
-            double r = Double.parseDouble(txtInputs[3].getText());
+                     txtInputs[0].getDouble(),
+                    txtInputs[1].getDouble(),
+                    txtInputs[2].getDouble());
+            double r = txtInputs[3].getDouble();
             if (r <= 0.0) r = 1.0;
-            Sphere p = new Sphere(center, r, material.get());
+            Sphere p = new Sphere(material.get());
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

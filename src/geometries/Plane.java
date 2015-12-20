@@ -2,7 +2,6 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
-import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
 import utils.Hit;
@@ -27,22 +26,12 @@ public class Plane extends Geometry {
      * Instantiates a new Plane Object.
      *
      * @param material of the Plane. Can't be null.
-     * @param a        of the Plane. Can't be null.
-     * @param n        of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Point3 a, final Normal3 n, final Material material) {
+    public Plane(final Material material) {
         super(material);
-
-        if (a == null) {
-            throw new IllegalArgumentException("The a cannot be null!");
-        }
-        if (n == null) {
-            throw new IllegalArgumentException("The n cannot be null!");
-        }
-
-        this.a = a;
-        this.n = n;
+        this.a = new Point3(0, 0, 0);
+        this.n = new Normal3(0, 1, 0);
     }
 
     @Override
@@ -59,8 +48,8 @@ public class Plane extends Geometry {
 
             final Point3 p = r.at(t);
 
-            final double v = p.x;
-            final double u = p.z;
+            final double u = p.x+0.5;
+            final double v = p.z+0.5;
 
             if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
         }

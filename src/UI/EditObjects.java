@@ -76,7 +76,7 @@ public class EditObjects extends Stage {
             if (!(e instanceof Camera)) {
                 if (e instanceof Plane) {
                     Plane p1 = (Plane) e;
-                    Plane p = new Plane(p1.a, p1.n, p1.material);
+                    Plane p = new Plane(p1.material);
                     p.name = p1.name;
                     p = (Plane) nameTest(p);
 
@@ -84,14 +84,14 @@ public class EditObjects extends Stage {
                     //  l.getItems().add(p);
                 } else if (e instanceof Sphere) {
                     Sphere s1 = (Sphere) e;
-                    Sphere s = new Sphere(s1.c, s1.r, s1.material);
+                    Sphere s = new Sphere(s1.material);
                     s.name = s1.name;
                     s = (Sphere) nameTest(s);
                     ImageSaver.raytracer.getWorld().geometries.add(s);
                     //  l.getItems().add(s);
                 } else if (e instanceof AxisAlignedBox) {
                     AxisAlignedBox b1 = (AxisAlignedBox) e;
-                    AxisAlignedBox b = new AxisAlignedBox(b1.run, b1.lbf, b1.material);
+                    AxisAlignedBox b = new AxisAlignedBox(b1.material);
                     b.name = b1.name;
                     b = (AxisAlignedBox) nameTest(b);
                     ImageSaver.raytracer.getWorld().geometries.add(b);

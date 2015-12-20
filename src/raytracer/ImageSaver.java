@@ -3,7 +3,9 @@ package raytracer;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.*;
+import geometries.AxisAlignedBox;
+import geometries.Geometry;
+import geometries.Node;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,20 +17,18 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.DirectionalLight;
 import light.Light;
 import light.PointLight;
-import light.SpotLight;
-import matVect.Normal3;
 import matVect.Point3;
+import matVect.Transform;
 import matVect.Vector3;
-import material.*;
+import material.ReflectiveMaterial;
 import texture.ImageTexture;
-import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
-import texture.TexCoord2;
 import utils.Color;
 import utils.World;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 /**
@@ -64,22 +64,22 @@ public class ImageSaver extends Application {
         raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
     */
 
-        World world = new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0));
+        World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
         raytracer.setWorld(world);
 
 
-        Light light2 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
-        light2.name = "Pointlight1";
-        world.lights.add(light2);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
+        light1.name = "Pointlight1";
+        world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(-5,5,5),new Vector3(1,-1,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,2,4),new Vector3(0,-0.5,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
         world.geometries.add(sphere);*/
 
-        Geometry sphere  = new Sphere(new Point3(1.5,0,0), 1, new ReflectiveMaterial(
-                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+        /*Geometry sphere  = new Sphere(new Point3(1.5,0,0), 1, new ReflectiveMaterial(
+                new InterpolatedImageTexture("texture/world.jpg"),
                 new Color(1,1,1),
                 new Color(0.5,0.5,0.5),
                 64
@@ -87,12 +87,12 @@ public class ImageSaver extends Application {
         world.geometries.add(sphere);
 
         Geometry sphere2  = new Sphere(new Point3(-1.5,0,0), 1, new ReflectiveMaterial(
-                new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                new ImageTexture("texture/world.jpg"),
                 new Color(1,1,1),
                 new Color(0.5,0.5,0.5),
                 64
         ));
-        world.geometries.add(sphere2);
+        world.geometries.add(sphere2);*/
 
 
         /*Geometry triangle  = new Triangle(
@@ -110,26 +110,40 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        /*Geometry box = new AxisAlignedBox(
-                new Point3(0.5,1.0,0.5),
-                new Point3(-0.5,0.0,-0.5),
+        Geometry geo = new AxisAlignedBox(
                 new ReflectiveMaterial(
-                        *//*new SingleColorTexture(new Color(1,0,0)),*//*
-                        new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
+                        new ImageTexture("texture/world.jpg"),
                     new Color(1,1,1),
                     new Color(0.5,0.5,0.5),
                     64
                 )
         );
+       /* Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
+                new ReflectiveMaterial(
+                        new SingleColorTexture(new Color(0.5,0.5,0.5)),
+                        new Color(1,1,1),
+                        new Color(0.5,0.5,0.5),
+                        64
+                )
+        );*/
 
-        world.geometries.add(box);*/
+        Transform t = new Transform();
 
-       Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
-                new InterpolatedImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/sterne.jpg"),
+        t = t.rotateY(Math.PI/4);
+        t=t.scale(1,1,1);
+
+        Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
+
+        world.geometries.add(n);
+
+
+
+       /*Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
+                new InterpolatedImageTexture("texture/sterne.jpg"),
                 0.6
         ));
 
-        world.geometries.add(plane);
+        world.geometries.add(plane);*/
     }
 
     /**

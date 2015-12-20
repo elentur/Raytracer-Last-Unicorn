@@ -7,15 +7,31 @@ import texture.Texture;
 import utils.*;
 
 /**
- * Created by Marcus Baetz on 01.12.2015.
+ * Created by Robert Dziuba on 01.12.2015.
  *
- * @author Marcus Bätz
+ * @author Robert Dziuba
  */
 public class ReflectiveMaterial extends Material {
+    /**
+     * Represents the Specular color
+     */
     public final Color specular;
+    /**
+     * represents the reflection amount and color
+     */
     public final  Color reflection;
+    /**
+     * amount of the light spot
+     */
     public final  int exponent;
 
+    /**
+     * A Material what represents any reflectiv materials
+     * @param texture  of the Material. Can't be null.
+     * @param specular of the Material. Can't be null.
+     * @param reflection of the Material. Can't be null.
+     * @param exponent of the Material. Muss be bigger zero.
+     */
     public ReflectiveMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent) {
         super(texture);
         this.specular=specular;

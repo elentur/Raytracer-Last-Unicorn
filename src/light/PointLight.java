@@ -26,6 +26,7 @@ public class PointLight extends Light {
      *
      * @param color    Represents the color of the light
      * @param position Represents the position of the light
+     * @param castShadow Shadows on or of
      */
     public PointLight(final Color color, final Point3 position, final boolean castShadow) {
         super(color,castShadow);
@@ -52,6 +53,7 @@ public class PointLight extends Light {
 
                 final Hit h = g.hit(r);
                 if ((h != null && h.t >= 0.0001 && h.t < tl)) {
+
                     return false;
                 }
             }

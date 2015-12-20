@@ -80,7 +80,7 @@ public class NewTriangleStage extends NewGeoStage {
         final Label lblZ = new Label("z");
         txtInputs = new NumberTextField[9];
         for (int i = 0; i < 9; i++) {
-            txtInputs[i] = new NumberTextField("0.0");
+            txtInputs[i] = new NumberTextField(0.0);
             center.add(txtInputs[i], (i % 3) + 1, (i / 3) + 2);
         }
 
@@ -121,27 +121,27 @@ public class NewTriangleStage extends NewGeoStage {
                     if (g instanceof Triangle) index++;
             }
             txtName.setText("Triangle" + index);
-            txtInputs[0].setText("-0.5");
-            txtInputs[1].setText("0.5");
-            txtInputs[2].setText("-3.0");
-            txtInputs[3].setText("0.5");
-            txtInputs[4].setText("0.5");
-            txtInputs[5].setText("-3.0");
-            txtInputs[6].setText("0.5");
-            txtInputs[7].setText("-0.5");
-            txtInputs[8].setText("-3.0");
+            txtInputs[0].setNumber(-0.5);
+            txtInputs[1].setNumber(0.5);
+            txtInputs[2].setNumber(-3.0);
+            txtInputs[3].setNumber(0.5);
+            txtInputs[4].setNumber(0.5);
+            txtInputs[5].setNumber(-3.0);
+            txtInputs[6].setNumber(0.5);
+            txtInputs[7].setNumber(-0.5);
+            txtInputs[8].setNumber(-3.0);
             material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
         } else {
             txtName.setText(t.name);
-            txtInputs[0].setText(t.a.x + "");
-            txtInputs[1].setText(t.a.y + "");
-            txtInputs[2].setText(t.a.z + "");
-            txtInputs[3].setText(t.b.x + "");
-            txtInputs[4].setText(t.b.y + "");
-            txtInputs[5].setText(t.b.z + "");
-            txtInputs[6].setText(t.c.x + "");
-            txtInputs[7].setText(t.c.y + "");
-            txtInputs[8].setText(t.c.z + "");
+            txtInputs[0].setNumber(t.a.x);
+            txtInputs[1].setNumber(t.a.y);
+            txtInputs[2].setNumber(t.a.z);
+            txtInputs[3].setNumber(t.b.x);
+            txtInputs[4].setNumber(t.b.y);
+            txtInputs[5].setNumber(t.b.z);
+            txtInputs[6].setNumber(t.c.x);
+            txtInputs[7].setNumber(t.c.y);
+            txtInputs[8].setNumber(t.c.z);
             material.set(t.material);
             // cpColorPicker.setValue(new javafx.scene.paint.Color(t.material.r, t.material.g, t.material.b, 1));
         }
@@ -155,17 +155,17 @@ public class NewTriangleStage extends NewGeoStage {
         try {
             if (t != null) ImageSaver.raytracer.getWorld().geometries.remove(t);
             Point3 edgeA = new Point3(
-                    Double.parseDouble(txtInputs[0].getText()),
-                    Double.parseDouble(txtInputs[1].getText()),
-                    Double.parseDouble(txtInputs[2].getText()));
+                    txtInputs[0].getDouble(),
+                    txtInputs[1].getDouble(),
+                    txtInputs[2].getDouble());
             Point3 edgeB = new Point3(
-                    Double.parseDouble(txtInputs[3].getText()),
-                    Double.parseDouble(txtInputs[4].getText()),
-                    Double.parseDouble(txtInputs[5].getText()));
+                    txtInputs[3].getDouble(),
+                    txtInputs[4].getDouble(),
+                    txtInputs[5].getDouble());
             Point3 edgeC = new Point3(
-                    Double.parseDouble(txtInputs[6].getText()),
-                    Double.parseDouble(txtInputs[7].getText()),
-                    Double.parseDouble(txtInputs[8].getText()));
+                    txtInputs[6].getDouble(),
+                    txtInputs[7].getDouble(),
+                    txtInputs[8].getDouble());
 
 
             Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
