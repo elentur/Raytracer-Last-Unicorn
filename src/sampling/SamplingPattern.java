@@ -31,8 +31,8 @@ public class SamplingPattern {
     }
 
     private void generateSampling() {
-        for(double x = 0; x < rows; x++){
-            for(double y = 0; y < columns; y++){
+        for(double x = 1; x <= rows; x++){
+            for(double y = 1; y <= columns; y++){
                 points.add(new Point2(x,y));
             }
         }

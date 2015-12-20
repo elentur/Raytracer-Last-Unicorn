@@ -338,15 +338,14 @@ public class Raytracer {
 
         Set<Ray> rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
 
-        utils.Color raysColor = new Color(0,0,0);
+        utils.Color raysColor = null;
 
         for(Ray r : rays) {
-            raysColor.mul(world.hit(r, x, y));
+            if(raysColor == null) raysColor = world.hit(r, x, y);
+            else raysColor = raysColor.add(world.hit(r, x, y));
         }
 
-        //utils.Color c = new Color(raysColor.r / rays.size(), raysColor.r / rays.size(), raysColor.r / rays.size());
-
-        utils.Color c = raysColor;
+        utils.Color c = new Color(raysColor.r / rays.size(), raysColor.g / rays.size(), raysColor.b / rays.size());
 
         if (hdr) hdrFilter.filter(c, x, y);
         if (c.r > 1) c = new utils.Color(1.0, c.g, c.b);
