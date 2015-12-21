@@ -19,8 +19,8 @@ public class SamplingPattern {
 
     public SamplingPattern(final double rows, final double columns) {
 
-        if(rows < 1) throw new IllegalArgumentException("The rows cannot be smaller than 1!");
-        if(columns < 1) throw new IllegalArgumentException("The columns cannot be smaller than 1!");
+        if(rows < 0) throw new IllegalArgumentException("The rows cannot be smaller than 0!");
+        if(columns < 0) throw new IllegalArgumentException("The columns cannot be smaller than 0!");
 
         this.rows = rows;
         this.columns = columns;
@@ -31,9 +31,9 @@ public class SamplingPattern {
     }
 
     private void generateSampling() {
-        for(double x = 1; x <= rows; x++){
-            for(double y = 1; y <= columns; y++){
-                points.add(new Point2(x,y));
+        for(double x = 0; x < columns; x++){
+            for(double y = 0; y < rows; y++){
+                points.add(new Point2(1.0/columns * x - 0.5, 1.0/rows * y - 0.5));
             }
         }
     }

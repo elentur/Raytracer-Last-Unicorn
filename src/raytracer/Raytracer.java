@@ -24,6 +24,7 @@ import java.util.Set;
 
 /**
  * Created by Marcus Baetz on 25.11.2015.
+ *
  * @author Marcus Bätz
  */
 public class Raytracer {
@@ -97,7 +98,7 @@ public class Raytracer {
     /**
      * represents the index of Refraction of the empty room of the scene
      */
-    public double iOR=1.0003;
+    public double iOR = 1.0003;
 
     /**
      * represents the start time of the render process.
@@ -109,7 +110,7 @@ public class Raytracer {
 
 
     public Raytracer(boolean loadConfig) {
-        world= new World(new Color(0,0,0), new Color(0.2,0.2,0.2));
+        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2));
         if (loadConfig) loadConfig();
         else setDefault();
         maxProgress.bind(imgHeight.multiply(imgWidth));
@@ -155,15 +156,15 @@ public class Raytracer {
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
                 imgHeight.set((int) (Double.parseDouble(input.get("height"))));
                 recursionDepth = (int) (Double.parseDouble(input.get("recursion")));
-                iOR=(Double.parseDouble(input.get("ior")));
+                iOR = (Double.parseDouble(input.get("ior")));
                 Color back = new Color(Double.parseDouble(input.get("backgroundColorRed")),
                         Double.parseDouble(input.get("backgroundColorGreen")),
                         Double.parseDouble(input.get("backgroundColorBlue")));
                 Color ambient = new Color(Double.parseDouble(input.get("ambientColorRed")),
                         Double.parseDouble(input.get("ambientColorGreen")),
                         Double.parseDouble(input.get("ambientColorBlue")));
-               World w = world;
-                world= new World(back, ambient);
+                World w = world;
+                world = new World(back, ambient);
                 world.lights.addAll(w.lights);
                 world.geometries.addAll(w.geometries);
             } catch (Exception e) {
@@ -230,7 +231,7 @@ public class Raytracer {
             }
             prepare();
             image.setImage(img);
-           // actualProgress.set(0);
+            // actualProgress.set(0);
             threadBreak = false;
             quadrantCounter = 0;
             quadrant = newQuadrants(pattern);
@@ -244,7 +245,7 @@ public class Raytracer {
                     for (int x = 0; x < imgWidth.get(); x++) {
                         final byte[] b = draw(x, y);
                         for (int i = 0; i < 3; i++) {
-                            imageData[ y * imgWidth.get() * 3 + x * 3 +i ] = b[i];
+                            imageData[y * imgWidth.get() * 3 + x * 3 + i] = b[i];
                         }
                     }
                 }
@@ -267,7 +268,7 @@ public class Raytracer {
      * @return paatern array of the renderer
      */
     private Point[] newQuadrants(final int pattern) {
-            Point[] q;
+        Point[] q;
         if (pattern == 0) {
             tileX = 10;
             tileY = 10;
@@ -328,24 +329,25 @@ public class Raytracer {
     /**
      * Generates for the pixel the specific material.
      *
-     * @param x           represents the x coordinate
-     * @param y           represents the y coordinate
+     * @param x represents the x coordinate
+     * @param y represents the y coordinate
      */
     private byte[] draw(final int x, final int y) {
         if (x < 0 || x > imgWidth.get() - 1) throw new IllegalArgumentException("x has to be between 0 and width -1.");
         if (y < 0 || y > imgHeight.get() - 1)
             throw new IllegalArgumentException("y has to be between 0 and height -1.");
 
-        Set<Ray> rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
 
-        utils.Color raysColor = null;
-
-        for(Ray r : rays) {
-            if(raysColor == null) raysColor = world.hit(r, x, y);
-            else raysColor = raysColor.add(world.hit(r, x, y));
+        utils.Color c = new Color(0, 0, 0);
+        Set<Ray> rays;
+        synchronized (camera) {
+            rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
+        }
+        for (Ray r : rays) {
+            c = c.add(world.hit(r, x, y));
         }
 
-        utils.Color c = new Color(raysColor.r / rays.size(), raysColor.g / rays.size(), raysColor.b / rays.size());
+        c = c.mul(1.0 / rays.size());
 
         if (hdr) hdrFilter.filter(c, x, y);
         if (c.r > 1) c = new utils.Color(1.0, c.g, c.b);
@@ -399,7 +401,7 @@ public class Raytracer {
             if (hdr) hdrFilter.getImage(imageData);
             pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
                     imgWidth.get() * 3);
-           // this.updateProgress(maxProgress.get(), maxProgress.get());
+            // this.updateProgress(maxProgress.get(), maxProgress.get());
             return null;
         }
     }

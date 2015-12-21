@@ -50,9 +50,9 @@ public class PerspectiveCamera extends Camera {
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
         for(Point2 point : samplingPattern.points) {
-            final Vector3 summand2 = this.u.mul(x - ((w - 1.0) / 2)).mul(point.x);
-            final Vector3 summand3 = this.v.mul(y - ((h - 1.0) / 2)).mul(point.y);
-            final Vector3 r = summand1.add(summand2).add(summand3);
+            final Vector3 summand2 = this.u.mul(x - ((w - 1.0) / 2));
+            final Vector3 summand3 = this.v.mul(y - ((h - 1.0) / 2));
+            final Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
             rays.add(new Ray(this.e, r.normalized()));
         }
 
