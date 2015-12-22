@@ -137,12 +137,12 @@ public class NewMaterialStage extends Stage {
     private void setUpTracer(NewGeoStage st) {
        // matTracer.setWorld(new World(new utils.Color(0, 0, 0), new utils.Color(0, 0, 0)));
         matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1)));
-        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false));
+        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false,500));
         matTracer.getWorld().backImg = new Image("img/matBack.png", 80, 80, false, false, false);
-        matTracer.getWorld().geometries.add(new Sphere(st.material.get()));
+        matTracer.getWorld().geometries.add(new Sphere(st.material.get(),true,true,true,true));
         st.material.addListener(a -> {
             matTracer.getWorld().geometries.clear();
-            matTracer.getWorld().geometries.add(new Sphere(st.material.get()));
+            matTracer.getWorld().geometries.add(new Sphere(st.material.get(),true,true,true,true));
             matTracer.render(img);
         });
         matTracer.render(img);
@@ -175,22 +175,22 @@ public class NewMaterialStage extends Stage {
                 chbMaterial.getSelectionModel().select(3);
 
                 cpColorPicker.setValue(new Color(m.texture.getColor(0,0).r, m.texture.getColor(0,0).g, m.texture.getColor(0,0).b, 1));
-                cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
+                //cpSpec.setValue(new Color(m.specular.ge.r, m.specular.g, m.specular.b, 1));
                 sldExp.setValue(m.exponent);
             }
             if (st.material.get() instanceof ReflectiveMaterial) {
                 ReflectiveMaterial m = (ReflectiveMaterial) st.material.get();
                 chbMaterial.getSelectionModel().select(4);
                 cpColorPicker.setValue(new Color(m.texture.getColor(0,0).r, m.texture.getColor(0,0).g, m.texture.getColor(0,0).b, 1));
-                cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
-                cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
+               // cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
+              //  cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
                 sldExp.setValue(m.exponent);
             } if (st.material.get() instanceof TransparentMaterial) {
                 TransparentMaterial m = (TransparentMaterial) st.material.get();
                 chbMaterial.getSelectionModel().select(5);
                 cpColorPicker.setValue(new Color(m.texture.getColor(0,0).r, m.texture.getColor(0,0).g, m.texture.getColor(0,0).b, 1));
-                cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
-                cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
+              //  cpSpec.setValue(new Color(m.specular.r, m.specular.g, m.specular.b, 1));
+              //  cpRef.setValue(new Color(m.reflection.r, m.reflection.g, m.reflection.b, 1));
                 sldExp.setValue(m.exponent);
                 txtIOR.setNumber(m.iOR);
             }
@@ -216,17 +216,17 @@ public class NewMaterialStage extends Stage {
         double exp = sldExp.getValue();
         Material material = null;
         if (typ == 0) {
-            material = new SingleColorMaterial(new SingleColorTexture(new utils.Color(0,0,0)));
+            material = new SingleColorMaterial(new SingleColorTexture(new utils.Color(0,0,0)),new SingleColorTexture(new utils.Color(0,0,0)),0);
         } else if (typ == 1) {
-            material = new LambertMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())));
+            material = new LambertMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())),new SingleColorTexture(new utils.Color(0,0,0)),0,new SingleColorTexture(new utils.Color(0,0,0)));
         } else if (typ == 2) {
-            material = new OrenNayarMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), exp);
+            material = new OrenNayarMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), exp,new SingleColorTexture(new utils.Color(0,0,0)),0,new SingleColorTexture(new utils.Color(0,0,0)));
         } else if (typ == 3) {
-            material = new PhongMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()), (int) exp);
+            material = new PhongMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new SingleColorTexture(new utils.Color(s.getRed(), s.getGreen(), s.getBlue())), (int) exp,new SingleColorTexture(new utils.Color(0,0,0)),0,new SingleColorTexture(new utils.Color(0,0,0)));
         }else if (typ == 4) {
-            material = new ReflectiveMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp);
+            material = new ReflectiveMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new SingleColorTexture( new utils.Color(s.getRed(), s.getGreen(), s.getBlue())),new SingleColorTexture(new utils.Color(r.getRed(), r.getGreen(),r.getBlue())), (int) exp,new SingleColorTexture(new utils.Color(0,0,0)),0,new SingleColorTexture(new utils.Color(0,0,0)));
         }else if (typ ==5) {
-            material = new TransparentMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new utils.Color(s.getRed(), s.getGreen(), s.getBlue()),new utils.Color(r.getRed(), r.getGreen(),r.getBlue()), (int) exp, txtIOR.getDouble());
+            material = new TransparentMaterial(new SingleColorTexture(new utils.Color(c.getRed(), c.getGreen(), c.getBlue())), new SingleColorTexture(new utils.Color(s.getRed(), s.getGreen(), s.getBlue())),new SingleColorTexture(new utils.Color(r.getRed(), r.getGreen(),r.getBlue())), (int) exp, txtIOR.getDouble(),new SingleColorTexture(new utils.Color(0,0,0)),0,new SingleColorTexture(new utils.Color(0,0,0)));
         }
         if (material != null) stage.material.set(material);
     }

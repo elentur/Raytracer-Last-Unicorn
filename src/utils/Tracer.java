@@ -23,6 +23,7 @@ public class Tracer {
             recursionDepth--;
             Hit hit = null;
             for (Geometry g : world.geometries) {
+                if(!g.visibility) continue;
                 final Hit h = g.hit(reflectionRay);
                 if (hit == null || (h != null && h.t < hit.t && h.t > 0.0001)) hit = h;
             }

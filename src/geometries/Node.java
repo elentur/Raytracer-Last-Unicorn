@@ -32,8 +32,10 @@ public class Node extends Geometry {
      * @param geos is a List of containing geometries.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, final List<Geometry> geos) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))));
+    public Node(final Transform t, final List<Geometry> geos,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
+                new SingleColorTexture(new Color(0,0,0)),0),reciveShadows,castShadows,
+                visibility,flipNormal);
 
         if (t == null) throw new IllegalArgumentException("The t cannot be null!");
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
@@ -48,8 +50,9 @@ public class Node extends Geometry {
      * @param geo is a geometry.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, Geometry geo) {
-        this(t, new ArrayList<Geometry>(Arrays.asList(geo)));
+    public Node(final Transform t, Geometry geo,final boolean reciveShadows,
+                final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        this(t, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
     }
 
     @Override

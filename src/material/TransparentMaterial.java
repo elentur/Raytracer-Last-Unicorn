@@ -15,11 +15,13 @@ import utils.*;
  */
 public class TransparentMaterial extends Material {
     public final double iOR;
-    public final Color specular;
-    public final  Color reflection;
+    public final Texture specular;
+    public final  Texture reflection;
     public final  int exponent;
-    public TransparentMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent, double indexOfRefraction) {
-        super(texture);
+    public TransparentMaterial(final Texture texture, final  Texture specular, final  Texture reflection,
+                               final  int exponent, double indexOfRefraction, final Texture bumpMap,
+                               final double bumpScale, final Texture irradiance) {
+        super(texture,bumpMap,bumpScale,irradiance);
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
@@ -77,20 +79,20 @@ public class TransparentMaterial extends Material {
 
             Vector3 l = light.directionFrom(p);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(p, world)) {
+            if (light.illuminates(p, world,hit.geo)) {
                 basicColor = basicColor.add(
-                        light.color.mul(texture.getColor(0,0))
+                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
                                 )
                 ).add(
-                        specular
+                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
                                 .mul(light.color)
                                 .mul(Math.pow(
                                         Math.max(0, rl.dot(e)), exponent)
                                 )
                 );
             }
-            basicColor = basicColor.add(reflection.mul(tracer.reflection(reflectionRay,world)).mul(a));
+            basicColor = basicColor.add(reflection.getColor(hit.texCoord.u,hit.texCoord.v).mul(tracer.reflection(reflectionRay,world)).mul(a));
         }
 
         return basicColor;

@@ -40,8 +40,9 @@ public class SpotLight extends Light {
      * @param castShadow Shadows on or of.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public SpotLight(final Color color, final Point3 position, final Vector3 direction, final double halfAngle, final boolean castShadow) {
-        super(color,castShadow);
+    public SpotLight(final Color color, final Point3 position, final Vector3 direction,
+                     final double halfAngle, final boolean castShadow, final int photons) {
+        super(color,castShadow,photons);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }
@@ -58,7 +59,7 @@ public class SpotLight extends Light {
     }
 
     @Override
-    public boolean illuminates(final Point3 point, final World world) {
+    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -68,7 +69,7 @@ public class SpotLight extends Light {
         }
 
         if(Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
-            if(castsShadow) {
+            if(castsShadow && geo.reciveShadows) {
 
                 final Ray r = new Ray(point, directionFrom(point));
 

@@ -76,7 +76,7 @@ public class EditObjects extends Stage {
             if (!(e instanceof Camera)) {
                 if (e instanceof Plane) {
                     Plane p1 = (Plane) e;
-                    Plane p = new Plane(p1.material);
+                    Plane p = new Plane(p1.material,true,true,true,true);
                     p.name = p1.name;
                     p = (Plane) nameTest(p);
 
@@ -84,42 +84,42 @@ public class EditObjects extends Stage {
                     //  l.getItems().add(p);
                 } else if (e instanceof Sphere) {
                     Sphere s1 = (Sphere) e;
-                    Sphere s = new Sphere(s1.material);
+                    Sphere s = new Sphere(s1.material,true,true,true,true);
                     s.name = s1.name;
                     s = (Sphere) nameTest(s);
                     ImageSaver.raytracer.getWorld().geometries.add(s);
                     //  l.getItems().add(s);
                 } else if (e instanceof AxisAlignedBox) {
                     AxisAlignedBox b1 = (AxisAlignedBox) e;
-                    AxisAlignedBox b = new AxisAlignedBox(b1.material);
+                    AxisAlignedBox b = new AxisAlignedBox(b1.material,true,true,true,true);
                     b.name = b1.name;
                     b = (AxisAlignedBox) nameTest(b);
                     ImageSaver.raytracer.getWorld().geometries.add(b);
                     //  l.getItems().add(b);
                 } else if (e instanceof Triangle) {
                     Triangle t1 = (Triangle) e;
-                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
+                    Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),true,true,true,true);
                     t.name = t1.name;
                     t = (Triangle) nameTest(t);
                     ImageSaver.raytracer.getWorld().geometries.add(t);
                     // l.getItems().add(t);
                 } else if (e instanceof PointLight) {
                     PointLight pl = (PointLight) e;
-                    PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow);
+                    PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (PointLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof DirectionalLight) {
                     DirectionalLight pl = (DirectionalLight) e;
-                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow);
+                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (DirectionalLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof SpotLight) {
                     SpotLight pl = (SpotLight) e;
-                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow);
+                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (SpotLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);

@@ -23,8 +23,8 @@ public class SingleColorMaterial extends Material {
      * @param texture
      */
 
-    public SingleColorMaterial(final Texture texture) {
-        super(texture);
+    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
+        super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)));
         if(texture == null){
             throw new IllegalArgumentException("texture must not be null");
         }
