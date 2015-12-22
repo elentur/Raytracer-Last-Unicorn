@@ -28,7 +28,7 @@ public abstract class Geometry extends Element implements Serializable {
      */
     public final boolean castShadows;
     public final boolean visibility;
-    private final boolean flipNormal;
+    public final boolean flipNormal;
 
 
     /**

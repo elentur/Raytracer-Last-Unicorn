@@ -65,6 +65,7 @@ public class World implements Serializable {
         Hit hit = null;
 
         for (Geometry g : geometries) {
+            if(!g.visibility) continue;
             final Hit h = g.hit(r);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }

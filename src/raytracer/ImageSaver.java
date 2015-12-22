@@ -133,17 +133,17 @@ public class ImageSaver extends Application {
         t = t.rotateY(Math.PI/4);
         t=t.scale(1,1,1);
 
-        Geometry n = new Node(t,geo,true,true,true,true);
+        Geometry n = new Node(t,geo,true,true,true,false);
         Geometry sphere = new Sphere(
                 new SingleColorMaterial(
                         new InterpolatedImageTexture("texture/Environment.jpg"),new SingleColorTexture(new Color(0,0,0)),0
-                ),true,true,true,true
+                ),true,true,true,false
         );
       //  world.geometries.add(new Node(new Transform().scale(500,500,500),sphere));
         Geometry sphere1 = new Sphere(
                 new LambertMaterial(
                         new InterpolatedImageTexture("texture/world.jpg",1,1,0,0),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
-                ),true,true,true,true
+                ),true,true,true,false
         );
         Geometry sphere2 = new Sphere(
                 new PhongMaterial(
@@ -152,18 +152,26 @@ public class ImageSaver extends Application {
                         10,
                         new InterpolatedImageTexture("texture/earthnormal.jpg"),0.2
                         ,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
-                ),true,true,true,true
+                ),true,false,false,false
+        );
+        Geometry sphere3 = new Sphere(
+                new LambertMaterial(
+                        new SingleColorTexture(new Color(0.5,0.5,0.5)),
+                        new SingleColorTexture(new Color(0,0,0)),0
+                        ,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
+                ),false,false,true,false
         );
         Geometry plane = new Plane(
                 new LambertMaterial(
                        new SingleColorTexture(new Color(0.5,0.5,0.5)),new InterpolatedImageTexture("texture/pillownormal.png",10,10,0,0),1,new SingleColorTexture(new Color(0,0,0))
-                ),true,true,true,true
+                ),true,true,true,false
         );
         sphere2.name="1";
        /// world.geometries.add(n);
-        world.geometries.add(new Node(new Transform().translate(2,0,0),sphere1,true,true,true,true));
-        world.geometries.add(new Node(new Transform().translate(-2,0,0).rotateY(Math.PI/8),sphere2,true,true,true,true));
-        world.geometries.add(new Node(new Transform().translate(0,0,-10).rotateX(Math.PI/2),plane,true,true,true,true));
+        world.geometries.add(new Node(new Transform().translate(2,0,0),sphere1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(-2,0,0).rotateY(Math.PI/8),sphere2,true,false,false,false));
+        world.geometries.add(new Node(new Transform().translate(1,0,-3).rotateY(Math.PI/8),sphere3,false,false,true,false));
+        world.geometries.add(new Node(new Transform().translate(0,0,-10).rotateX(Math.PI/2),plane,true,true,true,false));
         //world.geometries.add(n);
 
 

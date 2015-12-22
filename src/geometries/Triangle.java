@@ -127,7 +127,7 @@ public class Triangle extends Geometry {
                     Color normalC = material.bumpMap.getColor(u,v);
                     Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
                     Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
-
+                    if (flipNormal) n1 = n1.mul(-1);
                     return new Hit(t, n1, r, this, new TexCoord2(u,v));
                 }
             }
