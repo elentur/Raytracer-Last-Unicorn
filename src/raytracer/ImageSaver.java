@@ -73,7 +73,7 @@ public class ImageSaver extends Application {
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(5,5));
+        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(4));
         raytracer.setCamera(camera);
 
 

@@ -4,36 +4,56 @@ import matVect.Point2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
- * Created by roberto on 20/12/15.
+ * This class represents a SamplingPattern Object.
+ * The SamplingPattern involves a Pattern for a fixed number of rays for each pixel
+ *
+ * @author Robert Dziuba on 21.12.2015
  */
 public class SamplingPattern {
 
-    public final double rows;
+    /**
+     *  Square number  of the Rays for each pixel
+     */
+    public final int size;
 
-    public final double columns;
-
+    /**
+     * List of Points which represents the coordinates of the ray.
+     */
     public final List<Point2> points;
 
-    public SamplingPattern(final double rows, final double columns) {
+    /**
+     * SamplingPattern constructor which generate the List of points
+     *
+     * @param size the subdivision of the pattern
+     * @throws IllegalArgumentException if size is lower then one.
+     */
+    public SamplingPattern(final int size) {
 
-        if(rows < 0) throw new IllegalArgumentException("The rows cannot be smaller than 0!");
-        if(columns < 0) throw new IllegalArgumentException("The columns cannot be smaller than 0!");
+        if(size < 1) throw new IllegalArgumentException("The rows cannot be smaller than 0!");
 
-        this.rows = rows;
-        this.columns = columns;
+        this.size = size;
 
         points = new ArrayList<>();
 
         generateSampling();
     }
 
+    /**
+     * generate the list of points (coordinates) of the ray random differences.
+     */
     private void generateSampling() {
-        for(double x = 0; x < columns; x++){
-            for(double y = 0; y < rows; y++){
-                points.add(new Point2(1.0/columns * x - 0.5, 1.0/rows * y - 0.5));
+
+        Random rn = new Random();
+
+        for(int x = 0; x < size; x++){
+            for(int y = 0; y < size; y++){
+                final double rX = (rn.nextDouble()-0.5) / 10;
+                final double rY = (rn.nextDouble()-0.5) / 10;
+                points.add(new Point2((1.0/size * x - 0.5) + rX, (1.0/size * y - 0.5) + rY));
             }
         }
     }

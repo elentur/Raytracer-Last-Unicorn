@@ -81,7 +81,7 @@ public abstract class Camera extends Element implements Serializable {
      * @param h height of image
      * @param x x-coordinate of pixel
      * @param y y-coordinate of pixel
-     * @return beam for certain pixel
+     * @return beamset for certain pixel
      */
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
 
