@@ -3,7 +3,7 @@ package texture;
 import java.io.Serializable;
 
 /**
- * Created by roberto on 03/12/15.
+ * @author  Robert Dziuba on 03/12/15.
  */
 public class TexCoord2 implements Serializable {
 

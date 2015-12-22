@@ -7,7 +7,7 @@ import utils.Color;
 import java.io.File;
 
 /**
- * Created by roberto on 03/12/15.
+ * @author  Robert Dziuba on 03/12/15.
  */
 public class InterpolatedImageTexture extends Texture {
 
@@ -71,8 +71,6 @@ public class InterpolatedImageTexture extends Texture {
         Color e = b.add(d);
 
         return e;
-
-
 
     }
 }

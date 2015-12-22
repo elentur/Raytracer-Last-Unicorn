@@ -1,12 +1,28 @@
 package matVect;
 
 /**
- * Created by roberto on 20/12/15.
+ * s class represents a Point2 Object.
+ *
+ * @author  Robert Dziuba on 03/12/15.
  */
 public class Point2 {
+
+    /**
+     * the x coordinate of the point.
+     */
     public final double x;
+
+    /**
+     * the y coordinate of the point.
+     */
     public final double y;
 
+    /**
+     * Point2 constructor which generate a point object.
+     *
+     * @param x coordinate of the point.
+     * @param y coordinate of the point.
+     */
     public Point2(final double x, final double y) {
         this.x = x;
         this.y = y;
@@ -27,8 +43,7 @@ public class Point2 {
 
         Point2 point2 = (Point2) o;
 
-        if (Double.compare(point2.x, x) != 0) return false;
-        return Double.compare(point2.y, y) == 0;
+        return Double.compare(point2.x, x) == 0 && Double.compare(point2.y, y) == 0;
 
     }
 
