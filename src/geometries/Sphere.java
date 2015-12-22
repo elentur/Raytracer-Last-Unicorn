@@ -24,8 +24,6 @@ public class Sphere extends Geometry {
      * The radius of the Sphere.
      */
     public final double r;
-    private final InterpolatedImageTexture tex;
-
 
     /**
      * Instantiates a new Sphere Object.
@@ -37,7 +35,6 @@ public class Sphere extends Geometry {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
         this.c = new Point3(0,0,0);
         this.r = 1;
-        tex = new InterpolatedImageTexture("texture/earthnormal.jpg",1,1,0,0);
     }
 
     @Override

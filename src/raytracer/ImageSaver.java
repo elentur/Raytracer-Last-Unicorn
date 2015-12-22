@@ -2,6 +2,7 @@ package raytracer;
 
 import UI.*;
 import camera.Camera;
+import camera.OrthographicCamera;
 import camera.PerspectiveCamera;
 import geometries.*;
 import javafx.application.Application;
@@ -49,23 +50,6 @@ public class ImageSaver extends Application {
 
 
     private void testScene() {
-      /*  raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
-        // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
-        Light light = new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4));
-        light.name = "Pointlight1";
-        //camera = new PerspectiveCamera(new Point3(0,5,100),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        raytracer.setCamera(new PerspectiveCamera(new Point3(4, 4, 4), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4));
-        //camera = new PerspectiveCamera(new Point3(3,3,3),new Vector3(-3,-3,-3), new Vector3(0,1,0), Math.PI/4);
-        // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
-        //Geometry obj = new AxisAlignedBox(new Point3(0.5,1,0.5),new Point3(-0.5,0,-0.5), new LambertMaterial(new Color(0,0,1)));
-        //Geometry obj = new Plane(new Point3(0,-1,0), new Normal3(0,1,0), new LambertMaterial(new Color(0,1,0)));
-        //Geometry obj = new Triangle(new Point3(-0.5,0.5,-3),new Point3(0.5,0.5,-3),new Point3(0.5,-0.5,-3), new LambertMaterial(new Color(1,0,1)));
-        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\IdeaProjects\\CG1\\src\\obj\\cube.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
-        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\karren.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
-        raytracer.getWorld().lights.add(light);
-        // world.geometries.add(obj);
-        raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
-    */
 
         World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
         raytracer.setWorld(world);
@@ -75,118 +59,24 @@ public class ImageSaver extends Application {
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(4));
+        Camera camera = new OrthographicCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), 3, new SamplingPattern(4));
         raytracer.setCamera(camera);
 
-
-
-        /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
-        world.geometries.add(sphere);*/
-
-        /*Geometry sphere  = new Sphere(new Point3(1.5,0,0), 1, new ReflectiveMaterial(
-                new InterpolatedImageTexture("texture/world.jpg"),
-                new Color(1,1,1),
-                new Color(0.5,0.5,0.5),
-                64
-        ));
-        world.geometries.add(sphere);
-
-        Geometry sphere2  = new Sphere(new Point3(-1.5,0,0), 1, new ReflectiveMaterial(
-                new ImageTexture("texture/world.jpg"),
-                new Color(1,1,1),
-                new Color(0.5,0.5,0.5),
-                64
-        ));
-        world.geometries.add(sphere2);*/
-
-
-        /*Geometry triangle  = new Triangle(
-                new Point3(0,0,0),
-                new Point3(1,0,0),
-                new Point3(0,1,0),
-                new ReflectiveMaterial(
-                        new ImageTexture("/home/roberto/Documents/Uni/beuth/WS15/CG/RayTracer-Last-Unicorn/texture/world.jpg"),
-                        new Color(1,1,1),
-                        new Color(0.5,0.5,0.5),
-                        64),
-                new TexCoord2(1,1),
-                new TexCoord2(0,1),
-                new TexCoord2(1,0)
-                );
-        world.geometries.add(triangle);*/
-
-       /* Geometry geo = new AxisAlignedBox(
-                new ReflectiveMaterial(
-                        new ImageTexture("texture/world.jpg"),
-                    new Color(1,1,1),
-                    new Color(0.5,0.5,0.5),
-                    64
-                )
-        );*/
-        Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
-                new PhongMaterial(
-                        new SingleColorTexture(new Color(0.5,0.5,0.0)),
-                        new  SingleColorTexture(new Color(1,1,1)),
+        Sphere geo = new Sphere(
+                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
+                        new SingleColorTexture(new Color(1,1,1)),
                         64,
-                        new SingleColorTexture(new Color(0,0,0)),0,
-                        new SingleColorTexture(new Color(0,0,0))
-                ),true,true,true,true
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                        ),
+                true,
+                true,
+                true,
+                false
         );
 
-        Transform t = new Transform();
-
-        t = t.rotateY(Math.PI/4);
-        t=t.scale(1,1,1);
-
-        Geometry n = new Node(t,geo,true,true,true,false);
-        Geometry sphere = new Sphere(
-                new SingleColorMaterial(
-                        new InterpolatedImageTexture("texture/Environment.jpg"),new SingleColorTexture(new Color(0,0,0)),0
-                ),true,true,true,false
-        );
-      //  world.geometries.add(new Node(new Transform().scale(500,500,500),sphere));
-        Geometry sphere1 = new Sphere(
-                new LambertMaterial(
-                        new InterpolatedImageTexture("texture/world.jpg",1,1,0,0),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
-                ),true,true,true,false
-        );
-        Geometry sphere2 = new Sphere(
-                new PhongMaterial(
-                        new InterpolatedImageTexture("texture/world.jpg",1,1,0,0),
-                        new InterpolatedImageTexture("texture/earth-specular.jpg"),
-                        10,
-                        new InterpolatedImageTexture("texture/earthnormal.jpg"),0.2
-                        ,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
-                ),true,false,false,false
-        );
-        Geometry sphere3 = new Sphere(
-                new LambertMaterial(
-                        new SingleColorTexture(new Color(0.5,0.5,0.5)),
-                        new SingleColorTexture(new Color(0,0,0)),0
-                        ,new SingleColorTexture(new Color(0,0,0))//new SingleColorTexture(new Color(0.5,0.5,0.5))
-                ),false,false,true,false
-        );
-        Geometry plane = new Plane(
-                new LambertMaterial(
-                       new SingleColorTexture(new Color(0.5,0.5,0.5)),new InterpolatedImageTexture("texture/pillownormal.png",10,10,0,0),1,new SingleColorTexture(new Color(0,0,0))
-                ),true,true,true,false
-        );
-        sphere2.name="1";
-       /// world.geometries.add(n);
-        world.geometries.add(new Node(new Transform().translate(2,0,0),sphere1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(-2,0,0).rotateY(Math.PI/8),sphere2,true,false,false,false));
-        world.geometries.add(new Node(new Transform().translate(1,0,-3).rotateY(Math.PI/8),sphere3,false,false,true,false));
-        world.geometries.add(new Node(new Transform().translate(0,0,-10).rotateX(Math.PI/2),plane,true,true,true,false));
-        //world.geometries.add(n);
-
-
-
-       /*Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
-                new InterpolatedImageTexture("texture/sterne.jpg"),
-                0.6
-        ));
-
-        world.geometries.add(plane);*/
+        world.geometries.add(new Node(new Transform(),geo,true,true,false,false));
     }
 
     /**

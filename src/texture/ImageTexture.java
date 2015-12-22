@@ -19,7 +19,12 @@ public class ImageTexture extends Texture {
 
     public ImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV) {
         super(scaleU,scaleV,offsetU,offsetV);
-        this.image = new Image(new File(path).toURI().toString());
+
+        File file = new File(path);
+
+        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
+
+        this.image = new Image(file.toURI().toString());
     }
 
     @Override

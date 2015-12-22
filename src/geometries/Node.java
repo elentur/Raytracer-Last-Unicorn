@@ -24,7 +24,7 @@ public class Node extends Geometry {
     /**
      * A list with all geometries which will be rendered
      */
-    public final List<Geometry> geos;
+    public final List<Node> geos;
 
     /**
      * Instantiates a new Geometry.
@@ -32,7 +32,7 @@ public class Node extends Geometry {
      * @param geos is a List of containing geometries.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, final List<Geometry> geos,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+    public Node(final Transform t, final List<Node> geos,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
                 new SingleColorTexture(new Color(0,0,0)),0),reciveShadows,castShadows,
                 visibility,flipNormal);
@@ -52,7 +52,7 @@ public class Node extends Geometry {
      */
     public Node(final Transform t, Geometry geo,final boolean reciveShadows,
                 final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(t, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+        this(t, new ArrayList<Node>(Arrays.asList(new Node(t,geo,reciveShadows,castShadows,visibility,flipNormal))),reciveShadows,castShadows,visibility,flipNormal);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class Node extends Geometry {
         Hit hit = null;
 
         for (final Geometry g : geos) {
+            if(!g.visibility) continue;
             final Hit h = g.hit(tr);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }

@@ -6,6 +6,7 @@ import matVect.Vector3;
 import sampling.SamplingPattern;
 import utils.Ray;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -52,15 +53,15 @@ public class OrthographicCamera extends Camera {
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
         double aspectRatio = (double) w / (double) h;
+        double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
+        double scalar2 = s * (y - (h - 1) / 2) / (h - 1);
+
+        rays = new HashSet<>();
 
         for(Point2 point : samplingPattern.points) {
 
-            double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
-            double scalar2 = s * (y - (h - 1) / 2) / (h - 1);
-
-            final Point3 o = this.e.add(this.u.mul(scalar1).mul(point.x)).add(this.v.mul(scalar2).mul(point.y));
+            final Point3 o = this.e.add(this.u.mul(scalar1+point.x/(w/4))).add(this.v.mul(scalar2+point.y/(h/4)));
             final Vector3 d = this.w.mul(-1);
-
 
             rays.add(new Ray(o, d));
         }
