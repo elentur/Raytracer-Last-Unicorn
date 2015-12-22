@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
 import raytracer.ImageSaver;
+import sampling.SamplingPattern;
 
 /**
  * Created by Marcus Baetz on 03.11.2015.
@@ -173,11 +174,11 @@ public class NewCameraStage extends Stage {
                 if (s > 90.0) s = 90.0;
                 if (s < 5.0) s = 5.0;
                 double a = s / (180 / Math.PI);
-                cam = new PerspectiveCamera(e, g, t, a);
+                cam = new PerspectiveCamera(e, g, t, a, new SamplingPattern(1,1));
                 cam.name = "Perspective Camera";
             } else {
                 if (s < 1.0) s = 1.0;
-                cam = new OrthographicCamera(e, g, t, s);
+                cam = new OrthographicCamera(e, g, t, s, new SamplingPattern(1,1));
                 cam.name = "Orthographic Camera";
             }
             ImageSaver.raytracer.setCamera(cam);

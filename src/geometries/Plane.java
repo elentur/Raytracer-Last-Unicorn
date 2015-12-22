@@ -2,7 +2,6 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
-import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
 import utils.Hit;
@@ -49,8 +48,8 @@ public class Plane extends Geometry {
 
             final Point3 p = r.at(t);
 
-            final double u = p.x;
-            final double v = p.z;
+            final double u = p.x+0.5;
+            final double v = p.z+0.5;
 
             if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
         }

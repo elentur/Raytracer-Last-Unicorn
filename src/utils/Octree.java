@@ -1,11 +1,8 @@
 package utils;
 
-import geometries.AxisAlignedBox;
 import geometries.Geometry;
 import geometries.Triangle;
 import matVect.Point3;
-import material.SingleColorMaterial;
-import texture.SingleColorTexture;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +16,7 @@ import java.util.List;
  */
 public class Octree implements Serializable {
     private static final long serialVersionUID = 1L;
-    public AxisAlignedBox box;
+    public BoundingBox box;
 
     private List<Geometry> g;
 
@@ -86,7 +83,7 @@ public class Octree implements Serializable {
     }
 
     private void generateOctrees() {
-        box = null;//new AxisAlignedBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ), new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))));
+        box = new BoundingBox(new Point3(runX, runY, runZ), new Point3(lbfX, lbfY, lbfZ));
 
         final double e = 0.0000001;
         if (g.size() > 500) {

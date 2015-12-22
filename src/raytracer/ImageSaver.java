@@ -3,7 +3,9 @@ package raytracer;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.*;
+import geometries.AxisAlignedBox;
+import geometries.Geometry;
+import geometries.Node;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,19 +17,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.DirectionalLight;
 import light.Light;
 import light.PointLight;
-import light.SpotLight;
-import matVect.Normal3;
 import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
-import material.*;
+import material.ReflectiveMaterial;
+import sampling.SamplingPattern;
 import texture.ImageTexture;
-import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
-import texture.TexCoord2;
 import utils.Color;
 import utils.World;
 
@@ -72,12 +69,14 @@ public class ImageSaver extends Application {
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(0,0,4), true);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,0,4),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(5,5));
         raytracer.setCamera(camera);
+
+
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
         world.geometries.add(sphere);*/
@@ -114,18 +113,27 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        Geometry geo = new Sphere(
-                new PhongMaterial(
-                        new SingleColorTexture(new Color(1,0,0)),
-                        /*new ImageTexture("texture/world.jpg"),*/
+        Geometry geo = new AxisAlignedBox(
+                new ReflectiveMaterial(
+                        new ImageTexture("texture/world.jpg"),
                     new Color(1,1,1),
+                    new Color(0.5,0.5,0.5),
                     64
                 )
         );
+       /* Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
+                new ReflectiveMaterial(
+                        new SingleColorTexture(new Color(0.5,0.5,0.5)),
+                        new Color(1,1,1),
+                        new Color(0.5,0.5,0.5),
+                        64
+                )
+        );*/
 
         Transform t = new Transform();
 
-        t = t.rotateZ(-Math.PI/8).rotateX(Math.PI/8).scale(0.6,0.2,0.6);
+        t = t.rotateY(Math.PI/4);
+        t=t.scale(1,1,1);
 
         Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
 

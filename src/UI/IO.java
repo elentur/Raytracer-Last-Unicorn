@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
 import raytracer.ImageSaver;
+import sampling.SamplingPattern;
 import utils.Scene;
 import utils.World;
 
@@ -59,7 +60,7 @@ public class IO {
 
         if (camera == null) {
             // default camera
-            camera = new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4);
+            camera = new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1,1));
         }
         Scene scene = new Scene(world, camera);
         final FileChooser fileChooser = new FileChooser();
