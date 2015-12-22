@@ -51,8 +51,8 @@ public class Triangle extends Geometry {
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
                     final Material material,
                     final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC,
-                    final boolean reciveShadows, final boolean castShadows) {
-        super(material, reciveShadows,castShadows);
+                    final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material, reciveShadows,castShadows,visibility,flipNormal);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
         }
@@ -78,13 +78,14 @@ public class Triangle extends Geometry {
         this.texCoordC = texCoordC;
     }
 
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC, final boolean reciveShadows, final boolean castShadows) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         this(a, b, c,
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 material,
-                texCoordA, texCoordB, texCoordC,reciveShadows,castShadows);
+                texCoordA, texCoordB, texCoordC,reciveShadows,castShadows,
+                visibility,flipNormal);
     }
 
     @Override

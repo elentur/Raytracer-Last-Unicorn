@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -48,8 +49,8 @@ public class NewSphereStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
+        final ImageView btnMaterial = new MaterialView(this);
+        btnMaterial.setOnMouseClicked(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -124,7 +125,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setNumber(0.0);
             txtInputs[2].setNumber(-3.0);
             txtInputs[3].setNumber(0.5);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setNumber(s.c.x);
@@ -150,7 +151,7 @@ public class NewSphereStage extends NewGeoStage {
                     txtInputs[2].getDouble());
             double r = txtInputs[3].getDouble();
             if (r <= 0.0) r = 1.0;
-            Sphere p = new Sphere(material.get(),true,true);
+            Sphere p = new Sphere(material.get(),true,true,true,true);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

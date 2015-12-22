@@ -189,12 +189,12 @@ public class NewLightStage extends Stage {
                     txtInputs[5].getDouble());
             Light l = null;
             if (typ == 0) {
-                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected());
+                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected(),500);
             } else if (typ == 2) {
                 double a = sldAngle.getValue() / (180 / Math.PI);
-                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a,chkShadows.isSelected());
+                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a,chkShadows.isSelected(),500);
             } else {
-                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos,chkShadows.isSelected());
+                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos,chkShadows.isSelected(),500);
             }
             l.name = txtName.getText();
             int index = 1;

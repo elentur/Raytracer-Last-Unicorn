@@ -33,7 +33,7 @@ public class BoundingBox extends Geometry {
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public BoundingBox(final Point3 run, final Point3 lbf) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),false,false);
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),true,true,true,true);
         if (lbf == null) {
             throw new IllegalArgumentException("The lbf cannot be null!");
         }
@@ -138,7 +138,7 @@ public class BoundingBox extends Geometry {
          * @throws IllegalArgumentException if one of the given arguments are null.
          */
         public Plane(final Point3 a, final Normal3 n) {
-            super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),false,false);
+            super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),true,true,true,true);
 
             if (a == null) {
                 throw new IllegalArgumentException("The a cannot be null!");

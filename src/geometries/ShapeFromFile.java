@@ -36,8 +36,8 @@ public class ShapeFromFile extends Geometry {
     private final Octree octree;
     private int rekDeep = 10;
 
-    public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows) {
-        super(material,reciveShadows,castShadows);
+    public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material,reciveShadows,castShadows,visibility,castShadows);
         this.file = path;
         name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
@@ -55,7 +55,7 @@ public class ShapeFromFile extends Geometry {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
                         triangles.add(tri);
                     } //F�r f / v/vt
                     else {
@@ -75,11 +75,11 @@ public class ShapeFromFile extends Geometry {
                         if (n[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
-                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows);
+                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
                             triangles.add(tri);
                         } else {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
-                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows);
+                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
                             triangles.add(tri);
                         }
 

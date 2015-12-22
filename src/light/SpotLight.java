@@ -40,8 +40,9 @@ public class SpotLight extends Light {
      * @param castShadow Shadows on or of.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public SpotLight(final Color color, final Point3 position, final Vector3 direction, final double halfAngle, final boolean castShadow) {
-        super(color,castShadow);
+    public SpotLight(final Color color, final Point3 position, final Vector3 direction,
+                     final double halfAngle, final boolean castShadow, final int photons) {
+        super(color,castShadow,photons);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }

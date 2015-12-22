@@ -22,8 +22,8 @@ public class LambertMaterial extends Material {
      *
      * @param texture Represents the Color of the Lambert material
      */
-    public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
-        super(texture,bumpMap,bumpScale);
+    public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance) {
+        super(texture,bumpMap,bumpScale,irradiance);
     }
 
     @Override

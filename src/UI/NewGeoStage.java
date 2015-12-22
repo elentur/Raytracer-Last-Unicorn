@@ -15,6 +15,6 @@ import utils.Color;
  */
 public class NewGeoStage extends Stage {
 
-    public ObjectProperty<Material> material = new SimpleObjectProperty<>(this, "materialProperty", new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
+    public ObjectProperty<Material> material = new SimpleObjectProperty<>(this, "materialProperty", new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))));
 
 }

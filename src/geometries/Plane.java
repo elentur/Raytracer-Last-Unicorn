@@ -29,8 +29,8 @@ public class Plane extends Geometry {
      * @param material of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Material material,final boolean reciveShadows, final boolean castShadows) {
-        super(material,reciveShadows,castShadows);
+    public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material,reciveShadows,castShadows,visibility,flipNormal);
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }

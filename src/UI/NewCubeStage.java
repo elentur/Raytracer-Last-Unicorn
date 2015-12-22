@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -48,8 +49,8 @@ public class NewCubeStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
+        final ImageView btnMaterial = new MaterialView(this);
+        btnMaterial.setOnMouseClicked(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -126,7 +127,7 @@ public class NewCubeStage extends NewGeoStage {
             txtInputs[3].setNumber(-0.5);
             txtInputs[4].setNumber(0.0);
             txtInputs[5].setNumber(-0.5);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))));
         } else {
             txtName.setText(b.name);
             txtInputs[0].setNumber(b.run.x);
@@ -159,7 +160,7 @@ public class NewCubeStage extends NewGeoStage {
             if (run.y < lbf.y) run = new Point3(run.x, lbf.y + 1.0, run.z);
             if (run.z < lbf.z) run = new Point3(run.x, run.y, lbf.z + 1.0);
 
-            AxisAlignedBox p = new AxisAlignedBox(material.get(),true,true);
+            AxisAlignedBox p = new AxisAlignedBox(material.get(),true,true,true,true);
             p.name = txtName.getText();
             int index = 1;
             boolean run1 = false;

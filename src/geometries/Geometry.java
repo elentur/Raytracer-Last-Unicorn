@@ -27,6 +27,8 @@ public abstract class Geometry extends Element implements Serializable {
      * represents if a geometry casts shadows
      */
     public final boolean castShadows;
+    public final boolean visibility;
+    private final boolean flipNormal;
 
 
     /**
@@ -35,13 +37,16 @@ public abstract class Geometry extends Element implements Serializable {
      * @param material of child class. Can't be null.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Geometry(final Material material, final boolean reciveShadows, final boolean castShadows) {
+    public Geometry(final Material material, final boolean reciveShadows,
+                    final boolean castShadows,final boolean visibility,final boolean flipNormal) {
         if (material == null) {
             throw new IllegalArgumentException("The Material cannot be null!");
         }
         this.material = material;
         this.reciveShadows = reciveShadows;
         this.castShadows = castShadows;
+        this.visibility = visibility;
+        this.flipNormal = flipNormal;
     }
 
     /**

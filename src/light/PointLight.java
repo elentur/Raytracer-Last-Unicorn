@@ -28,8 +28,8 @@ public class PointLight extends Light {
      * @param position Represents the position of the light
      * @param castShadow Shadows on or of
      */
-    public PointLight(final Color color, final Point3 position, final boolean castShadow) {
-        super(color,castShadow);
+    public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons) {
+        super(color,castShadow,photons);
         if (position == null) throw new IllegalArgumentException("position must not be null ");
         this.position = position;
     }

@@ -33,8 +33,8 @@ public class Sphere extends Geometry {
      * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows) {
-        super(material,reciveShadows,castShadows);
+    public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material,reciveShadows,castShadows,visibility,flipNormal);
         this.c = new Point3(0,0,0);
         this.r = 1;
         tex = new InterpolatedImageTexture("texture/earthnormal.jpg",1,1,0,0);

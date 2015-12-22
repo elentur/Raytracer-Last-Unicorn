@@ -34,21 +34,22 @@ public class AxisAlignedBox extends Geometry {
      * @param material of the Axis Aligned Box. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows) {
-        super(material,reciveShadows, castShadows);
+    public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows
+            ,final boolean visibility,final boolean flipNormal) {
+        super(material,reciveShadows, castShadows,visibility,flipNormal);
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 
-        Plane p = new Plane(material,reciveShadows,castShadows);
+        Plane p = new Plane(material,reciveShadows,castShadows,visibility,flipNormal);
 
-        faces[0] = new Node(new Transform().translate(0,run.y,0),p); // up site
-        faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p); // down site
+        faces[0] = new Node(new Transform().translate(0,run.y,0),p,reciveShadows,castShadows,visibility,flipNormal); // up site
+        faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // down site
 
-        faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p); // front site
-        faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p); // back site
+        faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // front site
+        faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // back site
 
-        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p); // left site
-        faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p); // right site
+        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // left site
+        faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // right site
 
     }
 

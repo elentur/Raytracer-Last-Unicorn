@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -48,8 +49,8 @@ public class NewOBJStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
+        final ImageView btnMaterial = new MaterialView(this);
+        btnMaterial.setOnMouseClicked(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         final Label lblInfo = new Label("Do you wish to load and add a .Obj file?");
@@ -99,7 +100,7 @@ public class NewOBJStage extends NewGeoStage {
 
     public void setValues() {
         if (sff == null) {
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))));
         } else {
             btnOK.setDisable(false);
             material.set(sff.material);
@@ -128,7 +129,7 @@ public class NewOBJStage extends NewGeoStage {
         try {
 
             if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
-            ShapeFromFile p = new ShapeFromFile(file, material.get(),true,true);
+            ShapeFromFile p = new ShapeFromFile(file, material.get(),true,true,true,true);
 
             ImageSaver.raytracer.getWorld().geometries.add(p);
 
