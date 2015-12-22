@@ -130,7 +130,7 @@ public class NewTriangleStage extends NewGeoStage {
             txtInputs[6].setNumber(0.5);
             txtInputs[7].setNumber(-0.5);
             txtInputs[8].setNumber(-3.0);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
         } else {
             txtName.setText(t.name);
             txtInputs[0].setNumber(t.a.x);

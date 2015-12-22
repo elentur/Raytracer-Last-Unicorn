@@ -126,7 +126,7 @@ public class NewCubeStage extends NewGeoStage {
             txtInputs[3].setNumber(-0.5);
             txtInputs[4].setNumber(0.0);
             txtInputs[5].setNumber(-0.5);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
         } else {
             txtName.setText(b.name);
             txtInputs[0].setNumber(b.run.x);

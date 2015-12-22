@@ -32,8 +32,8 @@ public class ReflectiveMaterial extends Material {
      * @param reflection of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      */
-    public ReflectiveMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent) {
-        super(texture);
+    public ReflectiveMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent, final Texture bumpMap, final double bumpScale) {
+        super(texture,bumpMap,bumpScale);
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;

@@ -36,8 +36,8 @@ public class PhongMaterial extends Material {
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public PhongMaterial(final Texture texture, final Color specular, final int exponent) {
-        super(texture);
+    public PhongMaterial(final Texture texture, final Color specular, final int exponent, final Texture bumpMap, final double bumpScale) {
+        super(texture,bumpMap,bumpScale);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }

@@ -33,7 +33,7 @@ public class Node extends Geometry {
      * @throws IllegalArgumentException if the given argument is null.
      */
     public Node(final Transform t, final List<Geometry> geos) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0))),true,true);
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),true,true);
 
         if (t == null) throw new IllegalArgumentException("The t cannot be null!");
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");

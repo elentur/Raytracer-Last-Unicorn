@@ -21,17 +21,14 @@ import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
 import material.LambertMaterial;
+import material.PhongMaterial;
 import material.SingleColorMaterial;
-import material.TransparentMaterial;
-import texture.ImageTexture;
 import texture.InterpolatedImageTexture;
 import texture.SingleColorTexture;
 import utils.Color;
 import utils.World;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -71,11 +68,11 @@ public class ImageSaver extends Application {
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,20,30), true);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(10,0,30), true);
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,5,30),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,0,4),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
@@ -122,13 +119,12 @@ public class ImageSaver extends Application {
                 )
         );*/
         Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
-                new TransparentMaterial(
-                        new SingleColorTexture(new Color(0.0,0.0,0.0)),
+                new PhongMaterial(
+                        new SingleColorTexture(new Color(0.5,0.5,0.0)),
                         new Color(1,1,1),
-                        new Color(0.9,0.9,0.9),
                         64,
-                        1.33
-                ),true,false
+                        new SingleColorTexture(new Color(0,0,0)),0
+                ),true,true
         );
 
         Transform t = new Transform();
@@ -136,20 +132,34 @@ public class ImageSaver extends Application {
         t = t.rotateY(Math.PI/4);
         t=t.scale(1,1,1);
 
-        Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
+        Geometry n = new Node(t,geo);
         Geometry sphere = new Sphere(
                 new SingleColorMaterial(
-                        new InterpolatedImageTexture("texture/Environment.jpg")
+                        new InterpolatedImageTexture("texture/Environment.jpg"),new SingleColorTexture(new Color(0,0,0)),0
                 ),true,true
         );
-        world.geometries.add(new Node(new Transform().scale(500,500,500),sphere));
+      //  world.geometries.add(new Node(new Transform().scale(500,500,500),sphere));
+        Geometry sphere1 = new Sphere(
+                new LambertMaterial(
+                        new InterpolatedImageTexture("texture/world.jpg",1,1,0,0),new SingleColorTexture(new Color(0,0,0)),0//new SingleColorTexture(new Color(0.5,0.5,0.5))
+                ),true,true
+        );
+        Geometry sphere2 = new Sphere(
+                new LambertMaterial(
+                        new InterpolatedImageTexture("texture/world.jpg",1,1,0,0),new InterpolatedImageTexture("texture/earthnormal.jpg"),1//new SingleColorTexture(new Color(0.5,0.5,0.5))
+                ),true,true
+        );
         Geometry plane = new Plane(
                 new LambertMaterial(
-                        new ImageTexture("texture/ground.jpg",4,4,0,0)
+                       new SingleColorTexture(new Color(0.5,0.5,0.5)),new InterpolatedImageTexture("texture/pillownormal.png",10,10,0,0),1
                 ),true,true
         );
-        world.geometries.add(new Node(new Transform().translate(0,0,0),plane));
-        world.geometries.add(n);
+        sphere2.name="1";
+       /// world.geometries.add(n);
+        world.geometries.add(new Node(new Transform().translate(2,0,0),sphere1));
+        world.geometries.add(new Node(new Transform().translate(-2,0,0),sphere2));
+        world.geometries.add(new Node(new Transform().translate(0,0,-10).rotateX(Math.PI/2),plane));
+        //world.geometries.add(n);
 
 
 

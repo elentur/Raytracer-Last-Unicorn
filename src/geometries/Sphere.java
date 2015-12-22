@@ -2,8 +2,11 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
+import matVect.Vector3;
 import material.Material;
+import texture.InterpolatedImageTexture;
 import texture.TexCoord2;
+import utils.Color;
 import utils.Hit;
 import utils.Ray;
 
@@ -21,6 +24,7 @@ public class Sphere extends Geometry {
      * The radius of the Sphere.
      */
     public final double r;
+    private final InterpolatedImageTexture tex;
 
 
     /**
@@ -33,6 +37,7 @@ public class Sphere extends Geometry {
         super(material,reciveShadows,castShadows);
         this.c = new Point3(0,0,0);
         this.r = 1;
+        tex = new InterpolatedImageTexture("texture/earthnormal.jpg",1,1,0,0);
     }
 
     @Override
@@ -71,10 +76,13 @@ public class Sphere extends Geometry {
             final double u = 0.5 - Math.atan2(n.z,n.x)/(2*Math.PI);
 
             final double v = 0.5 - 2.0 * (Math.asin(n.y)/(2*Math.PI));
+            Color normalC = material.bumpMap.getColor(u,v);
+            Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
+            Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+            return new Hit(t, n1, r, this, new TexCoord2(u, v));
 
-            return new Hit(t, n, r, this, new TexCoord2(u,v));
+
         }
-
         /*Vector3 l = c.sub(r.o);
         double s = l.dot(r.d.normalized());
         double l2 = l.dot(l);

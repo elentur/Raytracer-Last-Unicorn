@@ -18,8 +18,8 @@ public class TransparentMaterial extends Material {
     public final Color specular;
     public final  Color reflection;
     public final  int exponent;
-    public TransparentMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent, double indexOfRefraction) {
-        super(texture);
+    public TransparentMaterial(final Texture texture, final  Color specular, final  Color reflection, final  int exponent, double indexOfRefraction, final Texture bumpMap, final double bumpScale) {
+        super(texture,bumpMap,bumpScale);
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;

@@ -1,6 +1,5 @@
 package material;
 
-import texture.SingleColorTexture;
 import texture.Texture;
 import utils.Color;
 import utils.Hit;
@@ -23,8 +22,8 @@ public class SingleColorMaterial extends Material {
      * @param texture
      */
 
-    public SingleColorMaterial(final Texture texture) {
-        super(texture);
+    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
+        super(texture,bumpMap,bumpScale);
         if(texture == null){
             throw new IllegalArgumentException("texture must not be null");
         }

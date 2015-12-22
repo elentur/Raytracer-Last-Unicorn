@@ -6,6 +6,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
+import utils.Color;
 import utils.Hit;
 import utils.Ray;
 
@@ -122,8 +123,11 @@ public class Triangle extends Geometry {
 
                     final double u = texCoordA.u*(1 - beta - gamma) +  texCoordB.u * beta + texCoordC.u * gamma;
                     final double v = texCoordA.v*(1 - beta - gamma) +  texCoordB.v * beta + texCoordC.v * gamma;
+                    Color normalC = material.bumpMap.getColor(u,v);
+                    Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
+                    Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
 
-                    return new Hit(t, n, r, this, new TexCoord2(u,v));
+                    return new Hit(t, n1, r, this, new TexCoord2(u,v));
                 }
             }
 

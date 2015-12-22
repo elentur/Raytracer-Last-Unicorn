@@ -124,7 +124,7 @@ public class NewSphereStage extends NewGeoStage {
             txtInputs[1].setNumber(0.0);
             txtInputs[2].setNumber(-3.0);
             txtInputs[3].setNumber(0.5);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
         } else {
             txtName.setText(s.name);
             txtInputs[0].setNumber(s.c.x);

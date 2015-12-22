@@ -99,7 +99,7 @@ public class NewOBJStage extends NewGeoStage {
 
     public void setValues() {
         if (sff == null) {
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0));
         } else {
             btnOK.setDisable(false);
             material.set(sff.material);
