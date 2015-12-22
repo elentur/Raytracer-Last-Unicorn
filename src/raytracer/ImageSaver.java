@@ -72,11 +72,11 @@ public class ImageSaver extends Application {
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(0,0,4), true);
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,-2,4),new Vector3(0,0.5,-1), new Vector3(0,1,0), Math.PI/4);
+        Camera camera = new PerspectiveCamera(new Point3(0,0,4),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
         raytracer.setCamera(camera);
 
         /*Geometry sphere  = new Sphere(new Point3(0,0,0), 1, new SingleColorMaterial(new ImageTexture("/home/roberto/Documents/CG/RayTracer-Last-Unicorn/texture/world.jpg")));
@@ -114,19 +114,18 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        Geometry geo = new AxisAlignedBox(
-                new ReflectiveMaterial(
-                        new ImageTexture("texture/world.jpg"),
+        Geometry geo = new Sphere(
+                new PhongMaterial(
+                        new SingleColorTexture(new Color(1,0,0)),
                         /*new ImageTexture("texture/world.jpg"),*/
                     new Color(1,1,1),
-                    new Color(0.5,0.5,0.5),
                     64
                 )
         );
 
         Transform t = new Transform();
 
-        t = t.rotateY(Math.PI/4);
+        t = t.rotateZ(-Math.PI/8).rotateX(Math.PI/8).scale(0.6,0.2,0.6);
 
         Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
 
