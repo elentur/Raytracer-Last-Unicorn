@@ -2,9 +2,9 @@ package raytracer;
 
 import UI.*;
 import camera.Camera;
-import camera.OrthographicCamera;
-import camera.PerspectiveCamera;
-import geometries.*;
+import camera.DOFCamera;
+import geometries.Node;
+import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,18 +21,13 @@ import light.PointLight;
 import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
-import material.ReflectiveMaterial;
-import sampling.SamplingPattern;
-import texture.ImageTexture;
-import material.LambertMaterial;
 import material.PhongMaterial;
-import material.SingleColorMaterial;
+import sampling.DOFPattern;
+import sampling.SamplingPattern;
 import texture.InterpolatedImageTexture;
 import texture.SingleColorTexture;
 import utils.Color;
 import utils.World;
-
-import java.io.File;
 
 
 /**
@@ -59,7 +54,7 @@ public class ImageSaver extends Application {
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new OrthographicCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), 3, new SamplingPattern(4));
+        Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
         raytracer.setCamera(camera);
 
         Sphere geo = new Sphere(
@@ -76,7 +71,7 @@ public class ImageSaver extends Application {
                 false
         );
 
-        world.geometries.add(new Node(new Transform(),geo,true,true,false,false));
+        world.geometries.add(new Node(new Transform(),geo,true,true,true,false));
     }
 
     /**
