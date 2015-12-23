@@ -11,16 +11,18 @@ public abstract class Texture implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public final double ScaleU;
-    public final double ScaleV;
-    public final double OffsetU;
-    public final double OffsetV;
+    public final double scaleU;
+    public final double scaleV;
+    public final double offsetU;
+    public final double offsetV;
+    public final double rotate;
 
-    public Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV) {
-        ScaleU = scaleU;
-        ScaleV = scaleV;
-        OffsetU = offsetU;
-        OffsetV = offsetV;
+    public Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
+        this.scaleU = scaleU;
+        this.scaleV = scaleV;
+        this.offsetU = offsetU;
+        this.offsetV = offsetV;
+        this.rotate=rotate;
     }
 
     public abstract Color getColor(final double u, final double v);

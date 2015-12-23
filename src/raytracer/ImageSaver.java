@@ -55,6 +55,8 @@ public class ImageSaver extends Application {
         world.lights.add(light1);
 
         Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
+       // Camera camera = new PerspectiveCamera(new Point3(2,5,30),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(4));
+
         raytracer.setCamera(camera);
 
         Sphere geo = new Sphere(
@@ -70,6 +72,20 @@ public class ImageSaver extends Application {
                 true,
                 false
         );
+       /* ShapeFromFile geo = new ShapeFromFile(new File("c:/users/marcu_000/Desktop/bunny.obj"),
+                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        64,
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),
+                true,
+                true,
+                true,
+                false
+        );*/
+
 
         world.geometries.add(new Node(new Transform(),geo,true,true,true,false));
     }

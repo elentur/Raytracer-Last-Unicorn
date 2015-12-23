@@ -35,13 +35,13 @@ public class MaterialView extends ImageView {
         matTracer.getWorld().lights.add(new PointLight(new utils.Color(1,1, 1), new Point3(4, 4, 4),false,500));
         matTracer.getWorld().geometries.add(new Node(new Transform(),new Sphere(st.material.get(),true,true,true,false),true,true,true,false));
         matTracer.getWorld().geometries.add(new Node(new Transform().scale(500,500,500),new Sphere(
-                new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
+                new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
 
         st.material.addListener(a -> {
             matTracer.getWorld().geometries.clear();
             matTracer.getWorld().geometries.add(new Node(new Transform(),new Sphere(st.material.get(),true,true,true,false),true,true,true,false));
             matTracer.getWorld().geometries.add(new Node(new Transform().scale(500,500,500),new Sphere(
-                    new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
+                    new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
 
             matTracer.render(this);
         });

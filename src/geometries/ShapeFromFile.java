@@ -31,10 +31,9 @@ public class ShapeFromFile extends Geometry {
     public final List<Geometry> triangles;
     private final List<Point3> v;
     private final List<Normal3> vn;
-    private final List<Normal3> vt;
+    private final List<TexCoord2> vt;
     private final List<String> f;
     private final Octree octree;
-    private int rekDeep = 10;
 
     public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,castShadows);
@@ -72,14 +71,20 @@ public class ShapeFromFile extends Geometry {
                                 System.out.println("Fehler");
                             }
                         }
-                        if (n[0] != -1) {
+                        if (n[0] != -1 && t[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
-                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
+                                    material,vt.get(t[0]),vt.get(t[1]),vt.get(t[2]),reciveShadows,castShadows,visibility,false);
                             triangles.add(tri);
-                        } else {
+                        } else if (n[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
-                                    material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
+                                    material,new TexCoord2(0,1),new TexCoord2(1,1),new TexCoord2(1,0),reciveShadows,castShadows,visibility,false);
+                            triangles.add(tri);
+                        }else{
+                            Normal3 normal = v.get(p[0]).sub(v.get(p[1])).x(v.get(p[2]).sub(v.get(p[1]))).normalized().asNormal().mul(-1);
+                            Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
+                                    normal, normal, normal,
+                                    material,vt.get(t[0]),vt.get(t[1]),vt.get(t[2]),reciveShadows,castShadows,visibility,false);
                             triangles.add(tri);
                         }
 
@@ -168,10 +173,7 @@ public class ShapeFromFile extends Geometry {
                     String[] vs = line.split("\\s+");
                     final double x = Double.parseDouble(vs[0]);
                     final double y = Double.parseDouble(vs[1]);
-                    final double z;
-                    if (vs.length == 3) z = Double.parseDouble(vs[2]);
-                    else z = 0.0;
-                    vt.add(new Normal3(x, y, z));
+                    vt.add(new TexCoord2(x, y));
                 } else if (line.matches("f\\s+.*")) {
                     line = line.substring(1).trim();
                     f.add(line);

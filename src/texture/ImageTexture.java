@@ -14,11 +14,11 @@ public class ImageTexture extends Texture {
     public Image image;
 
     public ImageTexture(final String path) {
-        this(path,1,1,1,1);
+        this(path,1,1,1,1,0);
     }
 
-    public ImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV) {
-        super(scaleU,scaleV,offsetU,offsetV);
+    public ImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
+        super(scaleU,scaleV,offsetU,offsetV,rotate);
 
         File file = new File(path);
 
@@ -30,8 +30,11 @@ public class ImageTexture extends Texture {
     @Override
     public Color getColor(double u, double v) {
 
-        u = (u/ScaleU + OffsetU) % 1.0;
-        v = (v/ScaleV + OffsetV) % 1.0;
+        double u1 = u*Math.cos(rotate) -v*Math.sin(rotate);
+        v = u*Math.sin(rotate) +v*Math.cos(rotate);
+        u=u1;
+        u = (u/ scaleU + offsetU) % 1.0;
+        v = (v/ scaleV + offsetV) % 1.0;
 
         if(u < 0) u += 1.0;
         if(v < 0) v += 1.0;
