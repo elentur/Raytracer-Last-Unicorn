@@ -2,8 +2,10 @@ package geometries;
 
 import matVect.Normal3;
 import matVect.Point3;
+import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
+import utils.Color;
 import utils.Hit;
 import utils.Ray;
 
@@ -21,15 +23,14 @@ public class Plane extends Geometry {
      * A Normal of the Plane.
      */
     public final Normal3 n;
-
     /**
      * Instantiates a new Plane Object.
      *
      * @param material of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Material material) {
-        super(material);
+    public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material,reciveShadows,castShadows,visibility,flipNormal);
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }
@@ -51,7 +52,11 @@ public class Plane extends Geometry {
             final double u = p.x+0.5;
             final double v = p.z+0.5;
 
-            if (t > 0) return new Hit(t, n, r, this, new TexCoord2(u,v));
+            Color normalC = material.bumpMap.getColor(u,v);
+            Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
+            Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+            if (flipNormal) n1 = n1.mul(-1);
+            if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u,v));
         }
         return null;
     }

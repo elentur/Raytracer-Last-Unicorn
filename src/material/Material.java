@@ -18,12 +18,18 @@ public abstract class Material implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public final Texture texture;
+    public final Texture bumpMap;
+    public final double bumpScale;
+    public final Texture irradiance;
 
-    public Material(final Texture texture) {
+    public Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance) {
         if (texture == null) {
             throw new IllegalArgumentException("Texture cannot be null!");
         }
         this.texture = texture;
+        this.bumpMap=bumpMap;
+        this.bumpScale=bumpScale;
+        this.irradiance=irradiance;
     }
 
     /**

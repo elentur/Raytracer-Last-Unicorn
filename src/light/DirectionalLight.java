@@ -27,14 +27,14 @@ public class DirectionalLight extends Light {
      * @param direction The direction of the light
      * @param castShadow Shadows on or of
      */
-    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow) {
-        super(color,castShadow);
+    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons) {
+        super(color,castShadow,photons);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
         this.direction = direction.normalized();
     }
 
     @Override
-    public boolean illuminates(final Point3 point, final World world) {
+    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -42,7 +42,7 @@ public class DirectionalLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if(castsShadow) {
+        if(castsShadow&& geo.reciveShadows) {
             final Ray r = new Ray(point, directionFrom(point));
 
             for (final Geometry g : world.geometries) {

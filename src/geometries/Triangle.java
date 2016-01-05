@@ -6,6 +6,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.Material;
 import texture.TexCoord2;
+import utils.Color;
 import utils.Hit;
 import utils.Ray;
 
@@ -49,8 +50,9 @@ public class Triangle extends Geometry {
     public Triangle(final Point3 a, final Point3 b, final Point3 c,
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
                     final Material material,
-                    final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC) {
-        super(material);
+                    final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC,
+                    final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+        super(material, reciveShadows,castShadows,visibility,flipNormal);
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
         }
@@ -76,13 +78,14 @@ public class Triangle extends Geometry {
         this.texCoordC = texCoordC;
     }
 
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         this(a, b, c,
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 material,
-                texCoordA, texCoordB, texCoordC);
+                texCoordA, texCoordB, texCoordC,reciveShadows,castShadows,
+                visibility,flipNormal);
     }
 
     @Override
@@ -121,8 +124,11 @@ public class Triangle extends Geometry {
 
                     final double u = texCoordA.u*(1 - beta - gamma) +  texCoordB.u * beta + texCoordC.u * gamma;
                     final double v = texCoordA.v*(1 - beta - gamma) +  texCoordB.v * beta + texCoordC.v * gamma;
-
-                    return new Hit(t, n, r, this, new TexCoord2(u,v));
+                    Color normalC = material.bumpMap.getColor(u,v);
+                    Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
+                    Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+                    if (flipNormal) n1 = n1.mul(-1);
+                    return new Hit(t, n1, r, this, new TexCoord2(u,v));
                 }
             }
 

@@ -64,7 +64,6 @@ public class OrthographicCamera extends Camera {
             final Point3 o = this.e.add(this.u.mul(scalar1)).add(this.v.mul(scalar2));
             final Vector3 d = this.w.mul(-1);
 
-
             rays.add(new Ray(o, d));
         }
 

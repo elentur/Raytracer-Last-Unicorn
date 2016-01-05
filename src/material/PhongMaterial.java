@@ -20,7 +20,7 @@ public class PhongMaterial extends Material {
     /**
      * The color of our reflection.
      */
-    public final Color specular;
+    public final Texture specular;
 
     /**
      * The value to change the size of the highlight.
@@ -36,8 +36,9 @@ public class PhongMaterial extends Material {
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public PhongMaterial(final Texture texture, final Color specular, final int exponent) {
-        super(texture);
+    public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
+                         final Texture bumpMap, final double bumpScale, final Texture irradiance) {
+        super(texture,bumpMap,bumpScale,irradiance);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
@@ -65,13 +66,13 @@ public class PhongMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h, world)) {
+            if (light.illuminates(h, world, hit.geo)) {
                 basicColor = basicColor.add(
                         light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
                                 )
                 ).add(
-                        specular
+                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
                                 .mul(light.color)
                                 .mul(Math.pow(
                                         Math.max(0, rl.dot(e)), exponent)

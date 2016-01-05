@@ -29,8 +29,9 @@ public class OrenNayarMaterial extends Material {
      * @param roughness of the Material. Can't be under 0.0 and over 1.0.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
-    public OrenNayarMaterial(final Texture texture, final double roughness) {
-        super(texture);
+    public OrenNayarMaterial(final Texture texture, final double roughness,
+                             final Texture bumpMap, final double bumpScale, final Texture irradiance) {
+        super(texture,bumpMap,bumpScale,irradiance);
 
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
@@ -76,7 +77,7 @@ public class OrenNayarMaterial extends Material {
 
         for (Light light : world.lights) {
 
-            if (light.illuminates(h, world)) {
+            if (light.illuminates(h, world,hit.geo)) {
 
                 final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));

@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -49,8 +50,8 @@ public class NewTriangleStage extends NewGeoStage {
         col3.setPercentWidth(25);
         center.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        final Button btnMaterial = new MaterialButton(this);
-        btnMaterial.setOnAction(a -> new NewMaterialStage(this));
+        final ImageView btnMaterial = new MaterialView(this);
+        btnMaterial.setOnMouseClicked(a -> new NewMaterialStage(this));
         final Label lblColorPicker = new Label("Material:");
 
         txtName = new TextField();
@@ -130,7 +131,7 @@ public class NewTriangleStage extends NewGeoStage {
             txtInputs[6].setNumber(0.5);
             txtInputs[7].setNumber(-0.5);
             txtInputs[8].setNumber(-3.0);
-            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5))));
+            material.set(new LambertMaterial(new SingleColorTexture(new Color(0.5, 0.5, 0.5)),new SingleColorTexture(new Color(0,0,0)),0,new SingleColorTexture(new Color(0,0,0))));
         } else {
             txtName.setText(t.name);
             txtInputs[0].setNumber(t.a.x);
@@ -168,7 +169,7 @@ public class NewTriangleStage extends NewGeoStage {
                     txtInputs[8].getDouble());
 
 
-            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1));
+            Triangle p = new Triangle(edgeA, edgeB, edgeC, material.get(),new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),true,true,true,true);
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;

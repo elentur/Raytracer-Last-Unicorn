@@ -174,11 +174,11 @@ public class NewCameraStage extends Stage {
                 if (s > 90.0) s = 90.0;
                 if (s < 5.0) s = 5.0;
                 double a = s / (180 / Math.PI);
-                cam = new PerspectiveCamera(e, g, t, a, new SamplingPattern(1,1));
+                cam = new PerspectiveCamera(e, g, t, a, new SamplingPattern(1));
                 cam.name = "Perspective Camera";
             } else {
                 if (s < 1.0) s = 1.0;
-                cam = new OrthographicCamera(e, g, t, s, new SamplingPattern(1,1));
+                cam = new OrthographicCamera(e, g, t, s, new SamplingPattern(1));
                 cam.name = "Orthographic Camera";
             }
             ImageSaver.raytracer.setCamera(cam);
