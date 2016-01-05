@@ -6,6 +6,7 @@ import matVect.Vector3;
 import sampling.SamplingPattern;
 import utils.Ray;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +35,7 @@ public class OrthographicCamera extends Camera {
     public OrthographicCamera(final Point3 e, final Vector3 g, final Vector3 t, final double s, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
         if (s <= 0) throw new IllegalArgumentException("s must not be 0 or lower");
+        this.name = "Orthographic Camera";
         this.s = s;
 
     }
@@ -51,6 +53,8 @@ public class OrthographicCamera extends Camera {
         if (h <= 0) throw new IllegalArgumentException("h must not be 0 or lower");
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
+
+        rays = new HashSet<>();
 
         double aspectRatio = (double) w / (double) h;
 

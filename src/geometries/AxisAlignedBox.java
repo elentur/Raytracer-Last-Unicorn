@@ -37,6 +37,7 @@ public class AxisAlignedBox extends Geometry {
     public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows
             ,final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows, castShadows,visibility,flipNormal);
+        this.name = "Axis Aligned Box";
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 

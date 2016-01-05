@@ -52,7 +52,7 @@ public class SpotLight extends Light {
         if (halfAngle < 0 || halfAngle > 90) {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
-
+        this.name = "Spotlight";
         this.position = position;
         this.direction = direction.normalized();
         this.halfAngle = halfAngle;

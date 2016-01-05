@@ -30,6 +30,7 @@ public class DirectionalLight extends Light {
     public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons) {
         super(color,castShadow,photons);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
+        this.name = "Directional Light";
         this.direction = direction.normalized();
     }
 

@@ -79,11 +79,11 @@ public class ImageSaver extends Application {
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true, 500);
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(5,5));
+        Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(5));
         raytracer.setCamera(camera);
 
 
@@ -123,14 +123,15 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        Geometry geo = new Sphere(
-                new ReflectiveMaterial(
-                        new ImageTexture("texture/world.jpg"),
-                    new Color(1,1,1),
-                    new Color(0.5,0.5,0.5),
-                    64
-                )
-        );
+//        Geometry geo = new Sphere(
+//                new ReflectiveMaterial(
+//                        new ImageTexture("texture/world.jpg"),
+//                        new ImageTexture("texture/world.jpg"),
+//                    new Color(1,1,1),
+//                    new Color(0.5,0.5,0.5),
+//                    64
+//                )
+//        );
        /* Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
                 new ReflectiveMaterial(
                         new SingleColorTexture(new Color(0.5,0.5,0.5)),
@@ -145,10 +146,10 @@ public class ImageSaver extends Application {
         t = t.rotateY(Math.PI/4);
         t=t.scale(1,1,1);
 
-        Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
+        //Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
 
 
-        world.geometries.add(n);
+       // world.geometries.add(n);
 
 
 
@@ -170,7 +171,7 @@ public class ImageSaver extends Application {
     public void start(final Stage primaryStage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Unicorn RayTracer");
         Scene scene = new Scene(root, 600, 450);
         scene.getStylesheets().add("css/rootStyle.css");
         primaryStage.setScene(scene);

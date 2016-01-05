@@ -10,10 +10,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  * Created by roberto on 05.01.16.
  */
-public class MenuController {
+public class MenuController extends AController{
 
     @FXML
     Parent embeddedView;
@@ -66,5 +69,10 @@ public class MenuController {
         Stage stage = (Stage) menuBar.getScene().getWindow();
         // do what you have to do
         stage.close();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

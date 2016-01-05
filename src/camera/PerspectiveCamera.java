@@ -35,6 +35,7 @@ public class PerspectiveCamera extends Camera {
         super(e, g, t, samplingPattern);
         if (angle <= 0 || angle > Math.PI / 2)
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
+        this.name = "Perspective Camera";
         this.angle = angle;
     }
 

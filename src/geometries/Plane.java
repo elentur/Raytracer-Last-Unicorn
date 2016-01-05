@@ -31,8 +31,16 @@ public class Plane extends Geometry {
      */
     public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
+        this.name = "Plane";
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
+    }
+
+    public Plane(Plane plane) {
+        super(plane.material,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
+        this.name = "Plane";
+        this.a = plane.a;
+        this.n = plane.n;
     }
 
     @Override

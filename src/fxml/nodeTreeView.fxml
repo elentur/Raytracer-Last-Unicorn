@@ -6,34 +6,29 @@
 <?import javafx.scene.control.ComboBox?>
 
 <?import javafx.collections.*?>
-
 <?import java.lang.String?>
-<?import javafx.scene.control.Separator?>
-<VBox fx:id="nodeTreeView" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
-    <ComboBox onAction="#handleNewElementAction">
+<?import geometries.Plane?>
+
+<?import utils.Color?>
+
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TreeItem?>
+<?import utils.Element?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
+    <HBox>
+    <ComboBox fx:id="cmbNewElement">
         <value>
             <String fx:value="add new element" />
         </value>
         <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Plane"/>
-                <String fx:value="Sphere"/>
-                <String fx:value="Axis Alined Box"/>
-                <String fx:value="Triangle"/>
-                <String fx:value="Import from File"/>
-
-                <String fx:value="Directionale Light"/>
-                <String fx:value="Point Light"/>
-                <String fx:value="Spotlight"/>
-
-                <String fx:value="Orthographic Camera"/>
-                <String fx:value="Perspective Camera"/>
-            </FXCollections>
+            <FXCollections fx:factory="observableArrayList" />
         </items>
     </ComboBox>
+        <Button text="Add" onAction="#handleNewElementAction"/>
+    </HBox>
 
-    <TreeView>
-    </TreeView>
+    <TreeView fx:id="nodeTreeView"/>
+
 
     <ButtonBar>
         <buttons>

@@ -22,7 +22,7 @@ public class SamplingPattern {
     /**
      * List of Points which represents the coordinates of the ray.
      */
-    public final List<Point2> points;
+    private final List<Point2> points;
 
     /**
      * SamplingPattern constructor which generate the List of points
@@ -44,7 +44,7 @@ public class SamplingPattern {
     /**
      * generate the list of points (coordinates) of the ray random differences.
      */
-    private void generateSampling() {
+    public List<Point2> generateSampling() {
 
         Random rn = new Random();
 
@@ -55,6 +55,8 @@ public class SamplingPattern {
                 points.add(new Point2((1.0/size * x - 0.5) + rX, (1.0/size * y - 0.5) + rY));
             }
         }
+
+        return points;
     }
 
     @Override

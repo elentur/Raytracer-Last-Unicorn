@@ -33,6 +33,7 @@ public class Sphere extends Geometry {
      */
     public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
+        this.name = "Sphere";
         this.c = new Point3(0,0,0);
         this.r = 1;
     }
