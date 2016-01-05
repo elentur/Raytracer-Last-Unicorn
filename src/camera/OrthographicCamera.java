@@ -40,6 +40,18 @@ public class OrthographicCamera extends Camera {
 
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public OrthographicCamera(OrthographicCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.s = camera.s;
+        this.rays = camera.rays;
+    }
+
     @Override
     public String toString() {
         return "OrthographicCamera{" +
@@ -72,6 +84,11 @@ public class OrthographicCamera extends Camera {
         }
 
         return rays;
+    }
+
+    @Override
+    public OrthographicCamera deepCopy() {
+        return new OrthographicCamera(this);
     }
 
     @Override

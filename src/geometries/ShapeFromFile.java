@@ -101,6 +101,18 @@ public class ShapeFromFile extends Geometry {
 
     }
 
+    public ShapeFromFile(ShapeFromFile shapeFromFile) {
+        super(shapeFromFile.material, shapeFromFile.reciveShadows, shapeFromFile.castShadows, shapeFromFile.visibility, shapeFromFile.castShadows);
+        this.file = shapeFromFile.file;
+        this.triangles = shapeFromFile.triangles;
+        this.v = shapeFromFile.v;
+        this.vn = shapeFromFile.vn;
+        this.vt = shapeFromFile.vt;
+        this.f = shapeFromFile.f;
+        this.octree = shapeFromFile.octree;
+        this.rekDeep = shapeFromFile.rekDeep;
+    }
+
     @Override
     public Hit hit(Ray r) {
        /* Hit h = null;
@@ -113,6 +125,11 @@ public class ShapeFromFile extends Geometry {
         }
         return h;*/
         return octree.hit(r);
+    }
+
+    @Override
+    public ShapeFromFile deepCopy() {
+        return new ShapeFromFile(this);
     }
 
     private String nameTest(String n) {

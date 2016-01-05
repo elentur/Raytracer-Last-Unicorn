@@ -39,6 +39,18 @@ public class PerspectiveCamera extends Camera {
         this.angle = angle;
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public PerspectiveCamera(PerspectiveCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.angle = camera.angle;
+        this.rays = camera.rays;
+    }
+
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
 
@@ -61,6 +73,11 @@ public class PerspectiveCamera extends Camera {
         }
 
         return rays;
+    }
+
+    @Override
+    public PerspectiveCamera deepCopy() {
+        return new PerspectiveCamera(this);
     }
 
     @Override

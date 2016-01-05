@@ -42,6 +42,20 @@ public class DOFCamera extends Camera {
         this.fStop = fStop;
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public DOFCamera(DOFCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.angle = camera.angle;
+        this.focalLength = camera.focalLength;
+        this.fStop = camera.fStop;
+        this.rays = camera.rays;
+    }
+
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
         if (w <= 0) throw new IllegalArgumentException("w must not be 0 or lower");
@@ -63,6 +77,11 @@ public class DOFCamera extends Camera {
         }
 
         return rays;
+    }
+
+    @Override
+    public DOFCamera deepCopy() {
+        return new DOFCamera(this);
     }
 
     @Override

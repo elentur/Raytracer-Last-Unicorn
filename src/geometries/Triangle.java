@@ -109,6 +109,24 @@ public class Triangle extends Geometry {
         );
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param triangle
+     */
+    public Triangle(Triangle triangle) {
+        super(triangle.material, triangle.reciveShadows,triangle.castShadows,triangle.visibility,triangle.flipNormal);
+        this.a = triangle.a;
+        this.b = triangle.b;
+        this.c = triangle.c;
+        this.na = triangle.na;
+        this.nb = triangle.nb;
+        this.nc = triangle.nc;
+        this.texCoordA = triangle.texCoordA;
+        this.texCoordB = triangle.texCoordB;
+        this.texCoordC = triangle.texCoordC;
+    }
+
     @Override
     public Hit hit(final Ray r) {
         if (r == null) {
@@ -156,6 +174,11 @@ public class Triangle extends Geometry {
         }
 
         return null;
+    }
+
+    @Override
+    public Triangle deepCopy() {
+        return new Triangle(this);
     }
 
     @Override

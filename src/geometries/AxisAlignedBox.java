@@ -54,6 +54,17 @@ public class AxisAlignedBox extends Geometry {
 
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param box
+     */
+    public AxisAlignedBox(AxisAlignedBox box) {
+        super(box.material, box.reciveShadows, box.castShadows, box.visibility, box.flipNormal);
+        this.lbf = box.lbf;
+        this.run = box.run;
+    }
+
     @Override
     public Hit hit(final Ray r) {
         if (r == null) {
@@ -84,6 +95,11 @@ public class AxisAlignedBox extends Geometry {
         }
 
         return hit;
+    }
+
+    @Override
+    public AxisAlignedBox deepCopy() {
+        return new AxisAlignedBox(this);
     }
 
     private boolean comp(final Point3 p, final double e) {

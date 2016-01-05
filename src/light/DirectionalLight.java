@@ -34,6 +34,17 @@ public class DirectionalLight extends Light {
         this.direction = direction.normalized();
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param light
+     */
+    public DirectionalLight(DirectionalLight light) {
+        super(light.color, light.castsShadow, light.photons);
+        this.name = light.name;
+        this.direction = light.direction;
+    }
+
     @Override
     public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
@@ -61,6 +72,11 @@ public class DirectionalLight extends Light {
     public Vector3 directionFrom(final Point3 point) {
         if (point == null) throw new IllegalArgumentException("point must not be null ");
         return direction.mul(-1);
+    }
+
+    @Override
+    public DirectionalLight deepCopy() {
+        return new DirectionalLight(this);
     }
 
     @Override

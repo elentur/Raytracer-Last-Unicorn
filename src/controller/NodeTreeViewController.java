@@ -9,16 +9,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxListCell;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.util.Callback;
-import javafx.util.StringConverter;
 import light.DirectionalLight;
 import light.Light;
 import light.PointLight;
@@ -30,14 +23,13 @@ import material.DefaultMaterial;
 import sampling.SamplingPattern;
 import utils.Color;
 import utils.Element;
-
 import java.net.URL;
-import java.nio.charset.CharsetEncoder;
 import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by roberto on 05.01.16.
+ * @author Robert Dziuba
  */
 public class NodeTreeViewController extends AController {
 
@@ -45,7 +37,7 @@ public class NodeTreeViewController extends AController {
     private ComboBox<Element> cmbNewElement;
 
     @FXML
-    private TreeView<Element> nodeTreeView;
+    private TreeView<Element> elementsTreeView;
 
     @FXML
     private TreeItem<Element> nodesRootTree;
@@ -64,69 +56,97 @@ public class NodeTreeViewController extends AController {
     }
 
     private void initializeTreeView() {
+
+        // nodesRootTree
+
         nodesRootTree = new TreeItem<>();
-        Element nodes = new Element() {
-        };
+        Element nodes = new Element() {};
         nodes.name="Nodes";
         nodesRootTree.setValue(nodes);
 
-        nodesRootTree.getChildren().addListener(new ListChangeListener<TreeItem<Element>>() {
-            @Override
-            public void onChanged(Change<? extends TreeItem<Element>> c) {
+        nodesRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
 
-                List<Geometry> geos = raytracer.getWorld().geometries;
+            List<Geometry> geos = raytracer.getWorld().geometries;
 
-                geos.clear();
+            geos.clear();
 
-                for(TreeItem<Element> item : nodesRootTree.getChildren()){
-                    geos.add((Geometry) item.getValue());
-                }
+            for(TreeItem<Element> item : nodesRootTree.getChildren()){
+                geos.add((Geometry) item.getValue());
             }
         });
 
-
-
+        // lightsRootTree
 
         lightsRootTree = new TreeItem<>();
-        Element light = new Element() {
-        };
+        Element light = new Element() {};
         light.name="Lights";
         lightsRootTree.setValue(light);
 
+        lightsRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
+
+            List<Light> lights = raytracer.getWorld().lights;
+
+            lights.clear();
+
+            for(TreeItem<Element> item : lightsRootTree.getChildren()){
+                lights.add((Light) item.getValue());
+            }
+        });
+
+        // camerasRootTree
+
         camerasRootTree = new TreeItem<>();
-        Element camera = new Element() {
-        };
+        Element camera = new Element() {};
         camera.name="Cameras";
         camerasRootTree.setValue(camera);
 
+        camerasRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
+            for(TreeItem<Element> item : camerasRootTree.getChildren()){
+                raytracer.setCamera((Camera) item.getValue());
+            }
+        });
+
+        // rootTreeItem
+
         TreeItem<Element> root = new TreeItem<>();
-        Element element = new Element() {
-        };
+        root.setExpanded(true);
+        Element element = new Element() {};
         element.name="Elements";
         root.setValue(element);
-        root.setExpanded(true);
+
 
         root.getChildren().addAll(nodesRootTree,lightsRootTree,camerasRootTree);
 
-        nodeTreeView.setRoot(root);
+        elementsTreeView.setRoot(root);
 
         // TODO in eigene Klasse auslagern
-        nodeTreeView.setCellFactory(new Callback<TreeView<Element>,TreeCell<Element>>(){
+        elementsTreeView.setCellFactory(new Callback<TreeView<Element>,TreeCell<Element>>(){
             @Override
             public TreeCell<Element> call(TreeView<Element> p) {
                 return new TreeCell<Element>() {
                     @Override
                     protected void updateItem(Element item, boolean empty) {
                         super.updateItem(item, empty);
-                        if (item != null) {
-                            setText(item.name);
-                        }else{
-                            setText(null);
+                        if(!empty){
+                            if (item != null) {
+                                setText(item.name);
+                            }else{
+                                setText(null);
+                            }
                         }
-
                     }
                 };
             }
+        });
+
+        // wenn element ausgewählt
+        elementsTreeView.getSelectionModel().selectedItemProperty().addListener( new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                TreeItem<Element> selectedItem = (TreeItem<Element>) newValue;
+                selectedElement.set(selectedItem.getValue());
+            }
+
         });
     }
 
@@ -178,31 +198,35 @@ public class NodeTreeViewController extends AController {
 
     }
 
-    public void handleGroupAction(ActionEvent actionEvent) {
+    public void handleGroupAction() {
     }
 
-    public void handleUngroupAction(ActionEvent actionEvent) {
+    public void handleUngroupAction() {
     }
 
-    public void handleDeleteAction(ActionEvent actionEvent) {
-        nodesRootTree.getChildren().remove(1);
+    public void handleDeleteAction() {
+        if(elementsTreeView.getSelectionModel().getSelectedItem() != null) {
+            TreeItem<Element> selectedItem = elementsTreeView.getSelectionModel().getSelectedItem();
+            if(selectedItem.getValue() instanceof Geometry || selectedItem.getValue() instanceof Light || selectedItem.getValue() instanceof Camera)
+                selectedItem.getParent().getChildren().remove(selectedItem);
+        }
     }
 
-    public void handleNewElementAction(ActionEvent actionEvent) {
+    public void handleNewElementAction() {
 
-        if(cmbNewElement.getSelectionModel().getSelectedItem() instanceof Element){
+        if(cmbNewElement.getSelectionModel().getSelectedItem() != null){
 
             Element element = cmbNewElement.getSelectionModel().getSelectedItem();
 
             if (element instanceof Light) {
-                lightsRootTree.getChildren().add(new TreeItem<Element>(element));
+                lightsRootTree.getChildren().add(new TreeItem<>(((Light) element).deepCopy()));
             } else if (element instanceof Camera) {
                 if(camerasRootTree.getChildren().isEmpty())
-                    camerasRootTree.getChildren().add(new TreeItem<Element>(element));
+                    camerasRootTree.getChildren().add(new TreeItem<>(((Camera) element).deepCopy()));
             } else if (element instanceof Geometry) {
-                Node node = new Node(new Transform(),(Geometry) element,true,true,true,false);
+                Node node = new Node(new Transform(),((Geometry) element).deepCopy(),true,true,true,false);
                 node.name = element.name;
-                nodesRootTree.getChildren().add(new TreeItem<Element>(node));
+                nodesRootTree.getChildren().add(new TreeItem<>(node));
             }
         }
     }

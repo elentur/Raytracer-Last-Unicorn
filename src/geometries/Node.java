@@ -1,6 +1,7 @@
 package geometries;
 
 import matVect.Transform;
+import material.Material;
 import material.SingleColorMaterial;
 import texture.SingleColorTexture;
 import utils.Color;
@@ -45,6 +46,17 @@ public class Node extends Geometry {
     }
 
     /**
+     * Copy Constructor
+     *
+     * @param node
+     */
+    public Node(Node node) {
+        super(node.material, node.reciveShadows, node.castShadows, node.visibility, node.flipNormal);
+        this.t = node.t;
+        this.geos = node.geos;
+    }
+
+    /**
      * Instantiates a new Geometry.
      * @param t is the transform object.
      * @param geo is a geometry.
@@ -68,6 +80,11 @@ public class Node extends Geometry {
         }
 
         return (hit == null) ? hit : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
+    }
+
+    @Override
+    public Node deepCopy() {
+        return new Node(this);
     }
 
     @Override

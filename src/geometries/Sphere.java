@@ -38,6 +38,17 @@ public class Sphere extends Geometry {
         this.r = 1;
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param sphere
+     */
+    public Sphere(Sphere sphere) {
+        super(sphere.material, sphere.reciveShadows, sphere.castShadows, sphere.visibility, sphere.flipNormal);
+        this.c = sphere.c;
+        this.r = sphere.r;
+    }
+
     @Override
     public Hit hit(Ray r) {
         if (r == null) {
@@ -101,6 +112,11 @@ public class Sphere extends Geometry {
             return new Hit(t, n, r, this);
         }*/
         return null;
+    }
+
+    @Override
+    public Sphere deepCopy() {
+        return new Sphere(this);
     }
 
     @Override

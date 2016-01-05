@@ -7,13 +7,8 @@
 
 <?import javafx.collections.*?>
 <?import java.lang.String?>
-<?import geometries.Plane?>
-
-<?import utils.Color?>
-
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.TreeItem?>
-<?import utils.Element?>
+
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
     <HBox>
     <ComboBox fx:id="cmbNewElement">
@@ -27,7 +22,7 @@
         <Button text="Add" onAction="#handleNewElementAction"/>
     </HBox>
 
-    <TreeView fx:id="nodeTreeView"/>
+    <TreeView fx:id="elementsTreeView"/>
 
 
     <ButtonBar>

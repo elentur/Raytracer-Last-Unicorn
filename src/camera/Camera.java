@@ -85,4 +85,11 @@ public abstract class Camera extends Element implements Serializable {
      */
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
 
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Camera;
+     */
+    public abstract Camera deepCopy();
+
 }

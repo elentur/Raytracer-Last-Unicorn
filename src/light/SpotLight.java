@@ -58,6 +58,14 @@ public class SpotLight extends Light {
         this.halfAngle = halfAngle;
     }
 
+    public SpotLight(SpotLight light) {
+        super(light.color, light.castsShadow, light.photons);
+        this.name = light.name;
+        this.position = light.position;
+        this.direction = light.direction;
+        this.halfAngle = light.halfAngle;
+    }
+
     @Override
     public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
         if (point == null) {
@@ -93,6 +101,11 @@ public class SpotLight extends Light {
     @Override
     public Vector3 directionFrom(final Point3 point) {
         return position.sub(point).normalized();
+    }
+
+    @Override
+    public SpotLight deepCopy() {
+        return new SpotLight(this);
     }
 
     @Override

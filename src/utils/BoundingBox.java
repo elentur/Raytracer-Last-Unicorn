@@ -99,6 +99,11 @@ public class BoundingBox extends Geometry {
         return comparison(max);
     }
 
+    @Override
+    public Geometry deepCopy() {
+        return null;
+    }
+
     /**
      * The method checks if the results lies within the Axis Aligned Box coordinates.
      *
@@ -163,6 +168,11 @@ public class BoundingBox extends Geometry {
                 final double t = n.dot(a.sub(r.o)) / nenner;
                 if (t > 0) return new Hit(t, n, r, this, new TexCoord2(0,0));
             }
+            return null;
+        }
+
+        @Override
+        public Geometry deepCopy() {
             return null;
         }
     }

@@ -36,6 +36,10 @@ public class Plane extends Geometry {
         this.n = new Normal3(0, 1, 0);
     }
 
+    /**
+     * Copy Constructor
+     * @param plane
+     */
     public Plane(Plane plane) {
         super(plane.material,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
         this.name = "Plane";
@@ -67,6 +71,11 @@ public class Plane extends Geometry {
             if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u,v));
         }
         return null;
+    }
+
+    @Override
+    public Plane deepCopy() {
+        return new Plane(this);
     }
 
     @Override

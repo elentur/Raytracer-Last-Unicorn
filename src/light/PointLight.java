@@ -35,6 +35,16 @@ public class PointLight extends Light {
         this.position = position;
     }
 
+    /**
+     * Copy Constructor
+     *
+     * @param light
+     */
+    public PointLight(PointLight light) {
+        super(light.color, light.castsShadow, light.photons);
+        this.name = light.name;
+        this.position = light.position;
+    }
 
     @Override
     public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
@@ -67,6 +77,11 @@ public class PointLight extends Light {
     public Vector3 directionFrom(Point3 point) {
         if (point == null) throw new IllegalArgumentException("point must not be null ");
         return position.sub(point).normalized();
+    }
+
+    @Override
+    public PointLight deepCopy() {
+        return new PointLight(this);
     }
 
     @Override
