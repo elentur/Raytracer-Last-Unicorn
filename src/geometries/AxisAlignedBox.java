@@ -56,7 +56,7 @@ public class AxisAlignedBox extends Geometry {
     @Override
     public Hit hit(final Ray r) {
         if (r == null) {
-            throw new IllegalArgumentException("The r cannot be null!");
+            throw new IllegalArgumentException("The ray cannot be null!");
         }
 
         final Hit[] hits = new Hit[]{

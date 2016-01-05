@@ -19,6 +19,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import material.*;
 import raytracer.Raytracer;
+import sampling.LightShadowPattern;
 import sampling.SamplingPattern;
 import texture.SingleColorTexture;
 
@@ -137,7 +138,7 @@ public class NewMaterialStage extends Stage {
     private void setUpTracer(NewGeoStage st) {
        // matTracer.setWorld(new World(new utils.Color(0, 0, 0), new utils.Color(0, 0, 0)));
         matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1)));
-        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false,500));
+        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1, 1, 1), new Point3(0.5, 0.5, 0),false,500, new LightShadowPattern(0,1)));
         matTracer.getWorld().backImg = new Image("img/matBack.png", 80, 80, false, false, false);
         matTracer.getWorld().geometries.add(new Sphere(st.material.get(),true,true,true,true));
         st.material.addListener(a -> {

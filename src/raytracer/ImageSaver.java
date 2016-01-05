@@ -2,8 +2,10 @@ package raytracer;
 
 import UI.*;
 import camera.Camera;
-import camera.DOFCamera;
+import camera.PerspectiveCamera;
+import geometries.AxisAlignedBox;
 import geometries.Node;
+import geometries.Plane;
 import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -21,10 +23,10 @@ import light.PointLight;
 import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
-import material.PhongMaterial;
-import sampling.DOFPattern;
+import material.LambertMaterial;
+import material.ReflectiveMaterial;
+import sampling.LightShadowPattern;
 import sampling.SamplingPattern;
-import texture.InterpolatedImageTexture;
 import texture.SingleColorTexture;
 import utils.Color;
 import utils.World;
@@ -46,23 +48,21 @@ public class ImageSaver extends Application {
 
     private void testScene() {
 
-        World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
+        World world = new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0));
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(10,0,30), true,500);
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(0,8,-10), true,500, new LightShadowPattern(1,1));
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-        Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
-       // Camera camera = new PerspectiveCamera(new Point3(2,5,30),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(4));
+       // Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
+        Camera camera = new PerspectiveCamera(new Point3(0,5,14),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/6, new SamplingPattern(5));
 
         raytracer.setCamera(camera);
 
-        Sphere geo = new Sphere(
-                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        64,
+        Sphere sphere1 = new Sphere(
+                new LambertMaterial(new SingleColorTexture(new Color(1,1,1)),
                         new SingleColorTexture(new Color(1,1,1)),
                         0,
                         new SingleColorTexture(new Color(1,1,1))
@@ -72,8 +72,10 @@ public class ImageSaver extends Application {
                 true,
                 false
         );
-       /* ShapeFromFile geo = new ShapeFromFile(new File("c:/users/marcu_000/Desktop/bunny.obj"),
-                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
+
+        Sphere sphere2 = new Sphere(
+                new ReflectiveMaterial(new SingleColorTexture(new Color(0.5,0.5,0.5)),
+                        new SingleColorTexture(new Color(1,1,1)),
                         new SingleColorTexture(new Color(1,1,1)),
                         64,
                         new SingleColorTexture(new Color(1,1,1)),
@@ -84,10 +86,63 @@ public class ImageSaver extends Application {
                 true,
                 true,
                 false
-        );*/
+        );
+        Plane plane1 = new Plane(
+                new LambertMaterial(new SingleColorTexture(new Color(1,1,1)),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),
+                true,
+                true,
+                true,
+                false
+        );
+        Plane plane2 = new Plane(
+                new LambertMaterial(new SingleColorTexture(new Color(0,1,0)),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),
+                true,
+                true,
+                true,
+                false
+        );
+        Plane plane3 = new Plane(
+                new LambertMaterial(new SingleColorTexture(new Color(1,0,0)),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),
+                true,
+                true,
+                true,
+                false
+        );
+        AxisAlignedBox box = new AxisAlignedBox(
+                new LambertMaterial(new SingleColorTexture(new Color(1,0,0)),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),
+                true,
+                true,
+                true,
+                false
+        );
 
 
-        world.geometries.add(new Node(new Transform(),geo,true,true,true,false));
+
+        world.geometries.add(new Node(new Transform().translate(-2.7,4.225,-11.39).scale(1.7,1.7,1.7),sphere1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(3,4.225,-7).scale(1.7,1.7,1.7),sphere1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(0.571,3.1,-12.532).scale(0.7,0.7,0.7),sphere2,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(0,10,0).rotateX(Math.PI),plane1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(0,0,-16).rotateX(Math.PI/2),plane1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(0,0,15).rotateX(-Math.PI/2),plane1,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(6,0,0).rotateZ(Math.PI/2),plane2,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(-6,0,0).rotateZ(-Math.PI/2),plane3,true,true,true,false));
+        world.geometries.add(new Node(new Transform().translate(0,2.5,0),plane1,true,true,true,false));
     }
 
     /**
@@ -139,7 +194,6 @@ public class ImageSaver extends Application {
         final MenuItem btnSettings = new MenuItem("Rendersettings");
         final MenuBar menubar = new MenuBar();
         final Label lblTime = new Label();
-
         final ScrollPane scrollPane = new ScrollPane(image);
         final ProgressBar progressBar = new ProgressBar(0);
         final StringProperty resolution = new SimpleStringProperty();

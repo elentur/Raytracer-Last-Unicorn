@@ -1,6 +1,7 @@
 package material;
 
 import light.Light;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
 import texture.Texture;
@@ -66,7 +67,7 @@ public class PhongMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h, world, hit.geo)) {
+            if (light.illuminates(h,new Point2(0,0), world, hit.geo)) {
                 basicColor = basicColor.add(
                         light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))

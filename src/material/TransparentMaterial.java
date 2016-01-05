@@ -2,6 +2,7 @@ package material;
 
 import light.Light;
 import matVect.Normal3;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
 import raytracer.ImageSaver;
@@ -79,7 +80,7 @@ public class TransparentMaterial extends Material {
 
             Vector3 l = light.directionFrom(p);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(p, world,hit.geo)) {
+            if (light.illuminates(p,new Point2(0,0), world,hit.geo)) {
                 basicColor = basicColor.add(
                         light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))

@@ -1,6 +1,7 @@
 package material;
 
 import light.Light;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
 import texture.Texture;
@@ -77,7 +78,7 @@ public class OrenNayarMaterial extends Material {
 
         for (Light light : world.lights) {
 
-            if (light.illuminates(h, world,hit.geo)) {
+            if (light.illuminates(h,new Point2(0,0), world,hit.geo)) {
 
                 final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));

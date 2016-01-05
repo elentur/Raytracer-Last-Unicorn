@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Element;
 import utils.World;
@@ -23,12 +25,14 @@ public abstract class Light extends Element implements Serializable {
     public final Color color;
     public final boolean castsShadow;
     public final int photons;
+    public final LightShadowPattern lightShadowPattern;
 
-    public Light(final Color color, final boolean castShadow, final int photons) {
+    public Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         if(color == null) throw new IllegalArgumentException("color must not be null");
         this.color = color;
         this.castsShadow =castShadow;
         this.photons=photons;
+        this.lightShadowPattern = lightShadowPattern;
     }
 
     /**
@@ -38,7 +42,7 @@ public abstract class Light extends Element implements Serializable {
      * @param world The world object for the shadow calculation
      * @return Returns if a point is illuminated
      */
-    public abstract boolean illuminates(final Point3 point, final World world, final Geometry geo);
+    public abstract boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo);
 
     /**
      * Returns a Vector that shows from the illuminated point to the Lightsourc

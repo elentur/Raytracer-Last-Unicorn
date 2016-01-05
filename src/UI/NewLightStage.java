@@ -17,6 +17,7 @@ import light.SpotLight;
 import matVect.Point3;
 import matVect.Vector3;
 import raytracer.ImageSaver;
+import sampling.LightShadowPattern;
 
 /**
  * Created by Marcus Baetz on 23.11.2015.
@@ -189,12 +190,12 @@ public class NewLightStage extends Stage {
                     txtInputs[5].getDouble());
             Light l = null;
             if (typ == 0) {
-                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected(),500);
+                l = new DirectionalLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), dir,chkShadows.isSelected(),500, new LightShadowPattern(0,1));
             } else if (typ == 2) {
                 double a = sldAngle.getValue() / (180 / Math.PI);
-                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a,chkShadows.isSelected(),500);
+                l = new SpotLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos, dir, a,chkShadows.isSelected(),500, new LightShadowPattern(0,1));
             } else {
-                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos,chkShadows.isSelected(),500);
+                l = new PointLight(new utils.Color(c.getRed(), c.getGreen(), c.getBlue()), pos,chkShadows.isSelected(),500, new LightShadowPattern(0,1));
             }
             l.name = txtName.getText();
             int index = 1;

@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -41,8 +43,8 @@ public class SpotLight extends Light {
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public SpotLight(final Color color, final Point3 position, final Vector3 direction,
-                     final double halfAngle, final boolean castShadow, final int photons) {
-        super(color,castShadow,photons);
+                     final double halfAngle, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        super(color,castShadow,photons,lightShadowPattern);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }
@@ -59,7 +61,7 @@ public class SpotLight extends Light {
     }
 
     @Override
-    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
+    public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }

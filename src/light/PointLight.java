@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -28,15 +30,15 @@ public class PointLight extends Light {
      * @param position Represents the position of the light
      * @param castShadow Shadows on or of
      */
-    public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons) {
-        super(color,castShadow,photons);
+    public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        super(color,castShadow,photons,lightShadowPattern);
         if (position == null) throw new IllegalArgumentException("position must not be null ");
         this.position = position;
     }
 
 
     @Override
-    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
+    public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -45,7 +47,7 @@ public class PointLight extends Light {
         }
 
         if(castsShadow&& geo.reciveShadows) {
-            final Ray r = new Ray(point, directionFrom(point));
+            final Ray r = new Ray(point, directionFrom(point,samplePoint));
 
             final double tl = r.tOf(position);
 
@@ -61,7 +63,11 @@ public class PointLight extends Light {
 
         return true;
     }
-
+    public Vector3 directionFrom(Point3 point, Point2 samplePoint) {
+        if (point == null) throw new IllegalArgumentException("point must not be null ");
+        Point3 p = new Point3(position.x +samplePoint.x,position.y+samplePoint.y,position.z);
+        return p.sub(point).normalized();
+    }
     @Override
     public Vector3 directionFrom(Point3 point) {
         if (point == null) throw new IllegalArgumentException("point must not be null ");

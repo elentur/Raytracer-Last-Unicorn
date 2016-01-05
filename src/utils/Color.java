@@ -39,6 +39,8 @@ public class Color implements Serializable {
         this.b = b;
     }
 
+
+
     /**
      * Adds a material to this material.
      *

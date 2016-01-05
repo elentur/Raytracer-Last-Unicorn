@@ -10,8 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -20,6 +23,7 @@ import light.Light;
 import light.PointLight;
 import light.SpotLight;
 import raytracer.ImageSaver;
+import sampling.LightShadowPattern;
 import texture.TexCoord2;
 import utils.Element;
 
@@ -105,21 +109,21 @@ public class EditObjects extends Stage {
                     // l.getItems().add(t);
                 } else if (e instanceof PointLight) {
                     PointLight pl = (PointLight) e;
-                    PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow,500);
+                    PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow,500, new LightShadowPattern(0,1));
                     p.name = pl.name;
                     p = (PointLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof DirectionalLight) {
                     DirectionalLight pl = (DirectionalLight) e;
-                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow,500);
+                    DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow,500, new LightShadowPattern(0,1));
                     p.name = pl.name;
                     p = (DirectionalLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof SpotLight) {
                     SpotLight pl = (SpotLight) e;
-                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow,500);
+                    SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow,500, new LightShadowPattern(0,1));
                     p.name = pl.name;
                     p = (SpotLight) nameTest(p);
                     ImageSaver.raytracer.getWorld().lights.add(p);
@@ -219,7 +223,9 @@ public class EditObjects extends Stage {
                                 String name = "";
                                 name = this.getItem().name;
                                 text = name;
+                                this.setBackground(new Background(new BackgroundFill(Color.RED,null,null)));
                             }
+
                             setText(text);
                         } else {
                             setText("");

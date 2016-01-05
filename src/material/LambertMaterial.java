@@ -1,6 +1,7 @@
 package material;
 
 import light.Light;
+import matVect.Point2;
 import matVect.Point3;
 import texture.Texture;
 import utils.Color;
@@ -35,9 +36,22 @@ public class LambertMaterial extends Material {
         Color c = new Color(0, 0, 0);
         for (Light light : world.lights) {
             final Point3 p = hit.ray.at(hit.t);
-            if(light.illuminates(p,world,hit.geo)){
-                c = c.add(light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
-            }
+          //  if (light.illuminates(p, world, hit.geo)) {
+          //      c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
+          //  }else {
+                synchronized (light.lightShadowPattern) {
+                    light.lightShadowPattern.generateSampling();
+
+                    for (Point2 point : light.lightShadowPattern.points) {
+
+                        if (light.illuminates(p,point, world, hit.geo)) {
+                            c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
+                        }
+                    }
+                    c = c.mul(1.0/light.lightShadowPattern.points.size());
+                }
+           // }
+
         }
 
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(c);

@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -27,14 +29,14 @@ public class DirectionalLight extends Light {
      * @param direction The direction of the light
      * @param castShadow Shadows on or of
      */
-    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons) {
-        super(color,castShadow,photons);
+    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        super(color,castShadow,photons,lightShadowPattern);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
         this.direction = direction.normalized();
     }
 
     @Override
-    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
+    public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
