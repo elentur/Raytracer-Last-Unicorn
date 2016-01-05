@@ -1,0 +1,45 @@
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+
+<?import javafx.collections.*?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Separator?>
+<VBox fx:id="nodeTreeView" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
+    <ComboBox onAction="#handleNewElementAction">
+        <value>
+            <String fx:value="add new element" />
+        </value>
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Plane"/>
+                <String fx:value="Sphere"/>
+                <String fx:value="Axis Alined Box"/>
+                <String fx:value="Triangle"/>
+                <String fx:value="Import from File"/>
+
+                <String fx:value="Directionale Light"/>
+                <String fx:value="Point Light"/>
+                <String fx:value="Spotlight"/>
+
+                <String fx:value="Orthographic Camera"/>
+                <String fx:value="Perspective Camera"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <TreeView>
+    </TreeView>
+
+    <ButtonBar>
+        <buttons>
+            <Button onAction="#handleGroupAction" text="Group" />
+            <Button onAction="#handleUngroupAction" text="Ungroup"/>
+            <Button onAction="#handleDeleteAction" text="Delete"/>
+        </buttons>
+    </ButtonBar>
+</VBox>

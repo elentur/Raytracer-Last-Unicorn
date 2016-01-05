@@ -15,7 +15,7 @@ public class SamplingPattern {
 
     public final double columns;
 
-    public final List<Point2> points;
+    private final List<Point2> points;
 
     public SamplingPattern(final double rows, final double columns) {
 
@@ -26,15 +26,15 @@ public class SamplingPattern {
         this.columns = columns;
 
         points = new ArrayList<>();
-
-        generateSampling();
     }
 
-    private void generateSampling() {
+    public List<Point2> generateSampling() {
         for(double x = 0; x < columns; x++){
             for(double y = 0; y < rows; y++){
                 points.add(new Point2(1.0/columns * x - 0.5, 1.0/rows * y - 0.5));
             }
         }
+
+        return points;
     }
 }

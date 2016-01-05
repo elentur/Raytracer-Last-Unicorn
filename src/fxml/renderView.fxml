@@ -1,0 +1,5 @@
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<ScrollPane fx:id="scrollPane" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.RenderController">
+    <ImageView fx:id="image"></ImageView>
+</ScrollPane>

@@ -6,10 +6,12 @@ import camera.PerspectiveCamera;
 import geometries.AxisAlignedBox;
 import geometries.Geometry;
 import geometries.Node;
+import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -22,11 +24,19 @@ import light.PointLight;
 import matVect.Point3;
 import matVect.Transform;
 import matVect.Vector3;
+import material.OrenNayarMaterial;
 import material.ReflectiveMaterial;
+import material.TransparentMaterial;
 import sampling.SamplingPattern;
 import texture.ImageTexture;
 import utils.Color;
 import utils.World;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,7 +123,7 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-        Geometry geo = new AxisAlignedBox(
+        Geometry geo = new Sphere(
                 new ReflectiveMaterial(
                         new ImageTexture("texture/world.jpg"),
                     new Color(1,1,1),
@@ -137,6 +147,7 @@ public class ImageSaver extends Application {
 
         Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
 
+
         world.geometries.add(n);
 
 
@@ -156,15 +167,22 @@ public class ImageSaver extends Application {
      * @see javafx.stage.Stage
      */
     @Override
-    public void start(final Stage primaryStage) {
+    public void start(final Stage primaryStage) throws Exception{
 
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
+        primaryStage.setTitle("Hello World");
+        Scene scene = new Scene(root, 600, 450);
+        scene.getStylesheets().add("css/rootStyle.css");
+        primaryStage.setScene(scene);
+        primaryStage.show();
 
         testScene();
+        primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
 
-        primaryStage.setScene(setScene(primaryStage));
+        /*primaryStage.setScene(setScene(primaryStage));
 
         primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
 

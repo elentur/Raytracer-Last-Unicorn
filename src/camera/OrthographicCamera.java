@@ -6,6 +6,7 @@ import matVect.Vector3;
 import sampling.SamplingPattern;
 import utils.Ray;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,12 +54,14 @@ public class OrthographicCamera extends Camera {
 
         double aspectRatio = (double) w / (double) h;
 
-        for(Point2 point : samplingPattern.points) {
+        List<Point2> points = samplingPattern.generateSampling();
 
-            double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
-            double scalar2 = s * (y - (h - 1) / 2) / (h - 1);
+        for(Point2 point : points) {
 
-            final Point3 o = this.e.add(this.u.mul(scalar1).mul(point.x)).add(this.v.mul(scalar2).mul(point.y));
+            double scalar1 = aspectRatio * s * (x + point.x - (w - 1) / 2) / (w - 1);
+            double scalar2 = s * (y + point.y - (h - 1) / 2) / (h - 1);
+
+            final Point3 o = this.e.add(this.u.mul(scalar1)).add(this.v.mul(scalar2));
             final Vector3 d = this.w.mul(-1);
 
 
