@@ -1,0 +1,24 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import UI.MaterialView?>
+<Tab fx:controller="controller.MainMaterialSettingsController" xmlns:fx="http://javafx.com/fxml" >
+    <content>
+        <VBox>
+           <HBox>
+               <Label text="Material"/>
+               <MaterialView fx:id="materialView"/>
+           </HBox>
+            <HBox>
+                <Label text="Diffuse"/>
+                <ColorPicker fx:id="clpDiffuse" onAction="#handleDiffuseColor"/>
+                <ComboBox fx:id="cmbDiffuse" onAction="#handleDiffuseTexture"/>
+            </HBox>
+            <HBox>
+                <Label text="Normal"/>
+                <TextField fx:id="txtNormalScale" onAction="#handleNormalScale"/>
+                <ComboBox fx:id="cmbNormal" onAction="#handleNormalValue"/>
+            </HBox>
+        </VBox>
+    </content>
+</Tab>

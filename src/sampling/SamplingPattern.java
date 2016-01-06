@@ -47,7 +47,7 @@ public class SamplingPattern {
     public List<Point2> generateSampling() {
 
         Random rn = new Random();
-
+        points.clear();
         for(int x = 0; x < size; x++){
             for(int y = 0; y < size; y++){
                 final double rX = (rn.nextDouble()-0.5) / 10;

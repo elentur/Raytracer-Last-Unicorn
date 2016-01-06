@@ -9,7 +9,7 @@ import utils.Element;
 /**
  * Created by roberto on 05.01.16.
  */
-abstract class AController  implements Initializable {
-    Raytracer raytracer = new Raytracer(true);
-    ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
+public abstract class AController  implements Initializable {
+    public final static Raytracer raytracer = new Raytracer(true);
+    public final static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
 }

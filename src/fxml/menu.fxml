@@ -11,6 +11,7 @@
                 <items>
                     <MenuItem text="Save Scene"/>
                     <MenuItem text="Load Scene"/>
+                    <MenuItem text="Import Model" onAction="#handleLoadModel"/>
                     <MenuItem text="Save Rendered Image" disable="true"/>
                     <SeparatorMenuItem  />
                     <MenuItem text="Exit" onAction="#handleExitAction"/>

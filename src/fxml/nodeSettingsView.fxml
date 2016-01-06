@@ -1,4 +1,5 @@
+
 <?import javafx.scene.control.TabPane?>
-<TabPane>
+<TabPane  fx:id = "tabPane"  xmlns:fx="http://javafx.com/fxml"  fx:controller="controller.NodeSettingsViewController">
 
 </TabPane>
