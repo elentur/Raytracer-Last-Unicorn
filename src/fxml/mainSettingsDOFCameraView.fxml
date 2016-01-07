@@ -1,18 +1,19 @@
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox fx:controller="controller.MainSettingsCameraController" xmlns:fx="http://javafx.com/fxml" >
+<?import UI.NumberTextField?>
+<VBox xmlns:fx="http://javafx.com/fxml" >
         <HBox>
-            <Label text="Opening Angel"/>
-            <TextField fx:id="txtAngel"/>
+            <Label fx:id="lblAngle"  text="Opening Angle"/>
+            <Slider fx:id="sldAngle"/>
         </HBox>
         <HBox>
             <Label text="F-Stop"/>
-            <TextField fx:id="txtFStop"/>
+            <NumberTextField fx:id="txtFStop"/>
         </HBox>
         <HBox>
             <Label text="Aperture"/>
-            <TextField fx:id="txtAperture"/>
+            <NumberTextField fx:id="txtAperture"/>
         </HBox>
 </VBox>

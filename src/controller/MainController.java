@@ -1,17 +1,10 @@
 package controller;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.control.cell.ComboBoxListCell;
-import utils.Element;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 
 import java.net.URL;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -23,5 +16,18 @@ public class MainController extends AController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+    public static ArrayList<Node> getAllNodes(Parent root) {
+        ArrayList<Node> nodes = new ArrayList<Node>();
+        addAllDescendents(root, nodes);
+        return nodes;
+    }
+
+    private static void addAllDescendents(Parent parent, ArrayList<Node> nodes) {
+        for (Node node : parent.getChildrenUnmodifiable()) {
+            nodes.add(node);
+            if (node instanceof Parent)
+                addAllDescendents((Parent)node, nodes);
+        }
     }
 }

@@ -42,22 +42,27 @@ import java.util.ResourceBundle;
 public class NodeTreeViewController extends AController {
 
     @FXML
-    private  ComboBox<Element> cmbNewElement;
+    private ComboBox<Element> cmbNewElement;
 
     @FXML
-    private  TreeView<Element> elementsTreeView;
+    private TreeView<Element> elementsTreeView;
     private static TreeView<Element> elementTreeViewStatic;
+    private static NodeTreeViewController controllerStatic;
 
     @FXML
-    private  TreeItem<Element> nodesRootTree;
+    private TreeItem<Element> nodesRootTree;
 
     @FXML
-    private  TreeItem<Element> lightsRootTree;
+    private TreeItem<Element> lightsRootTree;
 
     @FXML
-    private  TreeItem<Element> camerasRootTree;
+    private TreeItem<Element> camerasRootTree;
 
     private final static ObjectProperty<Element> element = new SimpleObjectProperty<>();
+
+    public NodeTreeViewController() {
+        this.controllerStatic = this;
+    }
 
     public void initialize(URL url, ResourceBundle resource) {
         initializeComobox();
@@ -66,9 +71,10 @@ public class NodeTreeViewController extends AController {
         element.addListener(new ChangeListener<Element>() {
             @Override
             public void changed(final ObservableValue<? extends Element> observable, final Element oldValue, final Element newValue) {
-                if(newValue!=null){
+                if (newValue != null) {
                     addNewElement();
                     element.setValue(null);
+
                 }
             }
         });
@@ -77,7 +83,7 @@ public class NodeTreeViewController extends AController {
     private void initializeTreeView() {
 
         // nodesRootTree
-        elementTreeViewStatic=elementsTreeView;
+        elementTreeViewStatic = elementsTreeView;
         elementsTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         nodesRootTree = new TreeItem<>();
         Element nodes = new Element() {
@@ -153,16 +159,16 @@ public class NodeTreeViewController extends AController {
                         super.updateItem(item, empty);
                         if (item != null || !empty) {
                             setText(item.name);
-                            if(item instanceof Geometry){
+                            if (item instanceof Geometry) {
                                 setGraphic(new ImageView(new Image("file:icons/mesh.png")));
 
-                            }else if (item instanceof Light){
+                            } else if (item instanceof Light) {
                                 setGraphic(new ImageView(new Image("file:icons/light.png")));
 
-                            }else if(item instanceof Camera){
+                            } else if (item instanceof Camera) {
                                 setGraphic(new ImageView(new Image("file:icons/camera.png")));
 
-                            }else{
+                            } else {
                                 setGraphic(null);
                             }
                         } else {
@@ -243,8 +249,8 @@ public class NodeTreeViewController extends AController {
             for (TreeItem<Element> item : selectedItems) {
                 if (!nodesRootTree.equals(item.getParent())) return;
                 geos.add((Geometry) item.getValue());
-                if(item.getChildren().isEmpty())newItems.add(new TreeItem<>(item.getValue()));
-                else{
+                if (item.getChildren().isEmpty()) newItems.add(new TreeItem<>(item.getValue()));
+                else {
                     TreeItem<Element> t = new TreeItem<>(item.getValue());
                     t.getChildren().addAll(item.getChildren());
                     newItems.add(t);
@@ -253,7 +259,7 @@ public class NodeTreeViewController extends AController {
             raytracer.getWorld().geometries.removeAll(geos);
             Node node = new Node(new Transform(), geos, true, true, true, false);
             raytracer.getWorld().geometries.add(node);
-            node.name="group";
+            node.name = "group";
             TreeItem<Element> t = new TreeItem<>(node);
             t.getChildren().addAll(newItems);
             nodesRootTree.getChildren().add(t);
@@ -264,15 +270,15 @@ public class NodeTreeViewController extends AController {
     public void handleUngroupAction() {
         if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
             TreeItem<Element> selectedItem = elementsTreeView.getSelectionModel().getSelectedItem();
-            if(selectedItem.getChildren().size()>0 && (selectedItem.getChildren().get(0).getValue() instanceof Node)) {
+            if (selectedItem.getChildren().size() > 0 && (selectedItem.getChildren().get(0).getValue() instanceof Node)) {
                 ObservableList<TreeItem<Element>> selectedItems = selectedItem.getChildren();
                 TreeItem<Element> parent = selectedItem.getParent();
                 parent.getChildren().remove(selectedItem);
                 raytracer.getWorld().geometries.remove(selectedItem.getValue());
-                for(TreeItem<Element> item : selectedItems){
+                for (TreeItem<Element> item : selectedItems) {
                     raytracer.getWorld().geometries.add((Geometry) item.getValue());
                     TreeItem<Element> t = new TreeItem(item.getValue());
-                    if(!item.getChildren().isEmpty()) t.getChildren().addAll(item.getChildren());
+                    if (!item.getChildren().isEmpty()) t.getChildren().addAll(item.getChildren());
                     parent.getChildren().add(t);
                 }
 
@@ -309,22 +315,40 @@ public class NodeTreeViewController extends AController {
 
         }
     }
-    private  void addNewElement(){
+
+    private void addNewElement() {
+        TreeItem<Element> t=null;
         if (element.getValue() instanceof Light) {
-            lightsRootTree.getChildren().add(new TreeItem<>(((Light) element.getValue()).deepCopy()));
+           t =new TreeItem<>(((Light) element.getValue()).deepCopy());
+            lightsRootTree.getChildren().add(t);
         } else if (element.getValue() instanceof Camera) {
             if (camerasRootTree.getChildren().isEmpty())
-                camerasRootTree.getChildren().add(new TreeItem<>(((Camera) element.getValue()).deepCopy()));
+                t=new TreeItem<>(((Camera) element.getValue()).deepCopy());
+                camerasRootTree.getChildren().add(t);
         } else if (element.getValue() instanceof Geometry) {
             Node node = new Node(new Transform(), ((Geometry) element.getValue()).deepCopy(), true, true, true, false);
             node.name = element.getValue().name;
-            nodesRootTree.getChildren().add(new TreeItem<>(node));
+            t=new TreeItem<>(node);
+            nodesRootTree.getChildren().add(t);
+        }
+        if(t!=null){
+            elementTreeViewStatic.getSelectionModel()
+            elementTreeViewStatic.getSelectionModel().select(t);
         }
     }
-    public static void newElement(Element e){
+
+    public static void newElement(Element e) {
         element.setValue(e);
     }
-    public static  void refresh(){
+
+    public static void updateElement(Element e) {
+        controllerStatic.handleDeleteAction();
+        element.setValue(e);
+
+
+    }
+
+    public static void refresh() {
         elementTreeViewStatic.refresh();
     }
 }

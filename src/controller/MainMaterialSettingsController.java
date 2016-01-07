@@ -6,11 +6,14 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import material.Material;
+import javafx.scene.layout.VBox;
+import material.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -29,7 +32,9 @@ public class MainMaterialSettingsController extends AController {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     @FXML
-    private MaterialView materialView;
+    private MaterialView materialRenderView;
+    @FXML
+    private VBox materialView;
     @FXML
     private ColorPicker cplDiffuse;
     @FXML
@@ -39,10 +44,42 @@ public class MainMaterialSettingsController extends AController {
     @FXML
     private ComboBox cmbNormal;
 
+    private boolean initialized = false;
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         ObjectProperty<Material> material = new SimpleObjectProperty<>(((Node)selectedElement.get()).geos.get(0).material);
-        materialView.setUpTracer(material);
+        materialRenderView.setUpTracer(material);
+        if(!initialized) {
+            VBox v;
+            FXMLLoader loader = new FXMLLoader();
+            loader.setController(this);
+            try {
+                if (material.get() instanceof OrenNayarMaterial) {
+                    v = loader.load(this.getClass().getResource("/fxml/mainOrenNayarMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                } else if (material.get() instanceof PhongMaterial) {
+                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                }else if (material.get() instanceof ReflectiveMaterial) {
+                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                    v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                } else  if (material.get() instanceof TransparentMaterial){
+                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                    v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                    v = loader.load(this.getClass().getResource("/fxml/mainTransparentMaterialSettingsView.fxml"));
+                    materialView.getChildren().add(v);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            initialized=true;
+        }
+
     }
 
     public void handleDiffuseColor(ActionEvent actionEvent) {
@@ -55,5 +92,27 @@ public class MainMaterialSettingsController extends AController {
     }
 
     public void handleNormalValue(ActionEvent actionEvent) {
+    }
+
+    public void handleSpecularColor(ActionEvent actionEvent) {
+    }
+
+    public void handleSpecularTexture(ActionEvent actionEvent) {
+    }
+
+    public void handleExponentScale(ActionEvent actionEvent) {
+    }
+
+    public void handleRoughnessScale(ActionEvent actionEvent) {
+
+    }
+
+    public void handleReflectionrColor(ActionEvent actionEvent) {
+    }
+
+    public void handleReflectionTexture(ActionEvent actionEvent) {
+    }
+
+    public void handleIORIndex(ActionEvent actionEvent) {
     }
 }

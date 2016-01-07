@@ -1,29 +1,32 @@
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox fx:controller="controller.MainSettingsCameraController" xmlns:fx="http://javafx.com/fxml" >
-        <HBox>
-            <Label text="X"/>
-            <Label text="Y"/>
-            <Label text="Z"/>
-        </HBox>
-        <HBox>
-            <Label text="Position"/>
-            <TextField fx:id="txtPositionX"/>
-            <TextField fx:id="txtPositionY"/>
-            <TextField fx:id="txtPositionZ"/>
-        </HBox>
-        <HBox>
-            <Label text="Direction"/>
-            <TextField fx:id="txtDirectionX"/>
-            <TextField fx:id="txtDirectionY"/>
-            <TextField fx:id="txtDirectionZ"/>
-        </HBox>
-        <HBox>
-            <Label text="UpVector"/>
-            <TextField fx:id="txtUpVectorX"/>
-            <TextField fx:id="txtUpVectorY"/>
-            <TextField fx:id="txtUpVectorZ"/>
-        </HBox>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import UI.*?>
+<VBox fx:id="cameraView" fx:controller="controller.MainSettingsCameraController" xmlns:fx="http://javafx.com/fxml">
+    <HBox>
+        <Label text="X"/>
+        <Label text="Y"/>
+        <Label text="Z"/>
+    </HBox>
+    <HBox>
+        <Label text="Position"/>
+        <NumberTextField fx:id="txtPositionX"/>
+        <NumberTextField fx:id="txtPositionY"/>
+        <NumberTextField fx:id="txtPositionZ"/>
+    </HBox>
+    <HBox>
+        <Label text="Direction"/>
+        <NumberTextField fx:id="txtDirectionX"/>
+        <NumberTextField fx:id="txtDirectionY"/>
+        <NumberTextField fx:id="txtDirectionZ"/>
+    </HBox>
+    <HBox>
+        <Label text="UpVector"/>
+        <NumberTextField fx:id="txtUpVectorX"/>
+        <NumberTextField fx:id="txtUpVectorY"/>
+        <NumberTextField fx:id="txtUpVectorZ"/>
+    </HBox>
+    <HBox>
+        <Label text="Sampling"/>
+        <NumberTextField fx:id="txtSampling"/>
+    </HBox>
 </VBox>

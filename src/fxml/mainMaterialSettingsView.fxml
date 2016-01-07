@@ -2,12 +2,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import UI.MaterialView?>
-<Tab fx:controller="controller.MainMaterialSettingsController" xmlns:fx="http://javafx.com/fxml" >
+<?import UI.NumberTextField?>
+<Tab  fx:controller="controller.MainMaterialSettingsController" xmlns:fx="http://javafx.com/fxml" >
     <content>
-        <VBox>
+        <VBox fx:id="materialView">
            <HBox>
                <Label text="Material"/>
-               <MaterialView fx:id="materialView"/>
+               <MaterialView fx:id="materialRenderView"/>
            </HBox>
             <HBox>
                 <Label text="Diffuse"/>
@@ -16,7 +17,7 @@
             </HBox>
             <HBox>
                 <Label text="Normal"/>
-                <TextField fx:id="txtNormalScale" onAction="#handleNormalScale"/>
+                <NumberTextField fx:id="txtNormalScale" onAction="#handleNormalScale"/>
                 <ComboBox fx:id="cmbNormal" onAction="#handleNormalValue"/>
             </HBox>
         </VBox>

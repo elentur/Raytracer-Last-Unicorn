@@ -1,12 +1,12 @@
 package controller;
 
 import camera.Camera;
-import camera.OrthographicCamera;
-import camera.PerspectiveCamera;
+import geometries.Node;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import light.Light;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,24 +39,21 @@ public class MainSettingsController extends AController {
         });
         try {
         if(selectedElement.get() instanceof Camera){
-            VBox v = null;
-            v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
+            VBox v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
             mainSettingsView.getChildren().add(v);
-           if(selectedElement.get() instanceof OrthographicCamera){
-               v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsOrthographicCameraView.fxml"));
-               mainSettingsView.getChildren().add(v);
-           }else if(selectedElement.get() instanceof PerspectiveCamera){
-               v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsPerspectiveCameraView.fxml"));
-               mainSettingsView.getChildren().add(v);
-           }else {
-               v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsDOFCameraView.fxml"));
-               mainSettingsView.getChildren().add(v);
-           }
 
+        }else if(selectedElement.get() instanceof Light){
+            VBox v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
+            mainSettingsView.getChildren().add(v);
+        }else if(selectedElement.get() instanceof Node) {
+            VBox v;
+            v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
+            mainSettingsView.getChildren().add(v);
         }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

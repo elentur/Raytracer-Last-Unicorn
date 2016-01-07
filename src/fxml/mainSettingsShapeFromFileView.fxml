@@ -1,0 +1,9 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox  xmlns:fx="http://javafx.com/fxml" >
+        <HBox>
+            <Label text="Path"/>
+            <TextField/>
+            <Button text="New Path"/>
+        </HBox>
+</VBox>

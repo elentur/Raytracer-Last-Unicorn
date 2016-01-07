@@ -1,0 +1,25 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.CheckBox?>
+<?import UI.NumberTextField?>
+<VBox fx:id ="lightView" fx:controller="controller.MainSettingsLightController" xmlns:fx="http://javafx.com/fxml" >
+        <HBox>
+            <Label text="Color"/>
+            <ColorPicker fx:id="clpLightColor"/>
+        </HBox>
+        <HBox>
+            <CheckBox fx:id="chkCastShadows" text="casts Shadows" selected="true"/>
+        </HBox>
+        <HBox>
+            <Label text="Irradiance"/>
+            <NumberTextField fx:id="txtIrradiance"/>
+        </HBox>
+        <HBox>
+            <Label text="X"/>
+            <Label text="Y"/>
+            <Label text="Z"/>
+        </HBox>
+</VBox>

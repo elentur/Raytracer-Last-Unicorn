@@ -4,7 +4,10 @@
 <?import UI.NumberTextField?>
 <VBox  xmlns:fx="http://javafx.com/fxml" >
         <HBox>
-            <Label text="Scale Factor"/>
-            <NumberTextField fx:id="txtScaleFactor"/>
+            <Label text="Direction"/>
+            <NumberTextField fx:id="txtDirectionX"/>
+            <NumberTextField fx:id="txtDirectionY"/>
+            <NumberTextField fx:id="txtDirectionZ"/>
         </HBox>
+
 </VBox>

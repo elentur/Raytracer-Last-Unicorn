@@ -1,0 +1,10 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import UI.NumberTextField?>
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <HBox>
+        <Label text="Roughness"/>
+        <NumberTextField fx:id="txtRoughness" />
+    </HBox>
+</VBox>
