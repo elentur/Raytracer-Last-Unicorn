@@ -41,7 +41,11 @@ public class Plane extends Geometry {
      * @param plane
      */
     public Plane(Plane plane) {
-        super(plane.material,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
+        this(plane,plane.material);
+    }
+
+    public Plane(final Plane plane, final Material m) {
+        super(m,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
         this.name = "Plane";
         this.a = plane.a;
         this.n = plane.n;
@@ -76,6 +80,11 @@ public class Plane extends Geometry {
     @Override
     public Plane deepCopy() {
         return new Plane(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Plane(this,m);
     }
 
     @Override

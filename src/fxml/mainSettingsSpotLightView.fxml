@@ -1,11 +1,11 @@
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import UI.NumberTextField?>
-<VBox  xmlns:fx="http://javafx.com/fxml" >
+<VBox xmlns:fx="http://javafx.com/fxml" >
         <HBox>
-            <Label text="Opening Angle"/>
-            <NumberTextField fx:id="txtAngle"/>
+            <Label fx:id="lblAngle" text="Opening Angle"/>
+            <Slider fx:id="sldAngle"/>
         </HBox>
 
 </VBox>

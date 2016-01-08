@@ -9,18 +9,18 @@
         <menus>
             <Menu text="File">
                 <items>
-                    <MenuItem text="Save Scene"/>
-                    <MenuItem text="Load Scene"/>
+                    <MenuItem text="Save Scene" onAction="#handleSaveAction"/>
+                    <MenuItem text="Load Scene" onAction="#handleLoadAction"/>
                     <MenuItem text="Import Model" onAction="#handleLoadModel"/>
-                    <MenuItem text="Save Rendered Image" disable="true"/>
+                    <MenuItem text="Save Rendered Image" onAction="#handleSaveImageAction" disable="true"/>
                     <SeparatorMenuItem  />
                     <MenuItem text="Exit" onAction="#handleExitAction"/>
                 </items>
             </Menu>
             <Menu text="Run">
                 <items>
-                    <MenuItem text="Render"/>
-                    <MenuItem text="Stop Render"/>
+                    <MenuItem text="Render" onAction="#handleRenderAction"/>
+                    <MenuItem text="Stop Render" onAction="#handleStopRenderAction"/>
                     <SeparatorMenuItem />
                     <MenuItem text="Rendersettings" onAction="#handleSettingsAction"/>
                 </items>

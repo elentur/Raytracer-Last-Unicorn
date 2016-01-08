@@ -3,6 +3,7 @@ package utils;
 import geometries.Geometry;
 import matVect.Normal3;
 import matVect.Point3;
+import material.Material;
 import material.SingleColorMaterial;
 import texture.SingleColorTexture;
 import texture.TexCoord2;
@@ -104,6 +105,11 @@ public class BoundingBox extends Geometry {
         return null;
     }
 
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return null;
+    }
+
     /**
      * The method checks if the results lies within the Axis Aligned Box coordinates.
      *
@@ -173,6 +179,11 @@ public class BoundingBox extends Geometry {
 
         @Override
         public Geometry deepCopy() {
+            return null;
+        }
+
+        @Override
+        public Geometry deepCopy(final Material m) {
             return null;
         }
     }

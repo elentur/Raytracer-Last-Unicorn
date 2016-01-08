@@ -63,4 +63,6 @@ public abstract class Geometry extends Element implements Serializable {
      * @return a copied Object from Geometry;
      */
     public abstract Geometry deepCopy();
+
+    public abstract Geometry deepCopy(final Material m);
 }

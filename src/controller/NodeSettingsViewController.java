@@ -1,11 +1,13 @@
 package controller;
 
+import camera.Camera;
 import geometries.Geometry;
 import geometries.Node;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import light.Light;
 import utils.Element;
 
 import java.io.IOException;
@@ -37,17 +39,31 @@ public class NodeSettingsViewController  extends AController{
 
     private void handleSelectedElement() {
         Element e = selectedElement.getValue();
-        tabPane.getTabs().clear();
+       if(e==null)tabPane.getTabs().clear();
         try {
             if(e !=null){
                 Tab t = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsView.fxml"));
-                t.setText(e.getClass().getName());
-                tabPane.getTabs().add(t);
+
+               if(tabPane.getTabs().isEmpty()){
+                   tabPane.getTabs().add(t);
+                   if(e instanceof Node)t.setText("Node");
+                   else if(e instanceof Light)t.setText("Light");
+                   else if(e instanceof Camera)t.setText("Camera");
+               }else {
+                   tabPane.getTabs().get(0).setContent(t.getContent());
+                   if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
+                   else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
+                   else if(e instanceof Camera) tabPane.getTabs().get(0).setText("Camera");
+               }
                 if(e instanceof Geometry){
                     if(!((Node)e).geos.isEmpty()&&!(((Node)e).geos.get(0) instanceof Node)){
                         t = FXMLLoader.load(getClass().getResource("/fxml/mainMaterialSettingsView.fxml"));
-                        t.setText(((Geometry)e).material.getClass().getName());
-                        tabPane.getTabs().add(t);
+                        t.setText("Material");
+                        if(tabPane.getTabs().size()<2){
+                            tabPane.getTabs().add(t);
+                        }else {
+                            tabPane.getTabs().get(1).setContent(t.getContent());
+                        }
                     }
                 }
             }

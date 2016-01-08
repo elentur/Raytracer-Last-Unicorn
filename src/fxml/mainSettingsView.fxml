@@ -3,7 +3,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<Tab fx:controller="controller.MainSettingsController" xmlns:fx="http://javafx.com/fxml" >
+<Tab closable="false" fx:controller="controller.MainSettingsController" xmlns:fx="http://javafx.com/fxml" >
     <content>
         <VBox fx:id="mainSettingsView">
            <HBox>

@@ -115,7 +115,11 @@ public class Triangle extends Geometry {
      * @param triangle
      */
     public Triangle(Triangle triangle) {
-        super(triangle.material, triangle.reciveShadows,triangle.castShadows,triangle.visibility,triangle.flipNormal);
+        this(triangle,triangle.material);
+    }
+
+    public Triangle(final Triangle triangle, final Material m) {
+        super(m, triangle.reciveShadows,triangle.castShadows,triangle.visibility,triangle.flipNormal);
         this.a = triangle.a;
         this.b = triangle.b;
         this.c = triangle.c;
@@ -179,6 +183,11 @@ public class Triangle extends Geometry {
     @Override
     public Triangle deepCopy() {
         return new Triangle(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Triangle(this,m);
     }
 
     @Override

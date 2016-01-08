@@ -2,8 +2,6 @@ package controller;
 
 import UI.MaterialView;
 import geometries.Node;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +9,10 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import material.*;
+import material.OrenNayarMaterial;
+import material.PhongMaterial;
+import material.ReflectiveMaterial;
+import material.TransparentMaterial;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,7 +49,7 @@ public class MainMaterialSettingsController extends AController {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        ObjectProperty<Material> material = new SimpleObjectProperty<>(((Node)selectedElement.get()).geos.get(0).material);
+        material.setValue(((Node)selectedElement.get()).geos.get(0).material);
         materialRenderView.setUpTracer(material);
         if(!initialized) {
             VBox v;

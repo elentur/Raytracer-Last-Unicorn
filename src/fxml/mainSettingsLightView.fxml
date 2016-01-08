@@ -8,14 +8,14 @@
 <VBox fx:id ="lightView" fx:controller="controller.MainSettingsLightController" xmlns:fx="http://javafx.com/fxml" >
         <HBox>
             <Label text="Color"/>
-            <ColorPicker fx:id="clpLightColor"/>
+            <ColorPicker fx:id="clpLightColor" onAction="#handleUpdateLight"/>
         </HBox>
         <HBox>
-            <CheckBox fx:id="chkCastShadows" text="casts Shadows" selected="true"/>
+            <CheckBox fx:id="chkCastShadows" text="casts Shadows" selected="true" onAction="#handleUpdateLight"/>
         </HBox>
         <HBox>
             <Label text="Irradiance"/>
-            <NumberTextField fx:id="txtIrradiance"/>
+            <NumberTextField fx:id="txtIrradiance" onAction="#handleUpdateLight"/>
         </HBox>
         <HBox>
             <Label text="X"/>

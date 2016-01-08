@@ -6,8 +6,8 @@
         <HBox>
             <Label text="Position"/>
             <NumberTextField fx:id="txtPositionX"/>
-            <NumberTextField fx:id="txtPositionXY"/>
-            <NumberTextField fx:id="txtPositionXZ"/>
+            <NumberTextField fx:id="txtPositionY"/>
+            <NumberTextField fx:id="txtPositionZ"/>
         </HBox>
 
 </VBox>

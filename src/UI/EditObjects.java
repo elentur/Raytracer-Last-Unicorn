@@ -1,6 +1,7 @@
 package UI;
 
 import camera.Camera;
+import controller.AController;
 import geometries.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,6 @@ import light.DirectionalLight;
 import light.Light;
 import light.PointLight;
 import light.SpotLight;
-import raytracer.ImageSaver;
 import texture.TexCoord2;
 import utils.Element;
 
@@ -80,49 +80,49 @@ public class EditObjects extends Stage {
                     p.name = p1.name;
                     p = (Plane) nameTest(p);
 
-                    ImageSaver.raytracer.getWorld().geometries.add(p);
+                    AController.raytracer.getWorld().geometries.add(p);
                     //  l.getItems().add(p);
                 } else if (e instanceof Sphere) {
                     Sphere s1 = (Sphere) e;
                     Sphere s = new Sphere(s1.material,true,true,true,true);
                     s.name = s1.name;
                     s = (Sphere) nameTest(s);
-                    ImageSaver.raytracer.getWorld().geometries.add(s);
+                    AController.raytracer.getWorld().geometries.add(s);
                     //  l.getItems().add(s);
                 } else if (e instanceof AxisAlignedBox) {
                     AxisAlignedBox b1 = (AxisAlignedBox) e;
                     AxisAlignedBox b = new AxisAlignedBox(b1.material,true,true,true,true);
                     b.name = b1.name;
                     b = (AxisAlignedBox) nameTest(b);
-                    ImageSaver.raytracer.getWorld().geometries.add(b);
+                    AController.raytracer.getWorld().geometries.add(b);
                     //  l.getItems().add(b);
                 } else if (e instanceof Triangle) {
                     Triangle t1 = (Triangle) e;
                     Triangle t = new Triangle(t1.a, t1.b, t1.c, t1.material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),true,true,true,true);
                     t.name = t1.name;
                     t = (Triangle) nameTest(t);
-                    ImageSaver.raytracer.getWorld().geometries.add(t);
+                    AController.raytracer.getWorld().geometries.add(t);
                     // l.getItems().add(t);
                 } else if (e instanceof PointLight) {
                     PointLight pl = (PointLight) e;
                     PointLight p = new PointLight(pl.color, pl.position,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (PointLight) nameTest(p);
-                    ImageSaver.raytracer.getWorld().lights.add(p);
+                    AController.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof DirectionalLight) {
                     DirectionalLight pl = (DirectionalLight) e;
                     DirectionalLight p = new DirectionalLight(pl.color, pl.direction,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (DirectionalLight) nameTest(p);
-                    ImageSaver.raytracer.getWorld().lights.add(p);
+                    AController.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 } else if (e instanceof SpotLight) {
                     SpotLight pl = (SpotLight) e;
                     SpotLight p = new SpotLight(pl.color, pl.position, pl.direction, pl.halfAngle,pl.castsShadow,500);
                     p.name = pl.name;
                     p = (SpotLight) nameTest(p);
-                    ImageSaver.raytracer.getWorld().lights.add(p);
+                    AController.raytracer.getWorld().lights.add(p);
                     // l.getItems().add(t);
                 }
             }
@@ -135,9 +135,9 @@ public class EditObjects extends Stage {
         ObservableList<Element> ol = l.getItems();
         l.setItems(null);
         ol.clear();
-        ol.addAll(ImageSaver.raytracer.getWorld().geometries);
-        ol.add(ImageSaver.raytracer.getCamera());
-        ol.addAll(ImageSaver.raytracer.getWorld().lights);
+        ol.addAll(AController.raytracer.getWorld().geometries);
+        ol.add(AController.raytracer.getCamera());
+        ol.addAll(AController.raytracer.getWorld().lights);
         l.setItems(ol);
         for (int i = 0; i < l.getItems().size(); i++) {
             l.getSelectionModel().select(i);
@@ -151,12 +151,12 @@ public class EditObjects extends Stage {
         boolean run = false;
         if (p instanceof Geometry) {
             Geometry g1 = (Geometry) p;
-            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+            for (Geometry g : AController.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+                for (Geometry g : AController.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -167,12 +167,12 @@ public class EditObjects extends Stage {
             return g1;
         } else {
             Light l1 = (Light) p;
-            for (Light l : ImageSaver.raytracer.getWorld().lights) {
+            for (Light l : AController.raytracer.getWorld().lights) {
                 if (l.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Light l : ImageSaver.raytracer.getWorld().lights) {
+                for (Light l : AController.raytracer.getWorld().lights) {
                     if (l.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -229,21 +229,21 @@ public class EditObjects extends Stage {
                 };
             }
         });
-        if (ImageSaver.raytracer.getWorld() != null) {
-            list.addAll(ImageSaver.raytracer.getWorld().geometries);
+        if (AController.raytracer.getWorld() != null) {
+            list.addAll(AController.raytracer.getWorld().geometries);
         }
-        if (ImageSaver.raytracer.getCamera() != null) list.add(ImageSaver.raytracer.getCamera());
-        if (ImageSaver.raytracer.getWorld() != null) {
-            list.addAll(ImageSaver.raytracer.getWorld().lights);
+        if (AController.raytracer.getCamera() != null) list.add(AController.raytracer.getCamera());
+        if (AController.raytracer.getWorld() != null) {
+            list.addAll(AController.raytracer.getWorld().lights);
         }
     }
 
     private void onDelete(ListView<Element> t) {
         ObservableList<Element> sel = t.getSelectionModel().getSelectedItems();
         for (Element e : sel) {
-            if (e instanceof Camera) ImageSaver.raytracer.setCamera(null);
-            else if (e instanceof Geometry) ImageSaver.raytracer.getWorld().geometries.remove(e);
-            else ImageSaver.raytracer.getWorld().lights.remove(e);
+            if (e instanceof Camera) AController.raytracer.setCamera(null);
+            else if (e instanceof Geometry) AController.raytracer.getWorld().geometries.remove(e);
+            else AController.raytracer.getWorld().lights.remove(e);
         }
         refreshList(t);
 

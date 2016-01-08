@@ -1,5 +1,6 @@
 package UI;
 
+import controller.AController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import raytracer.ImageSaver;
 import utils.World;
 
 import java.util.HashMap;
@@ -158,7 +158,7 @@ public class RenderSettingsStage extends Stage {
         Map<String, String> input = IO.readFile("settings.cfg");
         if (input.size() > 0) {
             try {
-                if (ImageSaver.raytracer.getWorld() == null) {
+                if (AController.raytracer.getWorld() == null) {
                     cpColorPicker.setValue(new Color(Double.parseDouble(input.get("backgroundColorRed")),
                             Double.parseDouble(input.get("backgroundColorGreen")),
                             Double.parseDouble(input.get("backgroundColorBlue")),
@@ -168,13 +168,13 @@ public class RenderSettingsStage extends Stage {
                             Double.parseDouble(input.get("ambientColorBlue")),
                             1));
                 }else{
-                    cpColorPicker.setValue(new Color(ImageSaver.raytracer.getWorld().backgroundColor.r,
-                            ImageSaver.raytracer.getWorld().backgroundColor.g,
-                            ImageSaver.raytracer.getWorld().backgroundColor.b,
+                    cpColorPicker.setValue(new Color(AController.raytracer.getWorld().backgroundColor.r,
+                            AController.raytracer.getWorld().backgroundColor.g,
+                            AController.raytracer.getWorld().backgroundColor.b,
                             1));
-                    cpAmbientColor.setValue(new Color(ImageSaver.raytracer.getWorld().ambientLight.r,
-                            ImageSaver.raytracer.getWorld().ambientLight.g,
-                            ImageSaver.raytracer.getWorld().ambientLight.b,
+                    cpAmbientColor.setValue(new Color(AController.raytracer.getWorld().ambientLight.r,
+                            AController.raytracer.getWorld().ambientLight.g,
+                            AController.raytracer.getWorld().ambientLight.b,
                             1));
                 }
                 chkMultithreading.setSelected(input.get("multithreading").equals("true"));
@@ -221,17 +221,17 @@ public class RenderSettingsStage extends Stage {
         int height = txtHeight.getInteger();
         if (width < 0) width = 0;
         if (height < 0) height = 0;
-        ImageSaver.raytracer.imgWidth.set(width);
-        ImageSaver.raytracer.imgHeight.set(height);
+        AController.raytracer.imgWidth.set(width);
+        AController.raytracer.imgHeight.set(height);
         if (chkMultithreading.isSelected()) {
-            ImageSaver.raytracer.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
+            AController.raytracer.cores = chbCores.getSelectionModel().getSelectedIndex() + 1;
         } else {
-            ImageSaver.raytracer.cores = 1;
+            AController.raytracer.cores = 1;
         }
-        ImageSaver.raytracer.hdr = chkHDRRendering.isSelected();
-        ImageSaver.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
-        ImageSaver.raytracer.recursionDepth = txtRecursion.getInteger();
-        ImageSaver.raytracer.iOR = txtIOR.getDouble();
+        AController.raytracer.hdr = chkHDRRendering.isSelected();
+        AController.raytracer.pattern = chbPattern.getSelectionModel().getSelectedIndex();
+        AController.raytracer.recursionDepth = txtRecursion.getInteger();
+        AController.raytracer.iOR = txtIOR.getDouble();
         utils.Color back = new utils.Color(
                 cpColorPicker.getValue().getRed(),
                 cpColorPicker.getValue().getGreen(),
@@ -240,10 +240,10 @@ public class RenderSettingsStage extends Stage {
                 cpAmbientColor.getValue().getRed(),
                 cpAmbientColor.getValue().getGreen(),
                 cpAmbientColor.getValue().getBlue());
-        World w = ImageSaver.raytracer.getWorld();
-        ImageSaver.raytracer.setWorld(new World(back, ambient));
-        ImageSaver.raytracer.getWorld().lights.addAll(w.lights);
-        ImageSaver.raytracer.getWorld().geometries.addAll(w.geometries);
+        World w = AController.raytracer.getWorld();
+        AController.raytracer.setWorld(new World(back, ambient));
+        AController.raytracer.getWorld().lights.addAll(w.lights);
+        AController.raytracer.getWorld().geometries.addAll(w.geometries);
         this.close();
     }
 }

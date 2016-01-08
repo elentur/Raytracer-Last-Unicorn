@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -89,5 +90,22 @@ public class MenuController extends AController{
             if(e!= null) NodeTreeViewController.newElement(e);
         }
 
+    }
+
+    public void handleSaveAction(ActionEvent actionEvent) {
+    }
+
+    public void handleLoadAction(ActionEvent actionEvent) {
+    }
+
+    public void handleSaveImageAction(ActionEvent actionEvent) {
+    }
+
+    public void handleRenderAction(ActionEvent actionEvent) {
+        ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
+        if(image!=null)raytracer.render(image);
+    }
+
+    public void handleStopRenderAction(ActionEvent actionEvent) {
     }
 }

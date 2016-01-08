@@ -32,12 +32,18 @@ public class OrenNayarMaterial extends Material {
     public OrenNayarMaterial(final Texture texture, final double roughness,
                              final Texture bumpMap, final double bumpScale, final Texture irradiance) {
         super(texture,bumpMap,bumpScale,irradiance);
-
+        name="Oren-Nayar Material";
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }
 
         this.rough_sq = roughness * roughness;
+    }
+
+    public OrenNayarMaterial(final OrenNayarMaterial m) {
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+         name=m.name;
+        this.rough_sq = m.rough_sq;
     }
 
     /*
@@ -119,6 +125,16 @@ public class OrenNayarMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    @Override
+    public Material deepCopy() {
+        return new OrenNayarMaterial(this);
+    }
+
     @Override
     public String toString() {
         return "OrenNayarMaterial{" +
@@ -128,24 +144,15 @@ public class OrenNayarMaterial extends Material {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrenNayarMaterial that = (OrenNayarMaterial) o;
-
-        if (Double.compare(that.rough_sq, rough_sq) != 0) return false;
-        return texture.equals(that.texture);
+        return false;
 
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = texture.hashCode();
-        temp = Double.doubleToLongBits(rough_sq);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        long temp = Double.doubleToLongBits(rough_sq);
+        return (int) (temp ^ (temp >>> 32));
     }
 }

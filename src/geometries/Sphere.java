@@ -4,7 +4,6 @@ import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
 import material.Material;
-import texture.InterpolatedImageTexture;
 import texture.TexCoord2;
 import utils.Color;
 import utils.Hit;
@@ -44,7 +43,11 @@ public class Sphere extends Geometry {
      * @param sphere
      */
     public Sphere(Sphere sphere) {
-        super(sphere.material, sphere.reciveShadows, sphere.castShadows, sphere.visibility, sphere.flipNormal);
+        this(sphere,sphere.material);
+    }
+
+    public Sphere(final Sphere sphere, final Material m) {
+        super(m, sphere.reciveShadows, sphere.castShadows, sphere.visibility, sphere.flipNormal);
         this.c = sphere.c;
         this.r = sphere.r;
     }
@@ -117,6 +120,11 @@ public class Sphere extends Geometry {
     @Override
     public Sphere deepCopy() {
         return new Sphere(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Sphere(this,m);
     }
 
     @Override

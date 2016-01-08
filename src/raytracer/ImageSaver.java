@@ -3,15 +3,17 @@ package raytracer;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.AxisAlignedBox;
+import controller.AController;
 import geometries.Geometry;
 import geometries.Node;
+import geometries.Plane;
 import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -22,24 +24,15 @@ import javafx.stage.Stage;
 import light.Light;
 import light.PointLight;
 import matVect.Point3;
-import matVect.Transform;
 import matVect.Vector3;
 import material.OrenNayarMaterial;
 import material.ReflectiveMaterial;
-import material.TransparentMaterial;
 import sampling.SamplingPattern;
 import texture.ImageTexture;
+import texture.InterpolatedImageTexture;
+import texture.SingleColorTexture;
 import utils.Color;
 import utils.World;
-
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 /**
@@ -53,7 +46,7 @@ public class ImageSaver extends Application {
      * The ImageView where the image is shown.
      */
     public static final ImageView image = new ImageView();
-    public final static Raytracer raytracer = new Raytracer(true);
+   // public final static Raytracer raytracer = new Raytracer(true);
 
 
     private void testScene() {
@@ -76,7 +69,7 @@ public class ImageSaver extends Application {
     */
 
         World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
-        raytracer.setWorld(world);
+        AController.raytracer.setWorld(world);
 
 
         Light light1 = new PointLight(new Color(1,1,1),new Point3(5,10,20), true, 500);
@@ -84,7 +77,7 @@ public class ImageSaver extends Application {
         world.lights.add(light1);
 
         Camera camera = new PerspectiveCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(5));
-        raytracer.setCamera(camera);
+        AController.raytracer.setCamera(camera);
 
 
 
@@ -123,15 +116,17 @@ public class ImageSaver extends Application {
                 );
         world.geometries.add(triangle);*/
 
-//        Geometry geo = new Sphere(
-//                new ReflectiveMaterial(
-//                        new ImageTexture("texture/world.jpg"),
-//                        new ImageTexture("texture/world.jpg"),
-//                    new Color(1,1,1),
-//                    new Color(0.5,0.5,0.5),
-//                    64
-//                )
-//        );
+        Geometry geo = new Sphere(
+                new ReflectiveMaterial(
+                        new ImageTexture("texture/world.jpg"),
+                        new ImageTexture("texture/world.jpg"),
+                        new SingleColorTexture(new Color(1,1,1)),
+                    64,
+                        new SingleColorTexture(new Color(1,1,1)),
+                        0,
+                        new SingleColorTexture(new Color(1,1,1))
+                ),true,true,true,false
+       );
        /* Geometry geo = new ShapeFromFile(new File("C:/Users/marcu_000/Desktop/bunny.obj"),
                 new ReflectiveMaterial(
                         new SingleColorTexture(new Color(0.5,0.5,0.5)),
@@ -141,24 +136,24 @@ public class ImageSaver extends Application {
                 )
         );*/
 
-        Transform t = new Transform();
 
-        t = t.rotateY(Math.PI/4);
-        t=t.scale(1,1,1);
-
-        //Geometry n = new Node(t,new ArrayList<Geometry>(Arrays.asList(geo)));
+        Geometry n = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0),geo,true,true,true,false);
 
 
-       // world.geometries.add(n);
+        world.geometries.add(n);
 
 
 
-       /*Geometry plane  = new Plane(new Point3(0,-1,0),new Normal3(0,1,0), new OrenNayarMaterial(
+       Geometry plane  = new Plane( new OrenNayarMaterial(
                 new InterpolatedImageTexture("texture/sterne.jpg"),
-                0.6
-        ));
+                0.6,
+               new SingleColorTexture(new Color(1,1,1)),
+               0,
+               new SingleColorTexture(new Color(1,1,1))
 
-        world.geometries.add(plane);*/
+        ),true,true,true,false);
+         n = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0),plane,true,true,true,false);
+        world.geometries.add(n);
     }
 
     /**
@@ -178,7 +173,7 @@ public class ImageSaver extends Application {
         primaryStage.show();
 
         testScene();
-        primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
+        primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
 
         /*primaryStage.setScene(setScene(primaryStage));
 
@@ -227,7 +222,7 @@ public class ImageSaver extends Application {
         root.setCenter(scrollPane);
         root.setBottom(statusPane);
 
-        final Scene scene = new Scene(root, raytracer.imgWidth.get() + 10, raytracer.imgHeight.get() + elementsHeight);
+        final Scene scene = new Scene(root, AController.raytracer.imgWidth.get() + 10, AController.raytracer.imgHeight.get() + elementsHeight);
 
         scene.getStylesheets().add("css/rootStyle.css");
 
@@ -242,7 +237,7 @@ public class ImageSaver extends Application {
         btnSave.disableProperty().bind(image.imageProperty().isNull());
 
         btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
-        btnSaveScene.setOnAction(a -> IO.saveScene(stage, raytracer.getWorld(), raytracer.getCamera()));
+        btnSaveScene.setOnAction(a -> IO.saveScene(stage, AController.raytracer.getWorld(), AController.raytracer.getCamera()));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
         btnObjects.setOnAction(a -> new EditObjects());
       //  btnNewScene.setOnAction(a -> new NewWorldStage());
@@ -253,21 +248,21 @@ public class ImageSaver extends Application {
         btnNewCube.setOnAction(a -> new NewCubeStage(null));
         btnNewTriangle.setOnAction(a -> new NewTriangleStage(null));
         btnNewOBJ.setOnAction(a -> new NewOBJStage(null));
-        btnRender.setOnAction(a -> raytracer.render(image));
-        btnStopRender.setOnAction(a -> raytracer.stopRender());
+        btnRender.setOnAction(a -> AController.raytracer.render(image));
+        btnStopRender.setOnAction(a -> AController.raytracer.stopRender());
         btnSettings.setOnAction(a -> new RenderSettingsStage());
-        raytracer.progress.addListener(a -> lblTime.setText(raytracer.getStatus()));
-        progressBar.progressProperty().bind(raytracer.progress);
+        AController.raytracer.progress.addListener(a -> lblTime.setText(AController.raytracer.getStatus()));
+        progressBar.progressProperty().bind(AController.raytracer.progress);
         progressBar.prefWidthProperty().bind(scene.widthProperty());
 
         scrollPane.minViewportHeightProperty().bind(image.fitHeightProperty());
         scrollPane.minViewportWidthProperty().bind(image.fitWidthProperty());
 
-        resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", raytracer.imgWidth, " x ", raytracer.imgHeight));
+        resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", AController.raytracer.imgWidth, " x ", AController.raytracer.imgHeight));
 
         stage.titleProperty().bind(resolution);
         scene.setOnKeyPressed(a -> {
-            if (a.getCode() == KeyCode.ESCAPE) raytracer.stopRender();
+            if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
         });
         return scene;
     }

@@ -22,7 +22,6 @@ import light.Light;
 import light.PointLight;
 import light.SpotLight;
 import matVect.Point3;
-import matVect.Transform;
 import matVect.Vector3;
 import material.DefaultMaterial;
 import sampling.SamplingPattern;
@@ -257,13 +256,15 @@ public class NodeTreeViewController extends AController {
                 }
             }
             raytracer.getWorld().geometries.removeAll(geos);
-            Node node = new Node(new Transform(), geos, true, true, true, false);
+            Node node = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0), geos, true, true, true, false);
             raytracer.getWorld().geometries.add(node);
             node.name = "group";
             TreeItem<Element> t = new TreeItem<>(node);
             t.getChildren().addAll(newItems);
             nodesRootTree.getChildren().add(t);
             nodesRootTree.getChildren().removeAll(selectedItems);
+            elementsTreeView.getSelectionModel().clearSelection();
+            elementsTreeView.getSelectionModel().select(t);
         }
     }
 
@@ -325,14 +326,20 @@ public class NodeTreeViewController extends AController {
             if (camerasRootTree.getChildren().isEmpty())
                 t=new TreeItem<>(((Camera) element.getValue()).deepCopy());
                 camerasRootTree.getChildren().add(t);
-        } else if (element.getValue() instanceof Geometry) {
-            Node node = new Node(new Transform(), ((Geometry) element.getValue()).deepCopy(), true, true, true, false);
+        } else if(element.getValue() instanceof Node){
+            Node n = ((Node)element.getValue());
+            if(n.geos.get(0) instanceof Geometry) {
+                t = new TreeItem<>(((Node) element.getValue()).deepCopy());
+                nodesRootTree.getChildren().add(t);
+            }
+        }else if (element.getValue() instanceof Geometry) {
+            Node node = new Node(new Point3(5,3,2),new Point3(1,3,1),new Point3(1,1,1), ((Geometry) element.getValue()).deepCopy(), true, true, true, false);
             node.name = element.getValue().name;
             t=new TreeItem<>(node);
             nodesRootTree.getChildren().add(t);
         }
         if(t!=null){
-            elementTreeViewStatic.getSelectionModel()
+            elementTreeViewStatic.getSelectionModel().clearSelection();
             elementTreeViewStatic.getSelectionModel().select(t);
         }
     }

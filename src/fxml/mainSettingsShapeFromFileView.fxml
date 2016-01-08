@@ -2,8 +2,8 @@
 <?import javafx.scene.layout.*?>
 <VBox  xmlns:fx="http://javafx.com/fxml" >
         <HBox>
-            <Label text="Path"/>
-            <TextField/>
-            <Button text="New Path"/>
+            <Label   text="Path"/>
+            <TextField editable="false" fx:id="txtPath"/>
+            <Button fx:id="btnNewPath" text="New Path"/>
         </HBox>
 </VBox>

@@ -1,6 +1,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import UI.NumberTextField?>
+<?import UI.MaterialView?>
 <VBox fx:id="nodeView" fx:controller="controller.MainSettingsNodeController" xmlns:fx="http://javafx.com/fxml" >
         <HBox>
             <Label text="X"/>
@@ -9,38 +10,38 @@
         </HBox>
         <HBox>
             <Label text="Translation"/>
-            <NumberTextField fx:id="txtTranslationX"/>
-            <NumberTextField fx:id="txtTranslationY"/>
-            <NumberTextField fx:id="txtTranslationZ"/>
+            <NumberTextField fx:id="txtTranslationX" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtTranslationY" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtTranslationZ" onAction="#handleUpdateNode"/>
         </HBox>
         <HBox>
             <Label text="Scaling"/>
-            <NumberTextField fx:id="txtScalingX"/>
-            <NumberTextField fx:id="txtScalingY"/>
-            <NumberTextField fx:id="txtScalingZ"/>
+            <NumberTextField fx:id="txtScalingX" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtScalingY" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtScalingZ" onAction="#handleUpdateNode"/>
         </HBox>
         <HBox>
             <Label text="Rotation"/>
-            <NumberTextField fx:id="txtRotationX"/>
-            <NumberTextField fx:id="txtRotationY"/>
-            <NumberTextField fx:id="txtRotationZ"/>
+            <NumberTextField fx:id="txtRotationX" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtRotationY" onAction="#handleUpdateNode"/>
+            <NumberTextField fx:id="txtRotationZ" onAction="#handleUpdateNode"/>
         </HBox>
     <HBox>
         <Label  text="Material" />
-        <ColorPicker fx:id="clpMaterialColor"/>
-        <ComboBox fx:id="cmbMaterial"/>
+        <MaterialView fx:id="materialView"/>
+        <ComboBox fx:id="cmbMaterial" onAction="#handleComboBoxMaterialAction"/>
 
     </HBox>
     <HBox>
-        <CheckBox fx:id="chkCastShadows" text="Cast Shadows" selected="true"/>
+        <CheckBox fx:id="chkCastShadows" text="Cast Shadows" selected="true" onAction="#handleUpdateNode"/>
     </HBox>
     <HBox>
-        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true"/>
+        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true" onAction="#handleUpdateNode"/>
     </HBox>
     <HBox>
-        <CheckBox fx:id="chkVisible" text="Visible" selected="true"/>
+        <CheckBox fx:id="chkVisible" text="Visible" selected="true" onAction="#handleUpdateNode"/>
     </HBox>
     <HBox>
-        <CheckBox fx:id="chkFlipNormals" text="Flip Normals" />
+        <CheckBox fx:id="chkFlipNormals" text="Flip Normals" onAction="#handleUpdateNode" />
     </HBox>
 </VBox>

@@ -21,6 +21,7 @@ public abstract class Material implements Serializable {
     public final Texture bumpMap;
     public final double bumpScale;
     public final Texture irradiance;
+    public String name;
 
     public Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance) {
         if (texture == null) {
@@ -41,5 +42,10 @@ public abstract class Material implements Serializable {
      * @return the Color-Object for the hit point
      */
     public abstract Color colorFor(final Hit hit, final World world, final Tracer tracer);
-
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    public abstract Material deepCopy();
 }
