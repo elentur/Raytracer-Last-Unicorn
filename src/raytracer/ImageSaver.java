@@ -172,7 +172,7 @@ public class ImageSaver extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        testScene();
+        //testScene();
         primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
 
         /*primaryStage.setScene(setScene(primaryStage));

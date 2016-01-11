@@ -21,9 +21,10 @@ public class InterpolatedImageTexture extends Texture {
         super(scaleU,scaleV,offsetU,offsetV);
         File file = new File(path);
 
-        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
+       // if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
 
         this.image = new Image(file.toURI().toString());
+        name = "Interpolated Image Texture";
     }
 
     @Override
@@ -76,5 +77,16 @@ public class InterpolatedImageTexture extends Texture {
 
         return e;
 
+    }
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return image != null ? image.hashCode() : 0;
     }
 }

@@ -12,13 +12,17 @@
            </HBox>
             <HBox>
                 <Label text="Diffuse"/>
-                <ColorPicker fx:id="clpDiffuse" onAction="#handleDiffuseColor"/>
-                <ComboBox fx:id="cmbDiffuse" onAction="#handleDiffuseTexture"/>
+                <ColorPicker fx:id="clpDiffuse" />
+                <ComboBox fx:id="cmbDiffuse" />
             </HBox>
             <HBox>
                 <Label text="Normal"/>
-                <NumberTextField fx:id="txtNormalScale" onAction="#handleNormalScale"/>
-                <ComboBox fx:id="cmbNormal" onAction="#handleNormalValue"/>
+                <NumberTextField fx:id="txtNormalScale" />
+                <ComboBox fx:id="cmbNormal"  />
+            </HBox>
+            <HBox>
+                <Label text="Irradiance"/>
+                <ComboBox fx:id="cmbIrradiance" />
             </HBox>
         </VBox>
     </content>

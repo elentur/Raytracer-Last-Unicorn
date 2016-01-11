@@ -160,7 +160,7 @@ public class MainSettingsCameraController extends AController {
             camera = new DOFCamera(e, g, t,
                     sldAngle.getValue() / (180 / Math.PI),
                     txtFStop.getDouble(),
-                    txtAperture.getDouble() / (180 / Math.PI),
+                    txtAperture.getDouble(),
                     pattern
             );
         }

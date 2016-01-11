@@ -43,13 +43,14 @@ public class NodeSettingsViewController  extends AController{
         try {
             if(e !=null){
                 Tab t = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsView.fxml"));
-
+                int index  = 0;
                if(tabPane.getTabs().isEmpty()){
                    tabPane.getTabs().add(t);
                    if(e instanceof Node)t.setText("Node");
                    else if(e instanceof Light)t.setText("Light");
                    else if(e instanceof Camera)t.setText("Camera");
                }else {
+                  index = tabPane.getSelectionModel().getSelectedIndex();
                    tabPane.getTabs().get(0).setContent(t.getContent());
                    if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
                    else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
@@ -66,6 +67,7 @@ public class NodeSettingsViewController  extends AController{
                         }
                     }
                 }
+               // tabPane.getSelectionModel().select(index);
             }
         } catch (IOException e1) {
             e1.printStackTrace();

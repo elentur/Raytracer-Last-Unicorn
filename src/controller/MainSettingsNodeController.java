@@ -11,11 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import matVect.Point3;
 import material.DefaultMaterial;
 import material.Material;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -69,12 +71,12 @@ public class MainSettingsNodeController extends AController {
 
     public MainSettingsNodeController() {
         if(materialList.isEmpty())materialList.addAll(
-                DefaultMaterial.SINGLECOLORMATERIAL,
-                DefaultMaterial.LAMBERTMATERIAL,
-                DefaultMaterial.ORENNAYARMATERIAL,
-                DefaultMaterial.PHONGMATERIAL,
-                DefaultMaterial.REFLECTIVEMATERIAL,
-                DefaultMaterial.TRANSPARENTMATERIAL,
+                DefaultMaterial.SINGLE_COLOR_MATERIAL,
+                DefaultMaterial.LAMBERT_MATERIAL,
+                DefaultMaterial.OREN_NAYAR_MATERIAL,
+                DefaultMaterial.PHONG_MATERIAL,
+                DefaultMaterial.REFLECTIVE_MATERIAL,
+                DefaultMaterial.TRANSPARENT_MATERIAL,
                 DefaultMaterial.MATERIAL);
     }
 
@@ -131,10 +133,27 @@ public class MainSettingsNodeController extends AController {
             txtPath.setText(((ShapeFromFile) n.geos.get(0)).file.getPath());
         }
         if (btnNewPath != null) {
-            btnNewPath.setOnAction(a -> {
-            });
+            btnNewPath.setOnAction(a -> newPathLoad());
         }
         setMaterialComboBox();
+    }
+
+    private void newPathLoad() {
+        FileChooser dlg = new FileChooser();
+        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
+        File file = dlg.showOpenDialog(materialView.getScene().getWindow());
+        if(file!= null){
+            ShapeFromFile s =(ShapeFromFile) ((Node)selectedElement.get()).geos.get(0);
+            ShapeFromFile e = new ShapeFromFile(file,
+                   s.material,
+                   s.reciveShadows,
+                   s.castShadows,
+                   s.visibility,
+                   s.flipNormal);
+            List<Geometry> geos = new ArrayList<>();
+            geos.add(e);
+            if(e!= null)updateNode(geos);;
+        }
     }
 
     private void setMaterialComboBox() {
@@ -206,9 +225,6 @@ public class MainSettingsNodeController extends AController {
         if(cmbMaterial.getSelectionModel().getSelectedIndex()<6){
             m=cmbMaterial.getSelectionModel().getSelectedItem().deepCopy();
             materialList.add(m);
-            for(Material t: materialList ){
-                if(t.equals(m)) System.out.println("true");
-            }
         }
         Geometry g = ((Node) selectedElement.get()).geos.get(0);
         List<Geometry> geos = new ArrayList<>();

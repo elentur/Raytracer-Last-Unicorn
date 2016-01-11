@@ -22,9 +22,10 @@ public class ImageTexture extends Texture {
 
         File file = new File(path);
 
-        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
+//        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
 
         this.image = new Image(file.toURI().toString());
+        name = "Image Texture";
     }
 
     @Override
@@ -42,5 +43,17 @@ public class ImageTexture extends Texture {
         PixelReader reader = image.getPixelReader();
         javafx.scene.paint.Color fxColor = reader.getColor(x,y);
         return new Color(fxColor.getRed(), fxColor.getGreen(), fxColor.getBlue());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return image != null ? image.hashCode() : 0;
     }
 }

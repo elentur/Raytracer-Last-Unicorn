@@ -84,7 +84,7 @@ public class MenuController extends AController{
     public void handleLoadModel(ActionEvent actionEvent) {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
-        File file = dlg.showOpenDialog((Stage) menuBar.getScene().getWindow());
+        File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
         if(file!= null){
             Element e = new ShapeFromFile(file,DefaultMaterial.MATERIAL, true, true, true, false);
             if(e!= null) NodeTreeViewController.newElement(e);

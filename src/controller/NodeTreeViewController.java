@@ -185,9 +185,11 @@ public class NodeTreeViewController extends AController {
                 if (newValue.getValue() instanceof Geometry || newValue.getValue() instanceof Light || newValue.getValue() instanceof Camera) {
                     selectedElement.set(newValue.getValue());
                     return;
+                }else{
+                    selectedElement.set(null);
                 }
             }
-            selectedElement.set(null);
+
         });
 
     }
@@ -263,7 +265,7 @@ public class NodeTreeViewController extends AController {
             t.getChildren().addAll(newItems);
             nodesRootTree.getChildren().add(t);
             nodesRootTree.getChildren().removeAll(selectedItems);
-            elementsTreeView.getSelectionModel().clearSelection();
+           elementsTreeView.getSelectionModel().clearSelection();
             elementsTreeView.getSelectionModel().select(t);
         }
     }
@@ -286,8 +288,10 @@ public class NodeTreeViewController extends AController {
             }
         }
     }
-
     public void handleDeleteAction() {
+        handleDeleteAction(true);
+    }
+    public void handleDeleteAction(boolean clear) {
         if (elementsTreeView.getSelectionModel().getSelectedItem() != null) {
             TreeItem<Element> selectedItem = elementsTreeView.getSelectionModel().getSelectedItem();
             if (selectedItem.getValue() instanceof Geometry || selectedItem.getValue() instanceof Light || selectedItem.getValue() instanceof Camera) {
@@ -303,8 +307,13 @@ public class NodeTreeViewController extends AController {
                     raytracer.setCamera(null);
                 }
                 selectedItem.getParent().getChildren().remove(selectedItem);
+                if(clear){
+                    elementsTreeView.getSelectionModel().clearSelection();
+                    selectedElement.setValue(null);
+                }
             }
         }
+
     }
 
     public void handleNewElementAction() {
@@ -333,7 +342,7 @@ public class NodeTreeViewController extends AController {
                 nodesRootTree.getChildren().add(t);
             }
         }else if (element.getValue() instanceof Geometry) {
-            Node node = new Node(new Point3(5,3,2),new Point3(1,3,1),new Point3(1,1,1), ((Geometry) element.getValue()).deepCopy(), true, true, true, false);
+            Node node = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0), ((Geometry) element.getValue()).deepCopy(), true, true, true, false);
             node.name = element.getValue().name;
             t=new TreeItem<>(node);
             nodesRootTree.getChildren().add(t);
@@ -349,7 +358,7 @@ public class NodeTreeViewController extends AController {
     }
 
     public static void updateElement(Element e) {
-        controllerStatic.handleDeleteAction();
+        controllerStatic.handleDeleteAction(false);
         element.setValue(e);
 
 

@@ -1,10 +1,10 @@
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import UI.NumberTextField?>
-<VBox  xmlns:fx="http://javafx.com/fxml">
+<VBox xmlns:fx="http://javafx.com/fxml">
     <HBox>
-        <Label text="Index of Refraction"/>
-        <NumberTextField />
+        <Label text="Index of Refraction" fx:id="lblIOR"/>
+        <Slider fx:id="sldIOR" />
     </HBox>
 </VBox>
