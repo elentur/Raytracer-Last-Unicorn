@@ -19,7 +19,6 @@ import java.util.ResourceBundle;
  */
 public class MainController extends AController{
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

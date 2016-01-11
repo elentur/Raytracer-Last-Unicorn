@@ -11,5 +11,5 @@ import utils.Element;
  */
 abstract class AController  implements Initializable {
     Raytracer raytracer = new Raytracer(true);
-    ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
+    static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
 }

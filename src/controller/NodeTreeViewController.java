@@ -133,6 +133,8 @@ public class NodeTreeViewController extends AController {
                             }else{
                                 setText(null);
                             }
+                        }else{
+                            setText(null);
                         }
                     }
                 };
@@ -144,7 +146,9 @@ public class NodeTreeViewController extends AController {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 TreeItem<Element> selectedItem = (TreeItem<Element>) newValue;
-                selectedElement.set(selectedItem.getValue());
+                TreeItem<Element> selectedItem = (TreeItem<Element>) newValue;
+                if(selectedItem.getValue() instanceof Geometry || selectedItem.getValue() instanceof Light || selectedItem.getValue() instanceof Camera)
+                    selectedElement.set(selectedItem.getValue());
             }
 
         });
@@ -163,6 +167,8 @@ public class NodeTreeViewController extends AController {
                         super.updateItem(item, empty);
                         if (item != null) {
                             setText(item.name);
+                        }else{
+                            setText("");
                         }
                     }
                 };
