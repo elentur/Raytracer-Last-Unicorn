@@ -87,7 +87,7 @@ public class MenuController extends AController{
         File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
         if(file!= null){
             Element e = new ShapeFromFile(file,DefaultMaterial.MATERIAL, true, true, true, false);
-            if(e!= null) NodeTreeViewController.newElement(e);
+           // if(e!= null) NodeTreeViewController.newElement(e);
         }
 
     }

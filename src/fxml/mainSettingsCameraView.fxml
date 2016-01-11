@@ -9,7 +9,7 @@
     </HBox>
     <HBox>
         <Label text="Position"/>
-        <NumberTextField fx:id="txtPositionX" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtPositionX" onAction="#handleUpdateCamera" />
         <NumberTextField fx:id="txtPositionY" onAction="#handleUpdateCamera"/>
         <NumberTextField fx:id="txtPositionZ" onAction="#handleUpdateCamera"/>
     </HBox>

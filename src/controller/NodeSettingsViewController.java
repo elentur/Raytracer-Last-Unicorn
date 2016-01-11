@@ -42,19 +42,20 @@ public class NodeSettingsViewController  extends AController{
        if(e==null)tabPane.getTabs().clear();
         try {
             if(e !=null){
+
                 Tab t = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsView.fxml"));
-                int index  = 0;
                if(tabPane.getTabs().isEmpty()){
                    tabPane.getTabs().add(t);
                    if(e instanceof Node)t.setText("Node");
                    else if(e instanceof Light)t.setText("Light");
                    else if(e instanceof Camera)t.setText("Camera");
                }else {
-                  index = tabPane.getSelectionModel().getSelectedIndex();
-                   tabPane.getTabs().get(0).setContent(t.getContent());
-                   if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
-                   else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
-                   else if(e instanceof Camera) tabPane.getTabs().get(0).setText("Camera");
+                  if(!e.getClass().getName().contains(tabPane.getTabs().get(0).getText())){
+                      tabPane.getTabs().get(0).setContent(t.getContent());
+                      if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
+                      else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
+                      else if(e instanceof Camera) tabPane.getTabs().get(0).setText("Camera");
+                  }
                }
                 if(e instanceof Geometry){
                     if(!((Node)e).geos.isEmpty()&&!(((Node)e).geos.get(0) instanceof Node)){
@@ -65,6 +66,12 @@ public class NodeSettingsViewController  extends AController{
                         }else {
                             tabPane.getTabs().get(1).setContent(t.getContent());
                         }
+                    }
+                }else{
+                    if(tabPane.getTabs().size()>1){
+                        Tab tab = tabPane.getTabs().get(0);
+                        tabPane.getTabs().clear();
+                        tabPane.getTabs().add(tab);
                     }
                 }
                // tabPane.getSelectionModel().select(index);

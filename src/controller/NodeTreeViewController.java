@@ -5,17 +5,10 @@ import camera.DOFCamera;
 import camera.OrthographicCamera;
 import camera.PerspectiveCamera;
 import geometries.*;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import light.DirectionalLight;
 import light.Light;
@@ -45,8 +38,8 @@ public class NodeTreeViewController extends AController {
 
     @FXML
     private TreeView<Element> elementsTreeView;
-    private static TreeView<Element> elementTreeViewStatic;
-    private static NodeTreeViewController controllerStatic;
+   // private static TreeView<Element> elementTreeViewStatic;
+   // private static NodeTreeViewController controllerStatic;
 
     @FXML
     private TreeItem<Element> nodesRootTree;
@@ -57,17 +50,18 @@ public class NodeTreeViewController extends AController {
     @FXML
     private TreeItem<Element> camerasRootTree;
 
-    private final static ObjectProperty<Element> element = new SimpleObjectProperty<>();
 
-    public NodeTreeViewController() {
-        this.controllerStatic = this;
-    }
+   // private final static ObjectProperty<Element> element = new SimpleObjectProperty<>();
+
+   // public NodeTreeViewController() {
+     //   this.controllerStatic = this;
+  //  }
 
     public void initialize(URL url, ResourceBundle resource) {
         initializeComobox();
         initializeTreeView();
 
-        element.addListener(new ChangeListener<Element>() {
+        /*element.addListener(new ChangeListener<Element>() {
             @Override
             public void changed(final ObservableValue<? extends Element> observable, final Element oldValue, final Element newValue) {
                 if (newValue != null) {
@@ -76,13 +70,14 @@ public class NodeTreeViewController extends AController {
 
                 }
             }
-        });
+        });*/
     }
 
     private void initializeTreeView() {
 
+
         // nodesRootTree
-        elementTreeViewStatic = elementsTreeView;
+       // elementTreeViewStatic = elementsTreeView;
         elementsTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         nodesRootTree = new TreeItem<>();
         Element nodes = new Element() {
@@ -90,7 +85,7 @@ public class NodeTreeViewController extends AController {
         nodes.name = "Nodes";
         nodesRootTree.setValue(nodes);
 
-        nodesRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
+        /*nodesRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
 
             List<Geometry> geos = raytracer.getWorld().geometries;
 
@@ -99,7 +94,7 @@ public class NodeTreeViewController extends AController {
             for (TreeItem<Element> item : nodesRootTree.getChildren()) {
                 geos.add((Geometry) item.getValue());
             }
-        });
+        });*/
 
         // lightsRootTree
 
@@ -109,7 +104,7 @@ public class NodeTreeViewController extends AController {
         light.name = "Lights";
         lightsRootTree.setValue(light);
 
-        lightsRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
+        /*lightsRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
 
             List<Light> lights = raytracer.getWorld().lights;
 
@@ -118,7 +113,7 @@ public class NodeTreeViewController extends AController {
             for (TreeItem<Element> item : lightsRootTree.getChildren()) {
                 lights.add((Light) item.getValue());
             }
-        });
+        });*/
 
         // camerasRootTree
 
@@ -128,11 +123,11 @@ public class NodeTreeViewController extends AController {
         camera.name = "Cameras";
         camerasRootTree.setValue(camera);
 
-        camerasRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
+      /*  camerasRootTree.getChildren().addListener((ListChangeListener<TreeItem<Element>>) c -> {
             if (camerasRootTree.getChildren().size() > 1) camerasRootTree.getChildren().remove(1);
             else if (camerasRootTree.getChildren().size() == 1)
                 raytracer.setCamera((Camera) camerasRootTree.getChildren().get(0).getValue());
-        });
+        });*/
 
         // rootTreeItem
 
@@ -147,47 +142,23 @@ public class NodeTreeViewController extends AController {
         root.getChildren().addAll(nodesRootTree, lightsRootTree, camerasRootTree);
 
         elementsTreeView.setRoot(root);
+        elementLists.setTreeview(elementsTreeView);
 
         // TODO in eigene Klasse auslagern
-        elementsTreeView.setCellFactory(new Callback<TreeView<Element>, TreeCell<Element>>() {
-            @Override
-            public TreeCell<Element> call(TreeView<Element> p) {
-                return new TreeCell<Element>() {
-                    @Override
-                    protected void updateItem(Element item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item != null || !empty) {
-                            setText(item.name);
-                            if (item instanceof Geometry) {
-                                setGraphic(new ImageView(new Image("file:icons/mesh.png")));
-
-                            } else if (item instanceof Light) {
-                                setGraphic(new ImageView(new Image("file:icons/light.png")));
-
-                            } else if (item instanceof Camera) {
-                                setGraphic(new ImageView(new Image("file:icons/camera.png")));
-
-                            } else {
-                                setGraphic(null);
-                            }
-                        } else {
-                            setText(null);
-                            setGraphic(null);
-                        }
-                    }
-                };
-            }
-        });
+        elementsTreeView.setCellFactory(new ElementTreeCellFactory());
 
         // wenn element ausgewählt
         elementsTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
-                if (newValue.getValue() instanceof Geometry || newValue.getValue() instanceof Light || newValue.getValue() instanceof Camera) {
+
+                if (newValue != null && newValue.getValue() instanceof Geometry || newValue.getValue() instanceof Light || newValue.getValue() instanceof Camera) {
                     selectedElement.set(newValue.getValue());
                     return;
                 }else{
                     selectedElement.set(null);
                 }
+            }else{
+                selectedElement.set(null);
             }
 
         });
@@ -289,7 +260,8 @@ public class NodeTreeViewController extends AController {
         }
     }
     public void handleDeleteAction() {
-        handleDeleteAction(true);
+        elementLists.removeElement(selectedElement.get());
+       // handleDeleteAction(true);
     }
     public void handleDeleteAction(boolean clear) {
         if (elementsTreeView.getSelectionModel().getSelectedItem() != null) {
@@ -315,20 +287,28 @@ public class NodeTreeViewController extends AController {
         }
 
     }
-
-    public void handleNewElementAction() {
-
+    @FXML
+    private void handleNewElementAction() {
         if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof Element) {
-
-            newElement(cmbNewElement.getSelectionModel().getSelectedItem());
+          Element e = cmbNewElement.getSelectionModel().getSelectedItem();
+            if(e instanceof Light){
+                addNewElement(((Light) e).deepCopy());
+            }else  if(e instanceof Camera){
+                addNewElement(((Camera) e).deepCopy());
+            }else  if(e instanceof Geometry){
+                Node node = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0), ((Geometry) e).deepCopy(), true, true, true, false);
+                node.name = e.name;
+                addNewElement(node);
+            }
 
 
         }
     }
 
-    private void addNewElement() {
-        TreeItem<Element> t=null;
-        if (element.getValue() instanceof Light) {
+    private void addNewElement(Element e) {
+        elementLists.addElement(e);
+       // TreeItem<Element> t=null;
+      /*  if (element.getValue() instanceof Light) {
            t =new TreeItem<>(((Light) element.getValue()).deepCopy());
             lightsRootTree.getChildren().add(t);
         } else if (element.getValue() instanceof Camera) {
@@ -350,21 +330,21 @@ public class NodeTreeViewController extends AController {
         if(t!=null){
             elementTreeViewStatic.getSelectionModel().clearSelection();
             elementTreeViewStatic.getSelectionModel().select(t);
-        }
+        }*/
     }
 
-    public static void newElement(Element e) {
-        element.setValue(e);
-    }
+    //public static void newElement(Element e) {
+       // element.setValue(e);
+   // }
 
-    public static void updateElement(Element e) {
-        controllerStatic.handleDeleteAction(false);
-        element.setValue(e);
+    //public static void updateElement(Element e) {
+     //   controllerStatic.handleDeleteAction(false);
+    //    element.setValue(e);
 
 
-    }
+   // }
 
-    public static void refresh() {
-        elementTreeViewStatic.refresh();
-    }
+   // public static void refresh() {
+   //     elementTreeViewStatic.refresh();
+   // }
 }

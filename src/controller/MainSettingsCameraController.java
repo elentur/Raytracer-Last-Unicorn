@@ -140,33 +140,36 @@ public class MainSettingsCameraController extends AController {
 
     @FXML
     private void handleUpdateCamera() {
-        Camera camera = null;
-        Point3 e = new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble());
-        Vector3 g = new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble());
-        Vector3 t = new Vector3(txtUpVectorX.getDouble(), txtUpVectorY.getDouble(), txtUpVectorZ.getDouble());
-        SamplingPattern pattern = new SamplingPattern(txtSampling.getInteger());
+        if (selectedElement.getValue() != null) {
+            Camera camera = null;
+            Point3 e = new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble());
+            Vector3 g = new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble());
+            Vector3 t = new Vector3(txtUpVectorX.getDouble(), txtUpVectorY.getDouble(), txtUpVectorZ.getDouble());
+            SamplingPattern pattern = new SamplingPattern(txtSampling.getInteger());
 
-        if (selectedElement.get() instanceof OrthographicCamera) {
-            camera = new OrthographicCamera(e, g, t,
-                    txtScaleFactor.getDouble(),
-                    pattern
-            );
-        } else if (selectedElement.get() instanceof PerspectiveCamera) {
-            camera = new PerspectiveCamera(e, g, t,
-                    sldAngle.getValue() / (180 / Math.PI),
-                    pattern
-            );
-        } else if (selectedElement.get() instanceof DOFCamera) {
-            camera = new DOFCamera(e, g, t,
-                    sldAngle.getValue() / (180 / Math.PI),
-                    txtFStop.getDouble(),
-                    txtAperture.getDouble(),
-                    pattern
-            );
-        }
-        if (camera != null) {
-            camera.name = selectedElement.get().name;
-            NodeTreeViewController.updateElement(camera);
+            if (selectedElement.get() instanceof OrthographicCamera) {
+                camera = new OrthographicCamera(e, g, t,
+                        txtScaleFactor.getDouble(),
+                        pattern
+                );
+            } else if (selectedElement.get() instanceof PerspectiveCamera) {
+                camera = new PerspectiveCamera(e, g, t,
+                        sldAngle.getValue() / (180 / Math.PI),
+                        pattern
+                );
+            } else if (selectedElement.get() instanceof DOFCamera) {
+                camera = new DOFCamera(e, g, t,
+                        sldAngle.getValue() / (180 / Math.PI),
+                        txtFStop.getDouble(),
+                        txtAperture.getDouble(),
+                        pattern
+                );
+            }
+            if (camera != null) {
+                camera.name = selectedElement.get().name;
+                elementLists.updateElement(selectedElement.get(), camera);
+                //  NodeTreeViewController.updateElement(camera);
+            }
         }
     }
 

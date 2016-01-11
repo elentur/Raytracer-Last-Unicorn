@@ -35,7 +35,7 @@ public class MainSettingsController extends AController {
         txtName.setText(selectedElement.getValue().name);
         txtName.setOnAction(a->{
            selectedElement.getValue().name=txtName.getText();
-            NodeTreeViewController.updateElement(selectedElement.get());
+           // NodeTreeViewController.updateElement(selectedElement.get());
         });
         try {
         if(selectedElement.get() instanceof Camera){

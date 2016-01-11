@@ -70,7 +70,7 @@ public class MainSettingsNodeController extends AController {
     private boolean initialized = false;
 
     public MainSettingsNodeController() {
-        if(materialList.isEmpty())materialList.addAll(
+        if (materialList.isEmpty()) materialList.addAll(
                 DefaultMaterial.SINGLE_COLOR_MATERIAL,
                 DefaultMaterial.LAMBERT_MATERIAL,
                 DefaultMaterial.OREN_NAYAR_MATERIAL,
@@ -142,24 +142,25 @@ public class MainSettingsNodeController extends AController {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(materialView.getScene().getWindow());
-        if(file!= null){
-            ShapeFromFile s =(ShapeFromFile) ((Node)selectedElement.get()).geos.get(0);
+        if (file != null) {
+            ShapeFromFile s = (ShapeFromFile) ((Node) selectedElement.get()).geos.get(0);
             ShapeFromFile e = new ShapeFromFile(file,
-                   s.material,
-                   s.reciveShadows,
-                   s.castShadows,
-                   s.visibility,
-                   s.flipNormal);
+                    s.material,
+                    s.reciveShadows,
+                    s.castShadows,
+                    s.visibility,
+                    s.flipNormal);
             List<Geometry> geos = new ArrayList<>();
             geos.add(e);
-            if(e!= null)updateNode(geos);;
+            if (e != null) updateNode(geos);
+            ;
         }
     }
 
     private void setMaterialComboBox() {
-        if(((Node) selectedElement.get()).geos.get(0) instanceof Node){
-            ((HBox)cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
-            ((HBox)materialView.getParent()).getChildren().remove(materialView);
+        if (((Node) selectedElement.get()).geos.get(0) instanceof Node) {
+            ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
+            ((HBox) materialView.getParent()).getChildren().remove(materialView);
         }
         cmbMaterial.setCellFactory(new Callback<ListView<Material>, ListCell<Material>>() {
             @Override
@@ -170,10 +171,10 @@ public class MainSettingsNodeController extends AController {
                     protected void updateItem(Material item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
-                            String prefix="";
-                            if(this.getIndex()<6)prefix="New";
-                            if(this.getIndex()==6)prefix="Default";
-                            setText(prefix+" " +item.name);
+                            String prefix = "";
+                            if (this.getIndex() < 6) prefix = "New";
+                            if (this.getIndex() == 6) prefix = "Default";
+                            setText(prefix + " " + item.name);
                         }
                     }
                 };
@@ -187,10 +188,10 @@ public class MainSettingsNodeController extends AController {
                 if (empty) {
                     setText("");
                 } else {
-                    String prefix="";
-                    if(this.getIndex()<6)prefix="New";
-                    if(this.getIndex()==6)prefix="Default";
-                    setText(prefix+" " +item.name);
+                    String prefix = "";
+                    if (this.getIndex() < 6) prefix = "New";
+                    if (this.getIndex() == 6) prefix = "Default";
+                    setText(prefix + " " + item.name);
                 }
             }
         });
@@ -203,27 +204,33 @@ public class MainSettingsNodeController extends AController {
     private void handleUpdateNode() {
         updateNode(null);
     }
-    private void updateNode(List<Geometry> geos){
-        if(geos == null) geos =((Node) selectedElement.get()).geos;
-        Node node = new Node(
-                new Point3(txtTranslationX.getDouble(), txtTranslationY.getDouble(), txtTranslationZ.getDouble()),
-                new Point3(txtScalingX.getDouble(), txtScalingY.getDouble(), txtScalingZ.getDouble()),
-                new Point3(txtRotationX.getDouble() / (180 / Math.PI), txtRotationY.getDouble() / (180 / Math.PI), txtRotationZ.getDouble() / (180 / Math.PI)),
-                geos,
-                chkReceiveShadows.isSelected(),
-                chkCastShadows.isSelected(),
-                chkVisible.isSelected(),
-                chkFlipNormals.isSelected());
-        if (node != null) {
-            node.name = selectedElement.get().name;
-            NodeTreeViewController.updateElement(node);
+
+    private void updateNode(List<Geometry> geos) {
+
+        if (selectedElement.getValue() != null){
+            if (geos == null) geos = ((Node) selectedElement.get()).geos;
+
+            Node node = new Node(
+                    new Point3(txtTranslationX.getDouble(), txtTranslationY.getDouble(), txtTranslationZ.getDouble()),
+                    new Point3(txtScalingX.getDouble(), txtScalingY.getDouble(), txtScalingZ.getDouble()),
+                    new Point3(txtRotationX.getDouble() / (180 / Math.PI), txtRotationY.getDouble() / (180 / Math.PI), txtRotationZ.getDouble() / (180 / Math.PI)),
+                    geos,
+                    chkReceiveShadows.isSelected(),
+                    chkCastShadows.isSelected(),
+                    chkVisible.isSelected(),
+                    chkFlipNormals.isSelected());
+            if (node != null) {
+                node.name = selectedElement.get().name;
+                elementLists.updateElement(selectedElement.get(), node);
+                //   NodeTreeViewController.updateElement(node);
+            }
         }
     }
 
     public void handleComboBoxMaterialAction(ActionEvent actionEvent) {
         Material m = cmbMaterial.getSelectionModel().getSelectedItem();
-        if(cmbMaterial.getSelectionModel().getSelectedIndex()<6){
-            m=cmbMaterial.getSelectionModel().getSelectedItem().deepCopy();
+        if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
+            m = cmbMaterial.getSelectionModel().getSelectedItem().deepCopy();
             materialList.add(m);
         }
         Geometry g = ((Node) selectedElement.get()).geos.get(0);

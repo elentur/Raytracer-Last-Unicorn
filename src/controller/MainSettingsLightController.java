@@ -146,34 +146,37 @@ public class MainSettingsLightController extends AController {
 
     @FXML
     private void handleUpdateLight() {
-        Light light = null;
-        utils.Color color = new utils.Color(clpLightColor.getValue().getRed(), clpLightColor.getValue().getGreen(), clpLightColor.getValue().getBlue());
-        boolean castShadows = chkCastShadows.isSelected();
-        int irrad = txtIrradiance.getInteger();
-        if (selectedElement.get() instanceof DirectionalLight) {
-            light = new DirectionalLight(color,
-                    new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
-                    castShadows,
-                    irrad
-            );
-        } else if (selectedElement.get() instanceof PointLight) {
-            light = new PointLight(color,
-                    new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
-                    castShadows,
-                    irrad
-            );
-        } else if (selectedElement.get() instanceof SpotLight) {
-            light = new SpotLight(color,
-                    new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
-                    new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
-                    sldAngle.getValue() / (180 / Math.PI),
-                    castShadows,
-                    irrad
-            );
-        }
-        if (light != null) {
-            light.name = selectedElement.get().name;
-            NodeTreeViewController.updateElement(light);
+        if (selectedElement.getValue() != null) {
+            Light light = null;
+            utils.Color color = new utils.Color(clpLightColor.getValue().getRed(), clpLightColor.getValue().getGreen(), clpLightColor.getValue().getBlue());
+            boolean castShadows = chkCastShadows.isSelected();
+            int irrad = txtIrradiance.getInteger();
+            if (selectedElement.get() instanceof DirectionalLight) {
+                light = new DirectionalLight(color,
+                        new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
+                        castShadows,
+                        irrad
+                );
+            } else if (selectedElement.get() instanceof PointLight) {
+                light = new PointLight(color,
+                        new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
+                        castShadows,
+                        irrad
+                );
+            } else if (selectedElement.get() instanceof SpotLight) {
+                light = new SpotLight(color,
+                        new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
+                        new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
+                        sldAngle.getValue() / (180 / Math.PI),
+                        castShadows,
+                        irrad
+                );
+            }
+            if (light != null) {
+                light.name = selectedElement.get().name;
+                elementLists.updateElement(selectedElement.get(), light);
+                // NodeTreeViewController.updateElement(light);
+            }
         }
     }
 }

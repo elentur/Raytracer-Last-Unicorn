@@ -323,7 +323,7 @@ public class MainMaterialSettingsController extends AController {
                     ((Node)selectedElement.get()).flipNormal);
             n.name = selectedElement.get().name;
             materialList.add(m);
-            NodeTreeViewController.updateElement(n);
+         //   NodeTreeViewController.updateElement(n);
 
         }
     }
