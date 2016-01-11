@@ -2,6 +2,7 @@
 -fx-base: rgb(50, 50, 50);
 -fx-background: rgb(80, 80, 80);
 }
+
 .context-menu {
     -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
     -fx-background-insets: 0, 1, 2;
