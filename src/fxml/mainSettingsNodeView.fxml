@@ -41,4 +41,19 @@
 
 
     </GridPane>
+
+    <HBox>
+        <Label text="Rotation" />
+        <NumberTextField />
+        <NumberTextField />
+        <NumberTextField />
+    </HBox>
+
+    <HBox>
+        <Label text="Rotation" />
+        <NumberTextField />
+        <NumberTextField />
+        <NumberTextField />
+    </HBox>
+
 </VBox>

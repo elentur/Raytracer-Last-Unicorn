@@ -32,12 +32,19 @@ GridPane{
     -fx-alignment:  center;
 }
 
-GridPane  .label{
-    -fx-pref-width: 80px;
+.label{
+    -fx-width: 40%;
 }
 
-GridPane  .text-field{
+.text-field{
+    -fx-pref-width: 100%;
+}
+
+HBox{
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-style: dashed;
+    -fx-alignment: center;
     -fx-padding: 10px;
-    -fx-pref-width: 20px;
 }
 
