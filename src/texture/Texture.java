@@ -15,6 +15,7 @@ public abstract class Texture implements Serializable {
     public final double ScaleV;
     public final double OffsetU;
     public final double OffsetV;
+    public String name;
 
     public Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV) {
         ScaleU = scaleU;

@@ -1,5 +1,6 @@
 package UI;
 
+import controller.AController;
 import geometries.Geometry;
 import geometries.Triangle;
 import javafx.geometry.Insets;
@@ -15,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import matVect.Point3;
 import material.LambertMaterial;
-import raytracer.ImageSaver;
 import texture.SingleColorTexture;
 import texture.TexCoord2;
 import utils.Color;
@@ -66,7 +66,7 @@ public class NewTriangleStage extends NewGeoStage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.raytracer.getWorld() == null) {
+        if (AController.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -117,8 +117,8 @@ public class NewTriangleStage extends NewGeoStage {
     private void setValues() {
         if (t == null) {
             int index = 1;
-            if (ImageSaver.raytracer.getWorld() != null) {
-                for (Geometry g : ImageSaver.raytracer.getWorld().geometries)
+            if (AController.raytracer.getWorld() != null) {
+                for (Geometry g : AController.raytracer.getWorld().geometries)
                     if (g instanceof Triangle) index++;
             }
             txtName.setText("Triangle" + index);
@@ -154,7 +154,7 @@ public class NewTriangleStage extends NewGeoStage {
 
     private void onOK() {
         try {
-            if (t != null) ImageSaver.raytracer.getWorld().geometries.remove(t);
+            if (t != null) AController.raytracer.getWorld().geometries.remove(t);
             Point3 edgeA = new Point3(
                     txtInputs[0].getDouble(),
                     txtInputs[1].getDouble(),
@@ -173,12 +173,12 @@ public class NewTriangleStage extends NewGeoStage {
             p.name = txtName.getText();
             int index = 1;
             boolean run = false;
-            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+            for (Geometry g : AController.raytracer.getWorld().geometries) {
                 if (g.name.equals(p.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+                for (Geometry g : AController.raytracer.getWorld().geometries) {
                     if (g.name == p.name + index) index++;
                 }
                 if (i == index) {
@@ -186,7 +186,7 @@ public class NewTriangleStage extends NewGeoStage {
                     p.name = p.name + index;
                 }
             }
-            ImageSaver.raytracer.getWorld().geometries.add(p);
+            AController.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

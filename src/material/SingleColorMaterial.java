@@ -25,10 +25,17 @@ public class SingleColorMaterial extends Material {
 
     public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
         super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)));
+        name="Single-Color Material";
         if(texture == null){
             throw new IllegalArgumentException("texture must not be null");
         }
         this.texture = texture;
+    }
+
+    public SingleColorMaterial(final SingleColorMaterial m) {
+        super(m.texture,m.bumpMap,m.bumpScale,new SingleColorTexture(new Color(0,0,0)));
+        name=m.name;
+        this.texture = m.texture;
     }
 
     @Override
@@ -37,6 +44,16 @@ public class SingleColorMaterial extends Material {
         if (world == null) throw new IllegalArgumentException("world must not be null ");
 
         return texture.getColor(hit.texCoord.u,hit.texCoord.v);
+    }
+
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    @Override
+    public Material deepCopy() {
+        return new SingleColorMaterial(this);
     }
 
     @Override
@@ -49,11 +66,7 @@ public class SingleColorMaterial extends Material {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SingleColorMaterial that = (SingleColorMaterial) o;
-
-        return !(texture != null ? !texture.equals(that.texture) : that.texture != null);
+        return false;
 
     }
 

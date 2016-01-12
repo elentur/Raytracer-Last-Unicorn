@@ -1,5 +1,6 @@
 package geometries;
 
+import matVect.Point3;
 import matVect.Transform;
 import material.Material;
 import material.SingleColorMaterial;
@@ -26,22 +27,30 @@ public class Node extends Geometry {
      * A list with all geometries which will be rendered
      */
     public final List<Geometry> geos;
+    public final Point3 translation;
+    public final Point3 scaling;
+    public final Point3 rotation;
 
     /**
      * Instantiates a new Geometry.
-     * @param t is the transform object.
      * @param geos is a List of containing geometries.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, final List<Geometry> geos,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+    public Node(final Point3 translation,final Point3 scaling , final Point3 rotation, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
                 new SingleColorTexture(new Color(0,0,0)),0),reciveShadows,castShadows,
                 visibility,flipNormal);
 
-        if (t == null) throw new IllegalArgumentException("The t cannot be null!");
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
 
-        this.t = t;
+        this.t = new Transform().rotateX(rotation.x).rotateY(rotation.y).rotateZ(rotation.z).scale(
+                scaling.x,scaling.y,scaling.z
+        ).translate(
+                translation.x,translation.y,translation.z
+        );
+        this.translation=translation;
+        this.scaling=scaling;
+        this.rotation=rotation;
         this.geos = geos;
     }
 
@@ -51,20 +60,27 @@ public class Node extends Geometry {
      * @param node
      */
     public Node(Node node) {
-        super(node.material, node.reciveShadows, node.castShadows, node.visibility, node.flipNormal);
-        this.t = node.t;
-        this.geos = node.geos;
+        this(node,null);
     }
 
     /**
      * Instantiates a new Geometry.
-     * @param t is the transform object.
      * @param geo is a geometry.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, Geometry geo,final boolean reciveShadows,
+    public Node(final Point3 translation,final Point3 scaling , final Point3 rotation, Geometry geo,final boolean reciveShadows,
                 final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(t, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+        this(translation,scaling,rotation, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+    }
+
+    public Node(final Node node, final Material m) {
+        super(node.material, node.reciveShadows, node.castShadows, node.visibility, node.flipNormal);
+        this.t = node.t;
+        this.name=node.name;
+        this.rotation=node.rotation;
+        this.scaling=node.scaling;
+        this.translation=node.translation;
+        this.geos = node.geos;
     }
 
     @Override
@@ -85,6 +101,11 @@ public class Node extends Geometry {
     @Override
     public Node deepCopy() {
         return new Node(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+         return new Node(this,m);
     }
 
     @Override

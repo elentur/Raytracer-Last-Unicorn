@@ -1,11 +1,50 @@
-.root{
--fx-base: rgb(50, 50, 50);
--fx-background: rgb(80, 80, 80);
+.root {
+    -fx-base: rgb(50, 50, 50);
+    -fx-background: rgb(80, 80, 80);
+    -fx-pref-width: 1400px;
 }
-.context-menu {
-    -fx-skin: "com.sun.javafx.scene.control.skin.ContextMenuSkin";
-    -fx-background-insets: 0, 1, 2;
-    -fx-background-radius: 0 6 6 6, 0 5 5 5, 0 4 4 4;
-    -fx-padding: 0.333333em 0.083333em 0.666667em 0.083333em;
-    -fx-text-fill: rgb(0, 255, 0);
+
+
+
+
+#nodeTreeView{
+    -fx-width: 25%;
 }
+
+/* TreeView */
+
+.tree-view, .tree-cell {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.tree-cell:selected {
+    -fx-font-weight: bold;
+}
+
+.tree-cell {
+    -fx-padding: 0.25em;
+}
+
+
+GridPane{
+    -fx-hgap:100%;
+    -fx-alignment:  center;
+}
+
+.label{
+    -fx-width: 40%;
+}
+
+.text-field{
+    -fx-pref-width: 100%;
+}
+
+HBox{
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+    -fx-border-style: dashed;
+    -fx-alignment: center;
+    -fx-padding: 10px;
+}
+

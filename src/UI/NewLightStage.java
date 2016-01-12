@@ -1,5 +1,6 @@
 package UI;
 
+import controller.AController;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,7 +17,6 @@ import light.PointLight;
 import light.SpotLight;
 import matVect.Point3;
 import matVect.Vector3;
-import raytracer.ImageSaver;
 
 /**
  * Created by Marcus Baetz on 23.11.2015.
@@ -73,7 +73,7 @@ public class NewLightStage extends Stage {
         final Button btnCancel = new Button("Cancel");
         btnCancel.setPrefWidth(100);
         btnCancel.setOnAction(a -> onCancel());
-        if (ImageSaver.raytracer.getWorld() == null) {
+        if (AController.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
             btnOK.setDisable(true);
@@ -126,8 +126,8 @@ public class NewLightStage extends Stage {
     private void setValues() {
         if (light == null) {
             int index = 1;
-            if (ImageSaver.raytracer.getWorld() != null) {
-                for (Light l : ImageSaver.raytracer.getWorld().lights)
+            if (AController.raytracer.getWorld() != null) {
+                for (Light l : AController.raytracer.getWorld().lights)
                     if (l instanceof PointLight) index++;
             }
             txtName.setText("Pointlight" + index);
@@ -178,7 +178,7 @@ public class NewLightStage extends Stage {
 
     private void onOK(Color c, int typ, int angle) {
         try {
-            if (light != null) ImageSaver.raytracer.getWorld().lights.remove(light);
+            if (light != null) AController.raytracer.getWorld().lights.remove(light);
             Point3 pos = new Point3(
                     txtInputs[0].getDouble(),
                     txtInputs[1].getDouble(),
@@ -199,12 +199,12 @@ public class NewLightStage extends Stage {
             l.name = txtName.getText();
             int index = 1;
             boolean run = false;
-            for (Light li : ImageSaver.raytracer.getWorld().lights) {
+            for (Light li : AController.raytracer.getWorld().lights) {
                 if (li.name.equals(l.name)) run = true;
             }
             while (run) {
                 int i = index;
-                for (Light li : ImageSaver.raytracer.getWorld().lights) {
+                for (Light li : AController.raytracer.getWorld().lights) {
                     if (li.name == li.name + index) index++;
                 }
                 if (i == index) {
@@ -213,7 +213,7 @@ public class NewLightStage extends Stage {
                 }
             }
 
-            ImageSaver.raytracer.getWorld().lights.add(l);
+            AController.raytracer.getWorld().lights.add(l);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

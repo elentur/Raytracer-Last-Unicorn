@@ -2,7 +2,11 @@ package UI;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -25,6 +29,7 @@ public class NumberTextField extends TextField {
         return number.get();
     }
     public final double getDouble() {
+
         return number.get().doubleValue();
     }
     public final int getInteger() {
@@ -73,7 +78,14 @@ public class NumberTextField extends TextField {
     private void initHandlers() {
 
         // try to parse when focus is lost or RETURN is hit
-        setOnAction(a->parseAndFormatInput());
+        addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(final KeyEvent event) {
+                if(event.getCode().equals(KeyCode.ENTER)){
+                    parseAndFormatInput();
+                }
+            }
+        });
 
         focusedProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.booleanValue()) {
@@ -102,6 +114,7 @@ public class NumberTextField extends TextField {
             BigDecimal newValue = new BigDecimal(parsedNumber.toString());
             setNumber(newValue);
             selectAll();
+            fireEvent(new ActionEvent());
         } catch (ParseException ex) {
             // If parsing fails keep old number
             setText(nf.format(number.get()));

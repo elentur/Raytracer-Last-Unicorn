@@ -1,0 +1,59 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import UI.NumberTextField?>
+<?import UI.MaterialView?>
+<VBox fx:id="nodeView" fx:controller="controller.MainSettingsNodeController" xmlns:fx="http://javafx.com/fxml">
+    <GridPane>
+        <Label text="X" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
+        <Label text="Y" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
+        <Label text="Z" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
+
+        <Label text="Translation" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="1"/>
+        <NumberTextField fx:id="txtTranslationX" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="1"
+                         onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtTranslationY" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.columnSpan="1"
+                         onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtTranslationZ" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.columnSpan="1"
+                         onAction="#handleUpdateNode"/>
+
+        <Label text="Scaling" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="1"/>
+        <NumberTextField fx:id="txtScalingX" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtScalingY" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtScalingZ" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+
+        <Label text="Rotation" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="1"/>
+        <NumberTextField fx:id="txtRotationX" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtRotationY" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+        <NumberTextField fx:id="txtRotationZ" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
+
+        <Label text="Material" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="1"/>
+        <MaterialView fx:id="materialView" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
+        <ComboBox fx:id="cmbMaterial" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="3" onAction="#handleComboBoxMaterialAction"/>
+
+
+        <CheckBox fx:id="chkCastShadows" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="3" text="Cast Shadows" selected="true" onAction="#handleUpdateNode"/>
+
+        <CheckBox fx:id="chkReceiveShadows" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="3" text="Receive Shadows" selected="true" onAction="#handleUpdateNode"/>
+
+        <CheckBox fx:id="chkVisible" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.columnSpan="3" text="Visible" selected="true" onAction="#handleUpdateNode"/>
+
+        <CheckBox fx:id="chkFlipNormals" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.columnSpan="3" text="Flip Normals" onAction="#handleUpdateNode"/>
+
+
+    </GridPane>
+
+    <HBox>
+        <Label text="Rotation" />
+        <NumberTextField />
+        <NumberTextField />
+        <NumberTextField />
+    </HBox>
+
+    <HBox>
+        <Label text="Rotation" />
+        <NumberTextField />
+        <NumberTextField />
+        <NumberTextField />
+    </HBox>
+
+</VBox>

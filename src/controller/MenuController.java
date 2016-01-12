@@ -1,15 +1,20 @@
 package controller;
 
+import geometries.ShapeFromFile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import material.DefaultMaterial;
+import utils.Element;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -74,5 +79,33 @@ public class MenuController extends AController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    public void handleLoadModel(ActionEvent actionEvent) {
+        FileChooser dlg = new FileChooser();
+        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
+        File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
+        if(file!= null){
+            Element e = new ShapeFromFile(file,DefaultMaterial.MATERIAL, true, true, true, false);
+           // if(e!= null) NodeTreeViewController.newElement(e);
+        }
+
+    }
+
+    public void handleSaveAction(ActionEvent actionEvent) {
+    }
+
+    public void handleLoadAction(ActionEvent actionEvent) {
+    }
+
+    public void handleSaveImageAction(ActionEvent actionEvent) {
+    }
+
+    public void handleRenderAction(ActionEvent actionEvent) {
+        ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
+        if(image!=null)raytracer.render(image);
+    }
+
+    public void handleStopRenderAction(ActionEvent actionEvent) {
     }
 }
