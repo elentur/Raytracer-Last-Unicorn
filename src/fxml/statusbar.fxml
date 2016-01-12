@@ -1,9 +1,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
 <VBox fx:id="statusbar" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.StatusController">
-    <ProgressBar fx:id="progressBar">
-    </ProgressBar>
-    <Label fx:id="lblTime">
-    </Label>
+    <HBox>
+        <Label fx:id="lblTime" />
+        <ProgressBar fx:id="progressBar" />
+    </HBox>
 </VBox>

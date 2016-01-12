@@ -11,8 +11,8 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <VBox fx:id="nodeTreeView" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
-    <HBox>
-        <ComboBox fx:id="cmbNewElement">
+    <HBox styleClass="form-group-3">
+        <ComboBox styleClass="col-3" fx:id="cmbNewElement">
             <value>
                 <String fx:value="add new element" />
             </value>
@@ -20,16 +20,14 @@
                 <FXCollections fx:factory="observableArrayList" />
             </items>
         </ComboBox>
-        <Button text="Add" onAction="#handleNewElementAction"/>
+        <Button styleClass="col-1" text="Add" onAction="#handleNewElementAction"/>
     </HBox>
 
     <TreeView fx:id="elementsTreeView"/>
 
-    <ButtonBar>
-        <buttons>
-            <Button onAction="#handleGroupAction" text="Group" />
-            <Button onAction="#handleUngroupAction" text="Ungroup"/>
-            <Button onAction="#handleDeleteAction" text="Delete"/>
-        </buttons>
-    </ButtonBar>
+    <HBox styleClass="form-group-3">
+            <Button styleClass="col-1" onAction="#handleGroupAction" text="Group" />
+            <Button styleClass="col-1" onAction="#handleUngroupAction" text="Ungroup"/>
+            <Button styleClass="col-1" onAction="#handleDeleteAction" text="Delete"/>
+    </HBox>
 </VBox>

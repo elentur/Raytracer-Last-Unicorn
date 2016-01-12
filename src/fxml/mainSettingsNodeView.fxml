@@ -3,57 +3,52 @@
 <?import UI.NumberTextField?>
 <?import UI.MaterialView?>
 <VBox fx:id="nodeView" fx:controller="controller.MainSettingsNodeController" xmlns:fx="http://javafx.com/fxml">
-    <GridPane>
-        <Label text="X" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
-        <Label text="Y" GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
-        <Label text="Z" GridPane.columnIndex="3" GridPane.rowIndex="0" GridPane.columnSpan="1"/>
-
-        <Label text="Translation" GridPane.columnIndex="0" GridPane.rowIndex="1" GridPane.columnSpan="1"/>
-        <NumberTextField fx:id="txtTranslationX" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="1"
-                         onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtTranslationY" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.columnSpan="1"
-                         onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtTranslationZ" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.columnSpan="1"
-                         onAction="#handleUpdateNode"/>
-
-        <Label text="Scaling" GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="1"/>
-        <NumberTextField fx:id="txtScalingX" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtScalingY" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtScalingZ" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-
-        <Label text="Rotation" GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.columnSpan="1"/>
-        <NumberTextField fx:id="txtRotationX" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtRotationY" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-        <NumberTextField fx:id="txtRotationZ" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.columnSpan="1" onAction="#handleUpdateNode"/>
-
-        <Label text="Material" GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.columnSpan="1"/>
-        <MaterialView fx:id="materialView" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.columnSpan="3"/>
-        <ComboBox fx:id="cmbMaterial" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.columnSpan="3" onAction="#handleComboBoxMaterialAction"/>
-
-
-        <CheckBox fx:id="chkCastShadows" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.columnSpan="3" text="Cast Shadows" selected="true" onAction="#handleUpdateNode"/>
-
-        <CheckBox fx:id="chkReceiveShadows" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.columnSpan="3" text="Receive Shadows" selected="true" onAction="#handleUpdateNode"/>
-
-        <CheckBox fx:id="chkVisible" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.columnSpan="3" text="Visible" selected="true" onAction="#handleUpdateNode"/>
-
-        <CheckBox fx:id="chkFlipNormals" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.columnSpan="3" text="Flip Normals" onAction="#handleUpdateNode"/>
-
-
-    </GridPane>
-
-    <HBox>
-        <Label text="Rotation" />
-        <NumberTextField />
-        <NumberTextField />
-        <NumberTextField />
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <Label styleClass="text-field-head" text="X"/>
+        <Label styleClass="text-field-head" text="Y"/>
+        <Label styleClass="text-field-head" text="Z"/>
     </HBox>
-
-    <HBox>
-        <Label text="Rotation" />
-        <NumberTextField />
-        <NumberTextField />
-        <NumberTextField />
+    <HBox styleClass="form-group-4">
+        <Label text="Translation"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Scaling"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Rotation"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4, element-center">
+        <MaterialView fx:id="materialView"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label  text="Material" />
+        <ComboBox styleClass="col-3" fx:id="cmbMaterial" onAction="#handleComboBoxMaterialAction"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkCastShadows" text="Cast Shadows" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkVisible" text="Visible" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkFlipNormals" text="Flip Normals" onAction="#handleUpdateNode" />
     </HBox>
 
 </VBox>

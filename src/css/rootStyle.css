@@ -1,17 +1,122 @@
 .root {
     -fx-base: rgb(50, 50, 50);
     -fx-background: rgb(80, 80, 80);
-    -fx-pref-width: 1400px;
+    -fx-pref-width: 1200;
+    -fx-pref-height:  600;
+}
+
+/* top right bottom right */
+
+#vbox{
+    -fx-pref-width: 1360;
+}
+
+#nodeTreeView{
+    -fx-min-width: 360;
+}
+
+#scrollPane{
+    -fx-min-width: 640;
+}
+
+#tabPane{
+    -fx-min-width: 360;
+}
+
+#statusbar{
+    -fx-pref-width: 1360;
+}
+
+/* Setting Formular  4 spaltig */
+
+.form-group-4{
+    -fx-alignment: baseline-left;
+    -fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-max-width: 360;
+}
+
+.form-group-4 .label,
+.form-group-4 .text-field,
+.form-group-4 .color-picker,
+.form-group-4 .combo-box,
+.form-group-4 .number-text-field,
+.form-group-4 .text-field-head{
+    -fx-pref-width: 90;
+    -fx-wrap-text: true;
+}
+
+.form-group-4 .col-1{
+    -fx-pref-width: 90 !important;
+}
+
+.form-group-4 .col-2{
+    -fx-pref-width: 175 !important;
+}
+
+.form-group-4 .col-3{
+    -fx-pref-width: 260 !important;
+}
+
+.form-group-4 .col-4{
+    -fx-pref-width: 345 !important;
+}
+
+/* Setting Formular  3 spaltig */
+
+.form-group-3{
+    -fx-alignment: baseline-left;
+    -fx-padding: 5;
+    -fx-spacing: 5;
+    -fx-max-width: 360;
+}
+
+.form-group-3 .label,
+.form-group-3 .text-field,
+.form-group-3 .color-picker,
+.form-group-3 .combo-box,
+.form-group-3 .number-text-field,
+.form-group-3 .text-field-head{
+    -fx-pref-width: 120;
+    -fx-wrap-text: true;
+}
+
+.form-group-3 .col-1{
+    -fx-pref-width: 120 !important;
+}
+
+.form-group-3 .col-2{
+    -fx-pref-width: 235 !important;
+}
+
+.form-group-3 .col-3{
+    -fx-pref-width: 330 !important;
 }
 
 
+/* helper classes */
 
+.text-field-head{
+    -fx-alignment: baseline-center;
+}
 
-#nodeTreeView{
-    -fx-width: 25%;
+.element-center{
+    -fx-alignment: baseline-center !important;
+}
+
+.element-right{
+    -fx-alignment: baseline-right !important;
+}
+
+.element-left{
+    -fx-alignment: baseline-left !important;
 }
 
 /* TreeView */
+
+.tree-view{
+    -fx-min-height: 500;
+}
 
 .tree-view, .tree-cell {
     -fx-background-color: black;
@@ -27,24 +132,16 @@
 }
 
 
-GridPane{
-    -fx-hgap:100%;
-    -fx-alignment:  center;
+/* StatusBar */
+
+#statusbar{
+    -fx-min-height: 20;
 }
 
-.label{
-    -fx-width: 40%;
+#statusbar #lblTime{
+    -fx-min-width: 360;
 }
 
-.text-field{
-    -fx-pref-width: 100%;
+#statusbar .progress-bar{
+    -fx-min-width: 640;
 }
-
-HBox{
-    -fx-border-color: red;
-    -fx-border-width: 2px;
-    -fx-border-style: dashed;
-    -fx-alignment: center;
-    -fx-padding: 10px;
-}
-

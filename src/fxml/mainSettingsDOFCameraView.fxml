@@ -4,16 +4,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
 <VBox xmlns:fx="http://javafx.com/fxml" >
-        <HBox>
-            <Label fx:id="lblAngle"  text="Opening Angle"/>
-            <Slider fx:id="sldAngle"/>
+        <HBox styleClass="form-group-4">
+            <Label styleClass="col-2" fx:id="lblAngle"  text="Opening Angle"/>
+            <Slider styleClass="col-2" fx:id="sldAngle"/>
         </HBox>
-        <HBox>
+        <HBox styleClass="form-group-4">
             <Label text="F-Stop"/>
-            <NumberTextField fx:id="txtFStop"/>
+            <NumberTextField styleClass="col-3" fx:id="txtFStop"/>
         </HBox>
-        <HBox>
+        <HBox styleClass="form-group-4">
             <Label text="Aperture"/>
-            <NumberTextField fx:id="txtAperture"/>
+            <NumberTextField styleClass="col-3" fx:id="txtAperture"/>
         </HBox>
 </VBox>
