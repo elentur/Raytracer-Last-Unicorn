@@ -1,3 +1,4 @@
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,5 +9,6 @@
         <Label text="Reflection Color"/>
         <ColorPicker fx:id="clpReflection" />
         <ComboBox fx:id="cmbReflection" />
+        <Button fx:id="btnClearReflection" text="X" />
     </HBox>
 </VBox>

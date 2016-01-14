@@ -5,6 +5,7 @@ import UI.NumberTextField;
 import geometries.Geometry;
 import geometries.Node;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -330,5 +331,7 @@ public class MainMaterialSettingsController extends AController {
     }
 
 
+    public void ClearTexture(ActionEvent actionEvent) {
 
+    }
 }

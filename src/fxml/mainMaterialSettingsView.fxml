@@ -14,15 +14,18 @@
                 <Label text="Diffuse"/>
                 <ColorPicker fx:id="clpDiffuse" />
                 <ComboBox fx:id="cmbDiffuse" />
+                <Button text="X" onAction="#ClearTexture"/>
             </HBox>
             <HBox>
                 <Label text="Normal"/>
                 <NumberTextField fx:id="txtNormalScale" />
                 <ComboBox fx:id="cmbNormal"  />
+                <Button text="X" onAction="#ClearTexture"/>
             </HBox>
             <HBox>
                 <Label text="Irradiance"/>
                 <ComboBox fx:id="cmbIrradiance" />
+                <Button text="X" onAction="#ClearTexture"/>
             </HBox>
         </VBox>
     </content>
