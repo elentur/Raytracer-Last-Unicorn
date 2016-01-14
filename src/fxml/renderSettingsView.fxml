@@ -1,0 +1,52 @@
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import UI.NumberTextField?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.control.Button?>
+<FlowPane xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
+
+    <HBox styleClass="form-group-6">
+        <CheckBox styleClass="col-2" fx:id="chkMultithreading" text="Multithreading"/>
+        <Label text="Cores" />
+        <ChoiceBox fx:id="chbCores"/>
+        <Label text="Pattern" />
+        <ChoiceBox fx:id="chbPattern"/>
+    </HBox>
+
+    <HBox styleClass="form-group-6">
+        <Label text="Resolution" />
+        <ChoiceBox styleClass="col-2" fx:id="chbResolution"/>
+    </HBox>
+
+    <HBox styleClass="form-group-6">
+        <Label text="Width"/>
+        <NumberTextField fx:id="txtWidth"/>
+        <Label text="Height"/>
+        <NumberTextField fx:id="txtHeight"/>
+        <CheckBox styleClass="col-2" fx:id="chkKeepRatio" text="Keep Ratio"/>
+    </HBox>
+
+    <HBox styleClass="form-group-6">
+        <Label text="Background"/>
+        <ColorPicker fx:id="cpColorPicker"/>
+        <Label text="Ambient"/>
+        <ColorPicker fx:id="cpAmbientColor"/>
+        <CheckBox styleClass="col-2" fx:id="chkHDRRendering" text="HDR-Rendering"/>
+    </HBox>
+
+    <HBox styleClass="form-group-6">
+        <Label text="Recursion"/>
+        <NumberTextField styleClass="col-2" fx:id="txtRecursion"/>
+        <Label text="IOR"/>
+        <NumberTextField styleClass="col-2" fx:id="txtIOR"/>
+    </HBox>
+    <HBox styleClass="form-group-6">
+        <HBox styleClass="col-4"/>
+        <Button text="OK"/>
+        <Button text="Cancle"/>
+    </HBox>
+
+</FlowPane>
