@@ -106,7 +106,7 @@ public class MainMaterialSettingsController extends AController {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        material.setValue(((Node)selectedElement.get()).geos.get(0).material);
+        material.setValue(((Node)selectedTreeItem.get().getValue()).geos.get(0).material);
         materialRenderView.setUpTracer(material);
         if(!initialized) {
             VBox v;
@@ -309,21 +309,22 @@ public class MainMaterialSettingsController extends AController {
         }
 
         if (m != null) {
-            materialList.remove(((Node)selectedElement.get()).geos.get(0).material);
-            m.name = ((Node)selectedElement.get()).geos.get(0).material.name;
-            Geometry g = ((Node)selectedElement.get()).geos.get(0).deepCopy(m);
-            Node n = new Node(
-                    ((Node)selectedElement.get()).translation,
-                    ((Node)selectedElement.get()).scaling,
-                    ((Node)selectedElement.get()).rotation,
+            Node n =(Node) selectedTreeItem.get().getValue();
+            m.name = n.geos.get(0).material.name;
+            Geometry g = n.geos.get(0).deepCopy(m);
+            Node node = new Node(
+                    n.translation,
+                    n.scaling,
+                    n.rotation,
                     g,
-                    ((Node)selectedElement.get()).reciveShadows,
-                    ((Node)selectedElement.get()).castShadows,
-                    ((Node)selectedElement.get()).visibility,
-                    ((Node)selectedElement.get()).flipNormal);
-            n.name = selectedElement.get().name;
-            materialList.add(m);
-         //   NodeTreeViewController.updateElement(n);
+                    n.reciveShadows,
+                    n.castShadows,
+                    n.visibility,
+                    n.flipNormal);
+            node.name = n.name;
+            material.setValue(m);
+            materialList.set(materialList.indexOf(n.geos.get(0).material),m);
+            elementLists.updateElement(selectedTreeItem.get().getValue(), node);
 
         }
     }

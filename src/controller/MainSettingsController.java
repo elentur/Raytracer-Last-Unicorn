@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import light.Light;
+import utils.Element;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,20 +33,21 @@ public class MainSettingsController extends AController {
     private VBox mainSettingsView;
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        txtName.setText(selectedElement.getValue().name);
+        txtName.setText(selectedTreeItem.get().getValue().name);
         txtName.setOnAction(a->{
-           selectedElement.getValue().name=txtName.getText();
-           // NodeTreeViewController.updateElement(selectedElement.get());
+            Element e = selectedTreeItem.get().getValue().deepCopy();
+            e.name=txtName.getText();
+           ObservableElementLists.getInstance().updateElement(selectedTreeItem.get().getValue(),e);
         });
         try {
-        if(selectedElement.get() instanceof Camera){
+        if(selectedTreeItem.get().getValue() instanceof Camera){
             VBox v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
             mainSettingsView.getChildren().add(v);
 
-        }else if(selectedElement.get() instanceof Light){
+        }else if(selectedTreeItem.get().getValue() instanceof Light){
             VBox v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
             mainSettingsView.getChildren().add(v);
-        }else if(selectedElement.get() instanceof Node) {
+        }else if(selectedTreeItem.get().getValue() instanceof Node) {
             VBox v;
             v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
             mainSettingsView.getChildren().add(v);

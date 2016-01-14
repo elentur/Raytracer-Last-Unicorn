@@ -110,10 +110,11 @@ public class Node extends Geometry {
 
     @Override
     public String toString() {
-        return "Node{" +
+        return name;
+        /*return "Node{" +
                 "t=" + t +
                 ", geos=" + geos +
-                '}';
+                '}';*/
     }
 
     @Override

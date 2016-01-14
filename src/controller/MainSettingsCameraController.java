@@ -77,11 +77,11 @@ public class MainSettingsCameraController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (selectedElement.get() instanceof OrthographicCamera) {
+                if (selectedTreeItem.get().getValue() instanceof OrthographicCamera) {
 
                     v = loader.load(this.getClass().getResource("/fxml/mainSettingsOrthographicCameraView.fxml"));
                     cameraView.getChildren().add(v);
-                } else if (selectedElement.get() instanceof PerspectiveCamera) {
+                } else if (selectedTreeItem.get().getValue() instanceof PerspectiveCamera) {
                     v = loader.load(this.getClass().getResource("/fxml/mainSettingsPerspectiveCameraView.fxml"));
                     cameraView.getChildren().add(v);
                 } else {
@@ -104,7 +104,7 @@ public class MainSettingsCameraController extends AController {
     }
 
     private void initializeFields() {
-        Camera c = (Camera) selectedElement.get();
+        Camera c = (Camera) selectedTreeItem.get().getValue();
         txtPositionX.setNumber(c.e.x);
         txtPositionY.setNumber(c.e.y);
         txtPositionZ.setNumber(c.e.z);
@@ -140,24 +140,24 @@ public class MainSettingsCameraController extends AController {
 
     @FXML
     private void handleUpdateCamera() {
-        if (selectedElement.getValue() != null) {
+        if (selectedTreeItem.get().getValue() != null) {
             Camera camera = null;
             Point3 e = new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble());
             Vector3 g = new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble());
             Vector3 t = new Vector3(txtUpVectorX.getDouble(), txtUpVectorY.getDouble(), txtUpVectorZ.getDouble());
             SamplingPattern pattern = new SamplingPattern(txtSampling.getInteger());
 
-            if (selectedElement.get() instanceof OrthographicCamera) {
+            if (selectedTreeItem.get().getValue() instanceof OrthographicCamera) {
                 camera = new OrthographicCamera(e, g, t,
                         txtScaleFactor.getDouble(),
                         pattern
                 );
-            } else if (selectedElement.get() instanceof PerspectiveCamera) {
+            } else if (selectedTreeItem.get().getValue() instanceof PerspectiveCamera) {
                 camera = new PerspectiveCamera(e, g, t,
                         sldAngle.getValue() / (180 / Math.PI),
                         pattern
                 );
-            } else if (selectedElement.get() instanceof DOFCamera) {
+            } else if (selectedTreeItem.get().getValue() instanceof DOFCamera) {
                 camera = new DOFCamera(e, g, t,
                         sldAngle.getValue() / (180 / Math.PI),
                         txtFStop.getDouble(),
@@ -166,8 +166,8 @@ public class MainSettingsCameraController extends AController {
                 );
             }
             if (camera != null) {
-                camera.name = selectedElement.get().name;
-                elementLists.updateElement(selectedElement.get(), camera);
+                camera.name = selectedTreeItem.get().getValue().name;
+                elementLists.updateElement(selectedTreeItem.get().getValue(), camera);
                 //  NodeTreeViewController.updateElement(camera);
             }
         }

@@ -1,5 +1,7 @@
 package controller;
 
+import geometries.Geometry;
+import geometries.Node;
 import geometries.ShapeFromFile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +13,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import matVect.Point3;
 import material.DefaultMaterial;
 import utils.Element;
 
@@ -87,7 +90,13 @@ public class MenuController extends AController{
         File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
         if(file!= null){
             Element e = new ShapeFromFile(file,DefaultMaterial.MATERIAL, true, true, true, false);
-           // if(e!= null) NodeTreeViewController.newElement(e);
+           Node n= new Node(
+                    new Point3(0,0,0),
+                    new Point3(1,1,1),
+                    new Point3(0,0,0),
+                    (Geometry) e,true,true,true,false);
+            n.name=e.name;
+            if(e!= null) ObservableElementLists.getInstance().addElement(n);
         }
 
     }

@@ -68,11 +68,11 @@ public class MainSettingsLightController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (selectedElement.get() instanceof DirectionalLight) {
+                if (selectedTreeItem.get().getValue() instanceof DirectionalLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
                     lightView.getChildren().add(v);
 
-                } else if (selectedElement.get() instanceof PointLight) {
+                } else if (selectedTreeItem.get().getValue() instanceof PointLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
                     lightView.getChildren().add(v);
                 } else {
@@ -107,7 +107,7 @@ public class MainSettingsLightController extends AController {
     }
 
     private void initializeFields() {
-        Light l = (Light) selectedElement.get();
+        Light l = (Light) selectedTreeItem.get().getValue();
 
         if (txtPositionX != null) {
             Point3 pos = l instanceof PointLight ? ((PointLight) l).position : ((SpotLight) l).position;
@@ -146,24 +146,24 @@ public class MainSettingsLightController extends AController {
 
     @FXML
     private void handleUpdateLight() {
-        if (selectedElement.getValue() != null) {
+        if (selectedTreeItem.get().getValue() != null) {
             Light light = null;
             utils.Color color = new utils.Color(clpLightColor.getValue().getRed(), clpLightColor.getValue().getGreen(), clpLightColor.getValue().getBlue());
             boolean castShadows = chkCastShadows.isSelected();
             int irrad = txtIrradiance.getInteger();
-            if (selectedElement.get() instanceof DirectionalLight) {
+            if (selectedTreeItem.get().getValue() instanceof DirectionalLight) {
                 light = new DirectionalLight(color,
                         new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
                         castShadows,
                         irrad
                 );
-            } else if (selectedElement.get() instanceof PointLight) {
+            } else if (selectedTreeItem.get().getValue() instanceof PointLight) {
                 light = new PointLight(color,
                         new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
                         castShadows,
                         irrad
                 );
-            } else if (selectedElement.get() instanceof SpotLight) {
+            } else if (selectedTreeItem.get().getValue() instanceof SpotLight) {
                 light = new SpotLight(color,
                         new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
                         new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
@@ -173,8 +173,8 @@ public class MainSettingsLightController extends AController {
                 );
             }
             if (light != null) {
-                light.name = selectedElement.get().name;
-                elementLists.updateElement(selectedElement.get(), light);
+                light.name = selectedTreeItem.get().getValue().name;
+                elementLists.updateElement(selectedTreeItem.get().getValue(), light);
                 // NodeTreeViewController.updateElement(light);
             }
         }

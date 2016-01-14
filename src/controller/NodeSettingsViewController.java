@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TreeItem;
 import light.Light;
 import utils.Element;
 
@@ -22,7 +23,9 @@ import java.util.ResourceBundle;
 public class NodeSettingsViewController  extends AController{
 
     @FXML
-    TabPane tabPane;
+     private  TabPane tabPane;
+    private TreeItem<Element> selTreeItem=null;
+
 
     /**
      * Called to initialize a controller after its root element has been
@@ -34,28 +37,31 @@ public class NodeSettingsViewController  extends AController{
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        selectedElement.addListener(a-> handleSelectedElement());
+        selectedTreeItem.addListener(a-> handleSelectedElement());
     }
 
     private void handleSelectedElement() {
-        Element e = selectedElement.getValue();
+        Element e = null;
+       if(selectedTreeItem.get()!=null) e = selectedTreeItem.get().getValue();
+
+
        if(e==null)tabPane.getTabs().clear();
         try {
             if(e !=null){
 
                 Tab t = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsView.fxml"));
-               if(tabPane.getTabs().isEmpty()){
+                if(tabPane.getTabs().isEmpty() || !selectedTreeItem.getValue().equals(selTreeItem)){
+                   tabPane.getTabs().clear();
                    tabPane.getTabs().add(t);
+                    selTreeItem = selectedTreeItem.getValue();
                    if(e instanceof Node)t.setText("Node");
                    else if(e instanceof Light)t.setText("Light");
                    else if(e instanceof Camera)t.setText("Camera");
                }else {
-                  if(!e.getClass().getName().contains(tabPane.getTabs().get(0).getText())){
                       tabPane.getTabs().get(0).setContent(t.getContent());
                       if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
                       else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
                       else if(e instanceof Camera) tabPane.getTabs().get(0).setText("Camera");
-                  }
                }
                 if(e instanceof Geometry){
                     if(!((Node)e).geos.isEmpty()&&!(((Node)e).geos.get(0) instanceof Node)){

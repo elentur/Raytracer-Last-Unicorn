@@ -6,6 +6,7 @@ import geometries.Geometry;
 import geometries.Node;
 import geometries.ShapeFromFile;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -16,6 +17,7 @@ import javafx.util.Callback;
 import matVect.Point3;
 import material.DefaultMaterial;
 import material.Material;
+import utils.Element;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,7 +97,7 @@ public class MainSettingsNodeController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (((Node) selectedElement.get()).geos.get(0) instanceof ShapeFromFile) {
+                if (((Node) selectedTreeItem.get().getValue()).geos.get(0) instanceof ShapeFromFile) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsShapeFromFileView.fxml"));
                     nodeView.getChildren().add(0, v);
                 }
@@ -112,7 +114,7 @@ public class MainSettingsNodeController extends AController {
 
     private void initializeFields() {
         TabPane t = null;
-        Node n = (Node) selectedElement.get();
+        Node n = (Node) selectedTreeItem.get().getValue();
         txtTranslationX.setNumber(n.translation.x);
         txtTranslationY.setNumber(n.translation.y);
         txtTranslationZ.setNumber(n.translation.z);
@@ -122,7 +124,7 @@ public class MainSettingsNodeController extends AController {
         txtRotationX.setNumber(n.rotation.x * (180 / Math.PI));
         txtRotationY.setNumber(n.rotation.y * (180 / Math.PI));
         txtRotationZ.setNumber(n.rotation.z * (180 / Math.PI));
-        material.setValue(((Node) selectedElement.get()).geos.get(0).material);
+        material.setValue(((Node) selectedTreeItem.get().getValue()).geos.get(0).material);
         materialView.setUpTracer(material);
         cmbMaterial.setItems(materialList);
         chkCastShadows.setSelected(n.castShadows);
@@ -143,7 +145,7 @@ public class MainSettingsNodeController extends AController {
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(materialView.getScene().getWindow());
         if (file != null) {
-            ShapeFromFile s = (ShapeFromFile) ((Node) selectedElement.get()).geos.get(0);
+            ShapeFromFile s = (ShapeFromFile) ((Node) selectedTreeItem.get().getValue()).geos.get(0);
             ShapeFromFile e = new ShapeFromFile(file,
                     s.material,
                     s.reciveShadows,
@@ -158,7 +160,7 @@ public class MainSettingsNodeController extends AController {
     }
 
     private void setMaterialComboBox() {
-        if (((Node) selectedElement.get()).geos.get(0) instanceof Node) {
+        if (((Node) selectedTreeItem.get().getValue()).geos.get(0) instanceof Node) {
             ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
             ((HBox) materialView.getParent()).getChildren().remove(materialView);
         }
@@ -201,14 +203,14 @@ public class MainSettingsNodeController extends AController {
     }
 
     @FXML
-    private void handleUpdateNode() {
+    private void handleUpdateNode(Event a) {
         updateNode(null);
     }
 
     private void updateNode(List<Geometry> geos) {
 
-        if (selectedElement.getValue() != null){
-            if (geos == null) geos = ((Node) selectedElement.get()).geos;
+        if (selectedTreeItem.get().getValue() != null){
+            if (geos == null) geos = ((Node) selectedTreeItem.get().getValue()).geos;
 
             Node node = new Node(
                     new Point3(txtTranslationX.getDouble(), txtTranslationY.getDouble(), txtTranslationZ.getDouble()),
@@ -220,22 +222,25 @@ public class MainSettingsNodeController extends AController {
                     chkVisible.isSelected(),
                     chkFlipNormals.isSelected());
             if (node != null) {
-                node.name = selectedElement.get().name;
-                elementLists.updateElement(selectedElement.get(), node);
+                node.name = selectedTreeItem.get().getValue().name;
+                elementLists.updateElement(selectedTreeItem.get().getValue(), node);
                 //   NodeTreeViewController.updateElement(node);
             }
         }
     }
-
     public void handleComboBoxMaterialAction(ActionEvent actionEvent) {
         Material m = cmbMaterial.getSelectionModel().getSelectedItem();
         if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
             m = cmbMaterial.getSelectionModel().getSelectedItem().deepCopy();
             materialList.add(m);
         }
-        Geometry g = ((Node) selectedElement.get()).geos.get(0);
+        material.setValue(m);
+        Geometry g = ((Node) selectedTreeItem.get().getValue()).geos.get(0);
         List<Geometry> geos = new ArrayList<>();
         geos.add(g.deepCopy(m));
         updateNode(geos);
+        TreeItem<Element> t = selectedTreeItem.get();
+        selectedTreeItem.setValue(null);
+        selectedTreeItem.setValue(t);
     }
 }
