@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml">
-    <HBox>
+    <HBox styleClass="form-group-4">
         <Label text="Reflection Color"/>
         <ColorPicker fx:id="clpReflection" />
-        <ComboBox fx:id="cmbReflection" />
+        <ComboBox styleClass="col-2" fx:id="cmbReflection" />
     </HBox>
 </VBox>

@@ -17,19 +17,31 @@ import java.io.IOException;;
  * Created by roberto on 12.01.16.
  */
 public class RenderSettingsController extends Stage {
-
+    @FXML
     private CheckBox chkMultithreading;
+    @FXML
     private CheckBox chkHDRRendering;
+    @FXML
     private CheckBox chkKeepRatio;
+    @FXML
     private ChoiceBox<String> chbCores;
+    @FXML
     private ChoiceBox<String> chbPattern;
+    @FXML
     private ChoiceBox<String> chbResolution;
+    @FXML
     private NumberTextField txtWidth;
+    @FXML
     private NumberTextField txtHeight;
+    @FXML
     private double aspectration = 0;
+    @FXML
     private ColorPicker cpColorPicker;
+    @FXML
     private ColorPicker cpAmbientColor;
+    @FXML
     private NumberTextField txtRecursion;
+    @FXML
     private NumberTextField txtIOR;
 
     private Parent root;
@@ -45,7 +57,7 @@ public class RenderSettingsController extends Stage {
 
         initialize();
 
-        Scene scene = new Scene(root,640,370);
+        Scene scene = new Scene(root);
         this.setTitle("Render-Settings");
         this.setScene(scene);
         this.initModality(Modality.APPLICATION_MODAL);
@@ -53,9 +65,7 @@ public class RenderSettingsController extends Stage {
     }
 
     private void initialize() {
-
-
-        chkMultithreading = (CheckBox) root.lookup("#chkMultithreading");
+        /*chkMultithreading = (CheckBox) root.lookup("#chkMultithreading");
         chkHDRRendering = (CheckBox) root.lookup("#chkHDRRendering");
         chkKeepRatio = (CheckBox) root.lookup("#chkKeepRatio");
         chbCores = (ChoiceBox<String>) root.lookup("#chbCores");
@@ -68,6 +78,6 @@ public class RenderSettingsController extends Stage {
         chbPattern.getItems().addAll("Clockwise", "Random");
         chbCores.disableProperty().bind(chkMultithreading.selectedProperty().not());
         chbPattern.getSelectionModel().select(0);
-        chbResolution.getItems().addAll("320x240", "640x480", "1024x768", "1280x720", "1920x1080");
+        chbResolution.getItems().addAll("320x240", "640x480", "1024x768", "1280x720", "1920x1080");*/
     }
 }

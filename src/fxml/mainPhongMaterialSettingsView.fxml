@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
 <VBox xmlns:fx="http://javafx.com/fxml">
-    <HBox>
+    <HBox styleClass="form-group-4">
         <Label text="Specular"/>
         <ColorPicker fx:id="clpSpecular" />
-        <ComboBox fx:id="cmbSpecular" />
+        <ComboBox styleClass="col-2" fx:id="cmbSpecular" />
     </HBox>
-    <HBox>
+    <HBox styleClass="form-group-4">
         <Label text="Intensity"/>
-        <NumberTextField fx:id="txtExponent" />
+        <NumberTextField styleClass="col-3" fx:id="txtExponent" />
     </HBox>
 </VBox>
