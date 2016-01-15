@@ -1,25 +1,26 @@
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.CheckBox?>
 <?import UI.NumberTextField?>
-<VBox fx:id ="lightView" fx:controller="controller.MainSettingsLightController" xmlns:fx="http://javafx.com/fxml" >
-        <HBox>
-            <Label text="Color"/>
-            <ColorPicker fx:id="clpLightColor" onAction="#handleUpdateLight"/>
-        </HBox>
-        <HBox>
-            <CheckBox fx:id="chkCastShadows" text="casts Shadows" selected="true" onAction="#handleUpdateLight"/>
-        </HBox>
-        <HBox>
-            <Label text="Irradiance"/>
-            <NumberTextField fx:id="txtIrradiance" onAction="#handleUpdateLight"/>
-        </HBox>
-        <HBox>
-            <Label text="X"/>
-            <Label text="Y"/>
-            <Label text="Z"/>
-        </HBox>
+<VBox fx:id="lightView" fx:controller="controller.MainSettingsLightController" xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <Label text="Color"/>
+        <ColorPicker styleClass="col-3" fx:id="clpLightColor" onAction="#handleUpdateLight"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox styleClass="col-3" fx:id="chkCastShadows" text="casts Shadows" selected="true" onAction="#handleUpdateLight"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Irradiance"/>
+        <NumberTextField styleClass="col-3" fx:id="txtIrradiance" onAction="#handleUpdateLight"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <Label styleClass="text-field-head" text="X"/>
+        <Label styleClass="text-field-head" text="Y"/>
+        <Label styleClass="text-field-head" text="Z"/>
+    </HBox>
 </VBox>

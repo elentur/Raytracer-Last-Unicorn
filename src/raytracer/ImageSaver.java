@@ -164,11 +164,9 @@ public class ImageSaver extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception{
-
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
         primaryStage.setTitle("Unicorn RayTracer");
-        Scene scene = new Scene(root, 600, 450);
-        scene.getStylesheets().add("css/rootStyle.css");
+        Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
 

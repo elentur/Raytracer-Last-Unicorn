@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
 <VBox  xmlns:fx="http://javafx.com/fxml" >
-        <HBox>
+        <HBox styleClass="form-group-4">
             <Label text="Direction"/>
             <NumberTextField fx:id="txtDirectionX"/>
             <NumberTextField fx:id="txtDirectionY"/>

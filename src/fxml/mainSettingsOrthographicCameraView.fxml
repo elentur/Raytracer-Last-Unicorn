@@ -2,9 +2,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
-<VBox  xmlns:fx="http://javafx.com/fxml" >
-        <HBox>
-            <Label text="Scale Factor"/>
-            <NumberTextField fx:id="txtScaleFactor"/>
-        </HBox>
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <Label text="Scale Factor"/>
+        <NumberTextField styleClass="col-3" fx:id="txtScaleFactor"/>
+    </HBox>
 </VBox>

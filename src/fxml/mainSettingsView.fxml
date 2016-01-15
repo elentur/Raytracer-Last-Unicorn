@@ -6,9 +6,9 @@
 <Tab closable="false" fx:controller="controller.MainSettingsController" xmlns:fx="http://javafx.com/fxml" >
     <content>
         <VBox fx:id="mainSettingsView">
-           <HBox>
+           <HBox styleClass="form-group-4">
                 <Label text="Name"/>
-               <TextField fx:id="txtName"/>
+               <TextField styleClass="col-3" fx:id="txtName"/>
            </HBox>
         </VBox>
     </content>
