@@ -40,6 +40,7 @@ public class PhongMaterial extends Material {
     public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
                          final Texture bumpMap, final double bumpScale, final Texture irradiance) {
         super(texture,bumpMap,bumpScale,irradiance);
+        name="Phong Material";
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
@@ -48,6 +49,13 @@ public class PhongMaterial extends Material {
         }
         this.specular = specular;
         this.exponent = exponent;
+    }
+
+    public PhongMaterial(final PhongMaterial m) {
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        name=m.name;
+        this.specular = m.specular;
+        this.exponent = m.exponent;
     }
 
     @Override
@@ -85,6 +93,16 @@ public class PhongMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    @Override
+    public Material deepCopy() {
+        return new PhongMaterial(this);
+    }
+
     @Override
     public String toString() {
         return "PhongMaterial{" +
@@ -97,13 +115,7 @@ public class PhongMaterial extends Material {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PhongMaterial that = (PhongMaterial) o;
-
-        if (exponent != that.exponent) return false;
-        if (!texture.equals(that.texture)) return false;
-        return specular.equals(that.specular);
+        return false;
 
     }
 

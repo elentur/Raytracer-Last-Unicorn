@@ -1,0 +1,15 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<Tab closable="false" fx:controller="controller.MainSettingsController" xmlns:fx="http://javafx.com/fxml" >
+    <content>
+        <VBox fx:id="mainSettingsView">
+           <HBox styleClass="form-group-4">
+                <Label text="Name"/>
+               <TextField styleClass="col-3" fx:id="txtName"/>
+           </HBox>
+        </VBox>
+    </content>
+</Tab>

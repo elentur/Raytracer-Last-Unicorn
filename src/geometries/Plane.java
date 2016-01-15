@@ -31,8 +31,24 @@ public class Plane extends Geometry {
      */
     public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
+        this.name = "Plane";
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
+    }
+
+    /**
+     * Copy Constructor
+     * @param plane
+     */
+    public Plane(Plane plane) {
+        this(plane,plane.material);
+    }
+
+    public Plane(final Plane plane, final Material m) {
+        super(m,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
+        this.name = "Plane";
+        this.a = plane.a;
+        this.n = plane.n;
     }
 
     @Override
@@ -59,6 +75,16 @@ public class Plane extends Geometry {
             if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u,v));
         }
         return null;
+    }
+
+    @Override
+    public Plane deepCopy() {
+        return new Plane(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Plane(this,m);
     }
 
     @Override

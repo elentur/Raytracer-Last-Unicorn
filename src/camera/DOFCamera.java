@@ -8,6 +8,7 @@ import sampling.SamplingPattern;
 import utils.Ray;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -36,9 +37,24 @@ public class DOFCamera extends Camera {
         super(e, g, t, samplingPattern);
         if (angle <= 0 || angle > Math.PI / 2)
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
+        this.name = "DOF Camera";
         this.angle = angle;
         this.dofPattern = dofPattern;
         this.focalLength = focalLength;
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public DOFCamera(DOFCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.angle = camera.angle;
+        this.focalLength = camera.focalLength;
+        this.fStop = camera.fStop;
+        this.rays = camera.rays;
     }
 
     @Override
@@ -51,8 +67,6 @@ public class DOFCamera extends Camera {
         rays = new HashSet<>();
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
-        final Vector3 summand2 = this.u.mul(x - ((w - 1.0) / 2));
-        final Vector3 summand3 = this.v.mul(y - ((h - 1.0) / 2));
 
         for(Point2 point : samplingPattern.points) {
             Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
@@ -67,6 +81,11 @@ public class DOFCamera extends Camera {
         }
 
         return rays;
+    }
+
+    @Override
+    public DOFCamera deepCopy() {
+        return new DOFCamera(this);
     }
 
     @Override

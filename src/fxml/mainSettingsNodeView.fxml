@@ -1,0 +1,54 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import UI.NumberTextField?>
+<?import UI.MaterialView?>
+<VBox fx:id="nodeView" fx:controller="controller.MainSettingsNodeController" xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <Label styleClass="text-field-head" text="X"/>
+        <Label styleClass="text-field-head" text="Y"/>
+        <Label styleClass="text-field-head" text="Z"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Translation"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Scaling"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Rotation"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationX" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationY" onAction="#handleUpdateNode"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationZ" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4, element-center">
+        <MaterialView fx:id="materialView"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label  text="Material" />
+        <ComboBox styleClass="col-3" fx:id="cmbMaterial" onAction="#handleComboBoxMaterialAction"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkCastShadows" text="Cast Shadows" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkVisible" text="Visible" selected="true" onAction="#handleUpdateNode"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkFlipNormals" text="Flip Normals" onAction="#handleUpdateNode" />
+    </HBox>
+
+</VBox>

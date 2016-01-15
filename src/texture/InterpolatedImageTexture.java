@@ -17,13 +17,14 @@ public class InterpolatedImageTexture extends Texture {
         this(path,1,1,1,1,0);
     }
 
-    public InterpolatedImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
-        super(scaleU,scaleV,offsetU,offsetV,rotate);
+    public InterpolatedImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate) {
+        super(scaleU,scaleV,offsetU,offsetV,rotate,path);
         File file = new File(path);
 
-        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
+       // if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
 
         this.image = new Image(file.toURI().toString());
+        name = "Interpolated Image Texture";
     }
 
     @Override
@@ -34,6 +35,8 @@ public class InterpolatedImageTexture extends Texture {
         u = (u/ scaleU + offsetU) % 1.0;
         v = (v/ scaleV + offsetV) % 1.0;
 
+        u = (u/ scaleU + offsetU) % 1.0;
+        v = (v/ scaleV + offsetV) % 1.0;
 
         if(u < 0) u += 1.0;
         if(v < 0) v += 1.0;
@@ -79,5 +82,16 @@ public class InterpolatedImageTexture extends Texture {
 
         return e;
 
+    }
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return image != null ? image.hashCode() : 0;
     }
 }

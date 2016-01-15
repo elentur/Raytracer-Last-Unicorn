@@ -3,7 +3,8 @@ package raytracer;
 import UI.*;
 import camera.Camera;
 import camera.PerspectiveCamera;
-import geometries.AxisAlignedBox;
+import controller.AController;
+import geometries.Geometry;
 import geometries.Node;
 import geometries.Plane;
 import geometries.Sphere;
@@ -11,6 +12,8 @@ import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -21,12 +24,17 @@ import javafx.stage.Stage;
 import light.Light;
 import light.PointLight;
 import matVect.Point3;
-import matVect.Transform;
 import matVect.Vector3;
+import material.OrenNayarMaterial;
 import material.LambertMaterial;
 import material.ReflectiveMaterial;
 import sampling.LightShadowPattern;
 import sampling.SamplingPattern;
+import texture.ImageTexture;
+import material.LambertMaterial;
+import material.PhongMaterial;
+import material.SingleColorMaterial;
+import texture.InterpolatedImageTexture;
 import texture.SingleColorTexture;
 import utils.Color;
 import utils.World;
@@ -43,26 +51,43 @@ public class ImageSaver extends Application {
      * The ImageView where the image is shown.
      */
     public static final ImageView image = new ImageView();
-    public final static Raytracer raytracer = new Raytracer(true);
+   // public final static Raytracer raytracer = new Raytracer(true);
 
 
     private void testScene() {
+      /*  raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
+        // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
+        Light light = new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4));
+        light.name = "Pointlight1";
+        //camera = new PerspectiveCamera(new Point3(0,5,100),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
+        raytracer.setCamera(new PerspectiveCamera(new Point3(4, 4, 4), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4));
+        //camera = new PerspectiveCamera(new Point3(3,3,3),new Vector3(-3,-3,-3), new Vector3(0,1,0), Math.PI/4);
+        // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
+        //Geometry obj = new AxisAlignedBox(new Point3(0.5,1,0.5),new Point3(-0.5,0,-0.5), new LambertMaterial(new Color(0,0,1)));
+        //Geometry obj = new Plane(new Point3(0,-1,0), new Normal3(0,1,0), new LambertMaterial(new Color(0,1,0)));
+        //Geometry obj = new Triangle(new Point3(-0.5,0.5,-3),new Point3(0.5,0.5,-3),new Point3(0.5,-0.5,-3), new LambertMaterial(new Color(1,0,1)));
+        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\IdeaProjects\\CG1\\src\\obj\\cube.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
+        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\karren.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
+        raytracer.getWorld().lights.add(light);
+        // world.geometries.add(obj);
+        raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
+    */
 
-        World world = new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0));
+        World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
         raytracer.setWorld(world);
 
 
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(0,8,-10), true,500, new LightShadowPattern(1,1));
+        Light light1 = new PointLight(new Color(1,1,1),new Point3(10,0,30), true,500);
         light1.name = "Pointlight1";
         world.lights.add(light1);
 
-       // Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
-        Camera camera = new PerspectiveCamera(new Point3(0,5,14),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/6, new SamplingPattern(5));
-
+        Camera camera = new OrthographicCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), 3, new SamplingPattern(4));
         raytracer.setCamera(camera);
 
-        Sphere sphere1 = new Sphere(
-                new LambertMaterial(new SingleColorTexture(new Color(1,1,1)),
+        Sphere geo = new Sphere(
+                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
+                        new SingleColorTexture(new Color(1,1,1)),
+                        64,
                         new SingleColorTexture(new Color(1,1,1)),
                         0,
                         new SingleColorTexture(new Color(1,1,1))
@@ -73,76 +98,7 @@ public class ImageSaver extends Application {
                 false
         );
 
-        Sphere sphere2 = new Sphere(
-                new ReflectiveMaterial(new SingleColorTexture(new Color(0.5,0.5,0.5)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        64,
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );
-        Plane plane1 = new Plane(
-                new LambertMaterial(new SingleColorTexture(new Color(1,1,1)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );
-        Plane plane2 = new Plane(
-                new LambertMaterial(new SingleColorTexture(new Color(0,1,0)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );
-        Plane plane3 = new Plane(
-                new LambertMaterial(new SingleColorTexture(new Color(1,0,0)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );
-        AxisAlignedBox box = new AxisAlignedBox(
-                new LambertMaterial(new SingleColorTexture(new Color(1,0,0)),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );
-
-
-
-        world.geometries.add(new Node(new Transform().translate(-2.7,4.225,-11.39).scale(1.7,1.7,1.7),sphere1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(3,4.225,-7).scale(1.7,1.7,1.7),sphere1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(0.571,3.1,-12.532).scale(0.7,0.7,0.7),sphere2,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(0,10,0).rotateX(Math.PI),plane1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(0,0,-16).rotateX(Math.PI/2),plane1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(0,0,15).rotateX(-Math.PI/2),plane1,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(6,0,0).rotateZ(Math.PI/2),plane2,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(-6,0,0).rotateZ(-Math.PI/2),plane3,true,true,true,false));
-        world.geometries.add(new Node(new Transform().translate(0,2.5,0),plane1,true,true,true,false));
+        world.geometries.add(new Node(new Transform(),geo,true,true,false,false));
     }
 
     /**
@@ -152,15 +108,21 @@ public class ImageSaver extends Application {
      * @see javafx.stage.Stage
      */
     @Override
-    public void start(final Stage primaryStage) {
+    public void start(final Stage primaryStage) throws Exception{
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
+        primaryStage.setTitle("Unicorn RayTracer");
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+        primaryStage.show();
 
+        //testScene();
+        primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
 
-        testScene();
-
-        primaryStage.setScene(setScene(primaryStage));
+        /*primaryStage.setScene(setScene(primaryStage));
 
         primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
-        primaryStage.show();
+        primaryStage.show();*/
     }
 
 
@@ -203,7 +165,7 @@ public class ImageSaver extends Application {
         root.setCenter(scrollPane);
         root.setBottom(statusPane);
 
-        final Scene scene = new Scene(root, raytracer.imgWidth.get() + 10, raytracer.imgHeight.get() + elementsHeight);
+        final Scene scene = new Scene(root, AController.raytracer.imgWidth.get() + 10, AController.raytracer.imgHeight.get() + elementsHeight);
 
         scene.getStylesheets().add("css/rootStyle.css");
 
@@ -218,7 +180,7 @@ public class ImageSaver extends Application {
         btnSave.disableProperty().bind(image.imageProperty().isNull());
 
         btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
-        btnSaveScene.setOnAction(a -> IO.saveScene(stage, raytracer.getWorld(), raytracer.getCamera()));
+        btnSaveScene.setOnAction(a -> IO.saveScene(stage, AController.raytracer.getWorld(), AController.raytracer.getCamera()));
         btnLoadScene.setOnAction(a -> IO.loadScene(stage));
         btnObjects.setOnAction(a -> new EditObjects());
       //  btnNewScene.setOnAction(a -> new NewWorldStage());
@@ -229,21 +191,21 @@ public class ImageSaver extends Application {
         btnNewCube.setOnAction(a -> new NewCubeStage(null));
         btnNewTriangle.setOnAction(a -> new NewTriangleStage(null));
         btnNewOBJ.setOnAction(a -> new NewOBJStage(null));
-        btnRender.setOnAction(a -> raytracer.render(image));
-        btnStopRender.setOnAction(a -> raytracer.stopRender());
+        btnRender.setOnAction(a -> AController.raytracer.render(image));
+        btnStopRender.setOnAction(a -> AController.raytracer.stopRender());
         btnSettings.setOnAction(a -> new RenderSettingsStage());
-        raytracer.progress.addListener(a -> lblTime.setText(raytracer.getStatus()));
-        progressBar.progressProperty().bind(raytracer.progress);
+        AController.raytracer.progress.addListener(a -> lblTime.setText(AController.raytracer.getStatus()));
+        progressBar.progressProperty().bind(AController.raytracer.progress);
         progressBar.prefWidthProperty().bind(scene.widthProperty());
 
         scrollPane.minViewportHeightProperty().bind(image.fitHeightProperty());
         scrollPane.minViewportWidthProperty().bind(image.fitWidthProperty());
 
-        resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", raytracer.imgWidth, " x ", raytracer.imgHeight));
+        resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", AController.raytracer.imgWidth, " x ", AController.raytracer.imgHeight));
 
         stage.titleProperty().bind(resolution);
         scene.setOnKeyPressed(a -> {
-            if (a.getCode() == KeyCode.ESCAPE) raytracer.stopRender();
+            if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
         });
         return scene;
     }

@@ -4,7 +4,6 @@ import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
 import material.Material;
-import texture.InterpolatedImageTexture;
 import texture.TexCoord2;
 import utils.Color;
 import utils.Hit;
@@ -33,8 +32,24 @@ public class Sphere extends Geometry {
      */
     public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
+        this.name = "Sphere";
         this.c = new Point3(0,0,0);
         this.r = 1;
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param sphere
+     */
+    public Sphere(Sphere sphere) {
+        this(sphere,sphere.material);
+    }
+
+    public Sphere(final Sphere sphere, final Material m) {
+        super(m, sphere.reciveShadows, sphere.castShadows, sphere.visibility, sphere.flipNormal);
+        this.c = sphere.c;
+        this.r = sphere.r;
     }
 
     @Override
@@ -100,6 +115,16 @@ public class Sphere extends Geometry {
             return new Hit(t, n, r, this);
         }*/
         return null;
+    }
+
+    @Override
+    public Sphere deepCopy() {
+        return new Sphere(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Sphere(this,m);
     }
 
     @Override

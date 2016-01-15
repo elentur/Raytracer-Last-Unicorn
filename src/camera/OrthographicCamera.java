@@ -7,6 +7,7 @@ import sampling.SamplingPattern;
 import utils.Ray;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,8 +35,21 @@ public class OrthographicCamera extends Camera {
     public OrthographicCamera(final Point3 e, final Vector3 g, final Vector3 t, final double s, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
         if (s <= 0) throw new IllegalArgumentException("s must not be 0 or lower");
+        this.name = "Orthographic Camera";
         this.s = s;
 
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public OrthographicCamera(OrthographicCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.s = camera.s;
+        this.rays = camera.rays;
     }
 
     @Override
@@ -52,21 +66,29 @@ public class OrthographicCamera extends Camera {
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
-        double aspectRatio = (double) w / (double) h;
-        double scalar1 = aspectRatio * s * (x - (w - 1) / 2) / (w - 1);
-        double scalar2 = s * (y - (h - 1) / 2) / (h - 1);
-
         rays = new HashSet<>();
 
-        for(Point2 point : samplingPattern.points) {
+        double aspectRatio = (double) w / (double) h;
 
-            final Point3 o = this.e.add(this.u.mul(scalar1+point.x/(w/4))).add(this.v.mul(scalar2+point.y/(h/4)));
+        List<Point2> points = samplingPattern.generateSampling();
+
+        for(Point2 point : points) {
+
+            double scalar1 = aspectRatio * s * (x + point.x - (w - 1) / 2) / (w - 1);
+            double scalar2 = s * (y + point.y - (h - 1) / 2) / (h - 1);
+
+            final Point3 o = this.e.add(this.u.mul(scalar1)).add(this.v.mul(scalar2));
             final Vector3 d = this.w.mul(-1);
 
             rays.add(new Ray(o, d));
         }
 
         return rays;
+    }
+
+    @Override
+    public OrthographicCamera deepCopy() {
+        return new OrthographicCamera(this);
     }
 
     @Override

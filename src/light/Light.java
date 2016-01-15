@@ -30,7 +30,7 @@ public abstract class Light extends Element implements Serializable {
     public Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         if(color == null) throw new IllegalArgumentException("color must not be null");
         this.color = color;
-        this.castsShadow =castShadow;
+        this.castsShadow = castShadow;
         this.photons=photons;
         this.lightShadowPattern = lightShadowPattern;
     }
@@ -51,4 +51,11 @@ public abstract class Light extends Element implements Serializable {
      * @return a normalized Vector3
      */
     public abstract Vector3 directionFrom(final Point3 point);
+
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Light;
+     */
+    public abstract Light deepCopy();
 }

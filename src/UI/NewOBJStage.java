@@ -1,5 +1,6 @@
 package UI;
 
+import controller.AController;
 import geometries.ShapeFromFile;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -13,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import material.LambertMaterial;
-import raytracer.ImageSaver;
 import texture.SingleColorTexture;
 import utils.Color;
 
@@ -67,7 +67,7 @@ public class NewOBJStage extends NewGeoStage {
         btnFile.setOnAction(a -> onLoad(btnOK));
         btnOK.setDisable(true);
 
-        if (ImageSaver.raytracer.getWorld() == null) {
+        if (AController.raytracer.getWorld() == null) {
             lblInfo.setText("No Scene Created!");
             lblInfo.setTextFill(javafx.scene.paint.Color.RED);
         }
@@ -116,7 +116,7 @@ public class NewOBJStage extends NewGeoStage {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         file = dlg.showOpenDialog(this);
-        if (ImageSaver.raytracer.getWorld() != null && file != null) {
+        if (AController.raytracer.getWorld() != null && file != null) {
             btnOK.setDisable(false);
         }
     }
@@ -128,10 +128,10 @@ public class NewOBJStage extends NewGeoStage {
     private void onOK() {
         try {
 
-            if (sff != null) ImageSaver.raytracer.getWorld().geometries.remove(sff);
+            if (sff != null) AController.raytracer.getWorld().geometries.remove(sff);
             ShapeFromFile p = new ShapeFromFile(file, material.get(),true,true,true,true);
 
-            ImageSaver.raytracer.getWorld().geometries.add(p);
+            AController.raytracer.getWorld().geometries.add(p);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

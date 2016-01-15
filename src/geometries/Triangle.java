@@ -53,6 +53,7 @@ public class Triangle extends Geometry {
                     final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC,
                     final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material, reciveShadows,castShadows,visibility,flipNormal);
+
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
         }
@@ -62,6 +63,7 @@ public class Triangle extends Geometry {
         if (c == null) {
             throw new IllegalArgumentException("The c cannot be null!");
         }
+        this.name = "Triangle";
         this.a = a;
         this.b = b;
         this.c = c;
@@ -86,6 +88,47 @@ public class Triangle extends Geometry {
                 material,
                 texCoordA, texCoordB, texCoordC,reciveShadows,castShadows,
                 visibility,flipNormal);
+    }
+
+    public Triangle(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal){
+        this(
+                new Point3(-0.5,1,0),
+                new Point3(0.5,1,0),
+                new Point3(0.5,0,0),
+                new Normal3(0,0,1),
+                new Normal3(0,0,1),
+                new Normal3(0,0,1),
+                material,
+                new TexCoord2(0,1),
+                new TexCoord2(1,1),
+                new TexCoord2(1,0),
+                reciveShadows,
+                castShadows,
+                visibility,
+                flipNormal
+        );
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param triangle
+     */
+    public Triangle(Triangle triangle) {
+        this(triangle,triangle.material);
+    }
+
+    public Triangle(final Triangle triangle, final Material m) {
+        super(m, triangle.reciveShadows,triangle.castShadows,triangle.visibility,triangle.flipNormal);
+        this.a = triangle.a;
+        this.b = triangle.b;
+        this.c = triangle.c;
+        this.na = triangle.na;
+        this.nb = triangle.nb;
+        this.nc = triangle.nc;
+        this.texCoordA = triangle.texCoordA;
+        this.texCoordB = triangle.texCoordB;
+        this.texCoordC = triangle.texCoordC;
     }
 
     @Override
@@ -135,6 +178,16 @@ public class Triangle extends Geometry {
         }
 
         return null;
+    }
+
+    @Override
+    public Triangle deepCopy() {
+        return new Triangle(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new Triangle(this,m);
     }
 
     @Override

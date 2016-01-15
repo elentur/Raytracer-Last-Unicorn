@@ -3,6 +3,7 @@ package UI;
 import camera.Camera;
 import camera.OrthographicCamera;
 import camera.PerspectiveCamera;
+import controller.AController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,7 +18,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
-import raytracer.ImageSaver;
 import sampling.SamplingPattern;
 
 /**
@@ -181,7 +181,7 @@ public class NewCameraStage extends Stage {
                 cam = new OrthographicCamera(e, g, t, s, new SamplingPattern(1));
                 cam.name = "Orthographic Camera";
             }
-            ImageSaver.raytracer.setCamera(cam);
+            AController.raytracer.setCamera(cam);
 
         } catch (NumberFormatException e) {
             System.out.println("ZahlenFehler");

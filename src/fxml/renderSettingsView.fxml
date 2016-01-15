@@ -1,0 +1,87 @@
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import UI.NumberTextField?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.VBox?>
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
+    <TabPane>
+        <Tab text="Performance" closable="false">
+            <content>
+                <VBox styleClass="setting-group-2">
+                    <HBox>
+                        <HBox styleClass="col-1"/>
+                        <CheckBox fx:id="chkMultithreading" text="Multithreading"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Cores"/>
+                        <ChoiceBox fx:id="chbCores"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Pattern"/>
+                        <ChoiceBox fx:id="chbPattern"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Recursion"/>
+                        <NumberTextField styleClass="number-text-field" fx:id="txtRecursion"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="IOR"/>
+                        <NumberTextField styleClass="number-text-field" fx:id="txtIOR"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Resolution" closable="false">
+            <content>
+                <VBox styleClass="setting-group-2">
+                    <HBox>
+                        <Label text="Resolution"/>
+                        <ChoiceBox fx:id="chbResolution"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Width"/>
+                        <NumberTextField styleClass="number-text-field" fx:id="txtWidth"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Height"/>
+                        <NumberTextField styleClass="number-text-field" fx:id="txtHeight"/>
+                    </HBox>
+                    <HBox>
+                        <HBox styleClass="col-1"/>
+                        <CheckBox fx:id="chkKeepRatio" text="Keep Ratio"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </Tab>
+        <Tab text="Lights" closable="false">
+            <content>
+                <VBox styleClass="setting-group-2">
+                    <HBox>
+                        <Label text="Background"/>
+                        <ColorPicker fx:id="cpColorPicker"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Ambient"/>
+                        <ColorPicker fx:id="cpAmbientColor"/>
+                    </HBox>
+                    <HBox>
+                        <HBox styleClass="col-1"/>
+                        <CheckBox fx:id="chkHDRRendering" text="HDR-Rendering"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </Tab>
+    </TabPane>
+
+    <HBox styleClass="setting-group-2">
+        <Button text="OK"/>
+        <Button text="Cancle"/>
+    </HBox>
+</VBox>

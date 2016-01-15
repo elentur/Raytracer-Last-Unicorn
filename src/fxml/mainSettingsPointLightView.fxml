@@ -1,0 +1,13 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import UI.NumberTextField?>
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <Label text="Position"/>
+        <NumberTextField fx:id="txtPositionX"/>
+        <NumberTextField fx:id="txtPositionY"/>
+        <NumberTextField fx:id="txtPositionZ"/>
+    </HBox>
+
+</VBox>

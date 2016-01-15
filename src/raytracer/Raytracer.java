@@ -319,11 +319,14 @@ public class Raytracer {
     private void prepare() {
         img = new WritableImage(imgWidth.get(), imgHeight.get());
         final PixelWriter pixelWriter = img.getPixelWriter();
-        for (int x = 0; x < imgWidth.get(); x++) {
-            for (int y = 0; y < imgHeight.get(); y++) {
-                pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
+        if (!def){
+            System.out.println("Fehlker");
+            for (int x = 0; x < imgWidth.get(); x++) {
+                for (int y = 0; y < imgHeight.get(); y++) {
+                    pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
+                }
             }
-        }
+         }
     }
 
     /**
@@ -407,12 +410,12 @@ public class Raytracer {
     }
 
     private void renderThread(byte[] imageData, final int[] threadProgress) {
+            for (int i = 0; i < imageData.length; i++) {
 
-        for (int i = 0; i < imageData.length; i++) {
-            if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
-            if (i % 3 == 1) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getGreen() * 255);
-            if (i % 3 == 2) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getBlue() * 255);
-        }
+                if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
+                if (i % 3 == 1) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getGreen() * 255);
+                if (i % 3 == 2) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getBlue() * 255);
+            }
         for (int i = 0; i < cores; i++) {
             threadProgress[i] = 0;
             final int num = i;

@@ -1,0 +1,33 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import UI.*?>
+<VBox  fx:id="cameraView" fx:controller="controller.MainSettingsCameraController" xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1" />
+        <Label styleClass="text-field-head" text="X"/>
+        <Label styleClass="text-field-head" text="Y"/>
+        <Label styleClass="text-field-head" text="Z"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Position"/>
+        <NumberTextField fx:id="txtPositionX" onAction="#handleUpdateCamera" />
+        <NumberTextField fx:id="txtPositionY" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtPositionZ" onAction="#handleUpdateCamera"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Direction"/>
+        <NumberTextField fx:id="txtDirectionX" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtDirectionY" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtDirectionZ" onAction="#handleUpdateCamera"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="UpVector"/>
+        <NumberTextField fx:id="txtUpVectorX" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtUpVectorY" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtUpVectorZ" onAction="#handleUpdateCamera"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Sampling"/>
+        <NumberTextField styleClass="col-3" fx:id="txtSampling" onAction="#handleUpdateCamera"/>
+    </HBox>
+</VBox>

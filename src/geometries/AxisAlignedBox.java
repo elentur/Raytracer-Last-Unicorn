@@ -1,7 +1,6 @@
 package geometries;
 
 import matVect.Point3;
-import matVect.Transform;
 import material.Material;
 import utils.Hit;
 import utils.Ray;
@@ -37,20 +36,36 @@ public class AxisAlignedBox extends Geometry {
     public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows
             ,final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows, castShadows,visibility,flipNormal);
+        this.name = "Axis Aligned Box";
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 
         Plane p = new Plane(material,reciveShadows,castShadows,visibility,flipNormal);
 
-        faces[0] = new Node(new Transform().translate(0,run.y,0),p,reciveShadows,castShadows,visibility,flipNormal); // up site
-        faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // down site
+        faces[0] = new Node(new Point3(0,run.y,0),new Point3(1,1,1),new Point3(0,0,0),p,reciveShadows,castShadows,visibility,flipNormal); // up site
+        faces[1] = new Node(new Point3(0,lbf.y,0),new Point3(1,1,1),new Point3(Math.PI,0,0),p,reciveShadows,castShadows,visibility,flipNormal); // down site
 
-        faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // front site
-        faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // back site
+        faces[2] = new Node(new Point3(0,0,run.z),new Point3(1,1,1),new Point3(Math.PI/2,0,0),p,reciveShadows,castShadows,visibility,flipNormal); // front site
+        faces[3] = new Node(new Point3(0,0,lbf.z),new Point3(1,1,1),new Point3(-Math.PI/2,Math.PI,0),p,reciveShadows,castShadows,visibility,flipNormal); // back site
 
-        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // left site
-        faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // right site
+        faces[4] = new Node(new Point3(lbf.x,0,0),new Point3(1,1,1),new Point3(Math.PI/2,-Math.PI/2,0),p,reciveShadows,castShadows,visibility,flipNormal); // left site
+        faces[5] = new Node(new Point3(run.x,0,0),new Point3(1,1,1),new Point3(Math.PI/2,Math.PI/2,0),p,reciveShadows,castShadows,visibility,flipNormal); // right site
 
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param box
+     */
+    public AxisAlignedBox(AxisAlignedBox box) {
+        this(box,box.material);
+    }
+
+    public AxisAlignedBox(final AxisAlignedBox box, final Material m) {
+        super(m, box.reciveShadows, box.castShadows, box.visibility, box.flipNormal);
+        this.lbf = box.lbf;
+        this.run = box.run;
     }
 
     @Override
@@ -83,6 +98,16 @@ public class AxisAlignedBox extends Geometry {
         }
 
         return hit;
+    }
+
+    @Override
+    public AxisAlignedBox deepCopy() {
+        return new AxisAlignedBox(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return  new AxisAlignedBox(this,m);
     }
 
     private boolean comp(final Point3 p, final double e) {

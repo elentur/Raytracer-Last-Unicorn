@@ -7,6 +7,7 @@ import sampling.SamplingPattern;
 import utils.Ray;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +35,20 @@ public class PerspectiveCamera extends Camera {
         super(e, g, t, samplingPattern);
         if (angle <= 0 || angle > Math.PI / 2)
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
+        this.name = "Perspective Camera";
         this.angle = angle;
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param camera
+     */
+    public PerspectiveCamera(PerspectiveCamera camera) {
+        super(camera.e, camera.g, camera.t, camera.samplingPattern);
+        this.name = camera.name;
+        this.angle = camera.angle;
+        this.rays = camera.rays;
     }
 
     @Override
@@ -49,15 +63,21 @@ public class PerspectiveCamera extends Camera {
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        final Vector3 summand2 = this.u.mul(x - ((w - 1.0) / 2));
-        final Vector3 summand3 = this.v.mul(y - ((h - 1.0) / 2));
+        List<Point2> points = samplingPattern.generateSampling();
 
-        for(Point2 point : samplingPattern.points) {
-            final Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
+        for(Point2 point : points) {
+            final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));
+            final Vector3 summand3 = this.v.mul(y + point.y - ((h - 1.0) / 2));
+            final Vector3 r = summand1.add(summand2).add(summand3);
             rays.add(new Ray(this.e, r.normalized()));
         }
 
         return rays;
+    }
+
+    @Override
+    public PerspectiveCamera deepCopy() {
+        return new PerspectiveCamera(this);
     }
 
     @Override

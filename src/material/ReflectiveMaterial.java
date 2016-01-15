@@ -37,9 +37,18 @@ public class ReflectiveMaterial extends Material {
                               final  int exponent, final Texture bumpMap, final double bumpScale,
                               final Texture irradiance) {
         super(texture,bumpMap,bumpScale,irradiance);
+        name="Reflective Material";
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
+    }
+
+    public ReflectiveMaterial(final ReflectiveMaterial m) {
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        name=m.name;
+        this.specular=m.specular;
+        this.reflection=m.reflection;
+        this.exponent=m.exponent;
     }
 
     @Override
@@ -78,5 +87,39 @@ public class ReflectiveMaterial extends Material {
         }
 
         return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
+    }
+
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    @Override
+    public Material deepCopy() {
+        return new ReflectiveMaterial(this);
+    }
+
+    @Override
+    public String toString() {
+        return "ReflectiveMaterial{" +
+                "specular=" + specular +
+                ", reflection=" + reflection +
+                ", exponent=" + exponent +
+                '}';
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = specular != null ? specular.hashCode() : 0;
+        result = 31 * result + (reflection != null ? reflection.hashCode() : 0);
+        result = 31 * result + exponent;
+        return result;
     }
 }

@@ -1,11 +1,11 @@
 package material;
 
+import controller.AController;
 import light.Light;
 import matVect.Normal3;
 import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
-import raytracer.ImageSaver;
 import texture.Texture;
 import utils.*;
 
@@ -23,10 +23,20 @@ public class TransparentMaterial extends Material {
                                final  int exponent, double indexOfRefraction, final Texture bumpMap,
                                final double bumpScale, final Texture irradiance) {
         super(texture,bumpMap,bumpScale,irradiance);
+        name="Transparent Material";
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
         this.iOR=indexOfRefraction;
+    }
+
+    public TransparentMaterial(final TransparentMaterial m) {
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        name=m.name;
+        this.specular=m.specular;
+        this.reflection=m.reflection;
+        this.exponent=m.exponent;
+        this.iOR=m.iOR;
     }
 
     /**
@@ -52,11 +62,11 @@ public class TransparentMaterial extends Material {
         Normal3 n;
         final Vector3 e = hit.ray.d.mul(-1).reflectedOn(hit.n);
         if(e.dot(hit.n) < 0){
-            ref = iOR/ImageSaver.raytracer.iOR;
+            ref = iOR/ AController.raytracer.iOR;
             n = hit.n.mul(-1);
 
         }else{
-            ref = ImageSaver.raytracer.iOR/iOR;
+            ref = AController.raytracer.iOR/iOR;
             n = hit.n;
         }
         double cosA1 = n.dot(e);
@@ -64,7 +74,7 @@ public class TransparentMaterial extends Material {
         double a=1;
         if(co>=0) {
             double cosA2 = Math.sqrt(co);
-            final double a0 = Math.pow((ImageSaver.raytracer.iOR - iOR) / (ImageSaver.raytracer.iOR + iOR), 2);
+            final double a0 = Math.pow((AController.raytracer.iOR - iOR) / (AController.raytracer.iOR + iOR), 2);
              a = a0 + (1 - a0) * Math.pow(1 - cosA1, 5);
             final double b = 1 - a;
             Vector3 t = hit.ray.d.mul(ref).sub(n.mul(cosA2-ref*cosA1));
@@ -99,4 +109,42 @@ public class TransparentMaterial extends Material {
         return basicColor;
     }
 
+    /**
+     * deepCopy Method
+     *
+     * @return a copied Object from Material;
+     */
+    @Override
+    public Material deepCopy() {
+        return new TransparentMaterial(this);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        return false;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(iOR);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (specular != null ? specular.hashCode() : 0);
+        result = 31 * result + (reflection != null ? reflection.hashCode() : 0);
+        result = 31 * result + exponent;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TransparentMaterial{" +
+                "iOR=" + iOR +
+                ", specular=" + specular +
+                ", reflection=" + reflection +
+                ", exponent=" + exponent +
+                '}';
+    }
 }

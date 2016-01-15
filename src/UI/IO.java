@@ -2,13 +2,13 @@ package UI;
 
 import camera.Camera;
 import camera.PerspectiveCamera;
+import controller.AController;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import matVect.Point3;
 import matVect.Vector3;
-import raytracer.ImageSaver;
 import sampling.SamplingPattern;
 import utils.Scene;
 import utils.World;
@@ -110,8 +110,8 @@ public class IO {
             }
 
             if (scene != null) {
-                ImageSaver.raytracer.setWorld(scene.getWorld());
-                ImageSaver.raytracer.setCamera(scene.getCamera());
+                AController.raytracer.setWorld(scene.getWorld());
+                AController.raytracer.setCamera(scene.getCamera());
             }
 
 

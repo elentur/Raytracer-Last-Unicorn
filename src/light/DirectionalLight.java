@@ -32,7 +32,19 @@ public class DirectionalLight extends Light {
     public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color,castShadow,photons,lightShadowPattern);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
+        this.name = "Directional Light";
         this.direction = direction.normalized();
+    }
+
+    /**
+     * Copy Constructor
+     *
+     * @param light
+     */
+    public DirectionalLight(DirectionalLight light) {
+        super(light.color, light.castsShadow, light.photons);
+        this.name = light.name;
+        this.direction = light.direction;
     }
 
     @Override
@@ -62,6 +74,11 @@ public class DirectionalLight extends Light {
     public Vector3 directionFrom(final Point3 point) {
         if (point == null) throw new IllegalArgumentException("point must not be null ");
         return direction.mul(-1);
+    }
+
+    @Override
+    public DirectionalLight deepCopy() {
+        return new DirectionalLight(this);
     }
 
     @Override

@@ -2,10 +2,10 @@ package geometries;
 
 
 import UI.Dialog;
+import controller.AController;
 import matVect.Normal3;
 import matVect.Point3;
 import material.Material;
-import raytracer.ImageSaver;
 import texture.TexCoord2;
 import utils.Hit;
 import utils.Octree;
@@ -106,6 +106,22 @@ public class ShapeFromFile extends Geometry {
 
     }
 
+    public ShapeFromFile(ShapeFromFile shapeFromFile) {
+        this(shapeFromFile,shapeFromFile.material);
+    }
+
+    public ShapeFromFile(final ShapeFromFile shapeFromFile, final Material m) {
+        super(m, shapeFromFile.reciveShadows, shapeFromFile.castShadows, shapeFromFile.visibility, shapeFromFile.castShadows);
+        this.file = shapeFromFile.file;
+        this.triangles = shapeFromFile.triangles;
+        this.v = shapeFromFile.v;
+        this.vn = shapeFromFile.vn;
+        this.vt = shapeFromFile.vt;
+        this.f = shapeFromFile.f;
+        this.octree = shapeFromFile.octree;
+        this.rekDeep = shapeFromFile.rekDeep;
+    }
+
     @Override
     public Hit hit(Ray r) {
        /* Hit h = null;
@@ -120,15 +136,25 @@ public class ShapeFromFile extends Geometry {
         return octree.hit(r);
     }
 
+    @Override
+    public ShapeFromFile deepCopy() {
+        return new ShapeFromFile(this);
+    }
+
+    @Override
+    public Geometry deepCopy(final Material m) {
+        return new ShapeFromFile(this,m);
+    }
+
     private String nameTest(String n) {
         int index = 1;
         boolean run = false;
-        for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+        for (Geometry g : AController.raytracer.getWorld().geometries) {
             if (g.name.equals(n)) run = true;
         }
         while (run) {
             int i = index;
-            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
+            for (Geometry g : AController.raytracer.getWorld().geometries) {
                 if (g.name == n + index) index++;
             }
             if (i == index) {

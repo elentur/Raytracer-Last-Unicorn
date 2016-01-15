@@ -54,10 +54,18 @@ public class SpotLight extends Light {
         if (halfAngle < 0 || halfAngle > 90) {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
-
+        this.name = "Spotlight";
         this.position = position;
         this.direction = direction.normalized();
         this.halfAngle = halfAngle;
+    }
+
+    public SpotLight(SpotLight light) {
+        super(light.color, light.castsShadow, light.photons);
+        this.name = light.name;
+        this.position = light.position;
+        this.direction = light.direction;
+        this.halfAngle = light.halfAngle;
     }
 
     @Override
@@ -95,6 +103,11 @@ public class SpotLight extends Light {
     @Override
     public Vector3 directionFrom(final Point3 point) {
         return position.sub(point).normalized();
+    }
+
+    @Override
+    public SpotLight deepCopy() {
+        return new SpotLight(this);
     }
 
     @Override

@@ -32,5 +32,33 @@ public class SamplingPattern extends SubdivisionPattern{
                 points.add(new Point2((1.0/subdiv * x - size) + rX, (1.0/subdiv * y - size) + rY));
             }
         }
+
+        return points;
+    }
+
+    @Override
+    public String toString() {
+        return "SamplingPattern{" +
+                "size=" + size +
+                ", points=" + points +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SamplingPattern that = (SamplingPattern) o;
+
+        return size == that.size && (points != null ? points.equals(that.points) : that.points == null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = size;
+        result = 31 * result + (points != null ? points.hashCode() : 0);
+        return result;
     }
 }
