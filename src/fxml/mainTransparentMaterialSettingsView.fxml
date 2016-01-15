@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
-        <Label text="Index of Refraction" fx:id="lblIOR"/>
-        <Slider styleClass="col-3" fx:id="sldIOR" />
+        <Label styleClass="col-3" text="Index of Refraction" fx:id="lblIOR"/>
+        <Slider fx:id="sldIOR" />
     </HBox>
 </VBox>

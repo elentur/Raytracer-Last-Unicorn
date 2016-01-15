@@ -20,6 +20,6 @@
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Intensity"/>
-        <NumberTextField styleClass="number-text-field" fx:id="txtExponent" />
+        <NumberTextField styleClass="col-3" fx:id="txtExponent" />
     </HBox>
 </VBox>

@@ -5,6 +5,7 @@ import geometries.Node;
 import geometries.ShapeFromFile;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,7 @@ import material.DefaultMaterial;
 import utils.Element;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -40,7 +42,7 @@ public class MenuController extends AController{
     @FXML
     private void handleSettingsAction(final ActionEvent event)
     {
-        provideAboutFunctionality();
+        new RenderSettingsController();
     }
 
     /**
