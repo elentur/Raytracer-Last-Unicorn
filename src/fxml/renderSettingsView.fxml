@@ -10,26 +10,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
-<FlowPane xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
     <TabPane>
-        <Tab text="Lights" closable="false">
-            <content>
-                <VBox styleClass="setting-group-2">
-                    <HBox>
-                        <Label text="Background"/>
-                        <ColorPicker fx:id="cpColorPicker"/>
-                    </HBox>
-                    <HBox>
-                        <Label text="Ambient"/>
-                        <ColorPicker fx:id="cpAmbientColor"/>
-                    </HBox>
-                    <HBox>
-                        <HBox styleClass="col-1"/>
-                        <CheckBox fx:id="chkHDRRendering" text="HDR-Rendering"/>
-                    </HBox>
-                </VBox>
-            </content>
-        </Tab>
         <Tab text="Performance" closable="false">
             <content>
                 <VBox styleClass="setting-group-2">
@@ -78,11 +60,28 @@
                 </VBox>
             </content>
         </Tab>
-
+        <Tab text="Lights" closable="false">
+            <content>
+                <VBox styleClass="setting-group-2">
+                    <HBox>
+                        <Label text="Background"/>
+                        <ColorPicker fx:id="cpColorPicker"/>
+                    </HBox>
+                    <HBox>
+                        <Label text="Ambient"/>
+                        <ColorPicker fx:id="cpAmbientColor"/>
+                    </HBox>
+                    <HBox>
+                        <HBox styleClass="col-1"/>
+                        <CheckBox fx:id="chkHDRRendering" text="HDR-Rendering"/>
+                    </HBox>
+                </VBox>
+            </content>
+        </Tab>
     </TabPane>
 
     <HBox styleClass="setting-group-2">
         <Button text="OK"/>
         <Button text="Cancle"/>
     </HBox>
-</FlowPane>
+</VBox>
