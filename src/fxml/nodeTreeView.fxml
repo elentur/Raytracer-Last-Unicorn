@@ -20,7 +20,7 @@
                 <FXCollections fx:factory="observableArrayList" />
             </items>
         </ComboBox>
-        <Button styleClass="col-1" text="Add" onAction="#handleNewElementAction"/>
+        <Button styleClass="col-2" text="Add" onAction="#handleNewElementAction"/>
     </HBox>
 
     <TreeView fx:id="elementsTreeView"/>

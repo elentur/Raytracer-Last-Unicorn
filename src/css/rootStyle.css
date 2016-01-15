@@ -1,30 +1,30 @@
 .root {
     -fx-base: rgb(50, 50, 50);
     -fx-background: rgb(80, 80, 80);
-    -fx-pref-width: 1200;
-    -fx-pref-height:  600;
+    -fx-pref-width: 100%;
+    -fx-pref-height:  100%;
 }
 
 /* top right bottom right */
 
 #vbox{
-    -fx-pref-width: 1360;
+    -fx-pref-width: 100em;
+
 }
 
 #nodeTreeView{
-    -fx-min-width: 360;
+    -fx-max-width: 20em;
 }
 
 #scrollPane{
-    -fx-min-width: 640;
+   /* -fx-max-width: 55em;*/
 }
 
 #tabPane{
-    -fx-min-width: 360;
+    -fx-max-width: 25em;
 }
-
 #statusbar{
-    -fx-pref-width: 1360;
+    -fx-min-width:100em;
 }
 
 /* Setting Formular  4 spaltig */
@@ -139,9 +139,11 @@
 }
 
 #statusbar #lblTime{
-    -fx-min-width: 360;
+   /* -fx-min-width: 360;*/
+    -fx-min-width:20em;
 }
 
 #statusbar .progress-bar{
-    -fx-min-width: 640;
+    /*-fx-min-width: 640;*/
+    /* -fx-min-width:55em;*/
 }

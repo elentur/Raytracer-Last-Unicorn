@@ -38,6 +38,7 @@ public class NodeSettingsViewController  extends AController{
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         selectedTreeItem.addListener(a-> handleSelectedElement());
+        masterTabPane=tabPane;
     }
 
     private void handleSelectedElement() {

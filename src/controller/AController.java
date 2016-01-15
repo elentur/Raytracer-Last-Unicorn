@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import material.Material;
 import raytracer.Raytracer;
@@ -23,4 +24,5 @@ public abstract class AController  implements Initializable {
     protected final static ObjectProperty<Material> material= new SimpleObjectProperty<>();
     protected final static ObservableList<Material> materialList = FXCollections.observableArrayList();
     protected final static ObservableList<Texture> textureList = FXCollections.observableArrayList();
+    protected static TabPane masterTabPane;
 }

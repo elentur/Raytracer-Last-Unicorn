@@ -1,16 +1,25 @@
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
 <VBox xmlns:fx="http://javafx.com/fxml">
-    <HBox>
+    <HBox styleClass="form-group-4">
         <Label text="Specular"/>
         <ColorPicker fx:id="clpSpecular" />
-        <ComboBox fx:id="cmbSpecular" />
+        <ComboBox styleClass="col-1" fx:id="cmbSpecular" />
+        <Button fx:id="btnNewSpecular">
+            <graphic>
+                <ImageView>
+                    <Image url="@/icons/texture.png"/>
+                </ImageView>
+            </graphic>
+        </Button>
         <Button fx:id="btnClearSpecular" text="X" />
     </HBox>
-    <HBox>
+    <HBox styleClass="form-group-4">
         <Label text="Intensity"/>
-        <NumberTextField fx:id="txtExponent" />
+        <NumberTextField styleClass="number-text-field" fx:id="txtExponent" />
     </HBox>
 </VBox>

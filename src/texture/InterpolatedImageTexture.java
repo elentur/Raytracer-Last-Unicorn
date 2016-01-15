@@ -14,11 +14,11 @@ public class InterpolatedImageTexture extends Texture {
     public Image image;
 
     public InterpolatedImageTexture(final String path) {
-        this(path,1,1,1,1);
+        this(path,1,1,0,0);
     }
 
     public InterpolatedImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV) {
-        super(scaleU,scaleV,offsetU,offsetV);
+        super(scaleU,scaleV,offsetU,offsetV,path);
         File file = new File(path);
 
        // if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
@@ -30,8 +30,8 @@ public class InterpolatedImageTexture extends Texture {
     @Override
     public Color getColor(double u, double v) {
 
-        u = (u/ScaleU + OffsetU) % 1.0;
-        v = (v/ScaleV + OffsetV) % 1.0;
+        u = (u/ scaleU + offsetU) % 1.0;
+        v = (v/ scaleV + offsetV) % 1.0;
 
         if(u < 0) u += 1.0;
         if(v < 0) v += 1.0;

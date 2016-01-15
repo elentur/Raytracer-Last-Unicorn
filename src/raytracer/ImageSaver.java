@@ -168,6 +168,7 @@ public class ImageSaver extends Application {
         primaryStage.setTitle("Unicorn RayTracer");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
         //testScene();

@@ -80,6 +80,7 @@ public class MainSettingsNodeController extends AController {
                 DefaultMaterial.REFLECTIVE_MATERIAL,
                 DefaultMaterial.TRANSPARENT_MATERIAL,
                 DefaultMaterial.MATERIAL);
+        DefaultMaterial.MATERIAL.name="Default Lambert Material";
     }
 
     /**
@@ -175,7 +176,6 @@ public class MainSettingsNodeController extends AController {
                         if (item != null) {
                             String prefix = "";
                             if (this.getIndex() < 6) prefix = "New";
-                            if (this.getIndex() == 6) prefix = "Default";
                             setText(prefix + " " + item.name);
                         }
                     }
@@ -192,7 +192,6 @@ public class MainSettingsNodeController extends AController {
                 } else {
                     String prefix = "";
                     if (this.getIndex() < 6) prefix = "New";
-                    if (this.getIndex() == 6) prefix = "Default";
                     setText(prefix + " " + item.name);
                 }
             }

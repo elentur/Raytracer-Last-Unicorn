@@ -28,13 +28,13 @@ public class ElementTreeCellFactory implements Callback<TreeView<Element>, TreeC
                 if (item != null || !empty) {
                     setText(item.name);
                     if (item instanceof Geometry) {
-                        setGraphic(new ImageView(new Image("file:icons/mesh.png")));
+                        setGraphic(new ImageView(new Image("icons/mesh.png")));
 
                     } else if (item instanceof Light) {
-                        setGraphic(new ImageView(new Image("file:icons/light.png")));
+                        setGraphic(new ImageView(new Image("icons/light.png")));
 
                     } else if (item instanceof Camera) {
-                        setGraphic(new ImageView(new Image("file:icons/camera.png")));
+                        setGraphic(new ImageView(new Image("icons/camera.png")));
 
                     } else {
                         setGraphic(null);
