@@ -29,14 +29,14 @@
     -fx-min-width: 100em;
 }
 
-/* Render Setting 6 spaltig */
+/* Render Setting 2 spaltig */
 
 .setting-group-2{
     -fx-border-width: 0 0 1 0;
     -fx-border-style: solid;
     -fx-border-color: rgb(60, 60, 60);
     -fx-alignment: baseline-left;
-    -fx-padding: 1em 2em;
+    -fx-padding: 1em 0.25em;
     -fx-spacing: 1em;
     -fx-pre-width: 25em;
 }
