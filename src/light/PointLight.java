@@ -43,7 +43,7 @@ public class PointLight extends Light {
      * @param light
      */
     public PointLight(PointLight light) {
-        super(light.color, light.castsShadow, light.photons);
+        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
         this.name = light.name;
         this.position = light.position;
     }

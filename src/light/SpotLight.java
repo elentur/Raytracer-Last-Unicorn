@@ -61,7 +61,7 @@ public class SpotLight extends Light {
     }
 
     public SpotLight(SpotLight light) {
-        super(light.color, light.castsShadow, light.photons);
+        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
         this.name = light.name;
         this.position = light.position;
         this.direction = light.direction;

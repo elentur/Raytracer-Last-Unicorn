@@ -320,7 +320,6 @@ public class Raytracer {
         img = new WritableImage(imgWidth.get(), imgHeight.get());
         final PixelWriter pixelWriter = img.getPixelWriter();
         if (!def){
-            System.out.println("Fehlker");
             for (int x = 0; x < imgWidth.get(); x++) {
                 for (int y = 0; y < imgHeight.get(); y++) {
                     pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);

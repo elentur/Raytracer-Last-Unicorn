@@ -24,7 +24,7 @@ public abstract class Texture implements Serializable {
         this.scaleV = scaleV;
         this.offsetU = offsetU;
         this.offsetV = offsetV;
-        this.rotation =rotate;
+        this.rotate =rotate;
         this.path = path;
 
     }

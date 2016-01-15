@@ -16,6 +16,8 @@ import light.SpotLight;
 import matVect.Point3;
 import matVect.Vector3;
 import material.DefaultMaterial;
+import sampling.DOFPattern;
+import sampling.LightShadowPattern;
 import sampling.SamplingPattern;
 import utils.Color;
 import utils.Element;
@@ -168,13 +170,13 @@ public class NodeTreeViewController extends AController {
         lstNewElement.add(new AxisAlignedBox(DefaultMaterial.MATERIAL, true, true, true, false));
         lstNewElement.add(new Triangle(DefaultMaterial.MATERIAL, true, true, true, false));
 
-        lstNewElement.add(new DirectionalLight(new Color(1, 1, 1), new Vector3(1, 1, 1), true, 500));
-        lstNewElement.add(new PointLight(new Color(1, 1, 1), new Point3(0, 0, 0), true, 500));
-        lstNewElement.add(new SpotLight(new Color(1, 1, 1), new Point3(0, 0, 0), new Vector3(1, 1, 1), Math.PI / 14, true, 500));
+        lstNewElement.add(new DirectionalLight(new Color(1, 1, 1), new Vector3(1, 1, 1), true, 500,new LightShadowPattern(0,1)));
+        lstNewElement.add(new PointLight(new Color(1, 1, 1), new Point3(0, 0, 0), true, 500,new LightShadowPattern(0,1)));
+        lstNewElement.add(new SpotLight(new Color(1, 1, 1), new Point3(0, 0, 0), new Vector3(1, 1, 1), Math.PI / 14, true, 500,new LightShadowPattern(0,1)));
 
         lstNewElement.add(new OrthographicCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 3, new SamplingPattern(1)));
         lstNewElement.add(new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1)));
-        lstNewElement.add(new DOFCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, 1, 1, new SamplingPattern(1)));
+        lstNewElement.add(new DOFCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new DOFPattern(3,8), 5, new SamplingPattern(1)));
 
     }
 

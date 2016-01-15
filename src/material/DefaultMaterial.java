@@ -64,9 +64,9 @@ public class DefaultMaterial {
         new Color(1,1,1)
     );
     public final static ImageTexture IMAGE_TEXTURE = new ImageTexture(
-            "",1,1,0,0
+            "",1,1,0,0,0
     );
     public final static InterpolatedImageTexture INTERPOLATED_IMAGE_TEXTURE = new InterpolatedImageTexture(
-            "",1,1,0,0
+            "",1,1,0,0,0
     );
 }

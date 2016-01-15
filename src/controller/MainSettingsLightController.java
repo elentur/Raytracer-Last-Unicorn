@@ -16,6 +16,7 @@ import light.PointLight;
 import light.SpotLight;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +36,10 @@ public class MainSettingsLightController extends AController {
     private CheckBox chkCastShadows;
     @FXML
     private NumberTextField txtIrradiance;
+    @FXML
+    private NumberTextField txtLightSize;
+    @FXML
+    private NumberTextField txtLightSizeSubdiv;
     @FXML
     private NumberTextField txtDirectionX;
     @FXML
@@ -109,6 +114,7 @@ public class MainSettingsLightController extends AController {
     private void initializeFields() {
         Light l = (Light) selectedTreeItem.get().getValue();
 
+
         if (txtPositionX != null) {
             Point3 pos = l instanceof PointLight ? ((PointLight) l).position : ((SpotLight) l).position;
 
@@ -142,6 +148,8 @@ public class MainSettingsLightController extends AController {
         clpLightColor.setValue(new Color(l.color.r, l.color.g, l.color.b, 1));
         chkCastShadows.setSelected(l.castsShadow);
         txtIrradiance.setNumber(l.photons);
+        txtLightSize.setNumber(l.lightShadowPattern.size);
+        txtLightSizeSubdiv.setNumber(l.lightShadowPattern.subdiv);
     }
 
     @FXML
@@ -155,13 +163,15 @@ public class MainSettingsLightController extends AController {
                 light = new DirectionalLight(color,
                         new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
                         castShadows,
-                        irrad
+                        irrad,
+                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
                 );
             } else if (selectedTreeItem.get().getValue() instanceof PointLight) {
                 light = new PointLight(color,
                         new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
                         castShadows,
-                        irrad
+                        irrad,
+                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
                 );
             } else if (selectedTreeItem.get().getValue() instanceof SpotLight) {
                 light = new SpotLight(color,
@@ -169,7 +179,8 @@ public class MainSettingsLightController extends AController {
                         new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
                         sldAngle.getValue() / (180 / Math.PI),
                         castShadows,
-                        irrad
+                        irrad,
+                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
                 );
             }
             if (light != null) {

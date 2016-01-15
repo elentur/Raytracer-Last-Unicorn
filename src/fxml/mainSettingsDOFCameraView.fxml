@@ -13,7 +13,11 @@
             <NumberTextField styleClass="col-3" fx:id="txtFStop"/>
         </HBox>
         <HBox styleClass="form-group-4">
-            <Label text="Aperture"/>
-            <NumberTextField styleClass="col-3" fx:id="txtAperture"/>
+            <Label text="Focal Length"/>
+            <NumberTextField styleClass="col-3" fx:id="txtFocalLength"/>
         </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Subdiv"/>
+        <NumberTextField styleClass="col-3" fx:id="txtSubdiv"/>
+    </HBox>
 </VBox>

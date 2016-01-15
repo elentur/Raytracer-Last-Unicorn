@@ -1,13 +1,7 @@
 package raytracer;
 
 import UI.*;
-import camera.Camera;
-import camera.PerspectiveCamera;
 import controller.AController;
-import geometries.Geometry;
-import geometries.Node;
-import geometries.Plane;
-import geometries.Sphere;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
@@ -21,23 +15,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.Light;
-import light.PointLight;
-import matVect.Point3;
-import matVect.Vector3;
-import material.OrenNayarMaterial;
-import material.LambertMaterial;
-import material.ReflectiveMaterial;
-import sampling.LightShadowPattern;
-import sampling.SamplingPattern;
-import texture.ImageTexture;
-import material.LambertMaterial;
-import material.PhongMaterial;
-import material.SingleColorMaterial;
-import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
-import utils.Color;
-import utils.World;
 
 
 /**
@@ -55,50 +32,7 @@ public class ImageSaver extends Application {
 
 
     private void testScene() {
-      /*  raytracer.setWorld(new World(new Color(0, 0, 0), new Color(0.0, 0.0, 0.0)));
-        // world.lights.add(new PointLight(new Color(1,1,1),new Point3(0,5,100)));
-        Light light = new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4));
-        light.name = "Pointlight1";
-        //camera = new PerspectiveCamera(new Point3(0,5,100),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4);
-        raytracer.setCamera(new PerspectiveCamera(new Point3(4, 4, 4), new Vector3(-1, -1, -1), new Vector3(0, 1, 0), Math.PI / 4));
-        //camera = new PerspectiveCamera(new Point3(3,3,3),new Vector3(-3,-3,-3), new Vector3(0,1,0), Math.PI/4);
-        // Geometry obj = new Sphere(new Point3(0,0,-3),0.5, new LambertMaterial(new Color(1,0,0)));
-        //Geometry obj = new AxisAlignedBox(new Point3(0.5,1,0.5),new Point3(-0.5,0,-0.5), new LambertMaterial(new Color(0,0,1)));
-        //Geometry obj = new Plane(new Point3(0,-1,0), new Normal3(0,1,0), new LambertMaterial(new Color(0,1,0)));
-        //Geometry obj = new Triangle(new Point3(-0.5,0.5,-3),new Point3(0.5,0.5,-3),new Point3(0.5,-0.5,-3), new LambertMaterial(new Color(1,0,1)));
-        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\IdeaProjects\\CG1\\src\\obj\\cube.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
-        //Geometry obj = new ShapeFromFile(new File("C:\\Users\\marcu_000\\karren.obj"), new LambertMaterial(new Color(0.5,0.5,0.5)));
-        raytracer.getWorld().lights.add(light);
-        // world.geometries.add(obj);
-        raytracer.getWorld().geometries.add(new geometries.Sphere(new Point3(1, 1, 1), 0.5, new LambertMaterial(new Color(0, 1, 0))));
-    */
 
-        World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
-        raytracer.setWorld(world);
-
-
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(10,0,30), true,500);
-        light1.name = "Pointlight1";
-        world.lights.add(light1);
-
-        Camera camera = new OrthographicCamera(new Point3(0,1,5),new Vector3(0,-0.3,-1), new Vector3(0,1,0), 3, new SamplingPattern(4));
-        raytracer.setCamera(camera);
-
-        Sphere geo = new Sphere(
-                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        64,
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                        ),
-                true,
-                true,
-                true,
-                false
-        );
-
-        world.geometries.add(new Node(new Transform(),geo,true,true,false,false));
     }
 
     /**

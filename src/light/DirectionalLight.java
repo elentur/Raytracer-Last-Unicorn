@@ -42,7 +42,7 @@ public class DirectionalLight extends Light {
      * @param light
      */
     public DirectionalLight(DirectionalLight light) {
-        super(light.color, light.castsShadow, light.photons);
+        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
         this.name = light.name;
         this.direction = light.direction;
     }

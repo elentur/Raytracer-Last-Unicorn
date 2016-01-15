@@ -119,7 +119,6 @@ public class ShapeFromFile extends Geometry {
         this.vt = shapeFromFile.vt;
         this.f = shapeFromFile.f;
         this.octree = shapeFromFile.octree;
-        this.rekDeep = shapeFromFile.rekDeep;
     }
 
     @Override

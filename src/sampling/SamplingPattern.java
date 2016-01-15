@@ -33,7 +33,6 @@ public class SamplingPattern extends SubdivisionPattern{
             }
         }
 
-        return points;
     }
 
     @Override
@@ -55,10 +54,5 @@ public class SamplingPattern extends SubdivisionPattern{
 
     }
 
-    @Override
-    public int hashCode() {
-        int result = size;
-        result = 31 * result + (points != null ? points.hashCode() : 0);
-        return result;
-    }
+
 }

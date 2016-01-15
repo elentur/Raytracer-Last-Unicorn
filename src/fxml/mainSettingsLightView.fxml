@@ -18,6 +18,14 @@
         <NumberTextField styleClass="col-3" fx:id="txtIrradiance" onAction="#handleUpdateLight"/>
     </HBox>
     <HBox styleClass="form-group-4">
+        <Label text="Light Size"/>
+        <NumberTextField styleClass="col-3" fx:id="txtLightSize" onAction="#handleUpdateLight"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Subdiv"/>
+        <NumberTextField styleClass="col-3" fx:id="txtLightSizeSubdiv" onAction="#handleUpdateLight"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
         <Label styleClass="text-field-head" text="X"/>
         <Label styleClass="text-field-head" text="Y"/>

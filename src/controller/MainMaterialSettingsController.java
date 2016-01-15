@@ -463,7 +463,7 @@ public class MainMaterialSettingsController extends AController {
         ((NumberTextField) v.lookup("#txtScalingU")).setOnAction(a->handleUpdateTexture(v,texture));
         ((NumberTextField) v.lookup("#txtScalingV")).setNumber(texture.scaleV);
         ((NumberTextField) v.lookup("#txtScalingV")).setOnAction(a->handleUpdateTexture(v,texture));
-        ((NumberTextField) v.lookup("#txtRotation")).setNumber(texture.rotation);
+        ((NumberTextField) v.lookup("#txtRotation")).setNumber(texture.rotate);
         ((NumberTextField) v.lookup("#txtRotation")).setOnAction(a->handleUpdateTexture(v,texture));
 
 
@@ -477,14 +477,16 @@ public class MainMaterialSettingsController extends AController {
                             ((NumberTextField) v.lookup("#txtScalingU")).getDouble(),
                             ((NumberTextField) v.lookup("#txtScalingV")).getDouble(),
                             ((NumberTextField) v.lookup("#txtOffsetU")).getDouble(),
-                            ((NumberTextField) v.lookup("#txtOffsetV")).getDouble()
+                            ((NumberTextField) v.lookup("#txtOffsetV")).getDouble(),
+                            ((NumberTextField) v.lookup("#txtRotation")).getDouble()
 
                     ):
                     new ImageTexture(((TextField) v.lookup("#txtPath")).getText(),
                             ((NumberTextField) v.lookup("#txtScalingU")).getDouble(),
                             ((NumberTextField) v.lookup("#txtScalingV")).getDouble(),
                             ((NumberTextField) v.lookup("#txtOffsetU")).getDouble(),
-                            ((NumberTextField) v.lookup("#txtOffsetV")).getDouble()
+                            ((NumberTextField) v.lookup("#txtOffsetV")).getDouble(),
+                            ((NumberTextField) v.lookup("#txtRotation")).getDouble()
 
                     );
         tex.name = ((TextField) v.lookup("#txtTextureName")).getText();

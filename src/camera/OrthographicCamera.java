@@ -70,7 +70,7 @@ public class OrthographicCamera extends Camera {
 
         double aspectRatio = (double) w / (double) h;
 
-        List<Point2> points = samplingPattern.generateSampling();
+        List<Point2> points = samplingPattern.points;
 
         for(Point2 point : points) {
 

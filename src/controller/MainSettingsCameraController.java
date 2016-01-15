@@ -13,6 +13,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.DOFPattern;
 import sampling.SamplingPattern;
 
 import java.io.IOException;
@@ -57,7 +58,8 @@ public class MainSettingsCameraController extends AController {
     @FXML
     private NumberTextField txtFStop;
     @FXML
-    private NumberTextField txtAperture;
+    private NumberTextField txtFocalLength;
+    private NumberTextField txtSubdiv;
 
 
     private boolean initialized = false;
@@ -95,7 +97,8 @@ public class MainSettingsCameraController extends AController {
             sldAngle = (Slider) cameraView.lookup("#sldAngle");
             lblAngle = (Label) cameraView.lookup("#lblAngle");
             txtFStop = (NumberTextField) cameraView.lookup("#txtFStop");
-            txtAperture = (NumberTextField) cameraView.lookup("#txtAperture");
+            txtFocalLength = (NumberTextField) cameraView.lookup("#txtFocalLength");
+            txtSubdiv = (NumberTextField) cameraView.lookup("#txtSubdiv");
             txtScaleFactor = (NumberTextField) cameraView.lookup("#txtScaleFactor");
 
             initializeFields();
@@ -114,7 +117,7 @@ public class MainSettingsCameraController extends AController {
         txtUpVectorX.setNumber(c.t.x);
         txtUpVectorY.setNumber(c.t.y);
         txtUpVectorZ.setNumber(c.t.z);
-        txtSampling.setNumber(c.samplingPattern.size);
+        txtSampling.setNumber(c.samplingPattern.subdiv);
         if (txtScaleFactor != null) {
             txtScaleFactor.setNumber(((OrthographicCamera) c).s);
             txtScaleFactor.setOnAction(a -> handleUpdateCamera());
@@ -129,12 +132,17 @@ public class MainSettingsCameraController extends AController {
             sldAngle.setOnMouseReleased(a -> handleUpdateCamera());
         }
         if (txtFStop != null) {
-            txtFStop.setNumber(5.0);
+            txtFStop.setNumber(((DOFCamera)c).dofPattern.size);
             txtFStop.setOnAction(a -> handleUpdateCamera());
         }
-        if (txtAperture != null) {
-            txtAperture.setNumber(8.0);
-            txtAperture.setOnAction(a -> handleUpdateCamera());
+        if (txtFocalLength != null) {
+            txtFocalLength.setNumber(((DOFCamera)c).focalLength);
+            txtFocalLength.setOnAction(a -> handleUpdateCamera());
+        }
+        if (txtSubdiv != null) {
+            txtSubdiv.setNumber(((DOFCamera)c).dofPattern.subdiv);
+            txtSubdiv.setOnAction(a -> handleUpdateCamera());
+
         }
     }
 
@@ -160,8 +168,8 @@ public class MainSettingsCameraController extends AController {
             } else if (selectedTreeItem.get().getValue() instanceof DOFCamera) {
                 camera = new DOFCamera(e, g, t,
                         sldAngle.getValue() / (180 / Math.PI),
-                        txtFStop.getDouble(),
-                        txtAperture.getDouble(),
+                        new DOFPattern(txtSubdiv.getInteger(),txtFStop.getDouble()),
+                        txtFocalLength.getDouble(),
                         pattern
                 );
             }
