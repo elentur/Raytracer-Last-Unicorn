@@ -65,7 +65,7 @@ public class RenderSettingsController extends Stage {
     }
 
     private void initialize() {
-        /*chkMultithreading = (CheckBox) root.lookup("#chkMultithreading");
+        chkMultithreading = (CheckBox) root.lookup("#chkMultithreading");
         chkHDRRendering = (CheckBox) root.lookup("#chkHDRRendering");
         chkKeepRatio = (CheckBox) root.lookup("#chkKeepRatio");
         chbCores = (ChoiceBox<String>) root.lookup("#chbCores");
@@ -78,6 +78,6 @@ public class RenderSettingsController extends Stage {
         chbPattern.getItems().addAll("Clockwise", "Random");
         chbCores.disableProperty().bind(chkMultithreading.selectedProperty().not());
         chbPattern.getSelectionModel().select(0);
-        chbResolution.getItems().addAll("320x240", "640x480", "1024x768", "1280x720", "1920x1080");*/
+        chbResolution.getItems().addAll("320x240", "640x480", "1024x768", "1280x720", "1920x1080");
     }
 }
