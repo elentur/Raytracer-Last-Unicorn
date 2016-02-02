@@ -1,7 +1,5 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 
@@ -23,7 +21,7 @@
         <Button styleClass="col-2" text="Add" onAction="#handleNewElementAction"/>
     </HBox>
 
-    <TreeView fx:id="elementsTreeView"/>
+    <TreeView fx:id="elementsTreeView" VBox.vgrow="ALWAYS"/>
 
     <HBox styleClass="form-group-3">
             <Button styleClass="col-1" onAction="#handleGroupAction" text="Group" />
