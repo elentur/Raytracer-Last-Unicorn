@@ -1,12 +1,12 @@
 package observables.materials;
 
-
 import material.SingleColorMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OSingleColorMaterial extends AOMaterial {
     public OSingleColorMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale) {

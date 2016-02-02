@@ -1,10 +1,10 @@
 package observables.textures;
 
 import texture.InterpolatedImageTexture;
-import texture.Texture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OInterpolatedImageTexture extends AOTexture {
 

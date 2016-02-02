@@ -1,11 +1,11 @@
 package observables.materials;
 
-import material.Material;
 import material.ReflectiveMaterial;
 import observables.textures.AOTexture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OReflectiveMaterial extends AOMaterial{
     public AOTexture specular;

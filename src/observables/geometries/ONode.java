@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba  on 02/02/16.
  */
 public class ONode extends AOGeometry {
 

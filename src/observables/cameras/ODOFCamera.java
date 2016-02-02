@@ -7,7 +7,8 @@ import sampling.DOFPattern;
 import sampling.SamplingPattern;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class ODOFCamera extends AOCamera{
     public double angle;

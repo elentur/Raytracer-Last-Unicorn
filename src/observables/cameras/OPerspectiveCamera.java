@@ -6,7 +6,8 @@ import matVect.Vector3;
 import sampling.SamplingPattern;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OPerspectiveCamera extends AOCamera {
 

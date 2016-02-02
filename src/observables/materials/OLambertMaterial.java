@@ -1,11 +1,11 @@
 package observables.materials;
 
 import material.LambertMaterial;
-import material.Material;
 import observables.textures.AOTexture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OLambertMaterial extends AOMaterial{
 

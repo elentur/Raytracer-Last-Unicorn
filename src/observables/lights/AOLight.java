@@ -4,7 +4,8 @@ import light.Light;
 import observables.AOElement;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public abstract class AOLight extends AOElement {
     public double colorR;

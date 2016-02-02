@@ -1,11 +1,11 @@
 package observables.materials;
 
-import material.Material;
 import material.TransparentMaterial;
 import observables.textures.AOTexture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OTransparentMaterial extends AOMaterial {
     public double indexOfRefraction;

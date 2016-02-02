@@ -5,7 +5,8 @@ import texture.TexCoord2;
 import java.util.Observable;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OTexCoord2 extends Observable {
 

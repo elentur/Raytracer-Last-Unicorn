@@ -7,7 +7,8 @@ import sampling.LightShadowPattern;
 import utils.Color;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OSpotLight extends AOLight {
 

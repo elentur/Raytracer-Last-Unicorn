@@ -1,13 +1,11 @@
 package observables.geometries;
 
-import geometries.Geometry;
 import geometries.Triangle;
-import matVect.Normal3;
-import matVect.Point3;
 import observables.materials.AOMaterial;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OTriangle extends AOGeometry {
 

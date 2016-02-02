@@ -1,13 +1,13 @@
 package observables.cameras;
 
 import camera.OrthographicCamera;
-import camera.PerspectiveCamera;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.SamplingPattern;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public class OOrthographicCamera extends AOCamera{
 

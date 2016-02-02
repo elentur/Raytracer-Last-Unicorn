@@ -4,7 +4,8 @@ import observables.AOElement;
 import texture.Texture;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public abstract class AOTexture extends AOElement {
     public double scaleU;
