@@ -83,8 +83,11 @@ public class OrenNayarMaterial extends Material {
         final Vector3 v = hit.ray.o.sub(h).normalized();*/
 
         for (Light light : world.lights) {
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
 
-            if (light.illuminates(h,new Point2(0,0), world,hit.geo)) {
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+            if (light.illuminates(h,point, world,hit.geo)) {
 
                 final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
@@ -120,6 +123,9 @@ public class OrenNayarMaterial extends Material {
                         a+b*Math.max( 0.0, hit.n.dot(l) )* Math.sin(alpha)*Math.tan(beta)
                 ));*/
 
+            }
+                }
+                basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
             }
         }
 

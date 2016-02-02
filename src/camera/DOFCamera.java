@@ -67,14 +67,14 @@ public class DOFCamera extends Camera {
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        for(Point2 point : samplingPattern.points) {
+        for(Point2 point : samplingPattern.generateSampling()) {
             final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));
             final Vector3 summand3 = this.v.mul(y + point.y - ((h - 1.0) / 2));
             Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
             Ray ray = new Ray(this.e, r.normalized());
             rays.add(ray);
             Point3 p = ray.at(focalLength);
-            for(Point2 point1 : dofPattern.points) {
+            for(Point2 point1 : dofPattern.generateSampling()) {
                 Point3 e1 = new Point3(this.e.x+point1.x,this.e.y+point1.y,this.e.z);
                 r = p.sub(e1);
                 rays.add(new Ray(e1, r.normalized()));

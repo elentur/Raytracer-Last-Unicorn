@@ -11,6 +11,7 @@ import matVect.Point3;
 import raytracer.Raytracer;
 import utils.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +26,16 @@ public class ObservableElementLists {
     private TreeItem<Element> nodeTree;
     private TreeItem<Element> lightTree;
     private TreeItem<Element> cameraTree;
+    private List<Node> geometries = new ArrayList<>();
 
 
     public static ObservableElementLists getInstance() {
         return ourInstance;
     }
 
+    public List<Node> getGeometries(){
+        return geometries;
+    }
     public void setTreeview(TreeView<Element> t) {
         treeView = t;
         nodeTree = t.getRoot().getChildren().get(0);
@@ -127,9 +132,12 @@ public class ObservableElementLists {
     private void addNode(Node n) {
        // nodes.add(n);
         r.getWorld().geometries.add(n);
-        TreeItem<Element> treeItem = new TreeItem<Element>(n);
+        TreeItem<Element> treeItem = new TreeItem<>(n);
         nodeTree.getChildren().add(treeItem);
         treeView.getSelectionModel().select(treeItem);
+        if(n.geos.size()== 1 && !(n.geos.get(0) instanceof Node)){
+            geometries.add(n);
+        }
     }
 
 
@@ -141,10 +149,29 @@ public class ObservableElementLists {
             Node n = getParentNode(r.getWorld().geometries,oldNode);
             n.geos.set(n.geos.indexOf(oldNode), newNode);
         }
-        treeView.getSelectionModel().getSelectedItem().setValue(newNode);
+        if(oldNode.geos.size()== 1 && !(oldNode.geos.get(0) instanceof Node)){
+            geometries.remove(oldNode);
+            geometries.add(newNode);
+        }
+        if(treeView.getSelectionModel().getSelectedItem().getValue().equals(oldNode)){
+            treeView.getSelectionModel().getSelectedItem().setValue(newNode);
+        }else{
+            TreeItem<Element> n = getTreeItem(nodeTree,oldNode);
+            System.out.println(n);
+
+        }
 
     }
-
+    private TreeItem<Element> getTreeItem(TreeItem<Element> root, Node n){
+        for(TreeItem<Element> child: root.getChildren()){
+            if(child.getValue().equals(n)){
+               return(child);
+            } else {
+                return getTreeItem(child,n);
+            }
+        }
+        return null;
+    }
     private void removeNode(Node n) {
         if (r.getWorld().geometries.contains(n)) {
             r.getWorld().geometries.remove(n);
@@ -174,6 +201,9 @@ public class ObservableElementLists {
                     else r.getWorld().geometries.remove(parentParent);
                 }
             }
+        }
+        if(n.geos.size()== 1 && !(n.geos.get(0) instanceof Node)){
+            geometries.remove(n);
         }
     }
 

@@ -49,7 +49,10 @@ public class ImageSaver extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
         primaryStage.show();
-
+        ImageView image  = (ImageView)scene.lookup("#image");
+        MenuItem menuItem = (MenuItem) ((MenuBar)scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);
+        menuItem.disableProperty().bind(image.imageProperty().isNull());
+        menuItem.setOnAction(a -> IO.saveImage(scene.getWindow(), image.getImage()));
         //testScene();
         primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
 

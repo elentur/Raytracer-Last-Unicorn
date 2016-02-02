@@ -61,10 +61,10 @@ public class TransparentMaterial extends Material {
         double ref;
         Normal3 n;
         final Vector3 e = hit.ray.d.mul(-1).reflectedOn(hit.n);
+        double insideColorIntensity = 0;
         if(e.dot(hit.n) < 0){
             ref = iOR/ AController.raytracer.iOR;
             n = hit.n.mul(-1);
-
         }else{
             ref = AController.raytracer.iOR/iOR;
             n = hit.n;
@@ -81,6 +81,12 @@ public class TransparentMaterial extends Material {
             Ray refractionRay = new Ray(hit.ray.at(hit.t+0.00001),t);
             Tracer tracer2 = new Tracer(tracer.recursionDepth);
             basicColor = basicColor.add(tracer2.reflection(refractionRay,world).mul(b));
+
+                Hit refHit = hit.geo.hit(refractionRay);
+                if(refHit != null && refHit.t>0.00001)
+                    insideColorIntensity=refHit.t/10;
+
+
         }
         Vector3 r =  hit.ray.d.normalized().add(n.mul(2*cosA1));
         final Point3 p = hit.ray.at(hit.t-0.00001);
@@ -90,12 +96,13 @@ public class TransparentMaterial extends Material {
 
             Vector3 l = light.directionFrom(p);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(p,new Point2(0,0), world,hit.geo)) {
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
+
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+            if (light.illuminates(p,point, world,hit.geo)) {
+
                 basicColor = basicColor.add(
-                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
-                                .mul(Math.max(0, hit.n.dot(l.normalized()))
-                                )
-                ).add(
                         specular.getColor(hit.texCoord.u,hit.texCoord.v)
                                 .mul(light.color)
                                 .mul(Math.pow(
@@ -103,6 +110,14 @@ public class TransparentMaterial extends Material {
                                 )
                 );
             }
+
+        }
+        basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
+    }
+
+            basicColor = basicColor.add(
+                    light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(insideColorIntensity)
+            );
             basicColor = basicColor.add(reflection.getColor(hit.texCoord.u,hit.texCoord.v).mul(tracer.reflection(reflectionRay,world)).mul(a));
         }
 

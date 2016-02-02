@@ -12,7 +12,7 @@
                     <MenuItem text="Save Scene" onAction="#handleSaveAction"/>
                     <MenuItem text="Load Scene" onAction="#handleLoadAction"/>
                     <MenuItem text="Import Model" onAction="#handleLoadModel"/>
-                    <MenuItem text="Save Rendered Image" onAction="#handleSaveImageAction" disable="true"/>
+                    <MenuItem fx:id ="mnuSaveImage" text="Save Rendered Image"  disable="true"/>
                     <SeparatorMenuItem  />
                     <MenuItem text="Exit" onAction="#handleExitAction"/>
                 </items>

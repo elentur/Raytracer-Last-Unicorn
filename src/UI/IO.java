@@ -7,6 +7,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.SamplingPattern;
@@ -34,7 +35,7 @@ public class IO {
      *
      * @param stage The PrimaryStage of this program.
      */
-    public static void saveImage(final Stage stage, final Image writableImage) {
+    public static void saveImage(final Window stage, final Image writableImage) {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         if (writableImage == null) throw new IllegalArgumentException("WritableImage must not be null.");
         final FileChooser fileChooser = new FileChooser();

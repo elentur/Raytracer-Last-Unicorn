@@ -1,13 +1,16 @@
 package material;
 
+import geometries.Geometry;
 import light.Light;
 import matVect.Point2;
 import matVect.Point3;
+import matVect.Vector3;
 import texture.Texture;
-import utils.Color;
-import utils.Hit;
-import utils.Tracer;
-import utils.World;
+import utils.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * A nearly perfect diffuse Material
@@ -41,22 +44,50 @@ public class LambertMaterial extends Material {
         Color c = new Color(0, 0, 0);
         for (Light light : world.lights) {
             final Point3 p = hit.ray.at(hit.t);
-          //  if (light.illuminates(p, world, hit.geo)) {
-          //      c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
-          //  }else {
                 synchronized (light.lightShadowPattern) {
                     light.lightShadowPattern.generateSampling();
 
-                    for (Point2 point : light.lightShadowPattern.points) {
-
+                    for (Point2 point : light.lightShadowPattern.generateSampling()) {
                         if (light.illuminates(p,point, world, hit.geo)) {
                             c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
                         }
                     }
-                    c = c.mul(1.0/light.lightShadowPattern.points.size());
+                    c = c.mul(1.0/light.lightShadowPattern.generateSampling().size());
                 }
-           // }
 
+            ///ambient occlusion test
+            List<Vector3> testDirections = new ArrayList<>();
+            int numberOfRays = 16;
+            int numOfHits=0;
+            Random rnd = new Random();
+
+            while(testDirections.size()<numberOfRays){
+                Vector3 v = new Vector3(rnd.nextDouble()-0.5,rnd.nextDouble()-0.5,rnd.nextDouble()-0.5);
+                double alpha = hit.n.dot(v.normalized());
+                if(alpha<Math.PI/2 && alpha >0){
+                    testDirections.add(v);
+                }
+
+            }
+            double ambientOcclusion=0;
+            for(Vector3 v : testDirections){
+                Ray r = new Ray(p,v);
+
+                for (Geometry g : world.geometries) {
+                    if(!g.visibility) continue;
+                    final Hit h = g.hit(r);
+                    final double border = rnd.nextDouble()*3.0;
+                    if (h != null && h.t >0.01 && h.t <border) {
+                        ambientOcclusion += 1*(h.t/border);
+                        numOfHits++;
+                        break;
+                    }
+
+                }
+            }
+           if(numOfHits>numberOfRays/10) c= c.mul((ambientOcclusion/(numOfHits*1.0)));
+
+            ////
         }
 
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(c);

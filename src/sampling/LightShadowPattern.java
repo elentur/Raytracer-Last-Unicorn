@@ -2,6 +2,7 @@ package sampling;
 
 import matVect.Point2;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -21,7 +22,7 @@ public class LightShadowPattern extends SubdivisionPattern {
     /**
      * generate the list of points (coordinates) of the ray random differences.
      */
-    public void generateSampling() {
+    public List<Point2> generateSampling() {
 
         Random rn = new Random();
         points.clear();
@@ -42,7 +43,7 @@ public class LightShadowPattern extends SubdivisionPattern {
             }
         }
 
-
+    return points;
     }
 
 }

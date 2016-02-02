@@ -57,17 +57,18 @@ public class PointLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if(castsShadow&& geo.reciveShadows) {
+        if(castsShadow&& geo.reciveShadows ) {
             final Ray r = new Ray(point, directionFrom(point,samplePoint));
 
             final double tl = r.tOf(position);
 
             for (final Geometry g : world.geometries) {
+                if(g.visibility) {
+                    final Hit h = g.hit(r);
+                    if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
 
-                final Hit h = g.hit(r);
-                if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
-
-                    return false;
+                        return false;
+                    }
                 }
             }
         }

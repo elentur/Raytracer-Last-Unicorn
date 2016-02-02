@@ -1,5 +1,6 @@
 package controller;
 
+import UI.IO;
 import geometries.Geometry;
 import geometries.Node;
 import geometries.ShapeFromFile;
@@ -7,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -31,6 +33,8 @@ public class MenuController extends AController{
 
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private MenuItem mnuSaveImage;
 
     /**
      * Handle action related to "About" menu item.
@@ -82,6 +86,7 @@ public class MenuController extends AController{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
     }
 
     public void handleLoadModel(ActionEvent actionEvent) {
@@ -102,13 +107,13 @@ public class MenuController extends AController{
     }
 
     public void handleSaveAction(ActionEvent actionEvent) {
+        IO.saveScene((Stage)menuBar.getScene().getWindow(), raytracer.getWorld(), raytracer.getCamera());
     }
 
     public void handleLoadAction(ActionEvent actionEvent) {
+        IO.loadScene((Stage)menuBar.getScene().getWindow());
     }
 
-    public void handleSaveImageAction(ActionEvent actionEvent) {
-    }
 
     public void handleRenderAction(ActionEvent actionEvent) {
         ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
@@ -116,5 +121,6 @@ public class MenuController extends AController{
     }
 
     public void handleStopRenderAction(ActionEvent actionEvent) {
+        raytracer.stopRender();
     }
 }

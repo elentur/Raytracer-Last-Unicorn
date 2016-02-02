@@ -25,7 +25,7 @@ import java.util.List;
     /**
      * List of Points which represents the coordinates of the ray.
      */
-    public final List<Point2> points;
+    protected final List<Point2> points;
 
     /**
      * SamplingPattern constructor which generate the List of points
@@ -48,7 +48,7 @@ import java.util.List;
     /**
      * generate the list of points (coordinates) of the ray random differences.
      */
-    protected abstract void generateSampling() ;
+    protected abstract List<Point2> generateSampling() ;
 
     @Override
     public String toString() {

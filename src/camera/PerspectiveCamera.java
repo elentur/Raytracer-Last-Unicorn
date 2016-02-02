@@ -63,7 +63,7 @@ public class PerspectiveCamera extends Camera {
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        List<Point2> points = samplingPattern.points;
+        List<Point2> points = samplingPattern.generateSampling();
 
         for(Point2 point : points) {
             final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));

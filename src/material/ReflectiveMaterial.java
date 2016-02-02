@@ -70,7 +70,11 @@ public class ReflectiveMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h,new Point2(0,0), world,hit.geo)) {
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
+
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+            if (light.illuminates(h,point, world,hit.geo)) {
                 basicColor = basicColor.add(
                         light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
                                 .mul(Math.max(0, hit.n.dot(l.normalized()))
@@ -83,6 +87,9 @@ public class ReflectiveMaterial extends Material {
                                 )
                 );
             }
+        }
+        basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
+    }
             basicColor = basicColor.add(reflection.getColor(hit.texCoord.u,hit.texCoord.v).mul(tracer.reflection(refRay,world)));
         }
 

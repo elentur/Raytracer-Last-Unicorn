@@ -70,12 +70,7 @@ public class World implements Serializable {
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
         Color back;
-        if (backImg != null) {
-            javafx.scene.paint.Color c = backImg.getPixelReader().getColor(x, y);
-            back = new Color(c.getRed(), c.getGreen(), c.getBlue());
-        } else {
             back = backgroundColor;
-        }
 
         return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer(AController.raytracer.recursionDepth)) : back;
     }

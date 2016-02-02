@@ -75,18 +75,25 @@ public class PhongMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h,new Point2(0,0), world, hit.geo)) {
-                basicColor = basicColor.add(
-                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
-                                .mul(Math.max(0, hit.n.dot(l.normalized()))
-                                )
-                ).add(
-                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
-                                .mul(light.color)
-                                .mul(Math.pow(
-                                        Math.max(0, rl.dot(e)), exponent)
-                                )
-                );
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
+
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+                    if (light.illuminates(h, point, world, hit.geo)) {
+                        basicColor = basicColor.add(
+                                light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v))
+                                        .mul(Math.max(0, hit.n.dot(l.normalized()))
+                                        )
+                        ).add(
+                                specular.getColor(hit.texCoord.u, hit.texCoord.v)
+                                        .mul(light.color)
+                                        .mul(Math.pow(
+                                                Math.max(0, rl.dot(e)), exponent)
+                                        )
+                        );
+                    }
+                }
+                basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
             }
         }
 

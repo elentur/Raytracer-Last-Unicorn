@@ -12,8 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import utils.*;
 import utils.Color;
+import utils.HDRFilter;
+import utils.Ray;
+import utils.World;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -269,6 +271,7 @@ public class Raytracer {
      */
     private Point[] newQuadrants(final int pattern) {
         Point[] q;
+
         if (pattern == 0) {
             tileX = 10;
             tileY = 10;

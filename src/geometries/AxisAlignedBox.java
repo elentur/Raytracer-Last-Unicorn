@@ -24,7 +24,7 @@ public class AxisAlignedBox extends Geometry {
     /**
      * The 6 sites of the Box.
      */
-    private final Node[] faces = new Node[6];
+    public final Node[] faces = new Node[6];
 
 
     /**
@@ -66,6 +66,12 @@ public class AxisAlignedBox extends Geometry {
         super(m, box.reciveShadows, box.castShadows, box.visibility, box.flipNormal);
         this.lbf = box.lbf;
         this.run = box.run;
+        this.faces[0] = box.faces[0];
+        this.faces[1] = box.faces[1];
+        this.faces[2] = box.faces[2];
+        this.faces[3] = box.faces[3];
+        this.faces[4] = box.faces[4];
+        this.faces[5] = box.faces[5];
     }
 
     @Override

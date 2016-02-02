@@ -22,13 +22,13 @@ public abstract class Geometry extends Element implements Serializable {
     /**
      * represents if a geometry recieves shadows
      */
-    public final boolean reciveShadows;
+    public  boolean reciveShadows;
     /**
      * represents if a geometry casts shadows
      */
-    public final boolean castShadows;
-    public final boolean visibility;
-    public final boolean flipNormal;
+    public  boolean castShadows;
+    public  boolean visibility;
+    public  boolean flipNormal;
 
 
     /**

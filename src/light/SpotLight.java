@@ -79,17 +79,18 @@ public class SpotLight extends Light {
         }
 
         if(Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
-            if(castsShadow && geo.reciveShadows) {
-
-                final Ray r = new Ray(point, directionFrom(point));
+            if(castsShadow&& geo.reciveShadows ) {
+                final Ray r = new Ray(point, directionFrom(point,samplePoint));
 
                 final double tl = r.tOf(position);
 
                 for (final Geometry g : world.geometries) {
+                    if(g.visibility) {
+                        final Hit h = g.hit(r);
+                        if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
 
-                    final Hit h = g.hit(r);
-                    if ((h != null && h.t >= 0.0001 && h.t < tl)) {
-                        return false;
+                            return false;
+                        }
                     }
                 }
             }
@@ -100,6 +101,11 @@ public class SpotLight extends Light {
         return false;
     }
 
+    public Vector3 directionFrom(Point3 point, Point2 samplePoint) {
+        if (point == null) throw new IllegalArgumentException("point must not be null ");
+        Point3 p = new Point3(position.x +samplePoint.x,position.y+samplePoint.y,position.z);
+        return p.sub(point).normalized();
+    }
     @Override
     public Vector3 directionFrom(final Point3 point) {
         return position.sub(point).normalized();

@@ -67,6 +67,7 @@ public class Sphere extends Geometry {
         final double d = (b * b) - (4 * a * cn);
 
         double t = -1;
+
         // change the normal if we are inside the sphere.
 
         if (d > 0) {

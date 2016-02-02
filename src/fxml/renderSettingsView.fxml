@@ -8,7 +8,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
     <TabPane>
@@ -81,7 +80,7 @@
     </TabPane>
 
     <HBox styleClass="setting-group-2">
-        <Button text="OK"/>
-        <Button text="Cancle"/>
+        <Button fx:id = "btnOK" text="OK"/>
+        <Button fx:id = "btnCancel" text="Cancle"/>
     </HBox>
 </VBox>

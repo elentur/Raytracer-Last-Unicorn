@@ -2,9 +2,7 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import geometries.Geometry;
-import geometries.Node;
-import geometries.ShapeFromFile;
+import geometries.*;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -132,6 +130,16 @@ public class MainSettingsNodeController extends AController {
         chkReceiveShadows.setSelected(n.reciveShadows);
         chkVisible.setSelected(n.visibility);
         chkFlipNormals.setSelected(n.flipNormal);
+        if(!(n.geos.size()==1 && !(n.geos.get(0)instanceof Node))){
+            System.out.println(chkFlipNormals.getParent().getParent());
+            nodeView.getChildren().removeAll(
+                    chkFlipNormals.getParent(),
+                    chkCastShadows.getParent(),
+                    chkReceiveShadows.getParent()
+
+            );
+
+        }
         if (txtPath != null) {
             txtPath.setText(((ShapeFromFile) n.geos.get(0)).file.getPath());
         }
@@ -211,6 +219,15 @@ public class MainSettingsNodeController extends AController {
         if (selectedTreeItem.get().getValue() != null){
             if (geos == null) geos = ((Node) selectedTreeItem.get().getValue()).geos;
 
+            if(geos.size()==1 && !(geos.get(0) instanceof Node)) {
+                Geometry g = geos.get(0);
+                if (g instanceof Triangle || g instanceof Plane || g instanceof Sphere || g instanceof AxisAlignedBox || g instanceof ShapeFromFile) {
+                    g.flipNormal = chkFlipNormals.isSelected();
+                    g.visibility = chkVisible.isSelected();
+                    g.castShadows = chkCastShadows.isSelected();
+                    g.reciveShadows = chkReceiveShadows.isSelected();
+                }
+            }
             Node node = new Node(
                     new Point3(txtTranslationX.getDouble(), txtTranslationY.getDouble(), txtTranslationZ.getDouble()),
                     new Point3(txtScalingX.getDouble(), txtScalingY.getDouble(), txtScalingZ.getDouble()),

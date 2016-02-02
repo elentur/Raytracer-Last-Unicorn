@@ -24,6 +24,8 @@ import texture.Texture;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -344,27 +346,40 @@ public class MainMaterialSettingsController extends AController {
         }
 
         if (m != null) {
-            Node n =(Node) selectedTreeItem.get().getValue();
-            m.name = txtMaterialName.getText();
-            Geometry g = n.geos.get(0).deepCopy(m);
-            Node node = new Node(
-                    n.translation,
-                    n.scaling,
-                    n.rotation,
-                    g,
-                    n.reciveShadows,
-                    n.castShadows,
-                    n.visibility,
-                    n.flipNormal);
-            node.name = n.name;
+              for (Node n: getNodesWithMaterial(material.get())) {
+                //Node n = (Node) selectedTreeItem.get().getValue();
+                m.name = txtMaterialName.getText();
+                Geometry g = n.geos.get(0).deepCopy(m);
+
+                Node node = new Node(
+                        n.translation,
+                        n.scaling,
+                        n.rotation,
+                        g,
+                        n.reciveShadows,
+                        n.castShadows,
+                        n.visibility,
+                        n.flipNormal);
+                node.name = n.name;
+                elementLists.updateElement(n, node);
+            }
+            materialList.set(materialList.indexOf( material.get()), m);
             material.setValue(m);
-            materialList.set(materialList.indexOf(n.geos.get(0).material),m);
-            elementLists.updateElement(selectedTreeItem.get().getValue(), node);
 
         }
         loadTextureTabs();
     }
 
+    private List<Node> getNodesWithMaterial(Material m){
+        List<Node>  geos = new ArrayList<>();
+        for (Node g : elementLists.getGeometries() ){
+
+            if(g.geos.get(0).material.equals(m)) geos.add(g);
+        }
+        System.out.println(elementLists.getGeometries().size());
+        System.out.println(geos.size());
+       return geos;
+    }
     private void loadTextureTabs() {
        TabPane tabPane = masterTabPane;
         for(int i =2 ; i <tabPane.getTabs().size();i++){
@@ -518,5 +533,6 @@ public class MainMaterialSettingsController extends AController {
                 setText(item.name);
             }
         }
-    };
+    }
+
 }
