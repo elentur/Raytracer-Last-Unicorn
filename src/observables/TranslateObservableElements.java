@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by roberto on 02/02/16.
+ * Created by
+ * Robert Dziuba on 02/02/16.
  */
 public abstract class TranslateObservableElements {
 
@@ -59,22 +60,6 @@ public abstract class TranslateObservableElements {
 
         return gs;
 
-    }
-
-    private List<Geometry> geometryFinder(List<AOGeometry> geos){
-
-        List<Geometry> gs = new ArrayList<>();
-
-        for(AOGeometry g : geos){
-
-            if(g instanceof ONode) {
-
-            }else {
-                gs.add(g.generate());
-            }
-        }
-
-        return gs;
     }
 
 }

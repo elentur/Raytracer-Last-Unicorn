@@ -6,6 +6,7 @@ import matVect.Point3;
 import observables.materials.AOMaterial;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -48,21 +49,46 @@ public class ONode extends AOGeometry {
     @Override
     public Node generate() {
 
-        List<Geometry> geos = new ArrayList<>();
+        return new Node(
+                new Point3(rotationx,translationy,translationz),
+                new Point3(scalingx, scalingy, scalingz),
+                new Point3(rotationx, rotationy, rotationz),
+                nodeFinder(oGeos),
+                reciveShadows,
+                castShadows,
+                visibility,
+                flipNormal
+        );
+    }
 
-        for(AOGeometry oGeo : oGeos){
-            geos.add(oGeo.generate());
+    private List<Geometry> nodeFinder(List<AOGeometry> obGeos){
+
+        List<Geometry> list = new ArrayList<>();
+
+        for(AOGeometry oGeo : obGeos){
+            
+            if(oGeo instanceof ONode) {
+
+                return new ArrayList<Geometry>(
+                    Arrays.asList(
+                        new Node(
+                            new Point3(((ONode) oGeo).rotationx,((ONode) oGeo).translationy,((ONode) oGeo).translationz),
+                            new Point3(((ONode) oGeo).scalingx, ((ONode) oGeo).scalingy, ((ONode) oGeo).scalingz),
+                            new Point3(((ONode) oGeo).rotationx, ((ONode) oGeo).rotationy, ((ONode) oGeo).rotationz),
+                            nodeFinder( ((ONode) oGeo).oGeos),
+                                ((ONode) oGeo).reciveShadows,
+                                ((ONode) oGeo).castShadows,
+                                ((ONode) oGeo).visibility,
+                                ((ONode) oGeo).flipNormal
+                        )
+                    )
+                );
+            }
+
+            list.add(oGeo.generate());
+            
         }
 
-        return new Node(
-            new Point3(translationx,translationy,translationz),
-            new Point3(scalingx,scalingy,scalingz),
-            new Point3(rotationx,rotationy,rotationz),
-            geos,
-            reciveShadows,
-            castShadows,
-            visibility,
-            flipNormal
-        );
+        return list;
     }
 }
