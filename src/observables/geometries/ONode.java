@@ -69,6 +69,8 @@ public class ONode extends AOGeometry {
             
             if(oGeo instanceof ONode) {
 
+                if(((ONode) oGeo).oGeos.isEmpty()) throw new IllegalArgumentException("The oGeos cannot be null!");
+
                 return new ArrayList<Geometry>(
                     Arrays.asList(
                         new Node(
