@@ -8,4 +8,12 @@ import javafx.beans.property.StringProperty;
  */
 public class AOElement{
     public StringProperty name = new SimpleStringProperty();
+
+    public AOElement() {
+    }
+
+    public AOElement(String name) {
+        this.name.set(name);
+    }
+
 }

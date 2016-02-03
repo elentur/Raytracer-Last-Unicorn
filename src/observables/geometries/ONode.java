@@ -19,34 +19,21 @@ import java.util.List;
  */
 public class ONode extends AOGeometry {
 
-    public DoubleProperty translationx = new SimpleDoubleProperty();
-    public DoubleProperty translationy = new SimpleDoubleProperty();
-    public DoubleProperty translationz = new SimpleDoubleProperty();
+    public DoubleProperty translationx = new SimpleDoubleProperty(0.0);
+    public DoubleProperty translationy = new SimpleDoubleProperty(0.0);
+    public DoubleProperty translationz = new SimpleDoubleProperty(0.0);
 
-    public DoubleProperty scalingx = new SimpleDoubleProperty();
-    public DoubleProperty scalingy = new SimpleDoubleProperty();
-    public DoubleProperty scalingz = new SimpleDoubleProperty();
+    public DoubleProperty scalingx = new SimpleDoubleProperty(1.0);
+    public DoubleProperty scalingy = new SimpleDoubleProperty(1.0);
+    public DoubleProperty scalingz = new SimpleDoubleProperty(1.0);
 
-    public DoubleProperty rotationx = new SimpleDoubleProperty();
-    public DoubleProperty rotationy = new SimpleDoubleProperty();
-    public DoubleProperty rotationz = new SimpleDoubleProperty();
+    public DoubleProperty rotationx = new SimpleDoubleProperty(0.0);
+    public DoubleProperty rotationy = new SimpleDoubleProperty(0.0);
+    public DoubleProperty rotationz = new SimpleDoubleProperty(0.0);
     public ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
-    public ONode(String name, double[] scaling, double[] translation, double[] rotation, List<AOGeometry> oGeos) {
+    public ONode(String name,List<AOGeometry> oGeos) {
         this.name.set(name);
-
-        scalingx.setValue(scaling[0]);
-        scalingy.setValue(scaling[1]);
-        scalingz.setValue(scaling[2]);
-
-        translationx.setValue(translation[0]);
-        translationy.setValue(translation[1]);
-        translationz.setValue(translation[2]);
-
-        rotationx.setValue(rotation[0]);
-        rotationy.setValue(rotation[1]);
-        rotationz.setValue(rotation[2]);
-
         this.oGeos.setAll(oGeos);
     }
 
