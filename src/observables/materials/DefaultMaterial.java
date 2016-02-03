@@ -9,70 +9,29 @@ import observables.textures.OSingleColorTexture;
  * @author Marcus Bätz
  */
 public class DefaultMaterial {
-    private final static AOMaterial defaultMaterial = getLambert();
+    private final static AOMaterial defaultMaterial = getDefaultMaterial();
+    public static AOMaterial getDefaultMaterial(){
+        OLambertMaterial oLambertMaterial = new OLambertMaterial();
+        oLambertMaterial.name.set("default Materia");
+        return oLambertMaterial;
+    }
     public static AOMaterial getLambert(){
-        return new OLambertMaterial(
-                "Lambert",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500,
-                getSingleColorTexture());
+        return new OLambertMaterial();
     }
     public static AOMaterial getSingleColorMaterial(){
-        return new OSingleColorMaterial(
-                "Single-Color",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500);
+        return new OSingleColorMaterial();
     }
     public static AOMaterial getOrenNayar(){
-        return new OOrenNayarMaterial(
-                "Oren-Nayar",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500,
-                getSingleColorTexture(),
-                0.5);
+        return new OOrenNayarMaterial();
     }
     public static AOMaterial getPhong(){
-        return new OPhongMaterial(
-                "Phong",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500,
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                64);
+        return new OPhongMaterial();
     }
     public static AOMaterial getReflectiveMaterial(){
-        return new OReflectiveMaterial(
-                "Reflective",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500,
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                64
-        );
+        return new OReflectiveMaterial();
     }
     public static AOMaterial getTransparentMaterial(){
-        return new OTransparentMaterial(
-                "Transparent",
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                500,
-                getSingleColorTexture(),
-                1.0,
-                getSingleColorTexture(),
-                getSingleColorTexture(),
-                64
-        );    }
-
-
-    public static AOTexture getSingleColorTexture(){
-        return  new OSingleColorTexture(new double[]{0.5,0.5,0.5});
-    }
+        return new OTransparentMaterial();    }
 
     public static AOMaterial getDefaultLambert() {
         return defaultMaterial;

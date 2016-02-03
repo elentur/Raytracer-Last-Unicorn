@@ -17,17 +17,17 @@ public class OPointLight extends AOLight {
     public DoubleProperty py = new SimpleDoubleProperty();
     public DoubleProperty pz = new SimpleDoubleProperty();
 
-    public OPointLight(String name, double[] color, double[] position, boolean castShadow, int photons, double[] pattern) {
-        super(name, color, castShadow, photons, pattern);
-        this.px.setValue(position[0]);
-        this.py.setValue(position[1]);
-        this.pz.setValue(position[2]);
+    public OPointLight() {
+        name.set("Poin Light");
+        px.set(5.0);
+        py.set(5.0);
+        pz.set(5.0);
     }
 
     @Override
     public PointLight generate() {
         return new PointLight(
-                new Color(colorR.get(),colorG.get(),colorB.get()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 castShadow.get(),
                 photons.get(),

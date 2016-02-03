@@ -20,12 +20,12 @@ public class ODOFCamera extends AOCamera{
     public DoubleProperty dPatternFStop  = new SimpleDoubleProperty();
     public DoubleProperty focalLength  = new SimpleDoubleProperty();
 
-    public ODOFCamera(String name, double[] e, double[] g, double[] t, double angle, double[] pattern, double[] dPattern, double focalLength) {
-        super(name, e, g, t, pattern);
-        this.angle.setValue(angle);
-        this.dPatternSubdiv.setValue(dPattern[0]);
-        this.dPatternFStop.setValue(dPattern[1]);
-        this.focalLength.setValue(focalLength);
+    public ODOFCamera() {
+        name.set("DOF Camera");
+        angle.setValue(40);
+        dPatternSubdiv.setValue(3);
+        dPatternFStop.setValue(8);
+        focalLength.setValue(5);
     }
 
     @Override

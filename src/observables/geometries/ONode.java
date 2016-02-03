@@ -32,20 +32,20 @@ public class ONode extends AOGeometry {
     public DoubleProperty rotationz = new SimpleDoubleProperty();
     public ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
-    public ONode(String name,  boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, double[] scaling, double[] translation, double[] rotation, List<AOGeometry> oGeos) {
-        super(name, DefaultMaterial.getSingleColorMaterial(), reciveShadows, castShadows, visibility, flipNormal);
+    public ONode(String name, double[] scaling, double[] translation, double[] rotation, List<AOGeometry> oGeos) {
+        this.name.set(name);
 
-        this.scalingx.setValue(scaling[0]);
-        this.scalingy.setValue(scaling[1]);
-        this.scalingz.setValue(scaling[2]);
+        scalingx.setValue(scaling[0]);
+        scalingy.setValue(scaling[1]);
+        scalingz.setValue(scaling[2]);
 
-        this.translationx.setValue(translation[0]);
-        this.translationy.setValue(translation[1]);
-        this.translationz.setValue(translation[2]);
+        translationx.setValue(translation[0]);
+        translationy.setValue(translation[1]);
+        translationz.setValue(translation[2]);
 
-        this.rotationx.setValue(rotation[0]);
-        this.rotationy.setValue(rotation[1]);
-        this.rotationz.setValue(rotation[2]);
+        rotationx.setValue(rotation[0]);
+        rotationy.setValue(rotation[1]);
+        rotationz.setValue(rotation[2]);
 
         this.oGeos.setAll(oGeos);
     }

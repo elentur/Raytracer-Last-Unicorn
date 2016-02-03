@@ -13,39 +13,20 @@ import observables.AOElement;
  */
 public abstract class AOCamera extends AOElement{
 
-    public DoubleProperty ex = new SimpleDoubleProperty();
-    public DoubleProperty ey = new SimpleDoubleProperty();
-    public DoubleProperty ez = new SimpleDoubleProperty();
+    public DoubleProperty ex = new SimpleDoubleProperty(0);
+    public DoubleProperty ey = new SimpleDoubleProperty(0);
+    public DoubleProperty ez = new SimpleDoubleProperty(5);
 
-    public DoubleProperty gx = new SimpleDoubleProperty();
-    public DoubleProperty gy = new SimpleDoubleProperty();
-    public DoubleProperty gz = new SimpleDoubleProperty();
+    public DoubleProperty gx = new SimpleDoubleProperty(0);
+    public DoubleProperty gy = new SimpleDoubleProperty(0);
+    public DoubleProperty gz = new SimpleDoubleProperty(-1);
 
-    public DoubleProperty tx = new SimpleDoubleProperty();
-    public DoubleProperty ty = new SimpleDoubleProperty();
-    public DoubleProperty tz = new SimpleDoubleProperty();
+    public DoubleProperty tx = new SimpleDoubleProperty(0);
+    public DoubleProperty ty = new SimpleDoubleProperty(1);
+    public DoubleProperty tz = new SimpleDoubleProperty(0);
 
-    public DoubleProperty patternSize = new SimpleDoubleProperty();
-    public IntegerProperty patternSubdiv = new SimpleIntegerProperty();
-
-    public AOCamera(String name, double[] e, double[] g, double[] t, double[] pattern) {
-        super(name);
-        this.ex.setValue(e[0]);
-        this.ey.setValue(e[1]);
-        this.ez.setValue(e[2]);
-
-        this.gx.setValue(g[0]);
-        this.gy.setValue(g[1]);
-        this.gz.setValue(g[2]);
-
-        this.tx.setValue(t[0]);
-        this.ty.setValue(t[1]);
-        this.tz.setValue(t[2]);
-
-        this.patternSize.setValue(pattern[0]);
-        this.patternSubdiv.setValue( pattern[1]);
-    }
-
+    public DoubleProperty patternSize = new SimpleDoubleProperty(0);
+    public IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
 
     public abstract Camera generate();
 }

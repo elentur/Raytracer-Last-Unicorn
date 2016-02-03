@@ -16,17 +16,17 @@ public class ODirectionalLight extends AOLight {
     public DoubleProperty dy = new SimpleDoubleProperty();
     public DoubleProperty dz = new SimpleDoubleProperty();
 
-    public ODirectionalLight(String name, double[] color, boolean castShadow, int photons, double[] pattern, double[] direction) {
-        super(name, color, castShadow, photons, pattern);
-        this.dx.setValue(direction[0]);
-        this.dy.setValue(direction[1]);
-        this.dz.setValue(direction[2]);
+    public ODirectionalLight() {
+        name.set("Directional Light");
+        dx.set(0.0);
+        dy.set(0.0);
+        dz.set(-1.0);
     }
 
     @Override
     public DirectionalLight generate() {
         return new DirectionalLight(
-                new Color(colorR.get(),colorG.get(),colorB.get()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 castShadow.get(),
                 photons.get(),

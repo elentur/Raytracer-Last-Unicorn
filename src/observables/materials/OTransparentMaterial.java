@@ -3,6 +3,7 @@ package observables.materials;
 import javafx.beans.property.*;
 import material.TransparentMaterial;
 import observables.textures.AOTexture;
+import observables.textures.OSingleColorTexture;
 
 /**
  * Created by
@@ -14,12 +15,12 @@ public class OTransparentMaterial extends AOMaterial {
     public ObjectProperty<AOTexture> reflection = new SimpleObjectProperty<>();
     public IntegerProperty exponent = new SimpleIntegerProperty();
 
-    public OTransparentMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance, double indexOfRefraction, AOTexture specular, AOTexture reflection, int exponent) {
-        super(name, texture, bumpMap, bumpScale, irradiance);
-        this.indexOfRefraction.setValue(indexOfRefraction);
-        this.specular.setValue(specular);
-        this.reflection.setValue(reflection);
-        this.exponent.setValue(exponent);
+    public OTransparentMaterial() {
+        name.set("Transparent Material");
+        indexOfRefraction.set(1.0);
+        specular.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
+        reflection.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
+        exponent.set(64);
     }
 
     @Override

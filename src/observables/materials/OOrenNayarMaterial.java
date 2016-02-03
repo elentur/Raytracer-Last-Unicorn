@@ -13,9 +13,9 @@ public class OOrenNayarMaterial extends AOMaterial{
 
     public DoubleProperty roughness = new SimpleDoubleProperty();
 
-    public OOrenNayarMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance, double roughness) {
-        super(name, texture, bumpMap, bumpScale, irradiance);
-        this.roughness.setValue(roughness);
+    public OOrenNayarMaterial() {
+        name.set("Oren Nayar Material");
+        roughness.set(0.5);
     }
 
     @Override

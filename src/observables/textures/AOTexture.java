@@ -12,22 +12,12 @@ import texture.Texture;
  * Robert Dziuba on 02/02/16.
  */
 public abstract class AOTexture extends AOElement {
-    public DoubleProperty scaleU = new SimpleDoubleProperty();
-    public DoubleProperty scaleV = new SimpleDoubleProperty();
-    public DoubleProperty offsetU = new SimpleDoubleProperty();
-    public DoubleProperty offsetV = new SimpleDoubleProperty();
-    public DoubleProperty rotate = new SimpleDoubleProperty();
+    public DoubleProperty scaleU = new SimpleDoubleProperty(1);
+    public DoubleProperty scaleV = new SimpleDoubleProperty(1);
+    public DoubleProperty offsetU = new SimpleDoubleProperty(0);
+    public DoubleProperty offsetV = new SimpleDoubleProperty(0);
+    public DoubleProperty rotate = new SimpleDoubleProperty(0);
     public StringProperty path  = new SimpleStringProperty();
-
-    public AOTexture(String name, double scaleU, double scaleV, double offsetU, double offsetV, double rotate, String path) {
-        super(name);
-        this.scaleU.setValue(scaleU);
-        this.scaleV.setValue(scaleV);
-        this.offsetU.setValue(offsetU);
-        this.offsetV.setValue(offsetV);
-        this.rotate.setValue(rotate);
-        this.path.setValue(path);
-    }
 
     public abstract Texture generate();
 }

@@ -15,9 +15,9 @@ public class OOrthographicCamera extends AOCamera{
 
     public DoubleProperty s = new SimpleDoubleProperty();
 
-    public OOrthographicCamera(String name, double[] e, double[] g, double[] t, double s, double[] pattern) {
-        super(name, e, g, t, pattern);
-        this.s.setValue(s);
+    public OOrthographicCamera() {
+        name.set("Orthographic Camera");
+        s.setValue(3);
     }
 
     @Override

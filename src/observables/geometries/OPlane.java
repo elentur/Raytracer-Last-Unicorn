@@ -9,8 +9,8 @@ import observables.materials.AOMaterial;
  */
 public class OPlane extends AOGeometry {
 
-    public OPlane(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+    public OPlane() {
+        name.set("Plane");
     }
 
     @Override

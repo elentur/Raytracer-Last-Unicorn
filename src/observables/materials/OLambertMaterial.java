@@ -9,8 +9,8 @@ import observables.textures.AOTexture;
  */
 public class OLambertMaterial extends AOMaterial{
 
-    public OLambertMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance) {
-        super(name, texture, bumpMap, bumpScale, irradiance);
+    public OLambertMaterial() {
+        name.set("Lambert Material");
     }
 
     @Override

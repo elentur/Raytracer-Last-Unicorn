@@ -8,35 +8,12 @@ package observables.lights;
 public class DefaultLight {
 
     public static AOLight getDirectionalLight(){
-        return new ODirectionalLight(
-                "Directional Light",
-                new double[]{1.0,1.0,1.0},
-                true,
-                500,
-                new double[]{0.0,1.0},
-                new double[]{0.0,0.0,-1.0}
-        );
+        return new ODirectionalLight();
     }
     public static AOLight getPointLight(){
-        return new OPointLight(
-                "Point Light",
-                new double[]{1.0,1.0,1.0},
-                new double[]{5.0,5.0,5.0},
-                true,
-                500,
-                new double[]{0.0,1.0}
-        );
+        return new OPointLight();
     }
     public static AOLight getSpotLight(){
-        return new OSpotLight(
-                "Spot Light",
-                new double[]{1.0,1.0,1.0},
-                true,
-                500,
-                new double[]{0.0,1.0},
-                new double[]{5.0,5.0,5.0},
-                new double[]{-1.0,-1.0,-1.0},
-                Math.PI/14
-        );
+        return new OSpotLight();
     }
 }

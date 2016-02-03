@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import observables.AOElement;
 import observables.materials.AOMaterial;
+import observables.materials.DefaultMaterial;
 
 /**
  * Created by
@@ -14,20 +15,11 @@ import observables.materials.AOMaterial;
  */
 public abstract class AOGeometry extends AOElement{
 
-    public ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>();
-    public BooleanProperty reciveShadows = new SimpleBooleanProperty();
-    public BooleanProperty castShadows  = new SimpleBooleanProperty();
-    public BooleanProperty visibility  = new SimpleBooleanProperty();
-    public BooleanProperty flipNormal = new SimpleBooleanProperty();
-
-    public AOGeometry(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name);
-        this.material.setValue(material);
-        this.reciveShadows.setValue(reciveShadows);
-        this.castShadows.setValue(castShadows);
-        this.visibility.setValue( visibility);
-        this.flipNormal.setValue(flipNormal);
-    }
+    public ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>(DefaultMaterial.getDefaultLambert());
+    public BooleanProperty reciveShadows = new SimpleBooleanProperty(true);
+    public BooleanProperty castShadows  = new SimpleBooleanProperty(true);
+    public BooleanProperty visibility  = new SimpleBooleanProperty(true);
+    public BooleanProperty flipNormal = new SimpleBooleanProperty(false);
 
     public abstract Geometry generate();
 }
