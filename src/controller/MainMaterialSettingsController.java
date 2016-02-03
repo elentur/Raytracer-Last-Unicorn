@@ -2,7 +2,6 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -10,10 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import material.*;
+import observables.materials.*;
 import texture.ImageTexture;
 import texture.InterpolatedImageTexture;
 import texture.Texture;
@@ -109,18 +107,18 @@ public class MainMaterialSettingsController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (material.get() instanceof OrenNayarMaterial) {
+                if (material.get() instanceof OOrenNayarMaterial) {
                     v = loader.load(this.getClass().getResource("/fxml/mainOrenNayarMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                } else if (material.get() instanceof PhongMaterial) {
+                } else if (material.get() instanceof OPhongMaterial) {
                     v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                }else if (material.get() instanceof ReflectiveMaterial) {
+                }else if (material.get() instanceof OReflectiveMaterial) {
                     v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
                     v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                } else  if (material.get() instanceof TransparentMaterial){
+                } else  if (material.get() instanceof OTransparentMaterial){
                     v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
                     v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
@@ -150,8 +148,8 @@ public class MainMaterialSettingsController extends AController {
 
     }
     private void initializeFields() {
-        Material m = material.get();
-        txtMaterialName.setText(m.name);
+        AOMaterial m = material.get();
+       /* txtMaterialName.setText(m.name);
         txtMaterialName.setOnAction(a -> handleUpdateMaterial());
         clpDiffuse.setValue(new Color(m.texture.getColor(0,0).r,m.texture.getColor(0,0).g,m.texture.getColor(0,0).b,1));
         clpDiffuse.setOnAction(a -> handleUpdateMaterial());
@@ -241,7 +239,7 @@ public class MainMaterialSettingsController extends AController {
         cmbNormal.setOnAction(a-> selectTexture(cmbNormal));
         cmbIrradiance.setOnAction(a-> selectTexture(cmbIrradiance));
         if(cmbSpecular!=null)cmbSpecular.setOnAction(a-> selectTexture(cmbSpecular));
-        if(cmbReflection!=null)cmbReflection.setOnAction(a-> selectTexture(cmbReflection));
+        if(cmbReflection!=null)cmbReflection.setOnAction(a-> selectTexture(cmbReflection));*/
 
     }
 
@@ -266,7 +264,7 @@ public class MainMaterialSettingsController extends AController {
 
 
     private void loadTextureTabs() {
-       TabPane tabPane = masterTabPane;
+      /* TabPane tabPane = masterTabPane;
         for(int i =2 ; i <tabPane.getTabs().size();i++){
             tabPane.getTabs().remove(i);
         }
@@ -344,6 +342,7 @@ public class MainMaterialSettingsController extends AController {
             }
         } catch (IOException e) {
         }
+        */
     }
 
     private void initializeTexture(final VBox v, final Texture texture) {
@@ -371,7 +370,7 @@ public class MainMaterialSettingsController extends AController {
     }
 
     private void handleUpdateTexture(final VBox v, final Texture texture) {
-            Texture tex = ((CheckBox)v.lookup("#chkBilinearFilter")).isSelected()?
+         /*   Texture tex = ((CheckBox)v.lookup("#chkBilinearFilter")).isSelected()?
                     new InterpolatedImageTexture(
                             ((TextField) v.lookup("#txtPath")).getText(),
                             ((NumberTextField) v.lookup("#txtScalingU")).getDouble(),
@@ -397,7 +396,7 @@ public class MainMaterialSettingsController extends AController {
         if(cmbSpecular != null && cmbSpecular.getValue()!=null && cmbSpecular.getSelectionModel().getSelectedItem().equals(texture))cmbSpecular.getSelectionModel().select(tex);
         if(cmbReflection !=null && cmbReflection.getValue()!=null &&  cmbReflection.getSelectionModel().getSelectedItem().equals(texture))cmbReflection.getSelectionModel().select(tex);
         textureList.remove(texture);
-        handleUpdateMaterial();
+        handleUpdateMaterial();*/
     }
 
     private void clearTexture(final MouseEvent a, final ComboBox<Texture> comboBox) {

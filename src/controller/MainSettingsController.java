@@ -33,21 +33,17 @@ public class MainSettingsController extends AController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         txtName.setText(selectedTreeItem.get().getValue().name.getValue());
-        txtName.setOnAction(a->{
-           /* Element e = selectedTreeItem.get().getValue().deepCopy();
-            e.name=txtName.getText();
-           ObservableElementLists.getInstance().updateElement(selectedTreeItem.get().getValue(),e);*/
-        });
+        txtName.textProperty().bindBidirectional(selectedTreeItem.get().getValue().name);
         try {
+            VBox v;
         if(selectedTreeItem.get().getValue() instanceof AOCamera){
-            VBox v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
+             v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
             mainSettingsView.getChildren().add(v);
 
         }else if(selectedTreeItem.get().getValue() instanceof AOLight){
-            VBox v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
+             v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
             mainSettingsView.getChildren().add(v);
         }else if(selectedTreeItem.get().getValue() instanceof ONode) {
-            VBox v;
             v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
             mainSettingsView.getChildren().add(v);
         }

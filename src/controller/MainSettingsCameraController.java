@@ -1,12 +1,14 @@
 package controller;
 
 import UI.NumberTextField;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import observables.cameras.AOCamera;
+import observables.cameras.ODOFCamera;
 import observables.cameras.OOrthographicCamera;
 import observables.cameras.OPerspectiveCamera;
 
@@ -102,42 +104,40 @@ public class MainSettingsCameraController extends AController {
 
     private void initializeFields() {
         AOCamera c = (AOCamera) selectedTreeItem.get().getValue();
-        /*txtPositionX.setNumber(c.ex);
-        txtPositionY.setNumber(c.e.y);
-        txtPositionZ.setNumber(c.e.z);
-        txtDirectionX.setNumber(c.g.x);
-        txtDirectionY.setNumber(c.g.y);
-        txtDirectionZ.setNumber(c.g.z);
-        txtUpVectorX.setNumber(c.t.x);
-        txtUpVectorY.setNumber(c.t.y);
-        txtUpVectorZ.setNumber(c.t.z);
-        txtSampling.setNumber(c.samplingPattern.subdiv);
+        txtPositionX.doubleProperty.bindBidirectional(c.ex);
+        txtPositionY.doubleProperty.bindBidirectional(c.ey);
+        txtPositionZ.doubleProperty.bindBidirectional(c.ez);
+        txtDirectionX.doubleProperty.bindBidirectional(c.gx);
+        txtDirectionY.doubleProperty.bindBidirectional(c.gy);
+        txtDirectionZ.doubleProperty.bindBidirectional(c.gz);
+        txtUpVectorX.doubleProperty.bindBidirectional(c.tx);
+        txtUpVectorY.doubleProperty.bindBidirectional(c.ty);
+        txtUpVectorZ.doubleProperty.bindBidirectional(c.tz);
+        txtSampling.doubleProperty.bindBidirectional(c.patternSubdiv);
         if (txtScaleFactor != null) {
-            txtScaleFactor.setNumber(((OrthographicCamera) c).s);
-            txtScaleFactor.setOnAction(a -> handleUpdateCamera());
+            txtScaleFactor.doubleProperty.bindBidirectional(((OOrthographicCamera) c).s);
         }
         if (sldAngle != null) {
-            Double angle = c instanceof DOFCamera ? ((DOFCamera) c).angle : ((PerspectiveCamera) c).angle;
-            angle = angle * (180 / Math.PI);
+
             lblAngle.textProperty().bind(Bindings.concat("Opening Angle: ").concat(Bindings.format("%.1f", sldAngle.valueProperty())).concat("°"));
             sldAngle.setMin(1);
             sldAngle.setMax(90);
-            sldAngle.setValue(angle);
-            sldAngle.setOnMouseReleased(a -> handleUpdateCamera());
+            if(c instanceof OPerspectiveCamera){
+                sldAngle.valueProperty().bindBidirectional(((OPerspectiveCamera)c).angle);
+            }else{
+                sldAngle.valueProperty().bindBidirectional(((ODOFCamera)c).angle);
+            }
         }
         if (txtFStop != null) {
-            txtFStop.setNumber(((DOFCamera)c).dofPattern.size);
-            txtFStop.setOnAction(a -> handleUpdateCamera());
+            txtFStop.doubleProperty.bindBidirectional(((ODOFCamera)c).dPatternFStop);
         }
         if (txtFocalLength != null) {
-            txtFocalLength.setNumber(((DOFCamera)c).focalLength);
-            txtFocalLength.setOnAction(a -> handleUpdateCamera());
+            txtFocalLength.doubleProperty.bindBidirectional(((ODOFCamera)c).focalLength);
         }
         if (txtSubdiv != null) {
-            txtSubdiv.setNumber(((DOFCamera)c).dofPattern.subdiv);
-            txtSubdiv.setOnAction(a -> handleUpdateCamera());
+            txtSubdiv.doubleProperty.bindBidirectional(((ODOFCamera)c).dPatternSubdiv);
 
-        }*/
+        }
     }
 
     @FXML

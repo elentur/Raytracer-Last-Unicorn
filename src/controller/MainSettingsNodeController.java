@@ -3,18 +3,22 @@ package controller;
 import UI.MaterialView;
 import UI.NumberTextField;
 import geometries.Geometry;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import material.DefaultMaterial;
+import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
 import observables.materials.AOMaterial;
+import observables.materials.DefaultMaterial;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -67,14 +71,14 @@ public class MainSettingsNodeController extends AController {
 
     public MainSettingsNodeController() {
         if (materialList.isEmpty()) materialList.addAll(
-                DefaultMaterial.SINGLE_COLOR_MATERIAL,
-                DefaultMaterial.LAMBERT_MATERIAL,
-                DefaultMaterial.OREN_NAYAR_MATERIAL,
-                DefaultMaterial.PHONG_MATERIAL,
-                DefaultMaterial.REFLECTIVE_MATERIAL,
-                DefaultMaterial.TRANSPARENT_MATERIAL,
-                DefaultMaterial.MATERIAL);
-        DefaultMaterial.MATERIAL.name="Default Lambert Material";
+                DefaultMaterial.getSingleColorMaterial(),
+                DefaultMaterial.getLambert(),
+                DefaultMaterial.getOrenNayar(),
+                DefaultMaterial.getPhong(),
+                DefaultMaterial.getReflectiveMaterial(),
+                DefaultMaterial.getTransparentMaterial(),
+                DefaultMaterial.getDefaultLambert()
+        );
     }
 
     /**
@@ -110,24 +114,23 @@ public class MainSettingsNodeController extends AController {
     private void initializeFields() {
         TabPane t = null;
         ONode n = (ONode) selectedTreeItem.get().getValue();
-        /*txtTranslationX.setNumber(n.translation.x);
-        txtTranslationY.setNumber(n.translation.y);
-        txtTranslationZ.setNumber(n.translation.z);
-        txtScalingX.setNumber(n.scaling.x);
-        txtScalingY.setNumber(n.scaling.y);
-        txtScalingZ.setNumber(n.scaling.z);
-        txtRotationX.setNumber(n.rotation.x * (180 / Math.PI));
-        txtRotationY.setNumber(n.rotation.y * (180 / Math.PI));
-        txtRotationZ.setNumber(n.rotation.z * (180 / Math.PI));
-        material.setValue(((Node) selectedTreeItem.get().getValue()).geos.get(0).material);
+        txtTranslationX.doubleProperty.bindBidirectional(n.translationx);
+        txtTranslationY.doubleProperty.bindBidirectional(n.translationy);
+        txtTranslationZ.doubleProperty.bindBidirectional(n.translationz);
+        txtScalingX.doubleProperty.bindBidirectional(n.scalingx);
+        txtScalingY.doubleProperty.bindBidirectional(n.scalingy);
+        txtScalingZ.doubleProperty.bindBidirectional(n.scalingz);
+        txtRotationX.doubleProperty.bindBidirectional(n.rotationx);
+        txtRotationY.doubleProperty.bindBidirectional(n.rotationy);
+        txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
+        material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
         materialView.setUpTracer(material);
         cmbMaterial.setItems(materialList);
-        chkCastShadows.setSelected(n.castShadows);
-        chkReceiveShadows.setSelected(n.reciveShadows);
-        chkVisible.setSelected(n.visibility);
-        chkFlipNormals.setSelected(n.flipNormal);
-        if(!(n.geos.size()==1 && !(n.geos.get(0)instanceof Node))){
-            System.out.println(chkFlipNormals.getParent().getParent());
+        chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
+        chkReceiveShadows.selectedProperty().bindBidirectional(n.reciveShadows);
+        chkVisible.selectedProperty().bindBidirectional(n.visibility);
+        chkFlipNormals.selectedProperty().bindBidirectional(n.flipNormal);
+        if(!(n.oGeos.size()==1 && !(n.oGeos.get(0)instanceof ONode))){
             nodeView.getChildren().removeAll(
                     chkFlipNormals.getParent(),
                     chkCastShadows.getParent(),
@@ -137,31 +140,21 @@ public class MainSettingsNodeController extends AController {
 
         }
         if (txtPath != null) {
-            txtPath.setText(((ShapeFromFile) n.geos.get(0)).file.getPath());
+            txtPath.textProperty().bindBidirectional(((OShapeFromFile) n.oGeos.get(0)).path);
         }
         if (btnNewPath != null) {
             btnNewPath.setOnAction(a -> newPathLoad());
         }
-        setMaterialComboBox();*/
+        setMaterialComboBox();
     }
 
     private void newPathLoad() {
-       /* FileChooser dlg = new FileChooser();
+        FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(materialView.getScene().getWindow());
         if (file != null) {
-            ShapeFromFile s = (ShapeFromFile) ((Node) selectedTreeItem.get().getValue()).geos.get(0);
-            ShapeFromFile e = new ShapeFromFile(file,
-                    s.material,
-                    s.reciveShadows,
-                    s.castShadows,
-                    s.visibility,
-                    s.flipNormal);
-            List<Geometry> geos = new ArrayList<>();
-            geos.add(e);
-            if (e != null) updateNode(geos);
-            ;
-        }*/
+            txtPath.setText(file.getPath());
+        }
     }
 
     private void setMaterialComboBox() {
@@ -180,7 +173,7 @@ public class MainSettingsNodeController extends AController {
                         if (item != null) {
                             String prefix = "";
                             if (this.getIndex() < 6) prefix = "New";
-                            setText(prefix + " " + item.name);
+                            setText(prefix + " " + item.name.get());
                         }
                     }
                 };
@@ -196,11 +189,11 @@ public class MainSettingsNodeController extends AController {
                 } else {
                     String prefix = "";
                     if (this.getIndex() < 6) prefix = "New";
-                    setText(prefix + " " + item.name);
+                    setText(prefix + " " + item.name.get());
                 }
             }
         });
-       // cmbMaterial.getSelectionModel().select(material.get());
+        cmbMaterial.getSelectionModel().select(material.get());
 
 
     }
@@ -212,47 +205,20 @@ public class MainSettingsNodeController extends AController {
 
     private void updateNode(List<Geometry> geos) {
 
-   /*     if (selectedTreeItem.get().getValue() != null){
-            if (geos == null) geos = ((Node) selectedTreeItem.get().getValue()).geos;
-
-            if(geos.size()==1 && !(geos.get(0) instanceof Node)) {
-                Geometry g = geos.get(0);
-                if (g instanceof Triangle || g instanceof Plane || g instanceof Sphere || g instanceof AxisAlignedBox || g instanceof ShapeFromFile) {
-                    g.flipNormal = chkFlipNormals.isSelected();
-                    g.visibility = chkVisible.isSelected();
-                    g.castShadows = chkCastShadows.isSelected();
-                    g.reciveShadows = chkReceiveShadows.isSelected();
-                }
-            }
-            Node node = new Node(
-                    new Point3(txtTranslationX.getDouble(), txtTranslationY.getDouble(), txtTranslationZ.getDouble()),
-                    new Point3(txtScalingX.getDouble(), txtScalingY.getDouble(), txtScalingZ.getDouble()),
-                    new Point3(txtRotationX.getDouble() / (180 / Math.PI), txtRotationY.getDouble() / (180 / Math.PI), txtRotationZ.getDouble() / (180 / Math.PI)),
-                    geos,
-                    chkReceiveShadows.isSelected(),
-                    chkCastShadows.isSelected(),
-                    chkVisible.isSelected(),
-                    chkFlipNormals.isSelected());
-            if (node != null) {
-                node.name = selectedTreeItem.get().getValue().name;
-                elementLists.updateElement(selectedTreeItem.get().getValue(), node);
-                //   NodeTreeViewController.updateElement(node);
-            }
-        }
     }
     public void handleComboBoxMaterialAction(ActionEvent actionEvent) {
-        Material m = cmbMaterial.getSelectionModel().getSelectedItem();
+        AOMaterial m = cmbMaterial.getSelectionModel().getSelectedItem();
         if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
-            m = cmbMaterial.getSelectionModel().getSelectedItem().deepCopy();
-            materialList.add(m);
+            try {
+                m =  cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
+                materialList.add(m);
+            } catch (InstantiationException e) {
+            } catch (IllegalAccessException e) {
+            }
+
         }
         material.setValue(m);
-        Geometry g = ((Node) selectedTreeItem.get().getValue()).geos.get(0);
-        List<Geometry> geos = new ArrayList<>();
-        geos.add(g.deepCopy(m));
-        updateNode(geos);
-        TreeItem<Element> t = selectedTreeItem.get();
-        selectedTreeItem.setValue(null);
-        selectedTreeItem.setValue(t);*/
+        AOGeometry g = ((ONode) selectedTreeItem.get().getValue()).oGeos.get(0);
+        g.material.setValue(m);
     }
 }

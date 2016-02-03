@@ -1,6 +1,7 @@
 package controller;
 
 import UI.NumberTextField;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -11,6 +12,7 @@ import javafx.scene.layout.VBox;
 import observables.lights.AOLight;
 import observables.lights.ODirectionalLight;
 import observables.lights.OPointLight;
+import observables.lights.OSpotLight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,7 +72,11 @@ public class MainSettingsLightController extends AController {
                 if (selectedTreeItem.get().getValue() instanceof ODirectionalLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
                     lightView.getChildren().add(v);
+                    lightView.getChildren().removeAll(
+                            txtLightSize.getParent(),
+                            txtLightSizeSubdiv.getParent()
 
+                    );
                 } else if (selectedTreeItem.get().getValue() instanceof OPointLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
                     lightView.getChildren().add(v);
@@ -91,6 +97,7 @@ public class MainSettingsLightController extends AController {
                 txtDirectionX = (NumberTextField) lightView.lookup("#txtDirectionX");
                 txtDirectionY = (NumberTextField) lightView.lookup("#txtDirectionY");
                 txtDirectionZ = (NumberTextField) lightView.lookup("#txtDirectionZ");
+
             } catch (
                     IOException e
                     )
@@ -107,49 +114,51 @@ public class MainSettingsLightController extends AController {
 
     private void initializeFields() {
         AOLight l = (AOLight) selectedTreeItem.get().getValue();
-        txtIrradiance.doubleProperty.bindBidirectional(l.photons);
 
-/*
         if (txtPositionX != null) {
-            Point3 pos = l instanceof PointLight ? ((PointLight) l).position : ((SpotLight) l).position;
+            if(l instanceof OPointLight){
+                OPointLight p = (OPointLight) l;
+                txtPositionX.doubleProperty.bindBidirectional(p.px);
+                txtPositionY.doubleProperty.bindBidirectional(p.py);
+                txtPositionZ.doubleProperty.bindBidirectional(p.pz);
+            }else{
+                OSpotLight p = (OSpotLight) l;
+                txtPositionX.doubleProperty.bindBidirectional(p.px);
+                txtPositionY.doubleProperty.bindBidirectional(p.py);
+                txtPositionZ.doubleProperty.bindBidirectional(p.pz);
+            }
 
-            txtPositionX.setNumber((pos.x));
-            txtPositionX.setOnAction(a -> handleUpdateLight());
-            txtPositionY.setNumber(pos.y);
-            txtPositionY.setOnAction(a -> handleUpdateLight());
-            txtPositionZ.setNumber(pos.z);
-            txtPositionZ.setOnAction(a -> handleUpdateLight());
+
         }
         if (txtDirectionX != null) {
-            Vector3 dir = l instanceof DirectionalLight ? ((DirectionalLight) l).direction : ((SpotLight) l).direction;
+            if(l instanceof ODirectionalLight){
+                ODirectionalLight d = (ODirectionalLight) l;
+                txtDirectionX.doubleProperty.bindBidirectional(d.dx);
+                txtDirectionY.doubleProperty.bindBidirectional(d.dy);
+                txtDirectionZ.doubleProperty.bindBidirectional(d.dz);
+            }else{
+                OSpotLight d = (OSpotLight) l;
+                txtDirectionX.doubleProperty.bindBidirectional(d.dx);
+                txtDirectionY.doubleProperty.bindBidirectional(d.dy);
+                txtDirectionZ.doubleProperty.bindBidirectional(d.dz);
+            }
 
-            txtDirectionX.setNumber(dir.x);
-            txtDirectionX.setOnAction(a -> handleUpdateLight());
-            txtDirectionY.setNumber(dir.y);
-            txtDirectionY.setOnAction(a -> handleUpdateLight());
-            txtDirectionZ.setNumber(dir.z);
-            txtDirectionZ.setOnAction(a -> handleUpdateLight());
         }
 
         if (sldAngle != null) {
-            Double angle = ((SpotLight) l).halfAngle;
-            angle = angle * (180 / Math.PI);
             lblAngle.textProperty().bind(Bindings.concat("Opening Angle: ").concat(Bindings.format("%.1f", sldAngle.valueProperty())).concat("°"));
             sldAngle.setMin(1);
             sldAngle.setMax(90);
-            sldAngle.setValue(angle);
-            sldAngle.setOnMouseReleased(a -> handleUpdateLight());
+            sldAngle.valueProperty().bindBidirectional(((OSpotLight) l).halfAngle);
         }
-        clpLightColor.setValue(new Color(l.color.r, l.color.g, l.color.b, 1));
-        chkCastShadows.setSelected(l.castsShadow);
-        txtIrradiance.setNumber(l.photons);
-        txtLightSize.setNumber(l.lightShadowPattern.size);
-        txtLightSizeSubdiv.setNumber(l.lightShadowPattern.subdiv);
-        */
+        //clpLightColor.setValue(new Color(l.color.r, l.color.g, l.color.b, 1));
+        chkCastShadows.selectedProperty().bindBidirectional(l.castShadow);
+        txtIrradiance.doubleProperty.bindBidirectional(l.photons);
+        txtLightSize.doubleProperty.bindBidirectional(l.patternSize);
+        txtLightSizeSubdiv.doubleProperty.bindBidirectional(l.patternSubdiv);
     }
 
     @FXML
     private void handleUpdateLight() {
-
     }
 }

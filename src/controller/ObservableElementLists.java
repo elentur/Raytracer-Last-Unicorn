@@ -166,17 +166,17 @@ public class ObservableElementLists {
             nodeTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
             geometries.remove(n);
         } else {
-           /* Node parent = getParentNode(r.getWorld().geometries, n);
+            ONode parent = getParentNode(geometries, n);
             if (parent != null) {
-                parent.geos.remove(n);
-                TreeItem<Element> parentItem = treeView.getSelectionModel().getSelectedItem().getParent();
+                parent.oGeos.remove(n);
+                TreeItem<AOElement> parentItem = treeView.getSelectionModel().getSelectedItem().getParent();
                 parentItem.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
-                if (parent.geos.isEmpty()) {
-                    Node parentParent = null;
-                    TreeItem<Element> parentParentItem = null;
+                if (parent.oGeos.isEmpty()) {
+                    ONode parentParent = null;
+                    TreeItem<AOElement> parentParentItem = null;
                     while (parentItem!= nodeTree){
                         parentParent = parent;
-                        parent = getParentNode(r.getWorld().geometries, parent);
+                        parent = getParentNode(geometries, parent);
                         parentParentItem = parentItem;
                         parentItem= parentItem.getParent();
                         if(parentItem.getChildren().size()>1){
@@ -186,10 +186,10 @@ public class ObservableElementLists {
                     }
                     treeView.getSelectionModel().clearSelection();
                     parentItem.getChildren().remove(parentParentItem);
-                    if(parent!=null)parent.geos.remove(parentParent);
-                    else r.getWorld().geometries.remove(parentParent);
+                    if(parent!=null)parent.oGeos.remove(parentParent);
+                    else geometries.remove(parentParent);
                 }
-            }*/
+            }
         }
     }
 
