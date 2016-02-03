@@ -24,25 +24,24 @@ public class OSpotLight extends AOLight {
 
     public DoubleProperty halfAngle = new SimpleDoubleProperty();
 
-    public OSpotLight(String name, double[] color, boolean castShadow, int photons, double[] pattern, double[] position, double[] direction, double halfAngle) {
-        super(name, color, castShadow, photons, pattern);
+    public OSpotLight() {
+        name.set("Spot Light");
+        this.px.set(5.0);
+        this.py.set(5.0);
+        this.pz.set(5.0);
 
-        this.px.setValue(position[0]);
-        this.py.setValue(position[1]);
-        this.pz.setValue(position[2]);
+        this.dx.set(-1.0);
+        this.dy.set(-1.0);
+        this.dz.set(-1.0);
 
-        this.dx.setValue(direction[0]);
-        this.dy.setValue(direction[1]);
-        this.dz.setValue(direction[2]);
-
-        this.halfAngle.setValue(halfAngle);
+        this.halfAngle.set(20);
     }
 
 
     @Override
     public SpotLight generate() {
         return new SpotLight(
-                new Color(colorR.get(),colorG.get(),colorB.get()),
+                new Color(color.getRed(),color.getGreen(),color.getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 halfAngle.get(),

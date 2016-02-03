@@ -9,8 +9,8 @@ import observables.materials.AOMaterial;
  */
 public class OAxisAlignedBox extends AOGeometry {
 
-    public OAxisAlignedBox(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+    public OAxisAlignedBox() {
+        name.set("Axis Aligned Box");
     }
 
     @Override

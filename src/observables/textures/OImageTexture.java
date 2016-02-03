@@ -7,8 +7,9 @@ import texture.ImageTexture;
  * Robert Dziuba on 02/02/16.
  */
 public class OImageTexture extends AOTexture {
-    public OImageTexture(String name, double scaleU, double scaleV, double offsetU, double offsetV, double rotate, String path) {
-        super(name, scaleU, scaleV, offsetU, offsetV, rotate, path);
+    public OImageTexture(String path) {
+        name.set("Image Texture");
+        this.path.set(path);
     }
 
     @Override

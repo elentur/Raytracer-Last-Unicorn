@@ -9,8 +9,8 @@ import observables.materials.AOMaterial;
  */
 public class OTriangle extends AOGeometry {
 
-    public OTriangle(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+    public OTriangle() {
+        name.set("Triangle");
     }
 
     @Override

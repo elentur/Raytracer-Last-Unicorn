@@ -4,8 +4,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
 import material.ReflectiveMaterial;
 import observables.textures.AOTexture;
+import observables.textures.OSingleColorTexture;
 
 /**
  * Created by
@@ -16,11 +18,10 @@ public class OReflectiveMaterial extends AOMaterial{
     public ObjectProperty<AOTexture> reflection = new SimpleObjectProperty<>();
     public IntegerProperty exponent = new SimpleIntegerProperty();
 
-    public OReflectiveMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance, AOTexture specular, AOTexture reflection, int exponent) {
-        super(name, texture, bumpMap, bumpScale, irradiance);
-        this.specular.setValue(specular);
-        this.reflection.setValue(reflection);
-        this.exponent.setValue(exponent);
+    public OReflectiveMaterial(){
+        specular.set(new OSingleColorTexture(Color.WHITE));
+        reflection.set(new OSingleColorTexture(Color.GRAY));
+        exponent.set(64);
     }
 
     @Override

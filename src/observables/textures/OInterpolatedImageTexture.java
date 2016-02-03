@@ -8,8 +8,9 @@ import texture.InterpolatedImageTexture;
  */
 public class OInterpolatedImageTexture extends AOTexture {
 
-    public OInterpolatedImageTexture(String name, double scaleU, double scaleV, double offsetU, double offsetV, double rotate, String path) {
-        super(name, scaleU, scaleV, offsetU, offsetV, rotate, path);
+    public OInterpolatedImageTexture(String path) {
+        name.set("Interpolated Image Texture");
+        this.path.set(path);
     }
 
     @Override

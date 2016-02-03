@@ -9,8 +9,8 @@ import observables.materials.AOMaterial;
  */
 public class OSphere extends AOGeometry {
 
-    public OSphere(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+    public OSphere() {
+       name.set("Sphere");
     }
 
     @Override

@@ -4,8 +4,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
 import material.PhongMaterial;
 import observables.textures.AOTexture;
+import observables.textures.OSingleColorTexture;
 
 /**
  * Created by
@@ -16,10 +18,10 @@ public class OPhongMaterial extends AOMaterial{
     public ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
     public IntegerProperty exponent = new SimpleIntegerProperty();
 
-    public OPhongMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance, AOTexture specular, int exponent) {
-        super(name, texture, bumpMap, bumpScale, irradiance);
-        this.specular.setValue(specular);
-        this.exponent.setValue(exponent);
+    public OPhongMaterial() {
+        name.set("Phong Material");
+        specular.set(new OSingleColorTexture(Color.WHITE));
+        exponent.set(64);
     }
 
     @Override

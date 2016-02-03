@@ -15,9 +15,9 @@ public class OPerspectiveCamera extends AOCamera {
 
     public DoubleProperty angle = new SimpleDoubleProperty();
 
-    public OPerspectiveCamera(String name, double[] e, double[] g, double[] t, double angle, double[] pattern) {
-        super(name, e, g, t, pattern);
-        this.angle.setValue(angle);
+    public OPerspectiveCamera() {
+        name.set("Perspective Camera");
+        angle.setValue(40);
     }
 
     @Override

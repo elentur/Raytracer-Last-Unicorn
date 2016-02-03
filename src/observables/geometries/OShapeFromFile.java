@@ -14,8 +14,9 @@ import java.io.File;
 public class OShapeFromFile extends AOGeometry {
 
     public StringProperty path = new SimpleStringProperty();
-    public OShapeFromFile(String name, String path, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+
+    public OShapeFromFile(String path) {
+        name.set("Shape From File");
         this.path.setValue(path);
     }
 
