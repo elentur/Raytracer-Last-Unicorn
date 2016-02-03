@@ -1,6 +1,7 @@
 package observables.materials;
 
 import javafx.beans.property.*;
+import javafx.scene.paint.Color;
 import material.TransparentMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
@@ -17,9 +18,10 @@ public class OTransparentMaterial extends AOMaterial {
 
     public OTransparentMaterial() {
         name.set("Transparent Material");
+        texture.set(new OSingleColorTexture(Color.BLACK));
         indexOfRefraction.set(1.0);
-        specular.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
-        reflection.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
+        specular.set(new OSingleColorTexture(Color.WHITE));
+        reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);
     }
 

@@ -4,6 +4,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.paint.Color;
 import material.ReflectiveMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
@@ -18,8 +19,8 @@ public class OReflectiveMaterial extends AOMaterial{
     public IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OReflectiveMaterial(){
-        specular.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
-        reflection.set(new OSingleColorTexture(new double[]{0.5,0.5,0.5}));
+        specular.set(new OSingleColorTexture(Color.WHITE));
+        reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);
     }
 
