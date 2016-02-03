@@ -1,13 +1,14 @@
 package controller;
 
-import camera.Camera;
-import geometries.Geometry;
 import geometries.Node;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import light.Light;
-import matVect.Point3;
+import observables.AOElement;
+import observables.cameras.AOCamera;
+import observables.geometries.AOGeometry;
+import observables.geometries.ONode;
+import observables.lights.AOLight;
 import raytracer.Raytracer;
 import utils.Element;
 
@@ -22,10 +23,10 @@ import java.util.List;
 public class ObservableElementLists {
     private final Raytracer r = AController.raytracer;
     private static ObservableElementLists ourInstance = new ObservableElementLists();
-    private TreeView<Element> treeView;
-    private TreeItem<Element> nodeTree;
-    private TreeItem<Element> lightTree;
-    private TreeItem<Element> cameraTree;
+    private TreeView<AOElement> treeView;
+    private TreeItem<AOElement> nodeTree;
+    private TreeItem<AOElement> lightTree;
+    private TreeItem<AOElement> cameraTree;
     private List<Node> geometries = new ArrayList<>();
 
 
@@ -36,7 +37,7 @@ public class ObservableElementLists {
     public List<Node> getGeometries(){
         return geometries;
     }
-    public void setTreeview(TreeView<Element> t) {
+    public void setTreeview(TreeView<AOElement> t) {
         treeView = t;
         nodeTree = t.getRoot().getChildren().get(0);
         lightTree = t.getRoot().getChildren().get(1);
@@ -46,91 +47,87 @@ public class ObservableElementLists {
     private ObservableElementLists() {
     }
 
-    public void addElement(Element e) {
+    public void addElement(AOElement e) {
         treeView.getSelectionModel().clearSelection();
-        if (e instanceof Camera) {
-            addCamera((Camera) e);
-        } else if (e instanceof Light) {
-            addLight((Light) e);
-        } else if (e instanceof Node) {
-            addNode((Node) e);
+        if (e instanceof AOCamera) {
+            addCamera((AOCamera) e);
+        } else if (e instanceof AOLight) {
+            addLight((AOLight) e);
+        } else if (e instanceof ONode) {
+            addNode((ONode) e);
         } else {
             throw new IllegalArgumentException("Wrong typ of Object. Must be Camera, Light or Node");
         }
     }
 
-    public void updateElement(Element oldElement, Element newElement) {
-        if (newElement instanceof Camera) {
-            updateCamera((Camera) newElement);
-        } else if (newElement instanceof Light) {
-            updateLight((Light) oldElement, (Light) newElement);
-        } else if (newElement instanceof Node) {
-            updateNode((Node) oldElement, (Node) newElement);
+    public void updateElement(AOElement oldElement, AOElement newElement) {
+        if (newElement instanceof AOCamera) {
+            updateCamera((AOCamera) newElement);
+        } else if (newElement instanceof AOLight) {
+            updateLight((AOLight) oldElement, (AOLight) newElement);
+        } else if (newElement instanceof ONode) {
+            updateNode((ONode) oldElement, (ONode) newElement);
         } else {
             throw new IllegalArgumentException("Wrong typ of Object. Must be Camera, Light or Node");
         }
         //AController.selectedTreeItem.get().setValue(newElement);
     }
 
-    public void removeElement(Element e) {
-        if (e instanceof Camera) {
+    public void removeElement(AOElement e) {
+        if (e instanceof AOCamera) {
             removeCamera();
-        } else if (e instanceof Light) {
-            removeLight((Light) e);
-        } else if (e instanceof Node) {
-            removeNode((Node) e);
+        } else if (e instanceof AOLight) {
+            removeLight((AOLight) e);
+        } else if (e instanceof ONode) {
+            removeNode((ONode) e);
         } else {
             throw new IllegalArgumentException("Wrong typ of Object. Must be Camera, Light or Node");
         }
         treeView.getSelectionModel().clearSelection();
     }
 
-    private void addCamera(Camera c) {
-        if (r.getCamera() == null) {
+    private void addCamera(AOCamera c) {
+       /* if (r.getCamera() == null) {
            // camera.setValue(c);
             r.setCamera(c);
-            TreeItem<Element> treeItem = new TreeItem<Element>(c);
+            TreeItem<AOElement> treeItem = new TreeItem<AOElement>(c);
             cameraTree.getChildren().add(treeItem);
             treeView.getSelectionModel().select(treeItem);
-        }
+        }*/
     }
 
-    private void updateCamera(Camera c) {
-       // camera.setValue(c);
-        r.setCamera(c);
-        treeView.getSelectionModel().getSelectedItem().setValue(c);
+    private void updateCamera(AOCamera c) {
+     /*   r.setCamera(c);
+        treeView.getSelectionModel().getSelectedItem().setValue(c);*/
     }
 
     private void removeCamera() {
-        //camera.setValue(null);
-        r.setCamera(null);
+        /*r.setCamera(null);
         cameraTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
-        treeView.getSelectionModel().clearSelection();
+        treeView.getSelectionModel().clearSelection();*/
     }
 
-    private void addLight(Light l) {
-        //lights.add(l);
-        r.getWorld().lights.add(l);
-        TreeItem<Element> treeItem = new TreeItem<Element>(l);
+    private void addLight(AOLight l) {
+        TreeItem<AOElement> treeItem = new TreeItem<>(l);
         lightTree.getChildren().add(treeItem);
         treeView.getSelectionModel().select(treeItem);
 
     }
-    private void updateLight(Light oldLight, Light newLight) {
-       // lights.set(lights.indexOf(oldLight), newLight);
+    private void updateLight(AOLight oldLight, AOLight newLight) {
+      /*
         r.getWorld().lights.set(r.getWorld().lights.indexOf(oldLight), newLight);
-        treeView.getSelectionModel().getSelectedItem().setValue(newLight);
+        treeView.getSelectionModel().getSelectedItem().setValue(newLight);*/
     }
 
-    private void removeLight(Light l) {
-       // lights.remove(l);
+    private void removeLight(AOLight l) {
+       /*
         r.getWorld().lights.remove(l);
         lightTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
-        treeView.getSelectionModel().clearSelection();
+        treeView.getSelectionModel().clearSelection();*/
     }
 
-    private void addNode(Node n) {
-       // nodes.add(n);
+    private void addNode(ONode n) {
+    /*
         r.getWorld().geometries.add(n);
         TreeItem<Element> treeItem = new TreeItem<>(n);
         nodeTree.getChildren().add(treeItem);
@@ -138,11 +135,12 @@ public class ObservableElementLists {
         if(n.geos.size()== 1 && !(n.geos.get(0) instanceof Node)){
             geometries.add(n);
         }
+        */
     }
 
 
-    private void updateNode(Node oldNode, Node newNode) {
-        if (r.getWorld().geometries.contains(oldNode)) {
+    private void updateNode(ONode oldNode, ONode newNode) {
+       /* if (r.getWorld().geometries.contains(oldNode)) {
        // nodes.set(nodes.indexOf(oldNode), newNode);
             r.getWorld().geometries.set(r.getWorld().geometries.indexOf(oldNode), newNode);
         }else {
@@ -160,20 +158,20 @@ public class ObservableElementLists {
             System.out.println(n);
 
         }
-
+*/
     }
     private TreeItem<Element> getTreeItem(TreeItem<Element> root, Node n){
-        for(TreeItem<Element> child: root.getChildren()){
+      /*  for(TreeItem<Element> child: root.getChildren()){
             if(child.getValue().equals(n)){
                return(child);
             } else {
                 return getTreeItem(child,n);
             }
-        }
+        }*/
         return null;
     }
-    private void removeNode(Node n) {
-        if (r.getWorld().geometries.contains(n)) {
+    private void removeNode(ONode n) {
+        /*if (r.getWorld().geometries.contains(n)) {
             r.getWorld().geometries.remove(n);
             nodeTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
         } else {
@@ -204,22 +202,23 @@ public class ObservableElementLists {
         }
         if(n.geos.size()== 1 && !(n.geos.get(0) instanceof Node)){
             geometries.remove(n);
-        }
+        }*/
     }
 
-    private Node getParentNode(List<Geometry> nodes, Node n) {
-        Node node = null;
+    private ONode getParentNode(List<AOGeometry> nodes, ONode n) {
+     /*   Node node = null;
         for (Geometry p : nodes) {
             if(p instanceof Node ) {
                 if (((Node) p).geos.contains(n)) return (Node) p;
                 node =  getParentNode(((Node) p).geos, n);
             }
         }
-        return node;
+        return node;*/
+        return null;
     }
 
-    public void groupNodes(List<Geometry> nodes){
-        Node parent = getParentNode(r.getWorld().geometries,(Node)nodes.get(0));
+    public void groupNodes(List<AOGeometry> nodes){
+        /*Node parent = getParentNode(r.getWorld().geometries,(Node)nodes.get(0));
         Node n = new Node(
                 new Point3(0,0,0),
                 new Point3(1,1,1),
@@ -254,12 +253,12 @@ public class ObservableElementLists {
         }
         treeView.getSelectionModel().clearSelection();
         treeView.getSelectionModel().select(t);
-
+*/
     }
 
 
-    public void ungroupNodes(final ObservableList<TreeItem<Element>> children, final TreeItem<Element> parent) {
-        TreeItem<Element> selectedItem =  treeView.getSelectionModel().getSelectedItem();
+    public void ungroupNodes(final ObservableList<TreeItem<AOElement>> children, final TreeItem<AOElement> parent) {
+      /*  TreeItem<Element> selectedItem =  treeView.getSelectionModel().getSelectedItem();
         parent.getChildren().remove(selectedItem);
         Node parentNode = getParentNode(r.getWorld().geometries,(Node)selectedItem.getValue());
         if(parentNode == null)r.getWorld().geometries.remove(selectedItem.getValue());
@@ -271,5 +270,6 @@ public class ObservableElementLists {
             if (!item.getChildren().isEmpty()) t.getChildren().addAll(item.getChildren());
             parent.getChildren().add(t);
         }
+        */
     }
 }

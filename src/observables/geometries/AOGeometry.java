@@ -1,6 +1,10 @@
 package observables.geometries;
 
 import geometries.Geometry;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import observables.AOElement;
 import observables.materials.AOMaterial;
 
@@ -10,19 +14,19 @@ import observables.materials.AOMaterial;
  */
 public abstract class AOGeometry extends AOElement{
 
-    public AOMaterial material;
-    public boolean reciveShadows;
-    public boolean castShadows;
-    public boolean visibility;
-    public boolean flipNormal;
+    public ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>();
+    public BooleanProperty reciveShadows = new SimpleBooleanProperty();
+    public BooleanProperty castShadows  = new SimpleBooleanProperty();
+    public BooleanProperty visibility  = new SimpleBooleanProperty();
+    public BooleanProperty flipNormal = new SimpleBooleanProperty();
 
     public AOGeometry(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal) {
         super(name);
-        this.material = material;
-        this.reciveShadows = reciveShadows;
-        this.castShadows = castShadows;
-        this.visibility = visibility;
-        this.flipNormal = flipNormal;
+        this.material.setValue(material);
+        this.reciveShadows.setValue(reciveShadows);
+        this.castShadows.setValue(castShadows);
+        this.visibility.setValue( visibility);
+        this.flipNormal.setValue(flipNormal);
     }
 
     public abstract Geometry generate();

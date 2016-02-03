@@ -1,20 +1,14 @@
 package controller;
 
 import UI.NumberTextField;
-import camera.Camera;
-import camera.DOFCamera;
-import camera.OrthographicCamera;
-import camera.PerspectiveCamera;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
-import matVect.Point3;
-import matVect.Vector3;
-import sampling.DOFPattern;
-import sampling.SamplingPattern;
+import observables.cameras.AOCamera;
+import observables.cameras.OOrthographicCamera;
+import observables.cameras.OPerspectiveCamera;
 
 import java.io.IOException;
 import java.net.URL;
@@ -79,11 +73,11 @@ public class MainSettingsCameraController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (selectedTreeItem.get().getValue() instanceof OrthographicCamera) {
+                if (selectedTreeItem.get().getValue() instanceof OOrthographicCamera) {
 
                     v = loader.load(this.getClass().getResource("/fxml/mainSettingsOrthographicCameraView.fxml"));
                     cameraView.getChildren().add(v);
-                } else if (selectedTreeItem.get().getValue() instanceof PerspectiveCamera) {
+                } else if (selectedTreeItem.get().getValue() instanceof OPerspectiveCamera) {
                     v = loader.load(this.getClass().getResource("/fxml/mainSettingsPerspectiveCameraView.fxml"));
                     cameraView.getChildren().add(v);
                 } else {
@@ -107,8 +101,8 @@ public class MainSettingsCameraController extends AController {
     }
 
     private void initializeFields() {
-        Camera c = (Camera) selectedTreeItem.get().getValue();
-        txtPositionX.setNumber(c.e.x);
+        AOCamera c = (AOCamera) selectedTreeItem.get().getValue();
+        /*txtPositionX.setNumber(c.ex);
         txtPositionY.setNumber(c.e.y);
         txtPositionZ.setNumber(c.e.z);
         txtDirectionX.setNumber(c.g.x);
@@ -143,42 +137,12 @@ public class MainSettingsCameraController extends AController {
             txtSubdiv.setNumber(((DOFCamera)c).dofPattern.subdiv);
             txtSubdiv.setOnAction(a -> handleUpdateCamera());
 
-        }
+        }*/
     }
 
     @FXML
     private void handleUpdateCamera() {
-        if (selectedTreeItem.get().getValue() != null) {
-            Camera camera = null;
-            Point3 e = new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble());
-            Vector3 g = new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble());
-            Vector3 t = new Vector3(txtUpVectorX.getDouble(), txtUpVectorY.getDouble(), txtUpVectorZ.getDouble());
-            SamplingPattern pattern = new SamplingPattern(txtSampling.getInteger());
 
-            if (selectedTreeItem.get().getValue() instanceof OrthographicCamera) {
-                camera = new OrthographicCamera(e, g, t,
-                        txtScaleFactor.getDouble(),
-                        pattern
-                );
-            } else if (selectedTreeItem.get().getValue() instanceof PerspectiveCamera) {
-                camera = new PerspectiveCamera(e, g, t,
-                        sldAngle.getValue() / (180 / Math.PI),
-                        pattern
-                );
-            } else if (selectedTreeItem.get().getValue() instanceof DOFCamera) {
-                camera = new DOFCamera(e, g, t,
-                        sldAngle.getValue() / (180 / Math.PI),
-                        new DOFPattern(txtSubdiv.getInteger(),txtFStop.getDouble()),
-                        txtFocalLength.getDouble(),
-                        pattern
-                );
-            }
-            if (camera != null) {
-                camera.name = selectedTreeItem.get().getValue().name;
-                elementLists.updateElement(selectedTreeItem.get().getValue(), camera);
-                //  NodeTreeViewController.updateElement(camera);
-            }
-        }
     }
 
 

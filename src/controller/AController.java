@@ -8,9 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
 import material.Material;
+import observables.AOElement;
 import raytracer.Raytracer;
 import texture.Texture;
-import utils.Element;
 
 /**
  * Created by roberto on 05.01.16.
@@ -18,7 +18,7 @@ import utils.Element;
 public abstract class AController  implements Initializable {
     public final static Raytracer raytracer = new Raytracer(true);
    // public final static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
-    public final static ObjectProperty<TreeItem<Element>> selectedTreeItem = new SimpleObjectProperty<>();
+    public final static ObjectProperty<TreeItem<AOElement>> selectedTreeItem = new SimpleObjectProperty<>();
     protected ObservableElementLists elementLists = ObservableElementLists.getInstance();
     //TODO material löschen und schauen ob es über die liste geht
     protected final static ObjectProperty<Material> material= new SimpleObjectProperty<>();

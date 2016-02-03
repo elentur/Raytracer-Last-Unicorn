@@ -63,8 +63,8 @@ public class LambertMaterial extends Material {
 
             while(testDirections.size()<numberOfRays){
                 Vector3 v = new Vector3(rnd.nextDouble()-0.5,rnd.nextDouble()-0.5,rnd.nextDouble()-0.5);
-                double alpha = hit.n.dot(v.normalized());
-                if(alpha<Math.PI/2 && alpha >0){
+                double alpha = Math.acos(hit.n.dot(v.normalized()));
+                if(alpha<Math.PI/4 && alpha >0){
                     testDirections.add(v);
                 }
 
@@ -86,7 +86,7 @@ public class LambertMaterial extends Material {
 
                 }
             }
-           if(numOfHits>0) c= c.mul(((ambientOcclusion)/(numOfHits*1.0)));
+           //if(numOfHits>0) c= c.mul(((ambientOcclusion)/(numOfHits*1.0)));
 
             ////
         }

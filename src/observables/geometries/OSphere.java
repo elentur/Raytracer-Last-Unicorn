@@ -16,11 +16,11 @@ public class OSphere extends AOGeometry {
     @Override
     public Sphere generate() {
         return new Sphere(
-                material.generate(),
-                reciveShadows,
-                castShadows,
-                visibility,
-                flipNormal
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get()
         );
     }
 }

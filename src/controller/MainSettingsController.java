@@ -1,13 +1,12 @@
 package controller;
 
-import camera.Camera;
-import geometries.Node;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import light.Light;
-import utils.Element;
+import observables.cameras.AOCamera;
+import observables.geometries.ONode;
+import observables.lights.AOLight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,21 +32,21 @@ public class MainSettingsController extends AController {
     private VBox mainSettingsView;
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        txtName.setText(selectedTreeItem.get().getValue().name);
+        txtName.setText(selectedTreeItem.get().getValue().name.getValue());
         txtName.setOnAction(a->{
-            Element e = selectedTreeItem.get().getValue().deepCopy();
+           /* Element e = selectedTreeItem.get().getValue().deepCopy();
             e.name=txtName.getText();
-           ObservableElementLists.getInstance().updateElement(selectedTreeItem.get().getValue(),e);
+           ObservableElementLists.getInstance().updateElement(selectedTreeItem.get().getValue(),e);*/
         });
         try {
-        if(selectedTreeItem.get().getValue() instanceof Camera){
+        if(selectedTreeItem.get().getValue() instanceof AOCamera){
             VBox v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
             mainSettingsView.getChildren().add(v);
 
-        }else if(selectedTreeItem.get().getValue() instanceof Light){
+        }else if(selectedTreeItem.get().getValue() instanceof AOLight){
             VBox v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
             mainSettingsView.getChildren().add(v);
-        }else if(selectedTreeItem.get().getValue() instanceof Node) {
+        }else if(selectedTreeItem.get().getValue() instanceof ONode) {
             VBox v;
             v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
             mainSettingsView.getChildren().add(v);

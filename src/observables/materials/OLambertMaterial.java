@@ -16,10 +16,10 @@ public class OLambertMaterial extends AOMaterial{
     @Override
     public LambertMaterial generate() {
         return new LambertMaterial(
-                texture.generate(),
-                bumpMap.generate(),
-                bumpScale,
-                irradiance.generate()
+                texture.get().generate(),
+                bumpMap.get().generate(),
+                bumpScale.get(),
+                irradiance.get().generate()
         );
     }
 }

@@ -1,6 +1,10 @@
 package observables.cameras;
 
 import camera.Camera;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import observables.AOElement;
 
 /**
@@ -9,37 +13,37 @@ import observables.AOElement;
  */
 public abstract class AOCamera extends AOElement{
 
-    public int ex;
-    public int ey;
-    public int ez;
+    public DoubleProperty ex = new SimpleDoubleProperty();
+    public DoubleProperty ey = new SimpleDoubleProperty();
+    public DoubleProperty ez = new SimpleDoubleProperty();
 
-    public int gx;
-    public int gy;
-    public int gz;
+    public DoubleProperty gx = new SimpleDoubleProperty();
+    public DoubleProperty gy = new SimpleDoubleProperty();
+    public DoubleProperty gz = new SimpleDoubleProperty();
 
-    public int tx;
-    public int ty;
-    public int tz;
+    public DoubleProperty tx = new SimpleDoubleProperty();
+    public DoubleProperty ty = new SimpleDoubleProperty();
+    public DoubleProperty tz = new SimpleDoubleProperty();
 
-    public double patternSize;
-    public int patternSubdiv;
+    public DoubleProperty patternSize = new SimpleDoubleProperty();
+    public IntegerProperty patternSubdiv = new SimpleIntegerProperty();
 
-    public AOCamera(String name, int[] e, int[] g, int[] t, double[] pattern) {
+    public AOCamera(String name, double[] e, double[] g, double[] t, double[] pattern) {
         super(name);
-        this.ex = e[0];
-        this.ey = e[1];
-        this.ez = e[2];
+        this.ex.setValue(e[0]);
+        this.ey.setValue(e[1]);
+        this.ez.setValue(e[2]);
 
-        this.gx = g[0];
-        this.gy = g[1];
-        this.gz = g[2];
+        this.gx.setValue(g[0]);
+        this.gy.setValue(g[1]);
+        this.gz.setValue(g[2]);
 
-        this.tx = t[0];
-        this.ty = t[1];
-        this.tz = t[2];
+        this.tx.setValue(t[0]);
+        this.ty.setValue(t[1]);
+        this.tz.setValue(t[2]);
 
-        this.patternSize = pattern[0];
-        this.patternSubdiv = (int) pattern[1];
+        this.patternSize.setValue(pattern[0]);
+        this.patternSubdiv.setValue( pattern[1]);
     }
 
 

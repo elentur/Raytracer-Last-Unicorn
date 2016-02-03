@@ -14,12 +14,12 @@ public class OImageTexture extends AOTexture {
     @Override
     public ImageTexture generate() {
         return new ImageTexture(
-                path,
-                scaleU,
-                scaleV,
-                offsetU,
-                offsetV,
-                rotate
+                path.get(),
+                scaleU.get(),
+                scaleV.get(),
+                offsetU.get(),
+                offsetV.get(),
+                rotate.get()
         );
     }
 }

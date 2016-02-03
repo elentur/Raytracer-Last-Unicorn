@@ -1,39 +1,39 @@
 package controller;
 
-import camera.Camera;
-import geometries.Geometry;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
-import light.Light;
-import utils.Element;
+import observables.AOElement;
+import observables.cameras.AOCamera;
+import observables.geometries.AOGeometry;
+import observables.lights.AOLight;
 
 /**
  * Created by Marcus Baetz on 11.01.2016.
  *
  * @author Marcus Bätz
  */
-public class ElementTreeCellFactory implements Callback<TreeView<Element>, TreeCell<Element>> {
+public class ElementTreeCellFactory implements Callback<TreeView<AOElement>, TreeCell<AOElement>> {
 
 
     @Override
-    public TreeCell<Element> call(TreeView<Element> p) {
-        return new TreeCell<Element>() {
+    public TreeCell<AOElement> call(TreeView<AOElement> p) {
+        return new TreeCell<AOElement>() {
             @Override
-            protected void updateItem(Element item, boolean empty) {
+            protected void updateItem(AOElement item, boolean empty) {
                 super.updateItem(item, empty);
 
                 if (item != null || !empty) {
-                    setText(item.name);
-                    if (item instanceof Geometry) {
+                    setText(item.name.getValue());
+                    if (item instanceof AOGeometry) {
                         setGraphic(new ImageView(new Image("icons/mesh.png")));
 
-                    } else if (item instanceof Light) {
+                    } else if (item instanceof AOLight) {
                         setGraphic(new ImageView(new Image("icons/light.png")));
 
-                    } else if (item instanceof Camera) {
+                    } else if (item instanceof AOCamera) {
                         setGraphic(new ImageView(new Image("icons/camera.png")));
 
                     } else {

@@ -1,5 +1,9 @@
 package observables.materials;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import material.PhongMaterial;
 import observables.textures.AOTexture;
 
@@ -9,24 +13,24 @@ import observables.textures.AOTexture;
  */
 public class OPhongMaterial extends AOMaterial{
 
-    public AOTexture specular;
-    public int exponent;
+    public ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
+    public IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OPhongMaterial(String name, AOTexture texture, AOTexture bumpMap, double bumpScale, AOTexture irradiance, AOTexture specular, int exponent) {
         super(name, texture, bumpMap, bumpScale, irradiance);
-        this.specular = specular;
-        this.exponent = exponent;
+        this.specular.setValue(specular);
+        this.exponent.setValue(exponent);
     }
 
     @Override
     public PhongMaterial generate() {
         return new PhongMaterial(
-                texture.generate(),
-                specular.generate(),
-                exponent,
-                bumpMap.generate(),
-                bumpScale,
-                irradiance.generate()
+                texture.get().generate(),
+                specular.get().generate(),
+                exponent.get(),
+                bumpMap.get().generate(),
+                bumpScale.get(),
+                irradiance.get().generate()
         );
     }
 }

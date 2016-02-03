@@ -16,9 +16,9 @@ public class OSingleColorMaterial extends AOMaterial {
     @Override
     public SingleColorMaterial generate() {
         return new SingleColorMaterial(
-                texture.generate(),
-                bumpMap.generate(),
-                bumpScale
+                texture.get().generate(),
+                bumpMap.get().generate(),
+                bumpScale.get()
         );
     }
 }

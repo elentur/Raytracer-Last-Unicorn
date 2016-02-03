@@ -1,7 +1,6 @@
 package controller;
 
 import UI.NumberTextField;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
@@ -9,14 +8,9 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import light.DirectionalLight;
-import light.Light;
-import light.PointLight;
-import light.SpotLight;
-import matVect.Point3;
-import matVect.Vector3;
-import sampling.LightShadowPattern;
+import observables.lights.AOLight;
+import observables.lights.ODirectionalLight;
+import observables.lights.OPointLight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -73,11 +67,11 @@ public class MainSettingsLightController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (selectedTreeItem.get().getValue() instanceof DirectionalLight) {
+                if (selectedTreeItem.get().getValue() instanceof ODirectionalLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
                     lightView.getChildren().add(v);
 
-                } else if (selectedTreeItem.get().getValue() instanceof PointLight) {
+                } else if (selectedTreeItem.get().getValue() instanceof OPointLight) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
                     lightView.getChildren().add(v);
                 } else {
@@ -112,9 +106,10 @@ public class MainSettingsLightController extends AController {
     }
 
     private void initializeFields() {
-        Light l = (Light) selectedTreeItem.get().getValue();
+        AOLight l = (AOLight) selectedTreeItem.get().getValue();
+        txtIrradiance.doubleProperty.bindBidirectional(l.photons);
 
-
+/*
         if (txtPositionX != null) {
             Point3 pos = l instanceof PointLight ? ((PointLight) l).position : ((SpotLight) l).position;
 
@@ -150,44 +145,11 @@ public class MainSettingsLightController extends AController {
         txtIrradiance.setNumber(l.photons);
         txtLightSize.setNumber(l.lightShadowPattern.size);
         txtLightSizeSubdiv.setNumber(l.lightShadowPattern.subdiv);
+        */
     }
 
     @FXML
     private void handleUpdateLight() {
-        if (selectedTreeItem.get().getValue() != null) {
-            Light light = null;
-            utils.Color color = new utils.Color(clpLightColor.getValue().getRed(), clpLightColor.getValue().getGreen(), clpLightColor.getValue().getBlue());
-            boolean castShadows = chkCastShadows.isSelected();
-            int irrad = txtIrradiance.getInteger();
-            if (selectedTreeItem.get().getValue() instanceof DirectionalLight) {
-                light = new DirectionalLight(color,
-                        new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
-                        castShadows,
-                        irrad,
-                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
-                );
-            } else if (selectedTreeItem.get().getValue() instanceof PointLight) {
-                light = new PointLight(color,
-                        new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
-                        castShadows,
-                        irrad,
-                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
-                );
-            } else if (selectedTreeItem.get().getValue() instanceof SpotLight) {
-                light = new SpotLight(color,
-                        new Point3(txtPositionX.getDouble(), txtPositionY.getDouble(), txtPositionZ.getDouble()),
-                        new Vector3(txtDirectionX.getDouble(), txtDirectionY.getDouble(), txtDirectionZ.getDouble()),
-                        sldAngle.getValue() / (180 / Math.PI),
-                        castShadows,
-                        irrad,
-                        new LightShadowPattern(txtLightSize.getDouble(),txtLightSizeSubdiv.getInteger())
-                );
-            }
-            if (light != null) {
-                light.name = selectedTreeItem.get().getValue().name;
-                elementLists.updateElement(selectedTreeItem.get().getValue(), light);
-                // NodeTreeViewController.updateElement(light);
-            }
-        }
+
     }
 }

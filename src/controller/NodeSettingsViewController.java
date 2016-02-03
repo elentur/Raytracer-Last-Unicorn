@@ -1,15 +1,15 @@
 package controller;
 
-import camera.Camera;
-import geometries.Geometry;
-import geometries.Node;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TreeItem;
-import light.Light;
-import utils.Element;
+import observables.AOElement;
+import observables.cameras.AOCamera;
+import observables.geometries.AOGeometry;
+import observables.geometries.ONode;
+import observables.lights.AOLight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,7 +24,7 @@ public class NodeSettingsViewController  extends AController{
 
     @FXML
      private  TabPane tabPane;
-    private TreeItem<Element> selTreeItem=null;
+    private TreeItem<AOElement> selTreeItem=null;
 
 
     /**
@@ -42,7 +42,7 @@ public class NodeSettingsViewController  extends AController{
     }
 
     private void handleSelectedElement() {
-        Element e = null;
+        AOElement e = null;
        if(selectedTreeItem.get()!=null) e = selectedTreeItem.get().getValue();
 
 
@@ -55,17 +55,17 @@ public class NodeSettingsViewController  extends AController{
                    tabPane.getTabs().clear();
                    tabPane.getTabs().add(t);
                     selTreeItem = selectedTreeItem.getValue();
-                   if(e instanceof Node)t.setText("Node");
-                   else if(e instanceof Light)t.setText("Light");
-                   else if(e instanceof Camera)t.setText("Camera");
+                   if(e instanceof ONode)t.setText("Node");
+                   else if(e instanceof AOLight)t.setText("Light");
+                   else if(e instanceof AOCamera)t.setText("Camera");
                }else {
                       tabPane.getTabs().get(0).setContent(t.getContent());
-                      if(e instanceof Node) tabPane.getTabs().get(0).setText("Node");
-                      else if(e instanceof Light) tabPane.getTabs().get(0).setText("Light");
-                      else if(e instanceof Camera) tabPane.getTabs().get(0).setText("Camera");
+                      if(e instanceof ONode) tabPane.getTabs().get(0).setText("Node");
+                      else if(e instanceof AOLight) tabPane.getTabs().get(0).setText("Light");
+                      else if(e instanceof AOCamera) tabPane.getTabs().get(0).setText("Camera");
                }
-                if(e instanceof Geometry){
-                    if(!((Node)e).geos.isEmpty()&&!(((Node)e).geos.get(0) instanceof Node)){
+                if(e instanceof AOGeometry){
+                    if(!((ONode)e).oGeos.isEmpty()&&!(((ONode)e).oGeos.get(0) instanceof ONode)){
                         t = FXMLLoader.load(getClass().getResource("/fxml/mainMaterialSettingsView.fxml"));
                         t.setText("Material");
                         if(tabPane.getTabs().size()<2){

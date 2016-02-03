@@ -15,12 +15,12 @@ public class OInterpolatedImageTexture extends AOTexture {
     @Override
     public InterpolatedImageTexture generate() {
         return new InterpolatedImageTexture(
-                path,
-                scaleU,
-                scaleV,
-                offsetU,
-                offsetV,
-                rotate
+                path.get(),
+                scaleU.get(),
+                scaleV.get(),
+                offsetU.get(),
+                offsetV.get(),
+                rotate.get()
         );
     }
 }

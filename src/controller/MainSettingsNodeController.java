@@ -2,25 +2,21 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import geometries.*;
-import javafx.event.ActionEvent;
+import geometries.Geometry;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import matVect.Point3;
 import material.DefaultMaterial;
-import material.Material;
-import utils.Element;
+import observables.geometries.ONode;
+import observables.geometries.OShapeFromFile;
+import observables.materials.AOMaterial;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -53,7 +49,7 @@ public class MainSettingsNodeController extends AController {
     @FXML
     private MaterialView materialView;
     @FXML
-    private ComboBox<Material> cmbMaterial;
+    private ComboBox<AOMaterial> cmbMaterial;
     @FXML
     private CheckBox chkCastShadows;
     @FXML
@@ -96,7 +92,7 @@ public class MainSettingsNodeController extends AController {
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
-                if (((Node) selectedTreeItem.get().getValue()).geos.get(0) instanceof ShapeFromFile) {
+                if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof OShapeFromFile) {
                     v = loader.load(getClass().getResource("/fxml/mainSettingsShapeFromFileView.fxml"));
                     nodeView.getChildren().add(0, v);
                 }
@@ -113,8 +109,8 @@ public class MainSettingsNodeController extends AController {
 
     private void initializeFields() {
         TabPane t = null;
-        Node n = (Node) selectedTreeItem.get().getValue();
-        txtTranslationX.setNumber(n.translation.x);
+        ONode n = (ONode) selectedTreeItem.get().getValue();
+        /*txtTranslationX.setNumber(n.translation.x);
         txtTranslationY.setNumber(n.translation.y);
         txtTranslationZ.setNumber(n.translation.z);
         txtScalingX.setNumber(n.scaling.x);
@@ -146,11 +142,11 @@ public class MainSettingsNodeController extends AController {
         if (btnNewPath != null) {
             btnNewPath.setOnAction(a -> newPathLoad());
         }
-        setMaterialComboBox();
+        setMaterialComboBox();*/
     }
 
     private void newPathLoad() {
-        FileChooser dlg = new FileChooser();
+       /* FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(materialView.getScene().getWindow());
         if (file != null) {
@@ -165,21 +161,21 @@ public class MainSettingsNodeController extends AController {
             geos.add(e);
             if (e != null) updateNode(geos);
             ;
-        }
+        }*/
     }
 
     private void setMaterialComboBox() {
-        if (((Node) selectedTreeItem.get().getValue()).geos.get(0) instanceof Node) {
+        if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode) {
             ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
             ((HBox) materialView.getParent()).getChildren().remove(materialView);
         }
-        cmbMaterial.setCellFactory(new Callback<ListView<Material>, ListCell<Material>>() {
+        cmbMaterial.setCellFactory(new Callback<ListView<AOMaterial>, ListCell<AOMaterial>>() {
             @Override
-            public ListCell<Material> call(ListView<Material> c) {
+            public ListCell<AOMaterial> call(ListView<AOMaterial> c) {
 
-                return new ListCell<Material>() {
+                return new ListCell<AOMaterial>() {
                     @Override
-                    protected void updateItem(Material item, boolean empty) {
+                    protected void updateItem(AOMaterial item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item != null) {
                             String prefix = "";
@@ -191,9 +187,9 @@ public class MainSettingsNodeController extends AController {
             }
         });
 
-        cmbMaterial.setButtonCell(new ListCell<Material>() {
+        cmbMaterial.setButtonCell(new ListCell<AOMaterial>() {
             @Override
-            protected void updateItem(Material item, boolean empty) {
+            protected void updateItem(AOMaterial item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setText("");
@@ -204,7 +200,7 @@ public class MainSettingsNodeController extends AController {
                 }
             }
         });
-        cmbMaterial.getSelectionModel().select(material.get());
+       // cmbMaterial.getSelectionModel().select(material.get());
 
 
     }
@@ -216,7 +212,7 @@ public class MainSettingsNodeController extends AController {
 
     private void updateNode(List<Geometry> geos) {
 
-        if (selectedTreeItem.get().getValue() != null){
+   /*     if (selectedTreeItem.get().getValue() != null){
             if (geos == null) geos = ((Node) selectedTreeItem.get().getValue()).geos;
 
             if(geos.size()==1 && !(geos.get(0) instanceof Node)) {
@@ -257,6 +253,6 @@ public class MainSettingsNodeController extends AController {
         updateNode(geos);
         TreeItem<Element> t = selectedTreeItem.get();
         selectedTreeItem.setValue(null);
-        selectedTreeItem.setValue(t);
+        selectedTreeItem.setValue(t);*/
     }
 }

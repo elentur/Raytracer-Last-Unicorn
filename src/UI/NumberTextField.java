@@ -1,7 +1,6 @@
 package UI;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -23,6 +22,9 @@ public class NumberTextField extends TextField {
 
     private final NumberFormat nf;
     private ObjectProperty<BigDecimal> number = new SimpleObjectProperty<>();
+    public DoubleProperty doubleProperty = new SimpleDoubleProperty();
+    public IntegerProperty integerProperty = new SimpleIntegerProperty();
+
 
     public final BigDecimal getNumber() {
         return number.get();
@@ -72,10 +74,16 @@ public class NumberTextField extends TextField {
         this.nf.setMaximumFractionDigits(8);
         initHandlers();
         setNumber(value);
+
     }
 
     private void initHandlers() {
-
+        doubleProperty.addListener(a->{
+            setNumber(doubleProperty.getValue());
+        });
+        integerProperty.addListener(a->{
+            setNumber(integerProperty.getValue());
+        });
         // try to parse when focus is lost or RETURN is hit
         addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
@@ -115,6 +123,8 @@ public class NumberTextField extends TextField {
             Number parsedNumber = nf.parse(input);
             BigDecimal newValue = new BigDecimal(parsedNumber.toString());
             setNumber(newValue);
+            integerProperty.setValue(newValue);
+            doubleProperty.setValue(newValue);
             selectAll();
           //  fireEvent(new ActionEvent());
         } catch (ParseException ex) {

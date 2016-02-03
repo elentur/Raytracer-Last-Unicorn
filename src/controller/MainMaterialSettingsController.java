@@ -2,7 +2,6 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import geometries.Geometry;
 import geometries.Node;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -18,7 +17,6 @@ import javafx.util.Callback;
 import material.*;
 import texture.ImageTexture;
 import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
 import texture.Texture;
 
 import java.io.File;
@@ -107,7 +105,7 @@ public class MainMaterialSettingsController extends AController {
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        material.setValue(((Node)selectedTreeItem.get().getValue()).geos.get(0).material);
+       // material.setValue(((Node)selectedTreeItem.get().getValue()).geos.get(0).material);
         materialRenderView.setUpTracer(material);
         if(!initialized) {
             VBox v;
@@ -266,108 +264,7 @@ public class MainMaterialSettingsController extends AController {
     }
 
     private void handleUpdateMaterial() {
-        Material m = null;
-        Texture diffuse = cmbDiffuse.getSelectionModel().getSelectedItem() != null ?
-                cmbDiffuse.getSelectionModel().getSelectedItem() :
-                new SingleColorTexture(new utils.Color(clpDiffuse.getValue().getRed(), clpDiffuse.getValue().getGreen(), clpDiffuse.getValue().getBlue()));
-        Texture normal = cmbNormal.getSelectionModel().getSelectedItem()!= null ?
-                cmbNormal.getSelectionModel().getSelectedItem():
-                new SingleColorTexture(new utils.Color(1,1,1));
-        double normalScaling = txtNormalScale.getDouble();
-        Texture irradiance = cmbIrradiance.getSelectionModel().getSelectedItem()!= null ?
-                cmbIrradiance.getSelectionModel().getSelectedItem():
-                new SingleColorTexture(new utils.Color(clpIrradiance.getValue().getRed(), clpIrradiance.getValue().getGreen(), clpIrradiance.getValue().getBlue()));
-        if (material.get() instanceof SingleColorMaterial) {
-            m = new SingleColorMaterial(
-                    diffuse,
-                    normal,
-                    normalScaling
-            );
-        } else if (material.get() instanceof LambertMaterial) {
-            m = new LambertMaterial(
-                    diffuse,
-                    normal,
-                    normalScaling,
-                    irradiance
-            );
-        } else if (material.get() instanceof OrenNayarMaterial) {
-            m = new OrenNayarMaterial(
-                    diffuse,
-                    sldRoughness.getValue(),
-                    normal,
-                    normalScaling,
-                    irradiance
-            );
-        } else {
-            Texture specular = cmbSpecular.getSelectionModel().getSelectedItem()!=null?
-                    cmbSpecular.getSelectionModel().getSelectedItem():
-                    new SingleColorTexture(new utils.Color(clpSpecular.getValue().getRed(),clpSpecular.getValue().getGreen(),clpSpecular.getValue().getBlue()));
 
-            if (material.get() instanceof PhongMaterial) {
-
-                m = new PhongMaterial(
-                        diffuse,
-                        specular,
-                        txtExponent.getInteger(),
-                        normal,
-                        normalScaling,
-                        irradiance
-                );
-            }else{
-                Texture reflection = cmbReflection.getSelectionModel().getSelectedItem()!=null?
-                        cmbReflection.getSelectionModel().getSelectedItem():
-                        new SingleColorTexture(new utils.Color(clpReflection.getValue().getRed(),clpReflection.getValue().getGreen(),clpReflection.getValue().getBlue()));
-
-                if (material.get() instanceof ReflectiveMaterial) {
-
-                    m = new ReflectiveMaterial(
-                            diffuse,
-                            specular,
-                            reflection,
-                            txtExponent.getInteger(),
-                            normal,
-                            normalScaling,
-                            irradiance
-                    );
-                }else if (material.get() instanceof TransparentMaterial) {
-
-                    m = new TransparentMaterial(
-                            diffuse,
-                            specular,
-                            reflection,
-                            txtExponent.getInteger(),
-                            sldIOR.getValue(),
-                            normal,
-                            normalScaling,
-                            irradiance
-                    );
-                }
-            }
-        }
-
-        if (m != null) {
-              for (Node n: getNodesWithMaterial(material.get())) {
-                //Node n = (Node) selectedTreeItem.get().getValue();
-                m.name = txtMaterialName.getText();
-                Geometry g = n.geos.get(0).deepCopy(m);
-
-                Node node = new Node(
-                        n.translation,
-                        n.scaling,
-                        n.rotation,
-                        g,
-                        n.reciveShadows,
-                        n.castShadows,
-                        n.visibility,
-                        n.flipNormal);
-                node.name = n.name;
-                elementLists.updateElement(n, node);
-            }
-            materialList.set(materialList.indexOf( material.get()), m);
-            material.setValue(m);
-
-        }
-        loadTextureTabs();
     }
 
     private List<Node> getNodesWithMaterial(Material m){

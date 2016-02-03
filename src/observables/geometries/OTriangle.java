@@ -16,11 +16,11 @@ public class OTriangle extends AOGeometry {
     @Override
     public Triangle generate() {
         return new Triangle(
-            material.generate(),
-            reciveShadows,
-            castShadows,
-            visibility,
-            flipNormal
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get()
         );
     }
 }

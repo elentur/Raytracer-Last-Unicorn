@@ -2,8 +2,12 @@ package observables.geometries;
 
 import geometries.Geometry;
 import geometries.Node;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import matVect.Point3;
-import observables.materials.AOMaterial;
+import observables.materials.DefaultMaterial;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,49 +19,49 @@ import java.util.List;
  */
 public class ONode extends AOGeometry {
 
-    public double translationx;
-    public double translationy;
-    public double translationz;
+    public DoubleProperty translationx = new SimpleDoubleProperty();
+    public DoubleProperty translationy = new SimpleDoubleProperty();
+    public DoubleProperty translationz = new SimpleDoubleProperty();
 
-    public double scalingx;
-    public double scalingy;
-    public double scalingz;
+    public DoubleProperty scalingx = new SimpleDoubleProperty();
+    public DoubleProperty scalingy = new SimpleDoubleProperty();
+    public DoubleProperty scalingz = new SimpleDoubleProperty();
 
-    public double rotationx;
-    public double rotationy;
-    public double rotationz;
-    public List<AOGeometry> oGeos;
+    public DoubleProperty rotationx = new SimpleDoubleProperty();
+    public DoubleProperty rotationy = new SimpleDoubleProperty();
+    public DoubleProperty rotationz = new SimpleDoubleProperty();
+    public ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
-    public ONode(String name, AOMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, double[] scaling, double[] translation, double[] rotation, List<AOGeometry> oGeos) {
-        super(name, material, reciveShadows, castShadows, visibility, flipNormal);
+    public ONode(String name,  boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, double[] scaling, double[] translation, double[] rotation, List<AOGeometry> oGeos) {
+        super(name, DefaultMaterial.getSingleColorMaterial(), reciveShadows, castShadows, visibility, flipNormal);
 
-        this.scalingx = scaling[0];
-        this.scalingy = scaling[1];
-        this.scalingz = scaling[2];
+        this.scalingx.setValue(scaling[0]);
+        this.scalingy.setValue(scaling[1]);
+        this.scalingz.setValue(scaling[2]);
 
-        this.translationx = translation[0];
-        this.translationy = translation[1];
-        this.translationz = translation[2];
+        this.translationx.setValue(translation[0]);
+        this.translationy.setValue(translation[1]);
+        this.translationz.setValue(translation[2]);
 
-        this.rotationx = rotation[0];
-        this.rotationy = rotation[1];
-        this.rotationz = rotation[2];
+        this.rotationx.setValue(rotation[0]);
+        this.rotationy.setValue(rotation[1]);
+        this.rotationz.setValue(rotation[2]);
 
-        this.oGeos = oGeos;
+        this.oGeos.setAll(oGeos);
     }
 
     @Override
     public Node generate() {
 
         return new Node(
-                new Point3(rotationx,translationy,translationz),
-                new Point3(scalingx, scalingy, scalingz),
-                new Point3(rotationx, rotationy, rotationz),
+                new Point3(rotationx.get(),translationy.get(),translationz.get()),
+                new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
+                new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
                 nodeFinder(oGeos),
-                reciveShadows,
-                castShadows,
-                visibility,
-                flipNormal
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get()
         );
     }
 
@@ -74,14 +78,14 @@ public class ONode extends AOGeometry {
                 return new ArrayList<Geometry>(
                     Arrays.asList(
                         new Node(
-                            new Point3(((ONode) oGeo).rotationx,((ONode) oGeo).translationy,((ONode) oGeo).translationz),
-                            new Point3(((ONode) oGeo).scalingx, ((ONode) oGeo).scalingy, ((ONode) oGeo).scalingz),
-                            new Point3(((ONode) oGeo).rotationx, ((ONode) oGeo).rotationy, ((ONode) oGeo).rotationz),
+                            new Point3(((ONode) oGeo).rotationx.get(),((ONode) oGeo).translationy.get(),((ONode) oGeo).translationz.get()),
+                            new Point3(((ONode) oGeo).scalingx.get(), ((ONode) oGeo).scalingy.get(), ((ONode) oGeo).scalingz.get()),
+                            new Point3(((ONode) oGeo).rotationx.get(), ((ONode) oGeo).rotationy.get(), ((ONode) oGeo).rotationz.get()),
                             nodeFinder( ((ONode) oGeo).oGeos),
-                                ((ONode) oGeo).reciveShadows,
-                                ((ONode) oGeo).castShadows,
-                                ((ONode) oGeo).visibility,
-                                ((ONode) oGeo).flipNormal
+                                ((ONode) oGeo).reciveShadows.get(),
+                                ((ONode) oGeo).castShadows.get(),
+                                ((ONode) oGeo).visibility.get(),
+                                ((ONode) oGeo).flipNormal.get()
                         )
                     )
                 );

@@ -1,9 +1,7 @@
 package controller;
 
 import UI.IO;
-import geometries.Geometry;
-import geometries.Node;
-import geometries.ShapeFromFile;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -15,9 +13,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import matVect.Point3;
-import material.DefaultMaterial;
-import utils.Element;
+import observables.geometries.AOGeometry;
+import observables.geometries.ONode;
+import observables.geometries.OShapeFromFile;
+import observables.materials.DefaultMaterial;
 
 import java.io.File;
 import java.net.URL;
@@ -94,12 +93,18 @@ public class MenuController extends AController{
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
         if(file!= null){
-            Element e = new ShapeFromFile(file,DefaultMaterial.MATERIAL, true, true, true, false);
-           Node n= new Node(
-                    new Point3(0,0,0),
-                    new Point3(1,1,1),
-                    new Point3(0,0,0),
-                    (Geometry) e,true,true,true,false);
+            AOGeometry e = new OShapeFromFile(file.getName().split(".")[0],file.toString(), DefaultMaterial.getDefaultLambert(), true, true, true, false);
+           ONode n= new ONode(
+                   e.name.get(),
+                   true,
+                   true,
+                   true,
+                   false,
+                   new double[]{0,0,0},
+                   new double[]{1,1,1},
+                   new double[]{0,0,0},
+                   FXCollections.observableArrayList(e)
+           );
             n.name=e.name;
             if(e!= null) ObservableElementLists.getInstance().addElement(n);
         }
