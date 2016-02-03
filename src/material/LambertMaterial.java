@@ -70,6 +70,7 @@ public class LambertMaterial extends Material {
 
             }
             double ambientOcclusion=0;
+
             for(Vector3 v : testDirections){
                 Ray r = new Ray(p,v);
 
@@ -77,15 +78,15 @@ public class LambertMaterial extends Material {
                     if(!g.visibility) continue;
                     final Hit h = g.hit(r);
                     final double border = rnd.nextDouble()*3.0;
-                    if (h != null && h.t >0.01 && h.t <border) {
-                        ambientOcclusion += 1*(h.t/border);
+                    if (h != null && h.t >0.00001 && h.t<border ) {
+                        ambientOcclusion += h.t/border;
                         numOfHits++;
                         break;
                     }
 
                 }
             }
-           if(numOfHits>numberOfRays/10) c= c.mul((ambientOcclusion/(numOfHits*1.0)));
+           if(numOfHits>0) c= c.mul(((ambientOcclusion)/(numOfHits*1.0)));
 
             ////
         }
