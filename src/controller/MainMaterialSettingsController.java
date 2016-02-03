@@ -2,7 +2,6 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import geometries.Node;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +21,6 @@ import texture.Texture;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -267,16 +264,7 @@ public class MainMaterialSettingsController extends AController {
 
     }
 
-    private List<Node> getNodesWithMaterial(Material m){
-        List<Node>  geos = new ArrayList<>();
-        for (Node g : elementLists.getGeometries() ){
 
-            if(g.geos.get(0).material.equals(m)) geos.add(g);
-        }
-        System.out.println(elementLists.getGeometries().size());
-        System.out.println(geos.size());
-       return geos;
-    }
     private void loadTextureTabs() {
        TabPane tabPane = masterTabPane;
         for(int i =2 ; i <tabPane.getTabs().size();i++){

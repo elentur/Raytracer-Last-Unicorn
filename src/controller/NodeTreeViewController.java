@@ -138,7 +138,7 @@ public class NodeTreeViewController extends AController {
         lstNewElement.add(DefaultLight.getSpotLight());
 
         lstNewElement.add(DefaultCameras.getOrthographicCamera());
-        lstNewElement.add(DefaultCameras.getOrthographicCamera());
+        lstNewElement.add(DefaultCameras.getPerspectiveCamera());
         lstNewElement.add(DefaultCameras.getDOFCamera());
 
     }
@@ -174,14 +174,8 @@ public class NodeTreeViewController extends AController {
     private void handleNewElementAction() {
         if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
           AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
-            if(e instanceof AOLight){
+            if(e instanceof AOLight || e instanceof AOCamera || e instanceof ONode){
                 elementLists.addElement( e);
-            }else  if(e instanceof AOCamera){
-              //  elementLists.addElement(((AOCamera) e).deepCopy());
-            }else  if(e instanceof AOGeometry){
-               // Node node = new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0), ((Geometry) e).deepCopy(), true, true, true, false);
-               // node.name = e.name;
-              //  elementLists.addElement(node);
             }
 
 
