@@ -208,12 +208,7 @@ public class ObservableElementLists {
         ONode parent = getParentNode(geometries,(ONode)nodes.get(0));
         ONode n = new ONode(
                 "Group",
-                true,true,true,false,
-               new double[]{0,0,0},
-                new double[]{1,1,1},
-                 new double[]{0,0,0},
                 nodes
-
         );
         TreeItem<AOElement> t = new TreeItem<>(n);
         if(parent==null){

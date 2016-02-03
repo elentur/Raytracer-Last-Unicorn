@@ -96,13 +96,6 @@ public class MenuController extends AController{
             AOGeometry e = new OShapeFromFile(file.getName().split(".")[0],file.toString(), DefaultMaterial.getDefaultLambert(), true, true, true, false);
            ONode n= new ONode(
                    e.name.get(),
-                   true,
-                   true,
-                   true,
-                   false,
-                   new double[]{0,0,0},
-                   new double[]{1,1,1},
-                   new double[]{0,0,0},
                    FXCollections.observableArrayList(e)
            );
             n.name=e.name;
