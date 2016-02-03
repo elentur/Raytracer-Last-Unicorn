@@ -3,7 +3,6 @@ package observables.materials;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import material.OrenNayarMaterial;
-import observables.textures.AOTexture;
 
 /**
  * Created by
@@ -16,6 +15,7 @@ public class OOrenNayarMaterial extends AOMaterial{
     public OOrenNayarMaterial() {
         name.set("Oren Nayar Material");
         roughness.set(0.5);
+        roughness.addListener(a->refreshMaterial());
     }
 
     @Override

@@ -22,6 +22,8 @@ public class OPhongMaterial extends AOMaterial{
         name.set("Phong Material");
         specular.set(new OSingleColorTexture(Color.WHITE));
         exponent.set(64);
+        specular.addListener(a->refreshMaterial());
+        exponent.addListener(a->refreshMaterial());
     }
 
     @Override

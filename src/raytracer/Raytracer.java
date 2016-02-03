@@ -239,27 +239,36 @@ public class Raytracer {
             quadrant = newQuadrants(pattern);
             startTime = System.currentTimeMillis();
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
+            Task rt = null;
             if (def) {
-                final PixelWriter pixelWriter = img.getPixelWriter();
-                final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
-                final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
-                for (int y = 0; y < imgHeight.get(); y++) {
-                    for (int x = 0; x < imgWidth.get(); x++) {
-                        final byte[] b = draw(x, y);
-                        for (int i = 0; i < 3; i++) {
-                            imageData[y * imgWidth.get() * 3 + x * 3 + i] = b[i];
+                 rt = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        final PixelWriter pixelWriter = img.getPixelWriter();
+                        final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
+                        final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
+                        for (int y = 0; y < imgHeight.get(); y++) {
+                            for (int x = 0; x < imgWidth.get(); x++) {
+                                final byte[] b = draw(x, y);
+                                for (int i = 0; i < 3; i++) {
+                                    imageData[y * imgWidth.get() * 3 + x * 3 + i] = b[i];
+                                }
+                            }
                         }
+                        pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
+                                imgWidth.get() * 3);
+                        return null;
                     }
-                }
-                pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
-                        imgWidth.get() * 3);
+                };
+
+
             } else {
-                Task rt = new RenderTask();
+                rt = new RenderTask();
                 progress.bind(rt.progressProperty());
-                Thread t = new Thread(rt, 0 + "");
-                t.setDaemon(true);
-                t.start();
             }
+            Thread t = new Thread(rt, 0 + "");
+            t.setDaemon(true);
+            t.start();
         }
     }
 
@@ -320,15 +329,19 @@ public class Raytracer {
      * Prepares the writableImage for rendering and sets its start-material.
      */
     private void prepare() {
+        WritableImage oldImg = img;
         img = new WritableImage(imgWidth.get(), imgHeight.get());
         final PixelWriter pixelWriter = img.getPixelWriter();
-        if (!def){
+        if (!def) {
             for (int x = 0; x < imgWidth.get(); x++) {
                 for (int y = 0; y < imgHeight.get(); y++) {
                     pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
                 }
             }
-         }
+        }else{
+            if(oldImg!=null)img = oldImg;
+        }
+
     }
 
     /**

@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import observables.AOElement;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
@@ -185,11 +186,13 @@ public class MainSettingsNodeController extends AController {
             protected void updateItem(AOMaterial item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
+                    textProperty().unbind();
                     setText("");
                 } else {
-                    String prefix = "";
-                    if (this.getIndex() < 6) prefix = "New";
-                    setText(prefix + " " + item.name.get());
+                   // String prefix = "";
+                   //if (this.getIndex() < 6) prefix = "New";
+                  //  setText(prefix + " " + item.name.get());
+                    textProperty().bind(item.name);
                 }
             }
         });
@@ -220,5 +223,8 @@ public class MainSettingsNodeController extends AController {
         material.setValue(m);
         AOGeometry g = ((ONode) selectedTreeItem.get().getValue()).oGeos.get(0);
         g.material.setValue(m);
+        TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
+        selectedTreeItem.setValue(null);
+        selectedTreeItem.setValue(treeItem);
     }
 }

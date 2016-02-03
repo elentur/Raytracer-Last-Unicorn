@@ -1,7 +1,6 @@
 package observables.materials;
 
 import material.LambertMaterial;
-import observables.textures.AOTexture;
 
 /**
  * Created by

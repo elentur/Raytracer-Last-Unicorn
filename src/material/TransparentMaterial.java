@@ -84,7 +84,7 @@ public class TransparentMaterial extends Material {
 
                 Hit refHit = hit.geo.hit(refractionRay);
                 if(refHit != null && refHit.t>0.00001)
-                    insideColorIntensity=refHit.t/10;
+                    insideColorIntensity=refHit.t/3;
 
 
         }

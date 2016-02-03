@@ -1,6 +1,8 @@
 package observables.textures;
 
+import controller.AController;
 import javafx.scene.paint.Color;
+import observables.materials.AOMaterial;
 import texture.SingleColorTexture;
 
 /**
@@ -9,16 +11,17 @@ import texture.SingleColorTexture;
  */
 public class OSingleColorTexture extends AOTexture {
 
-    public Color color;
+
 
     public OSingleColorTexture(Color color) {
         name.set("Single Color Texture");
         path.set("");
-        this.color = color;
+        this.color.setValue(color);
+
     }
 
     @Override
     public SingleColorTexture generate() {
-        return new SingleColorTexture(new utils.Color(color.getRed(),color.getGreen(),color.getBlue()));
+        return new SingleColorTexture(new utils.Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()));
     }
 }

@@ -20,7 +20,7 @@
     </ImageView>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
-        <Label styleClass="text-field-head" text="u"/>
+        <Label styleClass="text-field-head" text="U"/>
         <Label styleClass="text-field-head" text="V"/>
     </HBox>
     <HBox styleClass="form-group-4">

@@ -23,6 +23,9 @@ public class OReflectiveMaterial extends AOMaterial{
         specular.set(new OSingleColorTexture(Color.WHITE));
         reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);
+        specular.addListener(a->refreshMaterial());
+        reflection.addListener(a->refreshMaterial());
+        exponent.addListener(a->refreshMaterial());
     }
 
     @Override
