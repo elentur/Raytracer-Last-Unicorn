@@ -272,11 +272,6 @@
     -fx-min-height: 30em;
 }
 
-.tree-view, .tree-cell {
-    -fx-background-color: black;
-    -fx-text-fill: white;
-}
-
 .tree-cell:selected {
     -fx-font-weight: bold;
 }
@@ -289,16 +284,19 @@
 /* StatusBar */
 
 #statusbar{
-    -fx-min-height: 1.5em;
+    -fx-border-color: red;
+    -fx-border-style: solid;
+    -fx-border-width: 1px;
 }
-
+/*
 #statusbar #lblTime{
     -fx-pref-width: 25em;
 }
-
+*/
 #statusbar .progress-bar{
-    -fx-pref-width: 50em;
+    -fx-pref-width: 50%;
 }
+
 
 /* Render Settings */
 
