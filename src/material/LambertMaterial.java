@@ -1,16 +1,13 @@
 package material;
 
-import geometries.Geometry;
 import light.Light;
 import matVect.Point2;
 import matVect.Point3;
-import matVect.Vector3;
 import texture.Texture;
-import utils.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import utils.Color;
+import utils.Hit;
+import utils.Tracer;
+import utils.World;
 
 /**
  * A nearly perfect diffuse Material
@@ -56,7 +53,7 @@ public class LambertMaterial extends Material {
                 }
 
             ///ambient occlusion test
-            List<Vector3> testDirections = new ArrayList<>();
+          /*  List<Vector3> testDirections = new ArrayList<>();
             int numberOfRays = 16;
             int numOfHits=0;
             Random rnd = new Random();
@@ -85,7 +82,7 @@ public class LambertMaterial extends Material {
                     }
 
                 }
-            }
+            }*/
            //if(numOfHits>0) c= c.mul(((ambientOcclusion)/(numOfHits*1.0)));
 
             ////

@@ -26,7 +26,7 @@ public class ElementTreeCellFactory implements Callback<TreeView<AOElement>, Tre
                 super.updateItem(item, empty);
 
                 if (item != null || !empty) {
-                    setText(item.name.getValue());
+                    textProperty().bind(item.name);
                     if (item instanceof AOGeometry) {
                         setGraphic(new ImageView(new Image("icons/mesh.png")));
 
@@ -40,6 +40,7 @@ public class ElementTreeCellFactory implements Callback<TreeView<AOElement>, Tre
                         setGraphic(null);
                     }
                 } else {
+                    textProperty().unbind();
                     setText(null);
                     setGraphic(null);
                 }

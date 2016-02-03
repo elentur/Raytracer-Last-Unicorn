@@ -1,8 +1,5 @@
 package observables.materials;
 
-import observables.textures.AOTexture;
-import observables.textures.OSingleColorTexture;
-
 /**
  * Created by Marcus Baetz on 03.02.2016.
  *
@@ -12,7 +9,7 @@ public class DefaultMaterial {
     private final static AOMaterial defaultMaterial = getDefaultMaterial();
     public static AOMaterial getDefaultMaterial(){
         OLambertMaterial oLambertMaterial = new OLambertMaterial();
-        oLambertMaterial.name.set("default Materia");
+        oLambertMaterial.name.set("Default Material");
         return oLambertMaterial;
     }
     public static AOMaterial getLambert(){

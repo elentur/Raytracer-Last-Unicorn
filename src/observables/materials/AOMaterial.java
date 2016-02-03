@@ -18,7 +18,7 @@ public abstract class AOMaterial extends AOElement {
 
     public ObjectProperty<AOTexture> texture = new SimpleObjectProperty<>(new OSingleColorTexture(Color.GRAY));
     public ObjectProperty<AOTexture> bumpMap = new SimpleObjectProperty<>(new OSingleColorTexture(Color.BLACK));
-    public DoubleProperty bumpScale = new SimpleDoubleProperty(500);
+    public DoubleProperty bumpScale = new SimpleDoubleProperty(0);
     public ObjectProperty<AOTexture> irradiance = new SimpleObjectProperty<>(new OSingleColorTexture(Color.WHITE));
 
     public abstract Material generate();

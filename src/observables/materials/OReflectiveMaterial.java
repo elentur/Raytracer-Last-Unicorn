@@ -19,6 +19,7 @@ public class OReflectiveMaterial extends AOMaterial{
     public IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OReflectiveMaterial(){
+        name.set("Reflective Material");
         specular.set(new OSingleColorTexture(Color.WHITE));
         reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);

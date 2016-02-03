@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
-import observables.materials.DefaultMaterial;
 
 import java.io.File;
 import java.net.URL;
@@ -93,7 +92,7 @@ public class MenuController extends AController{
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
         if(file!= null){
-            AOGeometry e = new OShapeFromFile(file.getName().split(".")[0],file.toString(), DefaultMaterial.getDefaultLambert(), true, true, true, false);
+            AOGeometry e = new OShapeFromFile(file.toString());
            ONode n= new ONode(
                    e.name.get(),
                    FXCollections.observableArrayList(e)
