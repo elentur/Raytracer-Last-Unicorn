@@ -104,11 +104,11 @@ public class MenuController extends AController{
     }
 
     public void handleSaveAction(ActionEvent actionEvent) {
-        IO.saveScene((Stage)menuBar.getScene().getWindow(), raytracer.getWorld(), raytracer.getCamera());
+        IO.saveScene((Stage)menuBar.getScene().getWindow(), rootItem);
     }
 
     public void handleLoadAction(ActionEvent actionEvent) {
-        IO.loadScene((Stage)menuBar.getScene().getWindow());
+        IO.loadScene((Stage)menuBar.getScene().getWindow(),rootItem);
     }
 
 

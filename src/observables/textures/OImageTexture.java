@@ -15,7 +15,7 @@ public class OImageTexture extends AOTexture {
     @Override
     public ImageTexture generate() {
         return new ImageTexture(
-                img.get(),
+                path.get(),
                 scaleU.get(),
                 scaleV.get(),
                 offsetU.get(),

@@ -4,23 +4,28 @@ import camera.Camera;
 import camera.PerspectiveCamera;
 import controller.AController;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import matVect.Point3;
 import matVect.Vector3;
+import observables.AOElement;
 import sampling.SamplingPattern;
 import utils.Scene;
 import utils.World;
 
 import javax.imageio.ImageIO;
+import javax.xml.bind.JAXB;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,20 +55,16 @@ public class IO {
         }
     }
 
-    public static void saveScene(final Stage stage, final World world, Camera camera) {
-        if (world == null) {
-            Dialog dlg = new Dialog("No Scene!");
+    public static void saveScene(final Stage stage, final TreeItem<AOElement> rootItem) {
+        if (rootItem == null) {
+            Dialog dlg = new Dialog("No Elements!");
 
-            dlg.setNewText("No Scene Created. You must Create a Scene first before you can try to save it.");
+            dlg.setNewText("No Elements created. You must Create a Element first before you can try to save it.");
             dlg.showAndWait();
             return;
         }
 
-        if (camera == null) {
-            // default camera
-            camera = new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1));
-        }
-        Scene scene = new Scene(world, camera);
+        Scene scene = new Scene(rootItem);
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
@@ -78,12 +79,10 @@ public class IO {
             } catch (IOException e) {
                 System.out.println("IO Fehler");
             }
-
-
         }
     }
 
-    public static void loadScene(final Stage stage) {
+    public static void loadScene(final Stage stage, final TreeItem<AOElement> rootItem) {
 
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
@@ -111,8 +110,8 @@ public class IO {
             }
 
             if (scene != null) {
-                AController.raytracer.setWorld(scene.getWorld());
-                AController.raytracer.setCamera(scene.getCamera());
+                rootItem.getChildren().clear();
+                rootItem.getChildren().addAll(scene.getTreeView().getChildren());
             }
 
 
