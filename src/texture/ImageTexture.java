@@ -9,20 +9,12 @@ import utils.Color;
  */
 public class ImageTexture extends Texture {
 
-    public Image image;
-
-    public ImageTexture(final String path) {
-        this(path,1,1,0,0,0);
+    public ImageTexture(final Image img) {
+        this(img,1,1,0,0,0);
     }
 
-    public ImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
-        super(scaleU,scaleV,offsetU,offsetV,rotate,path);
-
-        File file = new File(path);
-
-//        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
-
-        this.image = new Image(file.toURI().toString());
+    public ImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
+        super(scaleU,scaleV,offsetU,offsetV,rotate,img);
         name = "Image Texture";
     }
 
