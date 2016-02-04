@@ -18,6 +18,16 @@
                 </HBox>
            </HBox>
             <HBox styleClass="form-group-4">
+                <Label  styleClass="col-2"  text="Ambient Occlusion"/>
+                <CheckBox fx:id="chkAmbientOcclusion" />
+            </HBox>
+            <HBox styleClass="form-group-4">
+                <Label text="Size"/>
+                <NumberTextField fx:id="txtAmbientSize" />
+                <Label text="Subdiv"/>
+                <NumberTextField fx:id="txtAmbientSubdive" />
+            </HBox>
+            <HBox styleClass="form-group-4">
                 <Label text="Diffuse"/>
                 <ColorPicker fx:id="clpDiffuse" />
                 <ComboBox styleClass="col-1" fx:id="cmbDiffuse" />

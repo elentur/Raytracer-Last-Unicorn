@@ -27,9 +27,9 @@ public class ObservableElementLists {
     private TreeItem<AOElement> nodeTree;
     private TreeItem<AOElement> lightTree;
     private TreeItem<AOElement> cameraTree;
-    private ObservableList<AOGeometry> geometries = FXCollections.observableArrayList();
-    private ObservableList<AOLight> lights = FXCollections.observableArrayList();
-
+    public ObservableList<AOGeometry> geometries = FXCollections.observableArrayList();
+    public ObservableList<AOLight> lights = FXCollections.observableArrayList();
+    public AOCamera camera=null;
 
     public static ObservableElementLists getInstance() {
         return ourInstance;
@@ -90,6 +90,7 @@ public class ObservableElementLists {
             TreeItem<AOElement> treeItem = new TreeItem<>(c);
             cameraTree.getChildren().add(treeItem);
             treeView.getSelectionModel().select(treeItem);
+        camera=c;
     }
 
     private void updateCamera(AOCamera c) {
@@ -101,6 +102,7 @@ public class ObservableElementLists {
 
         cameraTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
         treeView.getSelectionModel().clearSelection();
+        camera=null;
     }
 
     private void addLight(AOLight l) {

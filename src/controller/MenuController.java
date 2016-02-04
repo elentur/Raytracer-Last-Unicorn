@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
+import observables.lights.AOLight;
 
 import java.io.File;
 import java.net.URL;
@@ -113,6 +114,17 @@ public class MenuController extends AController{
 
 
     public void handleRenderAction(ActionEvent actionEvent) {
+        ObservableElementLists list = ObservableElementLists.getInstance();
+        if(list.camera!=null) raytracer.setCamera(list.camera.generate());
+        raytracer.getWorld().lights.clear();
+        raytracer.getWorld().geometries.clear();
+        for(AOLight light : list.lights){
+            raytracer.getWorld().lights.add(light.generate());
+        }
+        for(AOGeometry geo : list.geometries){
+            raytracer.getWorld().geometries.add(geo.generate());
+        }
+        if(list.camera!=null) raytracer.setCamera(list.camera.generate());
         ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
         if(image!=null)raytracer.render(image);
     }

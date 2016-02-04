@@ -26,7 +26,7 @@ public class OPerspectiveCamera extends AOCamera {
                 new Point3(ex.get(),ey.get(),ez.get()),
                 new Vector3(gx.get(),gy.get(),gz.get()),
                 new Vector3(tx.get(),ty.get(),tz.get()),
-                this.angle.get(),
+                this.angle.get()*(Math.PI/180),
                 new SamplingPattern(patternSubdiv.get())
         );
     }

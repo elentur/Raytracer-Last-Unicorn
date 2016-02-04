@@ -3,7 +3,6 @@ package observables.geometries;
 import geometries.ShapeFromFile;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import observables.materials.AOMaterial;
 
 import java.io.File;
 
@@ -16,7 +15,7 @@ public class OShapeFromFile extends AOGeometry {
     public StringProperty path = new SimpleStringProperty();
 
     public OShapeFromFile(String path) {
-        name.set("Shape From File");
+        name.set(new File(path).getName().split("\\.")[0]);
         this.path.setValue(path);
     }
 

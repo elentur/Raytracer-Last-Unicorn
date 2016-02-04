@@ -1,17 +1,14 @@
 package observables.geometries;
 
-import geometries.Geometry;
 import geometries.Node;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import matVect.Point3;
-import observables.materials.DefaultMaterial;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by
@@ -39,49 +36,15 @@ public class ONode extends AOGeometry {
 
     @Override
     public Node generate() {
-
         return new Node(
                 new Point3(rotationx.get(),translationy.get(),translationz.get()),
                 new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
                 new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
-                nodeFinder(oGeos),
+                oGeos.stream().map(AOGeometry::generate).collect(Collectors.toList()),
                 reciveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
         );
-    }
-
-    private List<Geometry> nodeFinder(List<AOGeometry> obGeos){
-
-        List<Geometry> list = new ArrayList<>();
-
-        for(AOGeometry oGeo : obGeos){
-            
-            if(oGeo instanceof ONode) {
-
-                if(((ONode) oGeo).oGeos.isEmpty()) throw new IllegalArgumentException("The oGeos cannot be null!");
-
-                return new ArrayList<Geometry>(
-                    Arrays.asList(
-                        new Node(
-                            new Point3(((ONode) oGeo).rotationx.get(),((ONode) oGeo).translationy.get(),((ONode) oGeo).translationz.get()),
-                            new Point3(((ONode) oGeo).scalingx.get(), ((ONode) oGeo).scalingy.get(), ((ONode) oGeo).scalingz.get()),
-                            new Point3(((ONode) oGeo).rotationx.get(), ((ONode) oGeo).rotationy.get(), ((ONode) oGeo).rotationz.get()),
-                            nodeFinder( ((ONode) oGeo).oGeos),
-                                ((ONode) oGeo).reciveShadows.get(),
-                                ((ONode) oGeo).castShadows.get(),
-                                ((ONode) oGeo).visibility.get(),
-                                ((ONode) oGeo).flipNormal.get()
-                        )
-                    )
-                );
-            }
-
-            list.add(oGeo.generate());
-            
-        }
-
-        return list;
     }
 }
