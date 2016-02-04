@@ -20,12 +20,10 @@ import java.util.ResourceBundle;
  *
  * @author Marcus Bätz
  */
-public class NodeSettingsViewController  extends AController{
+public class NodeSettingsViewController extends AController {
 
     @FXML
-     private  TabPane tabPane;
-    private TreeItem<AOElement> selTreeItem=null;
-
+    private TabPane tabPane;
 
     /**
      * Called to initialize a controller after its root element has been
@@ -37,54 +35,60 @@ public class NodeSettingsViewController  extends AController{
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        selectedTreeItem.addListener(a-> handleSelectedElement());
-        masterTabPane=tabPane;
+        selectedTreeItem.addListener(a -> handleSelectedElement());
+        masterTabPane = tabPane;
     }
 
     private void handleSelectedElement() {
-        AOElement e = null;
-       if(selectedTreeItem.get()!=null) e = selectedTreeItem.get().getValue();
 
+        tabPane.setVisible(true);
 
-       if(e==null)tabPane.getTabs().clear();
-        try {
-            if(e !=null){
+        AOElement e = selectedTreeItem.get().getValue();
+
+        if (!(e instanceof AOLight) && !(e instanceof AOCamera) && !(e instanceof AOGeometry)) {
+            //tabPane.setVisible(false);
+            if(tabPane.getTabs().size() > 1){
+                tabPane.getTabs().remove(1,tabPane.getTabs().size());
+            }
+        } else {
+
+            try {
 
                 Tab t = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsView.fxml"));
-                if(tabPane.getTabs().isEmpty() || !selectedTreeItem.getValue().equals(selTreeItem)){
-                   tabPane.getTabs().clear();
-                   tabPane.getTabs().add(t);
-                    selTreeItem = selectedTreeItem.getValue();
-                   if(e instanceof ONode)t.setText("Node");
-                   else if(e instanceof AOLight)t.setText("Light");
-                   else if(e instanceof AOCamera)t.setText("Camera");
-               }else {
-                      tabPane.getTabs().get(0).setContent(t.getContent());
-                      if(e instanceof ONode) tabPane.getTabs().get(0).setText("Node");
-                      else if(e instanceof AOLight) tabPane.getTabs().get(0).setText("Light");
-                      else if(e instanceof AOCamera) tabPane.getTabs().get(0).setText("Camera");
-               }
-                if(e instanceof AOGeometry){
-                    if(!((ONode)e).oGeos.isEmpty()&&!(((ONode)e).oGeos.get(0) instanceof ONode)){
+
+                if (tabPane.getTabs().isEmpty()) {
+                    tabPane.getTabs().addAll(t);
+                    if (e instanceof ONode) t.setText("Node");
+                    else if (e instanceof AOLight) t.setText("Light");
+                    else if (e instanceof AOCamera) t.setText("Camera");
+                } else {
+                    tabPane.getTabs().get(0).setContent(t.getContent());
+                    if (e instanceof ONode) tabPane.getTabs().get(0).setText("Node");
+                    else if (e instanceof AOLight) tabPane.getTabs().get(0).setText("Light");
+                    else if (e instanceof AOCamera) tabPane.getTabs().get(0).setText("Camera");
+                }
+
+                if (e instanceof AOGeometry) {
+                    if (!((ONode) e).oGeos.isEmpty() && !(((ONode) e).oGeos.get(0) instanceof ONode)) {
                         t = FXMLLoader.load(getClass().getResource("/fxml/mainMaterialSettingsView.fxml"));
                         t.setText("Material");
-                        if(tabPane.getTabs().size()<2){
+                        if (tabPane.getTabs().size() < 2) {
                             tabPane.getTabs().add(t);
-                        }else {
+                        } else {
                             tabPane.getTabs().get(1).setContent(t.getContent());
                         }
                     }
-                }else{
-                    if(tabPane.getTabs().size()>1){
+                } else {
+                    if (tabPane.getTabs().size() > 1) {
                         Tab tab = tabPane.getTabs().get(0);
                         tabPane.getTabs().clear();
                         tabPane.getTabs().add(tab);
                     }
                 }
-               // tabPane.getSelectionModel().select(index);
+
+            } catch (IOException e1) {
+                e1.printStackTrace();
             }
-        } catch (IOException e1) {
-            e1.printStackTrace();
         }
     }
 }
