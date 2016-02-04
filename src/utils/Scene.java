@@ -1,6 +1,10 @@
 package utils;
 
 import camera.Camera;
+import com.sun.corba.se.impl.orbutil.ObjectWriter;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import observables.AOElement;
 
 import java.io.Serializable;
 
@@ -14,36 +18,23 @@ public class Scene implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Represents the World object of this Scene.
+     * Represents the AOElments Treeview object of this Scene.
      */
-    private final World world;
-    /**
-     * Represents the Camera object of this Scene.
-     */
-    private final Camera camera;
+    private final TreeItem<AOElement> tree;
 
     /**
      * Generates a new Scene object.
      *
-     * @param world  Represents the World object of this Scene.
-     * @param camera Represents the Camera object of this Scene.
+     * @param tree  Represents the treeview object of this Scene.
      */
-    public Scene(final World world, final Camera camera) {
-        this.world = world;
-        this.camera = camera;
+    public Scene(TreeItem<AOElement> tree) {
+        this.tree = tree;
     }
 
     /**
-     * @return the World object of this Scene.
+     * @return the TreeView object of this Scene.
      */
-    public World getWorld() {
-        return world;
-    }
-
-    /**
-     * @return the Camera object of this Scene.
-     */
-    public Camera getCamera() {
-        return camera;
+    public TreeItem<AOElement> getTreeView() {
+        return tree;
     }
 }

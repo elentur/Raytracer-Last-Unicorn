@@ -62,16 +62,9 @@ public class NodeTreeViewController extends AController {
         camerasRootTree = new TreeItem<>();
         camerasRootTree.setValue(new AOElement("Camera"));
 
+        rootItem.getChildren().addAll(nodesRootTree, lightsRootTree, camerasRootTree);
 
-
-        TreeItem<AOElement> root = new TreeItem<>();
-        root.setExpanded(true);
-        root.setValue(new AOElement("Elements"));
-
-
-        root.getChildren().addAll(nodesRootTree, lightsRootTree, camerasRootTree);
-
-        elementsTreeView.setRoot(root);
+        elementsTreeView.setRoot(rootItem);
         elementLists.setTreeview(elementsTreeView);
 
         // TODO in eigene Klasse auslagern

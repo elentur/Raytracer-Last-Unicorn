@@ -11,12 +11,12 @@
         <fx:include source="nodeTreeView.fxml"/>
     </left>
     <center>
-        <fx:include source="renderView.fxml"/>
+
     </center>
     <right>
         <fx:include source="nodeSettingsView.fxml"/>
     </right>
     <bottom>
-        <fx:include source="statusbar.fxml"/>
+
     </bottom>
 </BorderPane>

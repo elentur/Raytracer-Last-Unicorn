@@ -105,11 +105,11 @@ public class MenuController extends AController{
     }
 
     public void handleSaveAction(ActionEvent actionEvent) {
-        IO.saveScene((Stage)menuBar.getScene().getWindow(), raytracer.getWorld(), raytracer.getCamera());
+        IO.saveScene((Stage)menuBar.getScene().getWindow(), rootItem);
     }
 
     public void handleLoadAction(ActionEvent actionEvent) {
-        IO.loadScene((Stage)menuBar.getScene().getWindow());
+        IO.loadScene((Stage)menuBar.getScene().getWindow(),rootItem);
     }
 
 
@@ -125,7 +125,9 @@ public class MenuController extends AController{
             raytracer.getWorld().geometries.add(geo.generate());
         }
         if(list.camera!=null) raytracer.setCamera(list.camera.generate());
-        ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
+
+        RenderViewController rvc = new RenderViewController();
+        ImageView image  = rvc.getImageView();
         if(image!=null)raytracer.render(image);
     }
 
