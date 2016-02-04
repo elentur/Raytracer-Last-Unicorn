@@ -32,6 +32,7 @@ public abstract class AOMaterial extends AOElement {
     public abstract Material generate();
 
     protected void refreshMaterial(){
+        
         AOMaterial m = AController.material.get();
         AController.material.setValue(null);
         AController.material.setValue(m);

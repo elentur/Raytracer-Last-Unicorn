@@ -36,4 +36,5 @@ public abstract class AOTexture extends AOElement {
         AController.material.setValue(null);
         AController.material.setValue(m);
     }
+
 }

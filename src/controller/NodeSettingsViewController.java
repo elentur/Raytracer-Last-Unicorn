@@ -68,11 +68,7 @@ public class NodeSettingsViewController  extends AController{
                     if(!((ONode)e).oGeos.isEmpty()&&!(((ONode)e).oGeos.get(0) instanceof ONode)){
                         t = FXMLLoader.load(getClass().getResource("/fxml/mainMaterialSettingsView.fxml"));
                         t.setText("Material");
-                        if(tabPane.getTabs().size()<2){
-                            tabPane.getTabs().add(t);
-                        }else {
-                            tabPane.getTabs().get(1).setContent(t.getContent());
-                        }
+                        tabPane.getTabs().add(1,t);
                     }
                 }else{
                     if(tabPane.getTabs().size()>1){
