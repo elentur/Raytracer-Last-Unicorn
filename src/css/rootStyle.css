@@ -3,19 +3,7 @@
     -fx-background: rgb(80, 80, 80);
 }
 
-/* top right bottom right */
-
-#vbox{
-    -fx-pref-width: 100em;
-}
-
-#nodeTreeView{
-    -fx-min-width: 25em;
-}
-
-#scrollPane{
-    -fx-min-width: 50em;
-}
+/* top right bottom left */
 
 #scrollPaneSettings{
     -fx-min-width: 26.5em;
@@ -25,9 +13,6 @@
     -fx-min-width: 25em;
 }
 
-#statusbar{
-    -fx-min-width: 100em;
-}
 
 /* Render Setting 2 spaltig */
 
@@ -279,24 +264,6 @@
 .tree-cell {
     -fx-padding: 0.25em;
 }
-
-
-/* StatusBar */
-
-#statusbar{
-    -fx-border-color: red;
-    -fx-border-style: solid;
-    -fx-border-width: 1px;
-}
-/*
-#statusbar #lblTime{
-    -fx-pref-width: 25em;
-}
-*/
-#statusbar .progress-bar{
-    -fx-pref-width: 50%;
-}
-
 
 /* Render Settings */
 

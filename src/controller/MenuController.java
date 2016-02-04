@@ -125,7 +125,9 @@ public class MenuController extends AController{
             raytracer.getWorld().geometries.add(geo.generate());
         }
         if(list.camera!=null) raytracer.setCamera(list.camera.generate());
-        ImageView image  = (ImageView)menuBar.getParent().getParent().lookup("#image");
+
+        RenderViewController rvc = new RenderViewController();
+        ImageView image  = rvc.getImageView();
         if(image!=null)raytracer.render(image);
     }
 
