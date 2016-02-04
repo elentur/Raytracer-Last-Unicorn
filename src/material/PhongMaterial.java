@@ -38,8 +38,9 @@ public class PhongMaterial extends Material {
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
-                         final Texture bumpMap, final double bumpScale, final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
+                         final Texture bumpMap, final double bumpScale, final Texture irradiance,
+            boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
         name="Phong Material";
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
@@ -52,7 +53,7 @@ public class PhongMaterial extends Material {
     }
 
     public PhongMaterial(final PhongMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
         name=m.name;
         this.specular = m.specular;
         this.exponent = m.exponent;

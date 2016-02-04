@@ -1,9 +1,6 @@
 package observables.materials;
 
 import material.SingleColorMaterial;
-import observables.textures.AOTexture;
-import observables.textures.OSingleColorTexture;
-import texture.SingleColorTexture;
 
 /**
  * Created by
@@ -20,7 +17,10 @@ public class OSingleColorMaterial extends AOMaterial {
         return new SingleColorMaterial(
                 texture.get().generate(),
                 bumpMap.get().generate(),
-                bumpScale.get()
+                bumpScale.get(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get()
         );
     }
 }

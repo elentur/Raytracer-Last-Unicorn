@@ -102,6 +102,8 @@ public class Raytracer {
      */
     public double iOR = 1.0003;
 
+    public boolean ambientOcclusion = false;
+
     /**
      * represents the start time of the render process.
      */
@@ -112,7 +114,7 @@ public class Raytracer {
 
 
     public Raytracer(boolean loadConfig) {
-        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2));
+        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2),ambientOcclusion);
         if (loadConfig) loadConfig();
         else setDefault();
         maxProgress.bind(imgHeight.multiply(imgWidth));
@@ -125,6 +127,7 @@ public class Raytracer {
         imgHeight.set(80);
         hdr = false;
         def = true;
+        ambientOcclusion=false;
     }
 
 
@@ -153,6 +156,7 @@ public class Raytracer {
         if (input.size() > 0) {
             try {
                 hdr = input.get("hdr").equals("true");
+                ambientOcclusion = input.get("ambient").equals("true");
                 cores = Integer.parseInt(input.get("cores"));
                 pattern = Integer.parseInt(input.get("pattern"));
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
@@ -166,7 +170,7 @@ public class Raytracer {
                         Double.parseDouble(input.get("ambientColorGreen")),
                         Double.parseDouble(input.get("ambientColorBlue")));
                 World w = world;
-                world = new World(back, ambient);
+                world = new World(back, ambient,ambientOcclusion);
                 world.lights.addAll(w.lights);
                 world.geometries.addAll(w.geometries);
             } catch (Exception e) {

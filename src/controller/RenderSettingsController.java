@@ -53,6 +53,8 @@ public class RenderSettingsController extends Stage {
     private Button btnOK;
     @FXML
     private Button btnCancel;
+    @FXML
+    private CheckBox chkAmbientOcclusion;
 
     private Parent root;
 
@@ -89,6 +91,7 @@ public class RenderSettingsController extends Stage {
         cpColorPicker = (ColorPicker) root.lookup("#cpColorPicker");
         btnCancel = (Button) root.lookup("#btnCancel");
         btnOK = (Button) root.lookup("#btnOK");
+        chkAmbientOcclusion = (CheckBox) root.lookup("#chkAmbientOcclusion");
 
         chbPattern.getItems().addAll("Clockwise", "Random");
         chbCores.disableProperty().bind(chkMultithreading.selectedProperty().not());
@@ -154,6 +157,7 @@ public class RenderSettingsController extends Stage {
                 txtHeight.setNumber(input.get("height"));
                 txtRecursion.setNumber(input.get("recursion"));
                 txtIOR.setNumber(input.get("ior"));
+                chkAmbientOcclusion.setSelected(input.get("ambient").equals("true"));
             } catch (Exception e) {
                 System.out.println("ladefehler");
             }
@@ -177,6 +181,7 @@ public class RenderSettingsController extends Stage {
         output.put("height", txtHeight.getInteger()+"");
         output.put("recursion", txtRecursion.getDouble()+"");
         output.put("ior", txtIOR.getDouble()+"");
+        output.put("ambient", chkAmbientOcclusion.isSelected() + "");
         IO.writeFile("settings.cfg", output);
     }
     private void onCancel() {
@@ -209,7 +214,7 @@ public class RenderSettingsController extends Stage {
                 cpAmbientColor.getValue().getGreen(),
                 cpAmbientColor.getValue().getBlue());
         World w = AController.raytracer.getWorld();
-        AController.raytracer.setWorld(new World(back, ambient));
+        AController.raytracer.setWorld(new World(back, ambient,chkAmbientOcclusion.isSelected()));
         AController.raytracer.getWorld().lights.addAll(w.lights);
         AController.raytracer.getWorld().geometries.addAll(w.geometries);
         this.close();

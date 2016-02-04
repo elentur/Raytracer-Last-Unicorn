@@ -35,8 +35,9 @@ public class ReflectiveMaterial extends Material {
      */
     public ReflectiveMaterial(final Texture texture, final  Texture specular, final  Texture reflection,
                               final  int exponent, final Texture bumpMap, final double bumpScale,
-                              final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
+                              final Texture irradiance,
+                              boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
         name="Reflective Material";
         this.specular=specular;
         this.reflection=reflection;
@@ -44,7 +45,7 @@ public class ReflectiveMaterial extends Material {
     }
 
     public ReflectiveMaterial(final ReflectiveMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
         name=m.name;
         this.specular=m.specular;
         this.reflection=m.reflection;

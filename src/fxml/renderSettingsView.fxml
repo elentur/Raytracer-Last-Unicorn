@@ -74,6 +74,10 @@
                         <HBox styleClass="col-1"/>
                         <CheckBox fx:id="chkHDRRendering" text="HDR-Rendering"/>
                     </HBox>
+                    <HBox>
+                        <HBox styleClass="col-1"/>
+                        <CheckBox fx:id="chkAmbientOcclusion" text="AmbientOclusion"/>
+                    </HBox>
                 </VBox>
             </content>
         </Tab>

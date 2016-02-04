@@ -3,6 +3,7 @@ package material;
 import light.Light;
 import matVect.Point2;
 import matVect.Point3;
+import sampling.AmbienOcclusion;
 import texture.Texture;
 import utils.Color;
 import utils.Hit;
@@ -23,12 +24,13 @@ public class LambertMaterial extends Material {
      *
      * @param texture Represents the Color of the Lambert material
      */
-    public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
+    public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
+            boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
         name="Lambert Material";
     }
     private LambertMaterial(LambertMaterial m){
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
         name = m.name;
     }
 
@@ -53,7 +55,7 @@ public class LambertMaterial extends Material {
                 }
 
             ///ambient occlusion test
-                //if(ambientOcllusion) c= c.mul(new AmbienOcclusion().getOcclusion(ambientSize,ambientSubdiv,hit,p));
+                if(ambientOcllusion && world.ambientOcclusion) c= c.mul(new AmbienOcclusion().getOcclusion(ambientSize,ambientSubdiv,hit,p,world));
 
             ////
         }

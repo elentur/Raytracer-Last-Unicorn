@@ -50,6 +50,12 @@ public class MainMaterialSettingsController extends AController {
     @FXML
     private VBox materialView;
     @FXML
+    private CheckBox chkAmbientOcclusion;
+    @FXML
+    private NumberTextField txtAmbientSize;
+    @FXML
+    private NumberTextField txtAmbientSubdive;
+    @FXML
     private ColorPicker clpDiffuse;
     @FXML
     private ComboBox<AOTexture> cmbDiffuse;
@@ -152,6 +158,9 @@ public class MainMaterialSettingsController extends AController {
     private void initializeFields() {
         AOMaterial m = material.get();
         txtMaterialName.textProperty().bindBidirectional(m.name);
+        chkAmbientOcclusion.selectedProperty().bindBidirectional(m.ambientOcclusion);
+        txtAmbientSize.doubleProperty.bindBidirectional(m.ambientSize);
+        txtAmbientSubdive.doubleProperty.bindBidirectional(m.ambientSubdiv);
         clpDiffuse.valueProperty().bindBidirectional(m.texture.get().color);
         cmbDiffuse.setItems(textureList);
         if(cmbDiffuse.getItems().contains(m.texture.get()))cmbDiffuse.getSelectionModel().select(m.texture.get());

@@ -37,6 +37,8 @@ public class World implements Serializable {
      */
     public final List<Light> lights;
 
+    public final boolean ambientOcclusion;
+
     public Image backImg;
 
     /**
@@ -44,12 +46,13 @@ public class World implements Serializable {
      *
      * @param backgroundColor represents the background material of the scene. The material is from typ Color.
      */
-    public World(final Color backgroundColor, final Color ambientLight) {
+    public World(final Color backgroundColor, final Color ambientLight, final boolean ambientOcclusion) {
         if (backgroundColor == null) throw new IllegalArgumentException("backgroundColor must not be null!");
         this.backgroundColor = backgroundColor;
         this.geometries = new ArrayList<>();
         this.lights = new ArrayList<>();
         this.ambientLight = ambientLight;
+        this.ambientOcclusion=ambientOcclusion;
     }
 
 

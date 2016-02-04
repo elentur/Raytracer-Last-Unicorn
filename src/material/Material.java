@@ -21,9 +21,13 @@ public abstract class Material implements Serializable {
     public final Texture bumpMap;
     public final double bumpScale;
     public final Texture irradiance;
+    public final boolean ambientOcllusion;
+    public final double ambientSize;
+    public final int ambientSubdiv;
     public String name;
 
-    public Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance) {
+    public Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
+                    boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         if (texture == null) {
             throw new IllegalArgumentException("Texture cannot be null!");
         }
@@ -31,6 +35,9 @@ public abstract class Material implements Serializable {
         this.bumpMap=bumpMap;
         this.bumpScale=bumpScale;
         this.irradiance=irradiance;
+        this.ambientOcllusion=ambientOcllusion;
+        this.ambientSize=ambientSize;
+        this.ambientSubdiv=ambientSubdiv;
     }
 
     /**

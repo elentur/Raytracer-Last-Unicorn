@@ -23,8 +23,9 @@ public class SingleColorMaterial extends Material {
      * @param texture
      */
 
-    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
-        super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)));
+    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
+                               boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+        super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)),ambientOcllusion,ambientSize,ambientSubdiv);
         name="Single-Color Material";
         if(texture == null){
             throw new IllegalArgumentException("texture must not be null");
@@ -33,7 +34,7 @@ public class SingleColorMaterial extends Material {
     }
 
     public SingleColorMaterial(final SingleColorMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,new SingleColorTexture(new Color(0,0,0)));
+        super(m.texture,m.bumpMap,m.bumpScale,new SingleColorTexture(new Color(0,0,0)),m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
         name=m.name;
         this.texture = m.texture;
     }

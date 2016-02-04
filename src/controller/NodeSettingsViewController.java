@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TreeItem;
 import observables.AOElement;
 import observables.cameras.AOCamera;
 import observables.geometries.AOGeometry;
@@ -42,8 +41,8 @@ public class NodeSettingsViewController extends AController {
     private void handleSelectedElement() {
         tabPane.setVisible(true);
         tabPane.getTabs().clear();
-
-        AOElement e = selectedTreeItem.get().getValue();
+        AOElement e = null;
+        if(selectedTreeItem.get() != null)  e = selectedTreeItem.get().getValue();
 
         if (!(e instanceof AOLight) && !(e instanceof AOCamera) && !(e instanceof AOGeometry)) {
             tabPane.setVisible(false);

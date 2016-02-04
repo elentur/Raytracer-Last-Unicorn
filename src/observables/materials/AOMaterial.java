@@ -1,10 +1,7 @@
 package observables.materials;
 
 import controller.AController;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 import material.Material;
 import observables.AOElement;
@@ -21,6 +18,9 @@ public abstract class AOMaterial extends AOElement {
     public ObjectProperty<AOTexture> bumpMap = new SimpleObjectProperty<>(new OSingleColorTexture(Color.BLACK));
     public DoubleProperty bumpScale = new SimpleDoubleProperty(0);
     public ObjectProperty<AOTexture> irradiance = new SimpleObjectProperty<>(new OSingleColorTexture(Color.WHITE));
+    public BooleanProperty ambientOcclusion = new SimpleBooleanProperty(false);
+    public DoubleProperty ambientSize = new SimpleDoubleProperty(2);
+    public IntegerProperty ambientSubdiv = new SimpleIntegerProperty(16);
 
     public AOMaterial(){
         texture.addListener(a->refreshMaterial());

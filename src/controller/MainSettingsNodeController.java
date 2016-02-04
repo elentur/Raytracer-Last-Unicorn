@@ -12,7 +12,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import observables.AOElement;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
@@ -124,7 +123,8 @@ public class MainSettingsNodeController extends AController {
         txtRotationX.doubleProperty.bindBidirectional(n.rotationx);
         txtRotationY.doubleProperty.bindBidirectional(n.rotationy);
         txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
-        material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
+        //material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
+        material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
         materialView.setUpTracer(material);
         cmbMaterial.setItems(materialList);
         chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
@@ -210,6 +210,7 @@ public class MainSettingsNodeController extends AController {
 
     }
     public void handleComboBoxMaterialAction(ActionEvent actionEvent) {
+
         AOMaterial m = cmbMaterial.getSelectionModel().getSelectedItem();
         if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
             try {
@@ -222,9 +223,10 @@ public class MainSettingsNodeController extends AController {
         }
         material.setValue(m);
         AOGeometry g = ((ONode) selectedTreeItem.get().getValue()).oGeos.get(0);
-        g.material.setValue(m);
-        TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
-        selectedTreeItem.setValue(null);
-        selectedTreeItem.setValue(treeItem);
+        g.material.set(m);
+       // TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
+      //  selectedTreeItem.setValue(null);
+       // selectedTreeItem.setValue(treeItem);
+
     }
 }

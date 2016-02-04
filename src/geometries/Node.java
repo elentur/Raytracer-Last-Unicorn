@@ -38,7 +38,7 @@ public class Node extends Geometry {
      */
     public Node(final Point3 translation,final Point3 scaling , final Point3 rotation, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
-                new SingleColorTexture(new Color(0,0,0)),0),reciveShadows,castShadows,
+                new SingleColorTexture(new Color(0,0,0)),0,false,2,16),reciveShadows,castShadows,
                 visibility,flipNormal);
 
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");

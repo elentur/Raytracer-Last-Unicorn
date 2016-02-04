@@ -1,19 +1,14 @@
 package raytracer;
 
-import UI.*;
+import UI.IO;
 import controller.AController;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -62,15 +57,15 @@ public class ImageSaver extends Application {
         primaryStage.show();*/
     }
 
-
+  /*
     /**
      * Initialize the GuiElements and set all necessary listeners.
      *
      * @param stage The PrimaryStage of this program.
      * @return The Scene for this PrimaryStage.
      */
-    private Scene setScene(final Stage stage) {
-        if (stage == null) throw new IllegalArgumentException("Stage can't be null");
+/*   private Scene setScene(final Stage stage) {
+      if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         final int elementsHeight = 80;
         final Menu btnFile = new Menu("File");
         final MenuItem btnSave = new MenuItem("Save Rendered Image");
@@ -145,7 +140,7 @@ public class ImageSaver extends Application {
             if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
         });
         return scene;
-    }
+    }*/
 
     public static void main(String[] args) {
         launch(args);

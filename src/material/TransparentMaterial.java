@@ -21,8 +21,9 @@ public class TransparentMaterial extends Material {
     public final  int exponent;
     public TransparentMaterial(final Texture texture, final  Texture specular, final  Texture reflection,
                                final  int exponent, double indexOfRefraction, final Texture bumpMap,
-                               final double bumpScale, final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
+                               final double bumpScale, final Texture irradiance,
+                               boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
         name="Transparent Material";
         this.specular=specular;
         this.reflection=reflection;
@@ -31,7 +32,7 @@ public class TransparentMaterial extends Material {
     }
 
     public TransparentMaterial(final TransparentMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance);
+        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
         name=m.name;
         this.specular=m.specular;
         this.reflection=m.reflection;

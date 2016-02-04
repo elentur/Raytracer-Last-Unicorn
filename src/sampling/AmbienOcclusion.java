@@ -18,9 +18,9 @@ import java.util.Random;
  */
 public class AmbienOcclusion  {
 
-    public double getOcclusion(double size, double subdiv, Hit hit, Point3 p, World world) {
+    public double getOcclusion(double size, int subdiv, Hit hit, Point3 p, World world) {
         List<Vector3> testDirections = new ArrayList<>();
-        int numberOfRays = 16;
+        int numberOfRays = subdiv;
         int numOfHits = 0;
         Random rnd = new Random();
 
@@ -40,7 +40,7 @@ public class AmbienOcclusion  {
             for (Geometry g : world.geometries) {
                 if (!g.visibility) continue;
                 final Hit h = g.hit(r);
-                final double border = rnd.nextDouble() * 3.0;
+                final double border = rnd.nextDouble() * size;
                 if (h != null && h.t > 0.00001 && h.t < border) {
                     ambientOcclusion += h.t / border;
                     numOfHits++;

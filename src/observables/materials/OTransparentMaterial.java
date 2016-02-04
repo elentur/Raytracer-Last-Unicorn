@@ -39,7 +39,10 @@ public class OTransparentMaterial extends AOMaterial {
                 indexOfRefraction.get(),
                 bumpMap.get().generate(),
                 bumpScale.get(),
-                irradiance.get().generate()
+                irradiance.get().generate(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get()
         );
     }
 }
