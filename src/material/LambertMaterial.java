@@ -53,37 +53,7 @@ public class LambertMaterial extends Material {
                 }
 
             ///ambient occlusion test
-          /*  List<Vector3> testDirections = new ArrayList<>();
-            int numberOfRays = 16;
-            int numOfHits=0;
-            Random rnd = new Random();
-
-            while(testDirections.size()<numberOfRays){
-                Vector3 v = new Vector3(rnd.nextDouble()-0.5,rnd.nextDouble()-0.5,rnd.nextDouble()-0.5);
-                double alpha = Math.acos(hit.n.dot(v.normalized()));
-                if(alpha<Math.PI/4 && alpha >0){
-                    testDirections.add(v);
-                }
-
-            }
-            double ambientOcclusion=0;
-
-            for(Vector3 v : testDirections){
-                Ray r = new Ray(p,v);
-
-                for (Geometry g : world.geometries) {
-                    if(!g.visibility) continue;
-                    final Hit h = g.hit(r);
-                    final double border = rnd.nextDouble()*3.0;
-                    if (h != null && h.t >0.00001 && h.t<border ) {
-                        ambientOcclusion += h.t/border;
-                        numOfHits++;
-                        break;
-                    }
-
-                }
-            }*/
-           //if(numOfHits>0) c= c.mul(((ambientOcclusion)/(numOfHits*1.0)));
+                //if(ambientOcllusion) c= c.mul(new AmbienOcclusion().getOcclusion(ambientSize,ambientSubdiv,hit,p));
 
             ////
         }
