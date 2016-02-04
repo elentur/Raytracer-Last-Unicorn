@@ -2,10 +2,13 @@ package observables.textures;
 
 import controller.AController;
 import javafx.beans.property.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import observables.AOElement;
 import observables.materials.AOMaterial;
 import texture.Texture;
+
+import java.io.File;
 
 /**
  * Created by
@@ -19,6 +22,7 @@ public abstract class AOTexture extends AOElement {
     public DoubleProperty rotate = new SimpleDoubleProperty(0);
     public StringProperty path  = new SimpleStringProperty();
     public ObjectProperty<Color> color = new SimpleObjectProperty<>(Color.GRAY);
+    public ObjectProperty<Image> img = new SimpleObjectProperty<>();
     public abstract Texture generate();
 
     public AOTexture(){
@@ -28,7 +32,10 @@ public abstract class AOTexture extends AOElement {
         this.offsetU.addListener(a->refreshMaterial());
         this.offsetV.addListener(a->refreshMaterial());
         this.rotate.addListener(a->refreshMaterial());
-        this.path.addListener(a->refreshMaterial());
+        this.path.addListener(a->{
+            if(!path.get().equals("")) img.set(new Image(new File(path.get()).toURI().toString()));
+            refreshMaterial();
+        });
     }
 
     protected void refreshMaterial(){

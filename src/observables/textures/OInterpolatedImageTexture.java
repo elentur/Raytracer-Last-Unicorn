@@ -16,7 +16,7 @@ public class OInterpolatedImageTexture extends AOTexture {
     @Override
     public InterpolatedImageTexture generate() {
         return new InterpolatedImageTexture(
-                path.get(),
+                img.get(),
                 scaleU.get(),
                 scaleV.get(),
                 offsetU.get(),

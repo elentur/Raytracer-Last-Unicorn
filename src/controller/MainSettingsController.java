@@ -23,30 +23,31 @@ public class MainSettingsController extends AController {
      * completely processed.
      *
      * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
+     * <tt>null</tt> if the location is not known.
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     @FXML
     private TextField txtName;
     @FXML
     private VBox mainSettingsView;
+
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         txtName.setText(selectedTreeItem.get().getValue().name.getValue());
         txtName.textProperty().bindBidirectional(selectedTreeItem.get().getValue().name);
         try {
             VBox v;
-        if(selectedTreeItem.get().getValue() instanceof AOCamera){
-             v= FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
-            mainSettingsView.getChildren().add(v);
+            if (selectedTreeItem.get().getValue() instanceof AOCamera) {
+                v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsCameraView.fxml"));
+                mainSettingsView.getChildren().add(v);
 
-        }else if(selectedTreeItem.get().getValue() instanceof AOLight){
-             v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
-            mainSettingsView.getChildren().add(v);
-        }else if(selectedTreeItem.get().getValue() instanceof ONode) {
-            v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
-            mainSettingsView.getChildren().add(v);
-        }
+            } else if (selectedTreeItem.get().getValue() instanceof AOLight) {
+                v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsLightView.fxml"));
+                mainSettingsView.getChildren().add(v);
+            } else if (selectedTreeItem.get().getValue() instanceof ONode) {
+                v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsNodeView.fxml"));
+                mainSettingsView.getChildren().add(v);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();

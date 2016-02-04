@@ -18,9 +18,9 @@ import java.util.List;
  */
 public abstract class TranslateObservableElements {
 
-    private ObservableList<AOLight> lights;
-    private AOCamera camera;
-    private ObservableList<AOGeometry> geos;
+    private static ObservableList<AOLight> lights;
+    private static AOCamera camera;
+    private static ObservableList<AOGeometry> geos;
 
     public void setLights(ObservableList<AOLight> lights) {
         this.lights = lights;
@@ -30,12 +30,11 @@ public abstract class TranslateObservableElements {
         this.camera = camera;
     }
 
-
     public void setGeos(ObservableList<AOGeometry> geos) {
         this.geos = geos;
     }
 
-    public List<Light> translateLights(){
+    public static List<Light> translateLights(){
 
         List<Light> ls = new ArrayList<>();
 
@@ -46,11 +45,11 @@ public abstract class TranslateObservableElements {
         return ls;
     }
 
-    public Camera translateCamera(){
+    public static Camera translateCamera(){
         return camera.generate();
     }
 
-    public List<Geometry> translateGeometries(){
+    public static List<Geometry> translateGeometries(){
 
         List<Geometry> gs = new ArrayList<>();
 

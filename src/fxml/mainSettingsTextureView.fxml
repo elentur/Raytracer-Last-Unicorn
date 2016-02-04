@@ -7,17 +7,19 @@
         <Label text="Name"/>
         <TextField styleClass="col-3" fx:id="txtTextureName"/>
     </HBox>
-    <HBox>
-        <Label   text="Path"/>
-        <TextField editable="false" fx:id="txtPath"/>
+    <HBox styleClass="form-group-4">
+        <Label  text="Path"/>
+        <TextField editable="false" styleClass="col-2" fx:id="txtPath"/>
         <Button fx:id="btnNewPath" text="New Path"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
         <CheckBox fx:id="chkBilinearFilter" text="Bilinear Filter" selected="false"/>
     </HBox>
-    <ImageView  fx:id = "imgTexture" fitWidth="80" fitHeight="80">
-    </ImageView>
+    <HBox styleClass="form-group-4, element-center">
+        <ImageView  fx:id = "imgTexture" fitWidth="80" fitHeight="80">
+        </ImageView>
+    </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
         <Label styleClass="text-field-head" text="U"/>

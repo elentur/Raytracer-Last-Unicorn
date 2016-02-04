@@ -10,6 +10,7 @@ import observables.cameras.DefaultCameras;
 import observables.geometries.AOGeometry;
 import observables.geometries.DefaultGeometries;
 import observables.geometries.ONode;
+import observables.geometries.OPlane;
 import observables.lights.AOLight;
 import observables.lights.DefaultLight;
 
@@ -78,21 +79,13 @@ public class NodeTreeViewController extends AController {
 
         // wenn element ausgewählt
         elementsTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // wenn nur ein Elmenet ausgewählt wurde
             if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
-
-                if (newValue != null && newValue.getValue() instanceof AOGeometry || newValue.getValue() instanceof AOLight || newValue.getValue() instanceof AOCamera) {
-
-                    selectedTreeItem.set(newValue);
-                    return;
-                }else{
-                    selectedTreeItem.set(null);
-                }
+                selectedTreeItem.set(newValue);
             }else{
-                selectedTreeItem.set(null);
+                selectedTreeItem.set(new TreeItem<AOElement>(new AOElement()));
             }
-
         });
-
     }
 
     private void initializeComobox() {
