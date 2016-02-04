@@ -245,6 +245,7 @@ public class Raytracer {
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
             Task rt = null;
             if (def) {
+                System.out.println("tray");
                  rt = new Task() {
                     @Override
                     protected Object call() throws Exception {

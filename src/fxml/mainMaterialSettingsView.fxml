@@ -13,8 +13,8 @@
             </HBox>
            <HBox styleClass="form-group-4">
                <Label text="Material"/>
-                <HBox styleClass="col-3, element-center">
-                    <MaterialView fx:id="materialRenderView"/>
+                <HBox  fx:id="materialRenderViewHBox" styleClass="col-3, element-center">
+
                 </HBox>
            </HBox>
             <HBox styleClass="form-group-4">

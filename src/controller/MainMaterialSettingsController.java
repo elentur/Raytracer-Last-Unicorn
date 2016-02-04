@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -44,7 +45,7 @@ public class MainMaterialSettingsController extends AController {
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
     @FXML
-    private MaterialView materialRenderView;
+    private HBox materialRenderViewHBox;
     @FXML
     private TextField txtMaterialName;
     @FXML
@@ -109,7 +110,7 @@ public class MainMaterialSettingsController extends AController {
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         material.setValue(((ONode)selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
-        materialRenderView.setUpTracer(material);
+
         if(!initialized) {
             VBox v;
             FXMLLoader loader = new FXMLLoader();
@@ -151,6 +152,9 @@ public class MainMaterialSettingsController extends AController {
             initializeFields();
             loadTextureTabs();
             initialized=true;
+            MaterialView materialRenderView = MaterialView.getInstance();
+            materialRenderView.setUpTracer(material);
+           // materialRenderViewHBox.getChildren().add(materialRenderView);
 
         }
 

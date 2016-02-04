@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
+import observables.AOElement;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
@@ -51,7 +52,7 @@ public class MainSettingsNodeController extends AController {
     @FXML
     private NumberTextField txtRotationZ;
     @FXML
-    private MaterialView materialView;
+    private HBox materialViewHBox;
     @FXML
     private ComboBox<AOMaterial> cmbMaterial;
     @FXML
@@ -125,13 +126,13 @@ public class MainSettingsNodeController extends AController {
         txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
         //material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
         material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
-        materialView.setUpTracer(material);
+
         cmbMaterial.setItems(materialList);
         chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
         chkReceiveShadows.selectedProperty().bindBidirectional(n.reciveShadows);
         chkVisible.selectedProperty().bindBidirectional(n.visibility);
         chkFlipNormals.selectedProperty().bindBidirectional(n.flipNormal);
-        if(!(n.oGeos.size()==1 && !(n.oGeos.get(0)instanceof ONode))){
+        if (!(n.oGeos.size() == 1 && !(n.oGeos.get(0) instanceof ONode))) {
             nodeView.getChildren().removeAll(
                     chkFlipNormals.getParent(),
                     chkCastShadows.getParent(),
@@ -147,12 +148,15 @@ public class MainSettingsNodeController extends AController {
             btnNewPath.setOnAction(a -> newPathLoad());
         }
         setMaterialComboBox();
+        MaterialView materialView = MaterialView.getInstance();
+        materialView.setUpTracer(material);
+        materialViewHBox.getChildren().add(materialView);
     }
 
     private void newPathLoad() {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
-        File file = dlg.showOpenDialog(materialView.getScene().getWindow());
+        File file = dlg.showOpenDialog(materialViewHBox.getScene().getWindow());
         if (file != null) {
             txtPath.setText(file.getPath());
         }
@@ -161,7 +165,7 @@ public class MainSettingsNodeController extends AController {
     private void setMaterialComboBox() {
         if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode) {
             ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
-            ((HBox) materialView.getParent()).getChildren().remove(materialView);
+           // ((HBox) materialView.getParent()).getChildren().remove(materialView);
         }
         cmbMaterial.setCellFactory(new Callback<ListView<AOMaterial>, ListCell<AOMaterial>>() {
             @Override
@@ -224,9 +228,9 @@ public class MainSettingsNodeController extends AController {
         material.setValue(m);
         AOGeometry g = ((ONode) selectedTreeItem.get().getValue()).oGeos.get(0);
         g.material.set(m);
-       // TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
-      //  selectedTreeItem.setValue(null);
-       // selectedTreeItem.setValue(treeItem);
+        TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
+        selectedTreeItem.setValue(null);
+        selectedTreeItem.setValue(treeItem);
 
     }
 }

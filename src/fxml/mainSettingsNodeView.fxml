@@ -27,8 +27,8 @@
         <NumberTextField styleClass="number-text-field" fx:id="txtRotationY" onAction="#handleUpdateNode"/>
         <NumberTextField styleClass="number-text-field" fx:id="txtRotationZ" onAction="#handleUpdateNode"/>
     </HBox>
-    <HBox styleClass="form-group-4, element-center">
-        <MaterialView fx:id="materialView"/>
+    <HBox fx:id="materialViewHBox" styleClass="form-group-4, element-center">
+
     </HBox>
     <HBox styleClass="form-group-4">
         <Label  text="Material" />

@@ -23,12 +23,17 @@ import utils.Color;
  * @author Marcus Bätz
  */
 public class MaterialView extends ImageView {
+    private static MaterialView materialView = new MaterialView();
     private final Raytracer matTracer = new Raytracer(false);
-    public MaterialView() {
+    private MaterialView() {
 
     }
+    public static MaterialView getInstance(){return materialView;}
+
     public void setUpTracer(ObjectProperty<AOMaterial> material) {
         MaterialView that = this;
+        matTracer.getWorld().lights.clear();
+        matTracer.getWorld().geometries.clear();
 
         matTracer.setCamera(new OrthographicCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 2.2, new SamplingPattern(1)));
         matTracer.getWorld().lights.add(new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4), false, 500, new LightShadowPattern(0, 1)));
@@ -38,6 +43,7 @@ public class MaterialView extends ImageView {
 
         material.addListener(a -> {
             if (material.getValue() != null) {
+                matTracer.stopRender();
                 matTracer.getWorld().geometries.clear();
                 matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(1, 1, 1), new Point3(0, 0, 0), new Sphere(material.get().generate(), true, true, true, false), true, true, true, false));
                 matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(10, 10, 10), new Point3(0, 0, 0), new Sphere(

@@ -10,7 +10,6 @@ import observables.cameras.DefaultCameras;
 import observables.geometries.AOGeometry;
 import observables.geometries.DefaultGeometries;
 import observables.geometries.ONode;
-import observables.geometries.OPlane;
 import observables.lights.AOLight;
 import observables.lights.DefaultLight;
 
