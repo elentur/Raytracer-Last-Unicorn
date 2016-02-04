@@ -1,5 +1,6 @@
 package texture;
 
+import javafx.scene.image.Image;
 import utils.Color;
 
 import java.io.Serializable;
@@ -17,15 +18,15 @@ public abstract class Texture implements Serializable {
     public final double offsetV;
     public final double rotate;
     public String name;
-    public final String path;
+    public final Image image;
 
-    public Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate, String path) {
+    public Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate, Image img) {
         this.scaleU = scaleU;
         this.scaleV = scaleV;
         this.offsetU = offsetU;
         this.offsetV = offsetV;
         this.rotate =rotate;
-        this.path = path;
+        this.image = img;
 
     }
 

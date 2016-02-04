@@ -10,14 +10,14 @@ public class CheckerTexture extends Texture {
     final Color color;
 
     public CheckerTexture(final Color color) {
-        super(1,1,1,1,0,"");
+        super(1,1,1,1,0,null);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }
         this.color = color;
     }
     public CheckerTexture(final Color color, final double ScaleU, final double ScaleV, final double OffsetU, final double OffsetV, final double rotate) {
-        super(ScaleU,ScaleV,OffsetU,OffsetV,rotate,"");
+        super(ScaleU,ScaleV,OffsetU,OffsetV,rotate,null);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }

@@ -11,19 +11,12 @@ import java.io.File;
  */
 public class InterpolatedImageTexture extends Texture {
 
-    public Image image;
-
-    public InterpolatedImageTexture(final String path) {
-        this(path,1,1,1,1,0);
+    public InterpolatedImageTexture(final Image img) {
+        this(img,1,1,1,1,0);
     }
 
-    public InterpolatedImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate) {
-        super(scaleU,scaleV,offsetU,offsetV,rotate,path);
-        File file = new File(path);
-
-       // if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
-
-        this.image = new Image(file.toURI().toString());
+    public InterpolatedImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate) {
+        super(scaleU,scaleV,offsetU,offsetV,rotate,img);
         name = "Interpolated Image Texture";
     }
 

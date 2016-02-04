@@ -37,22 +37,22 @@ public class MaterialView extends ImageView {
     public void setUpTracer(ObjectProperty<AOMaterial> material) {
         MaterialView that = this;
 
-                matTracer.setCamera(new OrthographicCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 2.2, new SamplingPattern(1)));
-                matTracer.getWorld().lights.add(new PointLight(new Color(1,1, 1), new Point3(4, 4, 4),false,500,new LightShadowPattern(0,1)));
-                matTracer.getWorld().geometries.add(new Node(new Point3(0,0,0),new Point3(1,1,1),new Point3(0,0,0),new Sphere(material.get().generate(),true,true,true,false),true,true,true,false));
-                matTracer.getWorld().geometries.add(new Node(new Point3(0,0,0),new Point3(10,10,10),new Point3(0,0,0),new Sphere(
-                        new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),10,5,0,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
+        matTracer.setCamera(new OrthographicCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 2.2, new SamplingPattern(1)));
+        matTracer.getWorld().lights.add(new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4), false, 500, new LightShadowPattern(0, 1)));
+        matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(1, 1, 1), new Point3(0, 0, 0), new Sphere(material.get().generate(), true, true, true, false), true, true, true, false));
+        matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(10, 10, 10), new Point3(0, 0, 0), new Sphere(
+                new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0), 10, 5, 0, 0, 0), new SingleColorTexture(new Color(0, 0, 0)), 0), true, true, true, false), true, true, true, false));
 
-                material.addListener(a -> {
-                    if(material.getValue()!=null) {
-                        matTracer.getWorld().geometries.clear();
-                        matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(1, 1, 1), new Point3(0, 0, 0), new Sphere(material.get().generate(), true, true, true, false), true, true, true, false));
-                        matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(10, 10, 10), new Point3(0, 0, 0), new Sphere(
-                                new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0), 10, 5, 0, 0, 0), new SingleColorTexture(new Color(0, 0, 0)), 0), true, true, true, false), true, true, true, false));
+        material.addListener(a -> {
+            if (material.getValue() != null) {
+                matTracer.getWorld().geometries.clear();
+                matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(1, 1, 1), new Point3(0, 0, 0), new Sphere(material.get().generate(), true, true, true, false), true, true, true, false));
+                matTracer.getWorld().geometries.add(new Node(new Point3(0, 0, 0), new Point3(10, 10, 10), new Point3(0, 0, 0), new Sphere(
+                        new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0), 10, 5, 0, 0, 0), new SingleColorTexture(new Color(0, 0, 0)), 0), true, true, true, false), true, true, true, false));
 
-                        matTracer.render(that);
-                    }
-                });
                 matTracer.render(that);
+            }
+        });
+        matTracer.render(that);
     }
 }
