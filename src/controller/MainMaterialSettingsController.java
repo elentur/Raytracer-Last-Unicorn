@@ -264,6 +264,7 @@ public class MainMaterialSettingsController extends AController {
         cmbTexture.getSelectionModel().clearSelection();
         if(clpColorPicker != null) clpColorPicker.valueProperty().bindBidirectional(texture.get().color);
         else material.get().bumpScale.setValue(0.0);
+        masterTabPane.getSelectionModel().select(1);
     }
 
     private void setTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture) {
@@ -351,7 +352,7 @@ public class MainMaterialSettingsController extends AController {
             if(cmbReflection != null && cmbReflection.getValue()!=null &&  cmbReflection.getValue().equals(texture))cmbReflection.setValue(newTex);
             masterTabPane.getSelectionModel().select(tab);
         });
-        ((ImageView) v.lookup("#imgTexture")).setImage(new Image(new File(texture.path.get()).toURI().toString()));
+        if(texture.img.get() != null) ((ImageView) v.lookup("#imgTexture")).setImage(texture.img.get());
         ((NumberTextField) v.lookup("#txtOffsetU")).doubleProperty.bindBidirectional(texture.offsetU);
         ((NumberTextField) v.lookup("#txtOffsetV")).doubleProperty.bindBidirectional(texture.offsetV);
         ((NumberTextField) v.lookup("#txtScalingU")).doubleProperty.bindBidirectional(texture.scaleU);
