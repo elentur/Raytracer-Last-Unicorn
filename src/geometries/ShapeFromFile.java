@@ -38,7 +38,7 @@ public class ShapeFromFile extends Geometry {
     public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,castShadows);
         this.file = path;
-        name = nameTest(path.getName().split("\\.")[0]);
+       // name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
         v = new ArrayList<>();
         vn = new ArrayList<>();
@@ -51,7 +51,7 @@ public class ShapeFromFile extends Geometry {
     protected void loadFile(){
 
         List<Point3> points = new ArrayList<>();
-        if (readFile(file.toString())) {
+        if (readFile(file.getPath())) {
             try {
                 for (String s : f) {
                     String[] fs = s.split("\\s+");

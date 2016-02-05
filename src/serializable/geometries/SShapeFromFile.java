@@ -32,7 +32,7 @@ public class SShapeFromFile extends ShapeFromFile implements SElement {
     @Override
     public OShapeFromFile generate(){
         OShapeFromFile geo = new OShapeFromFile(
-        file.toURI().toString());
+        file.getPath());
         geo.name.set(name);
         geo.material.set(material.generate());
         geo.reciveShadows.set(reciveShadows);
