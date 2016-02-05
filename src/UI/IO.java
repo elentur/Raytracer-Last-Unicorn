@@ -3,6 +3,7 @@ package UI;
 import camera.Camera;
 import camera.PerspectiveCamera;
 import controller.AController;
+import controller.ObservableElementLists;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -14,6 +15,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import observables.AOElement;
 import sampling.SamplingPattern;
+import serializable.SElement;
 import utils.Scene;
 import utils.World;
 
@@ -64,7 +66,10 @@ public class IO {
             return;
         }
 
-        Scene scene = new Scene(rootItem);
+        SElement camera = ObservableElementLists.getInstance().camera.serialize();
+
+        Scene scene = new Scene(camera);
+
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
@@ -77,6 +82,7 @@ public class IO {
                 out.writeObject(scene);
                 out.close();
             } catch (IOException e) {
+                e.printStackTrace();
                 System.out.println("IO Fehler");
             }
         }
@@ -111,7 +117,7 @@ public class IO {
 
             if (scene != null) {
                 rootItem.getChildren().clear();
-                rootItem.getChildren().addAll(scene.getTreeView().getChildren());
+                //rootItem.getChildren().addAll(scene.getTreeView().getChildren());
             }
 
 

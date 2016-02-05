@@ -9,6 +9,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import sampling.DOFPattern;
 import sampling.SamplingPattern;
+import serializable.cameras.SDOFCamera;
 
 /**
  * Created by
@@ -38,6 +39,20 @@ public class ODOFCamera extends AOCamera{
                 new DOFPattern(dPatternSubdiv.get(),dPatternFStop.get()),
                 focalLength.get(),
                 new SamplingPattern(patternSubdiv.get())
+        );
+    }
+
+    @Override
+    public SDOFCamera serialize(){
+        return new SDOFCamera(
+                new Point3(ex.get(),ey.get(),ez.get()),
+                new Vector3(gx.get(),gy.get(),gz.get()),
+                new Vector3(tx.get(),ty.get(),tz.get()),
+                this.angle.get()*(Math.PI/180),
+                new DOFPattern(dPatternSubdiv.get(),dPatternFStop.get()),
+                focalLength.get(),
+                new SamplingPattern(patternSubdiv.get()),
+                name.get()
         );
     }
 }

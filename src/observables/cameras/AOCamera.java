@@ -6,6 +6,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import observables.AOElement;
+import serializable.SElement;
 
 /**
  * Created by
@@ -25,8 +26,8 @@ public abstract class AOCamera extends AOElement{
     public DoubleProperty ty = new SimpleDoubleProperty(1);
     public DoubleProperty tz = new SimpleDoubleProperty(0);
 
-    public DoubleProperty patternSize = new SimpleDoubleProperty(0);
     public IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
 
     public abstract Camera generate();
+    public abstract SElement serialize();
 }

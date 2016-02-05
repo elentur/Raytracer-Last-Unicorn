@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.SamplingPattern;
+import serializable.cameras.SPerspectiveCamera;
 
 /**
  * Created by
@@ -28,6 +29,18 @@ public class OPerspectiveCamera extends AOCamera {
                 new Vector3(tx.get(),ty.get(),tz.get()),
                 this.angle.get()*(Math.PI/180),
                 new SamplingPattern(patternSubdiv.get())
+        );
+    }
+
+    @Override
+    public SPerspectiveCamera serialize(){
+        return new SPerspectiveCamera(
+                new Point3(ex.get(),ey.get(),ez.get()),
+                new Vector3(gx.get(),gy.get(),gz.get()),
+                new Vector3(tx.get(),ty.get(),tz.get()),
+                this.angle.get(),
+                new SamplingPattern(patternSubdiv.get()),
+                name.get()
         );
     }
 }
