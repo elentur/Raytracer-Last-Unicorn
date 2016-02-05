@@ -120,7 +120,8 @@ public class IO {
 
             if (scene != null) {
                 ObservableElementLists list = ObservableElementLists.getInstance();
-                list.addElement(scene.getCamera());
+                list.clearAll();
+                if(scene.getCamera()!=null)list.addElement(scene.getCamera());
 
                 for(AOLight light : scene.getLights()){
                     list.addElement(light);

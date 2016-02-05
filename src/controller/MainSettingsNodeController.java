@@ -117,7 +117,7 @@ public class MainSettingsNodeController extends AController {
         txtRotationY.doubleProperty.bindBidirectional(n.rotationy);
         txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
         //material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
-        material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
+        if(!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode))material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
 
         cmbMaterial.setItems(materialList);
         chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
@@ -141,8 +141,10 @@ public class MainSettingsNodeController extends AController {
         }
         setMaterialComboBox();
         MaterialView materialView = MaterialView.getInstance2();
-        materialView.setUpTracer(material);
-        materialViewHBox.getChildren().add(materialView);
+        if(!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode)) {
+            materialView.setUpTracer(material);
+            materialViewHBox.getChildren().add(materialView);
+        }
     }
 
     private void newPathLoad() {

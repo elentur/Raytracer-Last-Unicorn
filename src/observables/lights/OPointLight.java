@@ -5,7 +5,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import light.PointLight;
 import matVect.Point3;
 import sampling.LightShadowPattern;
-import serializable.SElement;
 import serializable.lights.SPointLight;
 import utils.Color;
 
@@ -29,7 +28,7 @@ public class OPointLight extends AOLight {
     @Override
     public PointLight generate() {
         return new PointLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 castShadow.get(),
                 photons.get(),
@@ -40,7 +39,7 @@ public class OPointLight extends AOLight {
     @Override
     public SPointLight serialize() {
         return new SPointLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 castShadow.get(),
                 photons.get(),

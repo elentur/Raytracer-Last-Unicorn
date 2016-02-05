@@ -114,7 +114,7 @@ public class MainSettingsLightController extends AController {
 
     private void initializeFields() {
         AOLight l = (AOLight) selectedTreeItem.get().getValue();
-
+        clpLightColor.valueProperty().bindBidirectional(l.color);
         if (txtPositionX != null) {
             if(l instanceof OPointLight){
                 OPointLight p = (OPointLight) l;

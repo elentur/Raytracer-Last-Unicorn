@@ -6,7 +6,6 @@ import light.SpotLight;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.LightShadowPattern;
-import serializable.SElement;
 import serializable.lights.SSpotLight;
 import utils.Color;
 
@@ -43,7 +42,7 @@ public class OSpotLight extends AOLight {
     @Override
     public SpotLight generate() {
         return new SpotLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 halfAngle.get()*(Math.PI/180),
@@ -56,7 +55,7 @@ public class OSpotLight extends AOLight {
     @Override
     public SSpotLight serialize() {
         return new SSpotLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Point3(px.get(),py.get(),pz.get()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 halfAngle.get()*(Math.PI/180),

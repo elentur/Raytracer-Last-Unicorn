@@ -27,7 +27,7 @@ public class ODirectionalLight extends AOLight {
     @Override
     public DirectionalLight generate() {
         return new DirectionalLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 castShadow.get(),
                 photons.get(),
@@ -37,7 +37,7 @@ public class ODirectionalLight extends AOLight {
 
     public SDirectionalLight serialize(){
         return new SDirectionalLight(
-                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
                 new Vector3(dx.get(),dy.get(),dz.get()),
                 castShadow.get(),
                 photons.get(),
