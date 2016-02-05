@@ -26,13 +26,18 @@ public class SamplingPattern extends SubdivisionPattern{
 
         Random rn = new Random();
         points.clear();
+        if(subdiv==1){
+           // points.add(new Point2(0,0));
+          //  return points;
+        }
+        final double v = 2*size/subdiv;
+        if(subdiv ==1){
+            points.add(new Point2(0,0));
+            return points;
+        }
         for(int i = 0; i <subdiv+1; i++){
-                final double rX = (rn.nextDouble()-0.5) / 10;
-                final double rY = (rn.nextDouble()-0.5) / 10;
-                points.add(new Point2(
-                        (2.0/(subdiv) * i*size - size) + rX ,
-                        (2.0/(subdiv) * i*size - size) + rY)
-                );
+             final double z =  i*v-size;
+                points.add(new Point2(z,z));
         }
         Collections.shuffle(points);
     return points;

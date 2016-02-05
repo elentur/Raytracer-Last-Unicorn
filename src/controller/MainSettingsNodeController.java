@@ -148,7 +148,7 @@ public class MainSettingsNodeController extends AController {
             btnNewPath.setOnAction(a -> newPathLoad());
         }
         setMaterialComboBox();
-        MaterialView materialView = MaterialView.getInstance();
+        MaterialView materialView = MaterialView.getInstance2();
         materialView.setUpTracer(material);
         materialViewHBox.getChildren().add(materialView);
     }

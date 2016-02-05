@@ -91,7 +91,7 @@ public class Raytracer {
     /**
      * represents the render progress in a range between 0.0 and 1.0.
      */
-    public final DoubleProperty progress = new SimpleDoubleProperty(0);
+    public  DoubleProperty progress = new SimpleDoubleProperty(0);
 
     /**
      * represent the recursion depth of the reflection.
@@ -245,7 +245,6 @@ public class Raytracer {
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
             Task rt = null;
             if (def) {
-                System.out.println("tray");
                  rt = new Task() {
                     @Override
                     protected Object call() throws Exception {
@@ -338,6 +337,7 @@ public class Raytracer {
         img = new WritableImage(imgWidth.get(), imgHeight.get());
         final PixelWriter pixelWriter = img.getPixelWriter();
         if (!def) {
+
             for (int x = 0; x < imgWidth.get(); x++) {
                 for (int y = 0; y < imgHeight.get(); y++) {
                     pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);

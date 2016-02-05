@@ -5,13 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 import observables.AOElement;
-import observables.cameras.AOCamera;
-import observables.cameras.DefaultCameras;
-import observables.geometries.AOGeometry;
-import observables.geometries.DefaultGeometries;
-import observables.geometries.ONode;
-import observables.lights.AOLight;
-import observables.lights.DefaultLight;
+import observables.cameras.*;
+import observables.geometries.*;
+import observables.lights.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -160,7 +156,19 @@ public class NodeTreeViewController extends AController {
         if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
           AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
             if(e instanceof AOLight || e instanceof AOCamera || e instanceof ONode){
-                elementLists.addElement( e);
+                if(e instanceof OPlane) e = DefaultGeometries.getPlane();
+                else if(e instanceof OSphere) e = DefaultGeometries.getSphere();
+                else if(e instanceof OAxisAlignedBox) e = DefaultGeometries.getAxisAlignedBox();
+                else if(e instanceof OTriangle) e = DefaultGeometries.getTriangle();
+                else if(e instanceof ODirectionalLight) e = DefaultLight.getDirectionalLight();
+                else if(e instanceof OPointLight) e = DefaultLight.getPointLight();
+                else if(e instanceof OSpotLight) e = DefaultLight.getSpotLight();
+                else if(e instanceof OOrthographicCamera) e = DefaultCameras.getOrthographicCamera();
+                else if(e instanceof OPerspectiveCamera) e = DefaultCameras.getPerspectiveCamera();
+                else if(e instanceof ODOFCamera) e = DefaultCameras.getDOFCamera();
+                    elementLists.addElement( e);
+                System.out.println(e);
+
             }
 
 

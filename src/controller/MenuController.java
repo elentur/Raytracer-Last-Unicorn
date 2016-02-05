@@ -1,6 +1,7 @@
 package controller;
 
 import UI.IO;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,8 +76,6 @@ public class MenuController extends AController{
 
     public void handleExitAction(ActionEvent actionEvent) {
 
-        System.out.println(actionEvent);
-
         Stage stage = (Stage) menuBar.getScene().getWindow();
         // do what you have to do
         stage.close();
@@ -125,7 +124,7 @@ public class MenuController extends AController{
             raytracer.getWorld().geometries.add(geo.generate());
         }
         if(list.camera!=null) raytracer.setCamera(list.camera.generate());
-
+        raytracer.progress = new SimpleDoubleProperty(0);
         RenderViewController rvc = new RenderViewController();
         ImageView image  = rvc.getImageView();
         if(image!=null)raytracer.render(image);
