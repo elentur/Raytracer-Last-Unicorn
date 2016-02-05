@@ -35,12 +35,8 @@ public abstract class SMaterial implements SElement ,Serializable {
     public abstract AOMaterial generate();
 
     protected void add2MaterialList(AOMaterial m){
-
-        if(AController.materialList.get(6).equals(m)){
-            AController.materialList.add(6,m);
-        }else{
+        if(!AController.materialList.contains(m)) {
             AController.materialList.add(m);
         }
     }
-
 }

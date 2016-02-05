@@ -71,15 +71,7 @@ public class MainSettingsNodeController extends AController {
     private boolean initialized = false;
 
     public MainSettingsNodeController() {
-        if (materialList.isEmpty()) materialList.addAll(
-                DefaultMaterial.getSingleColorMaterial(),
-                DefaultMaterial.getLambert(),
-                DefaultMaterial.getOrenNayar(),
-                DefaultMaterial.getPhong(),
-                DefaultMaterial.getReflectiveMaterial(),
-                DefaultMaterial.getTransparentMaterial(),
-                DefaultMaterial.getDefaultLambert()
-        );
+
     }
 
     /**

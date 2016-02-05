@@ -34,39 +34,4 @@ public class SLambertMaterial extends SMaterial {
         add2MaterialList(s);
         return s;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        SLambertMaterial that = (SLambertMaterial) o;
-
-        if (Double.compare(that.bumpScale, bumpScale) != 0) return false;
-        if (ambientOcllusion != that.ambientOcllusion) return false;
-        if (Double.compare(that.ambientSize, ambientSize) != 0) return false;
-        if (ambientSubdiv != that.ambientSubdiv) return false;
-        if (!name.equals(that.name)) return false;
-        if (!texture.equals(that.texture)) return false;
-        if (!irradiance.equals(that.irradiance)) return false;
-        return bumpMap.equals(that.bumpMap);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name.hashCode();
-        result = 31 * result + texture.hashCode();
-        result = 31 * result + bumpMap.hashCode();
-        temp = Double.doubleToLongBits(bumpScale);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (ambientOcllusion ? 1 : 0);
-        temp = Double.doubleToLongBits(ambientSize);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + ambientSubdiv;
-        result = 31 * result + irradiance.hashCode();
-        return result;
-    }
 }

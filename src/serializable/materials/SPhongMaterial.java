@@ -36,7 +36,6 @@ public class SPhongMaterial extends SMaterial {
         s.ambientOcclusion.setValue( ambientOcllusion);
         s.ambientSize.setValue( ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
-        add2MaterialList(s);
         return s;
     }
 }
