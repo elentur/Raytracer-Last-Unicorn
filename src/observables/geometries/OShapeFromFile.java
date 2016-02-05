@@ -36,7 +36,7 @@ public class OShapeFromFile extends AOGeometry {
     public SShapeFromFile serialize() {
         return new SShapeFromFile(
                 path.get(),
-                material.get().generate(),
+                material.get().serialize(),
                 reciveShadows.get(),
                 castShadows.get(),
                 visibility.get(),

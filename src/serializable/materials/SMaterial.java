@@ -1,14 +1,17 @@
 package serializable.materials;
 
+import observables.materials.AOMaterial;
 import serializable.SElement;
 import serializable.textures.STexture;
+
+import java.io.Serializable;
 
 /**
  * Created by Marcus Baetz on 05.02.2016.
  *
  * @author Marcus Bätz
  */
-public abstract class SMaterial implements SElement {
+public abstract class SMaterial implements SElement ,Serializable {
     protected static final long serialVersionUID = 1L;
     protected final String name;
     protected final STexture texture;
@@ -27,4 +30,6 @@ public abstract class SMaterial implements SElement {
         this.ambientSize = ambientSize;
         this.ambientSubdiv = ambientSubdiv;
     }
+    @Override
+    public abstract AOMaterial generate();
 }

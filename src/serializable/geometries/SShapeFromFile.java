@@ -1,9 +1,10 @@
 package serializable.geometries;
 
 import geometries.ShapeFromFile;
-import material.Material;
 import observables.geometries.OShapeFromFile;
+import observables.materials.DefaultMaterial;
 import serializable.SElement;
+import serializable.materials.SMaterial;
 
 import java.io.File;
 
@@ -15,10 +16,12 @@ public class SShapeFromFile extends ShapeFromFile implements SElement {
     private static final long serialVersionUID = 1L;
 
     private final String name;
+    private final SMaterial material;
 
-    public SShapeFromFile(String path, Material material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, String name) {
-        super(new File(path), material, reciveShadows, castShadows, visibility, flipNormal);
+    public SShapeFromFile(String path, SMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, String name) {
+        super(new File(path), DefaultMaterial.getSingleColorMaterial().generate(), reciveShadows, castShadows, visibility, flipNormal);
         this.name = name;
+        this.material=material;
     }
 
     @Override
@@ -31,7 +34,7 @@ public class SShapeFromFile extends ShapeFromFile implements SElement {
         OShapeFromFile geo = new OShapeFromFile(
         file.toURI().toString());
         geo.name.set(name);
-        geo.material.set(null);
+        geo.material.set(material.generate());
         geo.reciveShadows.set(reciveShadows);
         geo.castShadows.set(castShadows);
         geo.visibility.set(visibility);
