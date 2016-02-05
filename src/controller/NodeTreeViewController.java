@@ -62,7 +62,6 @@ public class NodeTreeViewController extends AController {
         elementsTreeView.setRoot(rootItem);
         elementLists.setTreeview(elementsTreeView);
 
-        // TODO in eigene Klasse auslagern
         elementsTreeView.setCellFactory(new ElementTreeCellFactory());
 
         // wenn element ausgewählt

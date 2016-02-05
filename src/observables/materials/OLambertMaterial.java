@@ -1,5 +1,6 @@
 package observables.materials;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import material.LambertMaterial;
 import serializable.materials.SLambertMaterial;
 
@@ -47,14 +48,18 @@ public class OLambertMaterial extends AOMaterial{
 
         AOMaterial that = (AOMaterial) o;
 
-        if (texture != null ? !texture.equals(that.texture) : that.texture != null) return false;
+        /*if (texture != null ? !texture.equals(that.texture) : that.texture != null) return false;
         if (bumpMap != null ? !bumpMap.equals(that.bumpMap) : that.bumpMap != null) return false;
         if (bumpScale != null ? !bumpScale.equals(that.bumpScale) : that.bumpScale != null) return false;
         if (irradiance != null ? !irradiance.equals(that.irradiance) : that.irradiance != null) return false;
         if (ambientOcclusion != null ? !ambientOcclusion.equals(that.ambientOcclusion) : that.ambientOcclusion != null)
             return false;
         if (ambientSize != null ? !ambientSize.equals(that.ambientSize) : that.ambientSize != null) return false;
-        return ambientSubdiv != null ? ambientSubdiv.equals(that.ambientSubdiv) : that.ambientSubdiv == null;
+        return ambientSubdiv != null ? ambientSubdiv.equals(that.ambientSubdiv) : that.ambientSubdiv == null;*/
+
+        //return name.get().equals(that.name.get());
+        //TODO - hier sollte auf jeden Fall per ID beim abspeichern geprüft werden, od diese schon enthalten ist
+        return false;
 
     }
 
