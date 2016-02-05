@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import matVect.Point3;
+import serializable.geometries.SNode;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,6 +38,20 @@ public class ONode extends AOGeometry {
     @Override
     public Node generate() {
         return new Node(
+                new Point3(rotationx.get(),translationy.get(),translationz.get()),
+                new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
+                new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
+                oGeos.stream().map(AOGeometry::generate).collect(Collectors.toList()),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get()
+        );
+    }
+
+    @Override
+    public SNode serialize() {
+        return new SNode(
                 new Point3(rotationx.get(),translationy.get(),translationz.get()),
                 new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
                 new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
