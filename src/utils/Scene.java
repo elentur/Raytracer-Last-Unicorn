@@ -1,23 +1,7 @@
 package utils;
 
-import camera.Camera;
-import com.sun.corba.se.impl.orbutil.ObjectWriter;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.image.Image;
-import javafx.scene.paint.*;
-import javafx.scene.paint.Color;
-import observables.AOElement;
-import observables.cameras.AOCamera;
-import observables.geometries.AOGeometry;
-import observables.lights.AOLight;
 import serializable.SElement;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,14 +18,19 @@ public class Scene implements Serializable {
      * Represents the AOElments Treeview object of this Scene.
      */
     private final SElement camera;
+    private final List<SElement> geometries;
+    private  final List<SElement> lights;
 
     /**
      * Generates a new Scene object.
-
+     * @param geometries
+     * @param lights
      * @param camera  Represents the treeview object of this Scene.
      */
-    public Scene(SElement camera) {
+    public Scene(final List<SElement> geometries, final List<SElement> lights, final SElement camera) {
         this.camera = camera;
+        this.geometries=geometries;
+        this.lights=lights;
     }
 
     /**

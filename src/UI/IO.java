@@ -1,34 +1,28 @@
 package UI;
 
-import camera.Camera;
-import camera.PerspectiveCamera;
-import controller.AController;
 import controller.ObservableElementLists;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import matVect.Point3;
-import matVect.Vector3;
 import observables.AOElement;
-import sampling.SamplingPattern;
+import observables.geometries.AOGeometry;
+import observables.lights.AOLight;
 import serializable.SElement;
 import utils.Scene;
-import utils.World;
 
 import javax.imageio.ImageIO;
-import javax.xml.bind.JAXB;
 import java.awt.image.RenderedImage;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,10 +59,19 @@ public class IO {
             dlg.showAndWait();
             return;
         }
+        ObservableElementLists list = ObservableElementLists.getInstance();
+        SElement camera = null;
+        if ( list.camera!=null)  camera = ObservableElementLists.getInstance().camera.serialize();
+        List<SElement> lights = new ArrayList<>();
+        for (AOLight light : list.lights){
+            lights.add(light.serialize());
+        }
+        List<SElement> geometries = new ArrayList<>();
+        for (AOGeometry geometry : list.geometries){
+            geometries.add(geometry.serialize());
+        }
 
-        SElement camera = ObservableElementLists.getInstance().camera.serialize();
-
-        Scene scene = new Scene(camera);
+        Scene scene = new Scene(geometries,lights,camera);
 
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
