@@ -29,7 +29,7 @@ public class OPlane extends AOGeometry {
     @Override
     public SPlane serialize() {
         return new SPlane(
-                material.get().generate(),
+                material.get().serialize(),
                 reciveShadows.get(),
                 castShadows.get(),
                 visibility.get(),

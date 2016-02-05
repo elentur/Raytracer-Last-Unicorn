@@ -1,8 +1,6 @@
 package observables.geometries;
 
 import geometries.Sphere;
-import observables.materials.AOMaterial;
-import serializable.SElement;
 import serializable.geometries.SSphere;
 
 /**
@@ -29,7 +27,7 @@ public class OSphere extends AOGeometry {
     @Override
     public SSphere serialize() {
         return new SSphere(
-                material.get().generate(),
+                material.get().serialize(),
                 reciveShadows.get(),
                 castShadows.get(),
                 visibility.get(),

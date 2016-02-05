@@ -28,7 +28,7 @@ public class OAxisAlignedBox extends AOGeometry {
     @Override
     public SAxisAlignedBox serialize() {
         return new SAxisAlignedBox(
-                material.get().generate(),
+                material.get().serialize(),
                 reciveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
