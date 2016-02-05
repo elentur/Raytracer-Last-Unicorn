@@ -47,4 +47,41 @@ public class ONode extends AOGeometry {
                 flipNormal.get()
         );
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ONode)) return false;
+
+        ONode oNode = (ONode) o;
+
+        if (!translationx.equals(oNode.translationx)) return false;
+        if (!translationy.equals(oNode.translationy)) return false;
+        if (!translationz.equals(oNode.translationz)) return false;
+        if (!scalingx.equals(oNode.scalingx)) return false;
+        if (!scalingy.equals(oNode.scalingy)) return false;
+        if (!scalingz.equals(oNode.scalingz)) return false;
+        if (!rotationx.equals(oNode.rotationx)) return false;
+        if (!rotationy.equals(oNode.rotationy)) return false;
+        if (!rotationz.equals(oNode.rotationz)) return false;
+        return !(oGeos != null ? !oGeos.equals(oNode.oGeos) : oNode.oGeos != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = translationx.hashCode();
+        result = 31 * result + translationy.hashCode();
+        result = 31 * result + translationz.hashCode();
+        result = 31 * result + scalingx.hashCode();
+        result = 31 * result + scalingy.hashCode();
+        result = 31 * result + scalingz.hashCode();
+        result = 31 * result + rotationx.hashCode();
+        result = 31 * result + rotationy.hashCode();
+        result = 31 * result + rotationz.hashCode();
+        result = 31 * result + (oGeos != null ? oGeos.hashCode() : 0);
+        return result;
+    }
+
+
 }

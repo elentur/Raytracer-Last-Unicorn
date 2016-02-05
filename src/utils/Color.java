@@ -84,7 +84,7 @@ public class Color implements Serializable {
      * @return the new Color that results in this multiplication.
      */
     public Color mul(final double v) {
-        if (v < 0) throw new IllegalArgumentException("v have to be positive!");
+        if (v < 0){throw new IllegalArgumentException("v have to be positive!");}
         return new Color(r * v, g * v, b * v);
     }
 

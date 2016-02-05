@@ -1,7 +1,6 @@
 package observables.geometries;
 
 import javafx.collections.FXCollections;
-import observables.materials.DefaultMaterial;
 
 /**
  * Created by Marcus Baetz on 03.02.2016.
