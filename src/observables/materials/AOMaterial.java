@@ -7,6 +7,7 @@ import material.Material;
 import observables.AOElement;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
+import serializable.materials.SMaterial;
 
 /**
  * Created by
@@ -30,7 +31,7 @@ public abstract class AOMaterial extends AOElement {
 
     }
     public abstract Material generate();
-
+    public abstract SMaterial serialize();
     protected void refreshMaterial(){
         
         AOMaterial m = AController.material.get();

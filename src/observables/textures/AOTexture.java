@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import observables.AOElement;
 import observables.materials.AOMaterial;
+import serializable.textures.STexture;
 import texture.Texture;
 
 import java.io.File;
@@ -24,6 +25,7 @@ public abstract class AOTexture extends AOElement {
     public ObjectProperty<Color> color = new SimpleObjectProperty<>(Color.GRAY);
     public ObjectProperty<Image> img = new SimpleObjectProperty<>();
     public abstract Texture generate();
+    public abstract STexture serialize();
 
     public AOTexture(){
         this.color.addListener(a->refreshMaterial());

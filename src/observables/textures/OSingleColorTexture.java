@@ -1,8 +1,7 @@
 package observables.textures;
 
-import controller.AController;
 import javafx.scene.paint.Color;
-import observables.materials.AOMaterial;
+import serializable.textures.SSingleColorTexture;
 import texture.SingleColorTexture;
 
 /**
@@ -19,9 +18,26 @@ public class OSingleColorTexture extends AOTexture {
         this.color.setValue(color);
 
     }
+    public OSingleColorTexture() {
+        name.set("Single Color Texture");
+        path.set("");
+        this.color.setValue(Color.GRAY);
 
+    }
+
+    public void setColor (final utils.Color color){
+        this.color.setValue(new Color(color.r,color.g,color.b,1));
+    }
     @Override
     public SingleColorTexture generate() {
         return new SingleColorTexture(new utils.Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()));
+    }
+
+    @Override
+    public SSingleColorTexture serialize() {
+        return new SSingleColorTexture(
+                new utils.Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
+                name.get()
+        );
     }
 }

@@ -1,5 +1,6 @@
 package observables.textures;
 
+import serializable.textures.SImageTexture;
 import texture.InterpolatedImageTexture;
 
 /**
@@ -23,5 +24,12 @@ public class OInterpolatedImageTexture extends AOTexture {
                 offsetV.get(),
                 rotate.get()
         );
+    }
+
+    @Override
+    public SImageTexture serialize() {
+        return new SImageTexture(
+                path.get(),
+                name.get());
     }
 }
