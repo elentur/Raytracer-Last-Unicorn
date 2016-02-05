@@ -1,11 +1,14 @@
 package matVect;
 
+import java.io.Serializable;
+
 /**
  * s class represents a Point2 Object.
  *
  * @author  Robert Dziuba on 03/12/15.
  */
-public class Point2 {
+public class Point2 implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * the x coordinate of the point.
