@@ -61,7 +61,7 @@ public class IO {
         }
         ObservableElementLists list = ObservableElementLists.getInstance();
         SElement camera = null;
-        if ( list.camera!=null)  camera = ObservableElementLists.getInstance().camera.serialize();
+        if ( list.camera!=null)  camera = list.camera.serialize();
         List<SElement> lights = new ArrayList<>();
         for (AOLight light : list.lights){
             lights.add(light.serialize());
@@ -119,8 +119,16 @@ public class IO {
             }
 
             if (scene != null) {
-                rootItem.getChildren().clear();
-                //rootItem.getChildren().addAll(scene.getTreeView().getChildren());
+                ObservableElementLists list = ObservableElementLists.getInstance();
+                list.addElement(scene.getCamera());
+
+                for(AOLight light : scene.getLights()){
+                    list.addElement(light);
+                }
+
+                for(AOGeometry geometry : scene.getGeometries()){
+                    list.addElement(geometry);
+                }
             }
 
 

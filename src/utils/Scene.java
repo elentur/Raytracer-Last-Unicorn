@@ -1,8 +1,12 @@
 package utils;
 
+import observables.cameras.AOCamera;
+import observables.geometries.AOGeometry;
+import observables.lights.AOLight;
 import serializable.SElement;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,8 +40,30 @@ public class Scene implements Serializable {
     /**
      * @return the TreeView object of this Scene.
      */
-    public SElement getSerializableCamera() {
+    public AOCamera getCamera() {
 
-        return camera;
+        return (AOCamera) camera.generate();
+    }
+
+    /**
+     * @return the TreeView object of this Scene.
+     */
+    public List<AOLight> getLights() {
+        List<AOLight> oLights = new ArrayList<>();
+        for(SElement light : lights){
+            oLights.add((AOLight) light.generate());
+        }
+        return oLights;
+    }
+
+    /**
+     * @return the TreeView object of this Scene.
+     */
+    public List<AOGeometry> getGeometries() {
+        List<AOGeometry> oGeometry = new ArrayList<>();
+        for(SElement geometry : geometries){
+            oGeometry.add((AOGeometry) geometry.generate());
+        }
+        return oGeometry;
     }
 }
