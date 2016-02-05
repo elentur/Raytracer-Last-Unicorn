@@ -2,6 +2,8 @@ package observables.geometries;
 
 import geometries.Triangle;
 import observables.materials.AOMaterial;
+import serializable.SElement;
+import serializable.geometries.STriangle;
 
 /**
  * Created by
@@ -21,6 +23,18 @@ public class OTriangle extends AOGeometry {
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
+        );
+    }
+
+    @Override
+    public STriangle serialize() {
+        return new STriangle(
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get(),
+                name.get()
         );
     }
 }

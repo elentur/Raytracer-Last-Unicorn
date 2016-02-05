@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import observables.AOElement;
 import observables.materials.AOMaterial;
 import observables.materials.DefaultMaterial;
+import serializable.SElement;
 
 /**
  * Created by
@@ -22,4 +23,5 @@ public abstract class AOGeometry extends AOElement{
     public BooleanProperty flipNormal = new SimpleBooleanProperty(false);
 
     public abstract Geometry generate();
+    public abstract SElement serialize();
 }

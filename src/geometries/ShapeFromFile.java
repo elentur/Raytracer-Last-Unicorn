@@ -44,8 +44,14 @@ public class ShapeFromFile extends Geometry {
         vn = new ArrayList<>();
         vt = new ArrayList<>();
         f = new ArrayList<>();
+        loadFile();
+        octree = new Octree(triangles);
+    }
+
+    protected void loadFile(){
+
         List<Point3> points = new ArrayList<>();
-        if (readFile(path.toString())) {
+        if (readFile(file.toString())) {
             try {
                 for (String s : f) {
                     String[] fs = s.split("\\s+");
@@ -87,10 +93,7 @@ public class ShapeFromFile extends Geometry {
                                     material,vt.get(t[0]),vt.get(t[1]),vt.get(t[2]),reciveShadows,castShadows,visibility,false);
                             triangles.add(tri);
                         }
-
-
                     }
-
                 }
 
             } catch (Exception e) {
@@ -101,9 +104,8 @@ public class ShapeFromFile extends Geometry {
             }
 
         }
-        octree = new Octree(triangles);
-        // System.out.println(ImageSaver.fTriangle.size());
 
+        // System.out.println(ImageSaver.fTriangle.size());
     }
 
     public ShapeFromFile(ShapeFromFile shapeFromFile) {

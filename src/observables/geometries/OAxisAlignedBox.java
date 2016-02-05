@@ -2,6 +2,7 @@ package observables.geometries;
 
 import geometries.AxisAlignedBox;
 import observables.materials.AOMaterial;
+import serializable.geometries.SAxisAlignedBox;
 
 /**
  * Created by
@@ -21,6 +22,18 @@ public class OAxisAlignedBox extends AOGeometry {
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
+        );
+    }
+
+    @Override
+    public SAxisAlignedBox serialize() {
+        return new SAxisAlignedBox(
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get(),
+                name.get()
         );
     }
 }

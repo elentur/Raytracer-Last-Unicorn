@@ -2,6 +2,8 @@ package observables.geometries;
 
 import geometries.Plane;
 import observables.materials.AOMaterial;
+import serializable.geometries.SPlane;
+import serializable.geometries.SSphere;
 
 /**
  * Created by
@@ -23,4 +25,17 @@ public class OPlane extends AOGeometry {
                 flipNormal.get()
         );
     }
+
+    @Override
+    public SPlane serialize() {
+        return new SPlane(
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get(),
+                name.get()
+        );
+    }
+
 }

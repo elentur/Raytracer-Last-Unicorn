@@ -3,6 +3,7 @@ package observables.geometries;
 import geometries.ShapeFromFile;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import serializable.geometries.SShapeFromFile;
 
 import java.io.File;
 
@@ -16,7 +17,7 @@ public class OShapeFromFile extends AOGeometry {
 
     public OShapeFromFile(String path) {
         name.set(new File(path).getName().split("\\.")[0]);
-        this.path.setValue(path);
+        this.path.set(path);
     }
 
     @Override
@@ -28,6 +29,19 @@ public class OShapeFromFile extends AOGeometry {
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
+        );
+    }
+
+    @Override
+    public SShapeFromFile serialize() {
+        return new SShapeFromFile(
+                path.get(),
+                material.get().generate(),
+                reciveShadows.get(),
+                castShadows.get(),
+                visibility.get(),
+                flipNormal.get(),
+                name.get()
         );
     }
 }

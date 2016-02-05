@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import light.DirectionalLight;
 import matVect.Vector3;
 import sampling.LightShadowPattern;
+import serializable.lights.SDirectionalLight;
 import utils.Color;
 
 /**
@@ -31,6 +32,17 @@ public class ODirectionalLight extends AOLight {
                 castShadow.get(),
                 photons.get(),
                 new LightShadowPattern(patternSize.get(),patternSubdiv.get())
+        );
+    }
+
+    public SDirectionalLight serialize(){
+        return new SDirectionalLight(
+                new Color(color.getRed(),color.getGreen(),color.getBlue()),
+                new Vector3(dx.get(),dy.get(),dz.get()),
+                castShadow.get(),
+                photons.get(),
+                new LightShadowPattern(patternSize.get(),patternSubdiv.get()),
+                name.get()
         );
     }
 }
