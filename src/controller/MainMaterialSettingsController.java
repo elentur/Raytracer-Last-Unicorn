@@ -152,9 +152,9 @@ public class MainMaterialSettingsController extends AController {
             initializeFields();
             loadTextureTabs();
             initialized=true;
-            MaterialView materialRenderView = MaterialView.getInstance();
+            MaterialView materialRenderView = MaterialView.getInstance1();
             materialRenderView.setUpTracer(material);
-           // materialRenderViewHBox.getChildren().add(materialRenderView);
+            materialRenderViewHBox.getChildren().add(materialRenderView);
 
         }
 

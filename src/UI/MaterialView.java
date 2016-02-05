@@ -23,12 +23,14 @@ import utils.Color;
  * @author Marcus Bätz
  */
 public class MaterialView extends ImageView {
-    private static MaterialView materialView = new MaterialView();
-    private final Raytracer matTracer = new Raytracer(false);
+    private static MaterialView materialView1 = new MaterialView();
+    private static MaterialView materialView2 = new MaterialView();
+    private final static Raytracer matTracer = new Raytracer(false);
     private MaterialView() {
 
     }
-    public static MaterialView getInstance(){return materialView;}
+    public static MaterialView getInstance1(){return materialView1;}
+    public static MaterialView getInstance2(){return materialView2;}
 
     public void setUpTracer(ObjectProperty<AOMaterial> material) {
         MaterialView that = this;
