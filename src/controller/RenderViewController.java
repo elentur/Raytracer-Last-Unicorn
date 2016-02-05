@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -15,7 +16,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Created by roberto on 04.02.16.
+ * Created by
+ * Robert Dziuba on 04.02.16.
  */
 public class RenderViewController extends Stage {
 
@@ -39,6 +41,10 @@ public class RenderViewController extends Stage {
         );
 
         initialize();
+
+        scene.setOnKeyPressed(a -> {
+            if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
+        });
 
         this.setTitle("Render-View");
         this.setScene(scene);

@@ -1,5 +1,6 @@
 package serializable.materials;
 
+import controller.AController;
 import observables.materials.AOMaterial;
 import serializable.SElement;
 import serializable.textures.STexture;
@@ -32,4 +33,14 @@ public abstract class SMaterial implements SElement ,Serializable {
     }
     @Override
     public abstract AOMaterial generate();
+
+    protected void add2MaterialList(AOMaterial m){
+
+        if(AController.materialList.get(6).equals(m)){
+            AController.materialList.add(6,m);
+        }else{
+            AController.materialList.add(m);
+        }
+    }
+
 }

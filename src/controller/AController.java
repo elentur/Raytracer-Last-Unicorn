@@ -24,8 +24,8 @@ public abstract class AController  implements Initializable {
     protected ObservableElementLists elementLists = ObservableElementLists.getInstance();
     //TODO material löschen und schauen ob es über die liste geht
     public final static ObjectProperty<AOMaterial> material= new SimpleObjectProperty<>();
-    protected final static ObservableList<AOMaterial> materialList = FXCollections.observableArrayList();
-    protected final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();
+    public final static ObservableList<AOMaterial> materialList = FXCollections.observableArrayList();
+    public final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();
     protected static TabPane masterTabPane;
     protected final TreeItem<AOElement> rootItem = new TreeItem<>(new AOElement("Elements"));
 }
