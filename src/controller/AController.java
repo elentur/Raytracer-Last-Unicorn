@@ -11,6 +11,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import observables.AOElement;
 import observables.materials.AOMaterial;
+import observables.materials.DefaultMaterial;
 import observables.textures.AOTexture;
 import raytracer.Raytracer;
 
@@ -22,10 +23,17 @@ public abstract class AController  implements Initializable {
    // public final static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
     public final static ObjectProperty<TreeItem<AOElement>> selectedTreeItem = new SimpleObjectProperty<>();
     protected ObservableElementLists elementLists = ObservableElementLists.getInstance();
-    //TODO material löschen und schauen ob es über die liste geht
     public final static ObjectProperty<AOMaterial> material= new SimpleObjectProperty<>();
-    protected final static ObservableList<AOMaterial> materialList = FXCollections.observableArrayList();
-    protected final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();
+    public final static ObservableList<AOMaterial> materialList = FXCollections.observableArrayList(
+            DefaultMaterial.getSingleColorMaterial(),
+            DefaultMaterial.getLambert(),
+            DefaultMaterial.getOrenNayar(),
+            DefaultMaterial.getPhong(),
+            DefaultMaterial.getReflectiveMaterial(),
+            DefaultMaterial.getTransparentMaterial(),
+            DefaultMaterial.getDefaultLambert()
+    );
+    public final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();
     protected static TabPane masterTabPane;
     protected final TreeItem<AOElement> rootItem = new TreeItem<>(new AOElement("Elements"));
 }

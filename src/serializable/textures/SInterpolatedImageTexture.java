@@ -1,5 +1,6 @@
 package serializable.textures;
 
+import controller.AController;
 import observables.textures.OInterpolatedImageTexture;
 
 /**
@@ -22,6 +23,7 @@ public class SInterpolatedImageTexture extends STexture {
     public OInterpolatedImageTexture generate() {
         OInterpolatedImageTexture t = new OInterpolatedImageTexture(path);
         t.name.setValue(name);
+        AController.textureList.add(t);
         return t;
     }
 }

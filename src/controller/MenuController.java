@@ -1,5 +1,6 @@
 package controller;
 
+import UI.Dialog;
 import UI.IO;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
@@ -114,7 +115,14 @@ public class MenuController extends AController{
 
     public void handleRenderAction(ActionEvent actionEvent) {
         ObservableElementLists list = ObservableElementLists.getInstance();
-        if(list.camera!=null) raytracer.setCamera(list.camera.generate());
+        if(list.camera!=null){
+            raytracer.setCamera(list.camera.generate());
+        }else{
+            Dialog dlg = new Dialog("No Camera created.");
+            dlg.setNewText("There is no Camera in this scene.");
+            dlg.showAndWait();
+            return;
+        }
         raytracer.getWorld().lights.clear();
         raytracer.getWorld().geometries.clear();
         for(AOLight light : list.lights){

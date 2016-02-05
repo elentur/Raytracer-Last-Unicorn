@@ -1,5 +1,6 @@
 package serializable.materials;
 
+import controller.AController;
 import observables.materials.OLambertMaterial;
 import serializable.textures.STexture;
 
@@ -30,6 +31,7 @@ public class SLambertMaterial extends SMaterial {
         s.ambientOcclusion.setValue( ambientOcllusion);
         s.ambientSize.setValue( ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
+        add2MaterialList(s);
         return s;
     }
 }
