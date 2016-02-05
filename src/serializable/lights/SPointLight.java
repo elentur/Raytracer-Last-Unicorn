@@ -25,7 +25,7 @@ public class SPointLight extends PointLight implements SElement {
     public OPointLight generate(){
         OPointLight light = new OPointLight();
 
-        light.color = new javafx.scene.paint.Color(color.r,color.g,color.b,1);
+        light.color.set(new javafx.scene.paint.Color(color.r,color.g,color.b,1));
         light.castShadow.set(castsShadow);
         light.photons.set(photons);
         light.patternSize.set(lightShadowPattern.size);
@@ -33,6 +33,7 @@ public class SPointLight extends PointLight implements SElement {
         light.px.set(position.x);
         light.py.set(position.y);
         light.pz.set(position.z);
+        light.name.set(name);
 
         return light;
     }

@@ -7,7 +7,7 @@ package observables.materials;
  */
 public class DefaultMaterial {
     private final static AOMaterial defaultMaterial = getDefaultMaterial();
-    public static AOMaterial getDefaultMaterial(){
+    private static AOMaterial getDefaultMaterial(){
         OLambertMaterial oLambertMaterial = new OLambertMaterial();
         oLambertMaterial.name.set("Default Material");
         return oLambertMaterial;

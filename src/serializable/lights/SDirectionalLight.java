@@ -25,7 +25,7 @@ public class SDirectionalLight extends DirectionalLight implements SElement {
     public ODirectionalLight generate(){
         ODirectionalLight light = new ODirectionalLight();
 
-        light.color = new javafx.scene.paint.Color(color.r,color.g,color.b,1);
+        light.color.set(new javafx.scene.paint.Color(color.r,color.g,color.b,1));
         light.castShadow.set(castsShadow);
         light.photons.set(photons);
         light.patternSize.set(lightShadowPattern.size);
@@ -33,6 +33,7 @@ public class SDirectionalLight extends DirectionalLight implements SElement {
         light.dx.set(direction.x);
         light.dy.set(direction.y);
         light.dz.set(direction.z);
+        light.name.set(name);
 
         return light;
     }

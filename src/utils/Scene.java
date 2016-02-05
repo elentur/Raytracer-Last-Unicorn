@@ -42,7 +42,7 @@ public class Scene implements Serializable {
      */
     public AOCamera getCamera() {
 
-        return (AOCamera) camera.generate();
+        return camera!=null?(AOCamera) camera.generate():null;
     }
 
     /**

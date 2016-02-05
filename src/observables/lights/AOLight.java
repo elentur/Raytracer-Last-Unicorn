@@ -11,7 +11,7 @@ import serializable.SElement;
  * Robert Dziuba on 02/02/16.
  */
 public abstract class AOLight extends AOElement {
-    public Color color = Color.WHITE;
+    public ObjectProperty<Color> color =  new SimpleObjectProperty<>(Color.WHITE);
     public BooleanProperty castShadow = new SimpleBooleanProperty(true);
     public IntegerProperty photons = new SimpleIntegerProperty(500);
     public DoubleProperty patternSize = new SimpleDoubleProperty(0.0);
