@@ -3,20 +3,11 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import javafx.scene.control.ListView?>
-<BorderPane fx:controller="controller.MainController" xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
-    <top>
+<?import javafx.scene.layout.HBox?>
+<VBox fx:controller="controller.MainController" xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
         <fx:include source="menu.fxml"/>
-    </top>
-    <left>
+    <HBox>
         <fx:include source="nodeTreeView.fxml"/>
-    </left>
-    <center>
-
-    </center>
-    <right>
         <fx:include source="nodeSettingsView.fxml"/>
-    </right>
-    <bottom>
-
-    </bottom>
-</BorderPane>
+    </HBox>
+</VBox>
