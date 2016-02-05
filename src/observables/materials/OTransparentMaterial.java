@@ -5,6 +5,7 @@ import javafx.scene.paint.Color;
 import material.TransparentMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
+import serializable.materials.STransparentMaterial;
 
 /**
  * Created by
@@ -43,6 +44,25 @@ public class OTransparentMaterial extends AOMaterial {
                 ambientOcclusion.get(),
                 ambientSize.get(),
                 ambientSubdiv.get()
+        );
+    }
+
+
+    @Override
+    public STransparentMaterial serialize() {
+        return new STransparentMaterial(
+                texture.get().serialize(),
+                bumpMap.get().serialize(),
+                bumpScale.get(),
+                irradiance.get().serialize(),
+                specular.get().serialize(),
+                exponent.get(),
+                reflection.get().serialize(),
+                indexOfRefraction.get(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get(),
+                name.get()
         );
     }
 }

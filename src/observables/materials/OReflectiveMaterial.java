@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import material.ReflectiveMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
+import serializable.materials.SReflectivMaterial;
 
 /**
  * Created by
@@ -41,6 +42,23 @@ public class OReflectiveMaterial extends AOMaterial{
                 ambientOcclusion.get(),
                 ambientSize.get(),
                 ambientSubdiv.get()
+        );
+    }
+
+    @Override
+    public SReflectivMaterial serialize() {
+        return new SReflectivMaterial(
+                texture.get().serialize(),
+                bumpMap.get().serialize(),
+                bumpScale.get(),
+                irradiance.get().serialize(),
+                specular.get().serialize(),
+                exponent.get(),
+                reflection.get().serialize(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get(),
+                name.get()
         );
     }
 }

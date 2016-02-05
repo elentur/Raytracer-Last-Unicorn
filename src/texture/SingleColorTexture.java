@@ -7,7 +7,7 @@ import utils.Color;
  */
 public class SingleColorTexture extends Texture {
 
-    final Color color;
+    public final Color color;
 
     public SingleColorTexture(final Color color) {
         super(1,1,1,1,0,null);

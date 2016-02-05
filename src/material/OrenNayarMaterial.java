@@ -90,7 +90,7 @@ public class OrenNayarMaterial extends Material {
                 for (Point2 point : light.lightShadowPattern.generateSampling()) {
             if (light.illuminates(h,point, world,hit.geo)) {
 
-                final Vector3 l = light.directionFrom(h).normalized();
+             /*   final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
                 final double beta = Math.min(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
 
@@ -109,20 +109,19 @@ public class OrenNayarMaterial extends Material {
                 final double a = gamma * c2 * Math.tan(beta);
                 final double b = (1 - Math.abs(gamma)) * c3 * Math.tan((alpha + beta) / 2.0);
 
-
                 basicColor = basicColor.add(
                         texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(Math.max(0.0, hit.n.dot(l)) * (c1 + a + b))
-                );
+                );*/
                 //simple variant
-                /*
+
                 final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha    = Math.max( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
                 final double beta     = Math.min( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
                 final double a = 1-0.5*(rough_sq/(rough_sq+0.57));
                 final double b = 0.45*(rough_sq/(rough_sq+0.09));
-                basicColor = basicColor.add(light.color.mul(diffuse).mul(Math.max(0, hit.n.dot(l))).mul(
+                basicColor = basicColor.add(light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v)).mul(Math.max(0, hit.n.dot(l))).mul(
                         a+b*Math.max( 0.0, hit.n.dot(l) )* Math.sin(alpha)*Math.tan(beta)
-                ));*/
+                ));
 
             }
                 }

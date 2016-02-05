@@ -156,18 +156,23 @@ public class NodeTreeViewController extends AController {
         if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
           AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
             if(e instanceof AOLight || e instanceof AOCamera || e instanceof ONode){
-                if(e instanceof OPlane) e = DefaultGeometries.getPlane();
-                else if(e instanceof OSphere) e = DefaultGeometries.getSphere();
-                else if(e instanceof OAxisAlignedBox) e = DefaultGeometries.getAxisAlignedBox();
-                else if(e instanceof OTriangle) e = DefaultGeometries.getTriangle();
-                else if(e instanceof ODirectionalLight) e = DefaultLight.getDirectionalLight();
-                else if(e instanceof OPointLight) e = DefaultLight.getPointLight();
-                else if(e instanceof OSpotLight) e = DefaultLight.getSpotLight();
-                else if(e instanceof OOrthographicCamera) e = DefaultCameras.getOrthographicCamera();
-                else if(e instanceof OPerspectiveCamera) e = DefaultCameras.getPerspectiveCamera();
-                else if(e instanceof ODOFCamera) e = DefaultCameras.getDOFCamera();
+                if(e instanceof ONode){
+                    AOGeometry g = ((ONode)e).oGeos.get(0);
+                    if( g instanceof OPlane) e = DefaultGeometries.getPlane();
+                    else if(g instanceof OSphere) e = DefaultGeometries.getSphere();
+                    else if(g instanceof OAxisAlignedBox) e = DefaultGeometries.getAxisAlignedBox();
+                    else if(g instanceof OTriangle) e = DefaultGeometries.getTriangle();
+                }else {
+                    if (e instanceof ODirectionalLight) e = DefaultLight.getDirectionalLight();
+                    else if (e instanceof OPointLight) e = DefaultLight.getPointLight();
+                    else if (e instanceof OSpotLight) e = DefaultLight.getSpotLight();
+                    else if (e instanceof OOrthographicCamera) e = DefaultCameras.getOrthographicCamera();
+                    else if (e instanceof OPerspectiveCamera) e = DefaultCameras.getPerspectiveCamera();
+                    else if (e instanceof ODOFCamera) e = DefaultCameras.getDOFCamera();
+                }
                     elementLists.addElement( e);
-                System.out.println(e);
+
+
 
             }
 

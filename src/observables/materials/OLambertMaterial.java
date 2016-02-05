@@ -1,6 +1,7 @@
 package observables.materials;
 
 import material.LambertMaterial;
+import serializable.materials.SLambertMaterial;
 
 /**
  * Created by
@@ -22,6 +23,20 @@ public class OLambertMaterial extends AOMaterial{
                 ambientOcclusion.get(),
                 ambientSize.get(),
                 ambientSubdiv.get()
+        );
+    }
+
+    @Override
+    public SLambertMaterial serialize() {
+        return new SLambertMaterial(
+                texture.get().serialize(),
+                bumpMap.get().serialize(),
+                bumpScale.get(),
+                irradiance.get().serialize(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get(),
+                name.get()
         );
     }
 }

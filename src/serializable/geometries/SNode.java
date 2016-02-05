@@ -57,14 +57,14 @@ public class SNode extends Node implements SElement {
         return geo;
     }
 
-    private List<AOGeometry> sGoes2aGeos(List<SElement> sGeos){
+    private List<AOGeometry> sGoes2aGeos(){
         List<AOGeometry> oGeos = new ArrayList<>();
 
         for(SElement sGeo : sGeos){
             if(sGeo instanceof SNode){
-                oGeos.add(sGoes2aGeos(((SNode) sGeo).sGeos));
+                oGeos.add(((SNode) sGeo).generate());
             }else {
-                oGeos.add(sGeo.serialize());
+                oGeos.add((AOGeometry) sGeo.generate());
             }
         }
 

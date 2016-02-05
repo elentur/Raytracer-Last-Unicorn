@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import material.PhongMaterial;
 import observables.textures.AOTexture;
 import observables.textures.OSingleColorTexture;
+import serializable.materials.SPhongMaterial;
 
 /**
  * Created by
@@ -38,6 +39,22 @@ public class OPhongMaterial extends AOMaterial{
                 ambientOcclusion.get(),
                 ambientSize.get(),
                 ambientSubdiv.get()
+        );
+    }
+
+    @Override
+    public SPhongMaterial serialize() {
+        return new SPhongMaterial(
+                texture.get().serialize(),
+                bumpMap.get().serialize(),
+                bumpScale.get(),
+                irradiance.get().serialize(),
+                specular.get().serialize(),
+                exponent.get(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get(),
+                name.get()
         );
     }
 }

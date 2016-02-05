@@ -1,6 +1,7 @@
 package observables.materials;
 
 import material.SingleColorMaterial;
+import serializable.materials.SSingleColorMaterial;
 
 /**
  * Created by
@@ -21,6 +22,19 @@ public class OSingleColorMaterial extends AOMaterial {
                 ambientOcclusion.get(),
                 ambientSize.get(),
                 ambientSubdiv.get()
+        );
+    }
+
+    @Override
+    public SSingleColorMaterial serialize() {
+        return new SSingleColorMaterial(
+                texture.get().serialize(),
+                bumpMap.get().serialize(),
+                bumpScale.get(),
+                ambientOcclusion.get(),
+                ambientSize.get(),
+                ambientSubdiv.get(),
+                name.get()
         );
     }
 }
