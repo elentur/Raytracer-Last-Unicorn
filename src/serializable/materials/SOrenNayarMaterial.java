@@ -15,8 +15,8 @@ public class SOrenNayarMaterial extends SMaterial {
     private final STexture irradiance;
     private final double roughness;
 
-    public SOrenNayarMaterial(final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final double roughness, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+    public SOrenNayarMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final double roughness, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
+        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
         this.irradiance=irradiance;
         this.roughness=roughness;
     }
@@ -24,6 +24,7 @@ public class SOrenNayarMaterial extends SMaterial {
     @Override
     public OOrenNayarMaterial generate() {
         OOrenNayarMaterial s =  new OOrenNayarMaterial();
+        s.uniqueID = uniqueID;
         s.name.setValue(name);
         s.texture.setValue( texture.generate());
         s.bumpMap.setValue( bumpMap.generate());

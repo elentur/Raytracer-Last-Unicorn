@@ -17,10 +17,10 @@ public class SReflectivMaterial  extends SMaterial {
     private final STexture reflection;
     private final int exponent;
 
-    public SReflectivMaterial(final STexture texture, final STexture bumpMap, final double bumpScale ,
+    public SReflectivMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale ,
                               final STexture irradiance,final STexture specular,final int exponent,
                               final STexture reflection, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
         this.irradiance=irradiance;
         this.exponent=exponent;
         this.specular=specular;
@@ -63,6 +63,7 @@ public class SReflectivMaterial  extends SMaterial {
     @Override
     public OReflectiveMaterial generate() {
         OReflectiveMaterial s =  new OReflectiveMaterial();
+        s.uniqueID = uniqueID;
         s.name.setValue(name);
         s.texture.setValue( texture.generate());
         s.bumpMap.setValue( bumpMap.generate());
