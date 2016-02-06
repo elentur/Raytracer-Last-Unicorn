@@ -21,19 +21,19 @@ public class OrenNayarMaterial extends Material {
     /**
      * The roughness of the material
      */
-    public final double rough_sq;
+    private final double rough_sq;
 
     /**
      * Instantiates a new SpotLight Object.
      *
-     * @param texture     of the Material. Can't be null.
+     * @param texture   of the Material. Can't be null.
      * @param roughness of the Material. Can't be under 0.0 and over 1.0.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public OrenNayarMaterial(final Texture texture, final double roughness,
                              final Texture bumpMap, final double bumpScale, final Texture irradiance,
-                             boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
-        super(texture,bumpMap,bumpScale,irradiance, ambientOcllusion,ambientSize,ambientSubdiv);
+                             boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }
@@ -82,7 +82,7 @@ public class OrenNayarMaterial extends Material {
                 light.lightShadowPattern.generateSampling();
 
                 for (Point2 point : light.lightShadowPattern.generateSampling()) {
-            if (light.illuminates(h,point, world,hit.geo)) {
+                    if (light.illuminates(h, point, world, hit.geo)) {
 
              /*   final Vector3 l = light.directionFrom(h).normalized();
                 final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
@@ -108,27 +108,26 @@ public class OrenNayarMaterial extends Material {
                 );*/
 
 
-                //simple variant
+                        //simple variant
 
-                final Vector3 l = light.directionFrom(h).normalized();
-                final double alpha    = Math.max( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
-                final double beta     = Math.min( Math.acos( hit.n.dot(v) ), Math.acos( hit.n.dot(l) ) );
-                final double a = 1-0.5*(rough_sq/(rough_sq+0.57));
-                final double b = 0.45*(rough_sq/(rough_sq+0.09));
-                basicColor = basicColor.add(light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v)).mul(Math.max(0, hit.n.dot(l))).mul(
-                        a+b*Math.max( 0.0, hit.n.dot(l) )* Math.sin(alpha)*Math.tan(beta)
-                ));
-                ////////////////
+                        final Vector3 l = light.directionFrom(h).normalized();
+                        final double alpha = Math.max(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
+                        final double beta = Math.min(Math.acos(hit.n.dot(v)), Math.acos(hit.n.dot(l)));
+                        final double a = 1 - 0.5 * (rough_sq / (rough_sq + 0.57));
+                        final double b = 0.45 * (rough_sq / (rough_sq + 0.09));
+                        basicColor = basicColor.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(l))).mul(
+                                a + b * Math.max(0.0, hit.n.dot(l)) * Math.sin(alpha) * Math.tan(beta)
+                        ));
+                        ////////////////
 
-            }
+                    }
                 }
-                basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
+                basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
             }
         }
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
-
 
 
     @Override

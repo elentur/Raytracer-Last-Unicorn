@@ -19,7 +19,7 @@ public class OrthographicCamera extends Camera {
     /**
      * scale factor of the of imagescene
      */
-    public final double s;
+    private final double s;
 
 
     /**
@@ -36,7 +36,6 @@ public class OrthographicCamera extends Camera {
         this.s = s;
 
     }
-
 
 
     @Override
@@ -59,7 +58,7 @@ public class OrthographicCamera extends Camera {
 
         List<Point2> points = samplingPattern.generateSampling();
 
-        for(Point2 point : points) {
+        for (Point2 point : points) {
 
             double scalar1 = aspectRatio * s * (x + point.x - (w - 1) / 2) / (w - 1);
             double scalar2 = s * (y + point.y - (h - 1) / 2) / (h - 1);

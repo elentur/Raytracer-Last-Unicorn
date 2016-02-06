@@ -7,8 +7,8 @@
 <VBox xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
         <Label text="Specular"/>
-        <ColorPicker fx:id="clpSpecular" />
-        <ComboBox styleClass="col-1" fx:id="cmbSpecular" />
+        <ColorPicker fx:id="clpSpecular"/>
+        <ComboBox styleClass="col-1" fx:id="cmbSpecular"/>
         <Button fx:id="btnNewSpecular">
             <graphic>
                 <ImageView>
@@ -16,10 +16,10 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="btnClearSpecular" text="X" />
+        <Button fx:id="btnClearSpecular" text="X"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Intensity"/>
-        <NumberTextField styleClass="col-3" fx:id="txtExponent" />
+        <NumberTextField styleClass="col-3" fx:id="txtExponent"/>
     </HBox>
 </VBox>

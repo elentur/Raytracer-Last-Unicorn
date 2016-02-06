@@ -11,10 +11,10 @@ import java.util.List;
  *
  * @author Robert Dziuba on 21.12.2015
  */
-public class SamplingPattern extends SubdivisionPattern{
+public class SamplingPattern extends SubdivisionPattern {
 
     public SamplingPattern(final int subdiv) {
-    super(0.5, subdiv);
+        super(0.5, subdiv);
 
     }
 
@@ -24,17 +24,17 @@ public class SamplingPattern extends SubdivisionPattern{
     public List<Point2> generateSampling() {
 
         points.clear();
-        if(subdiv ==1){
-            points.add(new Point2(0,0));
+        if (subdiv == 1) {
+            points.add(new Point2(0, 0));
             return points;
         }
-        final double v = 2*size/subdiv;
-        for(int i = 0; i <subdiv+1; i++){
-             final double z =  i*v-size;
-                points.add(new Point2(z,z));
+        final double v = 2 * size / subdiv;
+        for (int i = 0; i < subdiv + 1; i++) {
+            final double z = i * v - size;
+            points.add(new Point2(z, z));
         }
         Collections.shuffle(points);
-    return points;
+        return points;
     }
 
     @Override

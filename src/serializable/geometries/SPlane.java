@@ -5,17 +5,16 @@ import serializable.materials.SMaterial;
 
 /**
  * Created by roberto on 05.02.16.
- *
  */
-public class SPlane  extends SGeometry{
+public class SPlane extends SGeometry {
 
     public SPlane(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
                   final boolean visibility, final boolean flipNormal, final String name) {
-        super(material,reciveShadows,castShadows,visibility,flipNormal,name);
+        super(material, reciveShadows, castShadows, visibility, flipNormal, name);
     }
 
     @Override
-    public OPlane generate(){
+    public OPlane generate() {
 
         OPlane geo = new OPlane();
         geo.name.set(name);

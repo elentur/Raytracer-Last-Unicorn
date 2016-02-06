@@ -15,24 +15,24 @@ public class SOrenNayarMaterial extends SMaterial {
     private final STexture irradiance;
     private final double roughness;
 
-    public SOrenNayarMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final double roughness, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
-        this.irradiance=irradiance;
-        this.roughness=roughness;
+    public SOrenNayarMaterial(final String uniqueID, final STexture texture, final STexture bumpMap, final double bumpScale, final STexture irradiance, final double roughness, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv, final String name) {
+        super(uniqueID, name, texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+        this.irradiance = irradiance;
+        this.roughness = roughness;
     }
 
     @Override
     public OOrenNayarMaterial generate() {
-        OOrenNayarMaterial s =  new OOrenNayarMaterial();
+        OOrenNayarMaterial s = new OOrenNayarMaterial();
         s.uniqueID = uniqueID;
         s.name.setValue(name);
-        s.texture.setValue( texture.generate());
-        s.bumpMap.setValue( bumpMap.generate());
-        s.bumpScale.setValue( bumpScale);
+        s.texture.setValue(texture.generate());
+        s.bumpMap.setValue(bumpMap.generate());
+        s.bumpScale.setValue(bumpScale);
         s.irradiance.setValue(irradiance.generate());
         s.roughness.setValue(roughness);
-        s.ambientOcclusion.setValue( ambientOcllusion);
-        s.ambientSize.setValue( ambientSize);
+        s.ambientOcclusion.setValue(ambientOcllusion);
+        s.ambientSize.setValue(ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
         add2MaterialList(s);
         return s;

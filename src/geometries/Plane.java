@@ -18,19 +18,20 @@ public class Plane extends Geometry {
     /**
      * A known Point.
      */
-    public final Point3 a;
+    private final Point3 a;
     /**
      * A Normal of the Plane.
      */
-    public final Normal3 n;
+    private final Normal3 n;
+
     /**
      * Instantiates a new Plane Object.
      *
      * @param material of the Plane. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows,castShadows,visibility,flipNormal);
+    public Plane(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, reciveShadows, castShadows, visibility, flipNormal);
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }
@@ -50,14 +51,14 @@ public class Plane extends Geometry {
 
             final Point3 p = r.at(t);
 
-            final double u = p.x+0.5;
-            final double v = p.z+0.5;
+            final double u = p.x + 0.5;
+            final double v = p.z + 0.5;
 
-            Color normalC = material.bumpMap.getColor(u,v);
+            Color normalC = material.bumpMap.getColor(u, v);
             Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
-            Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+            Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
             if (flipNormal) n1 = n1.mul(-1);
-            if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u,v));
+            if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u, v));
         }
         return null;
     }

@@ -13,7 +13,7 @@ import java.io.File;
  */
 public class OShapeFromFile extends AOGeometry {
 
-    public StringProperty path = new SimpleStringProperty();
+    public final StringProperty path = new SimpleStringProperty();
 
     public OShapeFromFile(String path) {
         name.set(new File(path).getName().split("\\.")[0]);

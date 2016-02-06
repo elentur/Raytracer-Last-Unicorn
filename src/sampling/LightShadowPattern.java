@@ -14,8 +14,8 @@ import java.util.Random;
 public class LightShadowPattern extends SubdivisionPattern {
 
 
-    public LightShadowPattern( final double size,final int subdiv) {
-        super(size,subdiv);
+    public LightShadowPattern(final double size, final int subdiv) {
+        super(size, subdiv);
         generateSampling();
     }
 
@@ -26,10 +26,10 @@ public class LightShadowPattern extends SubdivisionPattern {
 
         Random rn = new Random();
         points.clear();
-        if(size==0){
+        if (size == 0) {
             points.add(new Point2(0, 0));
 
-        }else {
+        } else {
             for (int x = 0; x < subdiv; x++) {
                 for (int y = 0; y < subdiv; y++) {
                     // final double rX = (rn.nextDouble()-size) / 10;
@@ -43,7 +43,7 @@ public class LightShadowPattern extends SubdivisionPattern {
             }
         }
 
-    return points;
+        return points;
     }
 
 }

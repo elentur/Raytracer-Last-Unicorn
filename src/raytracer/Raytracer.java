@@ -55,7 +55,7 @@ public class Raytracer {
     /**
      * Represents if hdr Render.
      */
-    public  boolean hdr = false;
+    public boolean hdr = false;
     /**
      * represents the Scene with all its lights and geometries.
      */
@@ -87,7 +87,7 @@ public class Raytracer {
     /**
      * represents the render progress in a range between 0.0 and 1.0.
      */
-    public  DoubleProperty progress = new SimpleDoubleProperty(0);
+    public DoubleProperty progress = new SimpleDoubleProperty(0);
 
     /**
      * represent the recursion depth of the reflection.
@@ -98,7 +98,7 @@ public class Raytracer {
      */
     public double iOR = 1.0003;
 
-    public boolean ambientOcclusion = false;
+    private boolean ambientOcclusion = false;
 
     /**
      * represents the start time of the render process.
@@ -110,7 +110,7 @@ public class Raytracer {
 
 
     public Raytracer(boolean loadConfig) {
-        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2),ambientOcclusion);
+        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2), ambientOcclusion);
         if (loadConfig) loadConfig();
         else setDefault();
         maxProgress.bind(imgHeight.multiply(imgWidth));
@@ -123,7 +123,7 @@ public class Raytracer {
         imgHeight.set(80);
         hdr = false;
         def = true;
-        ambientOcclusion=false;
+        ambientOcclusion = false;
     }
 
 
@@ -148,7 +148,7 @@ public class Raytracer {
      * on start old configuration will be loaded.
      */
     private void loadConfig() {
-        Map<String, String> input = IO.readFile("settings.cfg");
+        Map<String, String> input = IO.readFile();
         if (input.size() > 0) {
             try {
                 hdr = input.get("hdr").equals("true");
@@ -166,7 +166,7 @@ public class Raytracer {
                         Double.parseDouble(input.get("ambientColorGreen")),
                         Double.parseDouble(input.get("ambientColorBlue")));
                 World w = world;
-                world = new World(back, ambient,ambientOcclusion);
+                world = new World(back, ambient, ambientOcclusion);
                 world.lights.addAll(w.lights);
                 world.geometries.addAll(w.geometries);
             } catch (Exception e) {
@@ -240,7 +240,7 @@ public class Raytracer {
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
             Task rt;
             if (def) {
-                 rt = new Task() {
+                rt = new Task() {
                     @Override
                     protected Object call() throws Exception {
                         final PixelWriter pixelWriter = img.getPixelWriter();
@@ -338,8 +338,8 @@ public class Raytracer {
                     pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
                 }
             }
-        }else{
-            if(oldImg!=null)img = oldImg;
+        } else {
+            if (oldImg != null) img = oldImg;
         }
 
     }
@@ -387,9 +387,10 @@ public class Raytracer {
     private class RenderTask<Empty> extends Task<Empty> {
         private final Point[] quadrant;
 
-        public RenderTask( final Point[] quadrant){
-            this.quadrant=quadrant;
+        public RenderTask(final Point[] quadrant) {
+            this.quadrant = quadrant;
         }
+
         @Override
         protected Empty call() throws Exception {
             PixelWriter pixelWriter = img.getPixelWriter();
@@ -428,12 +429,12 @@ public class Raytracer {
     }
 
     private void renderThread(byte[] imageData, final int[] threadProgress, final Point[] quadrant) {
-            for (int i = 0; i < imageData.length; i++) {
+        for (int i = 0; i < imageData.length; i++) {
 
-                if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
-                if (i % 3 == 1) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getGreen() * 255);
-                if (i % 3 == 2) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getBlue() * 255);
-            }
+            if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
+            if (i % 3 == 1) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getGreen() * 255);
+            if (i % 3 == 2) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getBlue() * 255);
+        }
         for (int i = 0; i < cores; i++) {
             threadProgress[i] = 0;
             final int num = i;

@@ -14,19 +14,19 @@ import serializable.materials.SReflectivMaterial;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public class OReflectiveMaterial extends AOMaterial{
-    public ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
-    public ObjectProperty<AOTexture> reflection = new SimpleObjectProperty<>();
-    public IntegerProperty exponent = new SimpleIntegerProperty();
+public class OReflectiveMaterial extends AOMaterial {
+    public final ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
+    public final ObjectProperty<AOTexture> reflection = new SimpleObjectProperty<>();
+    public final IntegerProperty exponent = new SimpleIntegerProperty();
 
-    public OReflectiveMaterial(){
+    public OReflectiveMaterial() {
         name.set("Reflective Material");
         specular.set(new OSingleColorTexture(Color.WHITE));
         reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);
-        specular.addListener(a->refreshMaterial());
-        reflection.addListener(a->refreshMaterial());
-        exponent.addListener(a->refreshMaterial());
+        specular.addListener(a -> refreshMaterial());
+        reflection.addListener(a -> refreshMaterial());
+        exponent.addListener(a -> refreshMaterial());
     }
 
     @Override

@@ -5,13 +5,12 @@ import serializable.materials.SMaterial;
 
 /**
  * Created by roberto on 05.02.16.
- *
  */
-public class SAxisAlignedBox extends SGeometry{
+public class SAxisAlignedBox extends SGeometry {
 
     public SAxisAlignedBox(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
                            final boolean visibility, final boolean flipNormal, final String name) {
-        super(material,reciveShadows,castShadows,visibility,flipNormal,name);
+        super(material, reciveShadows, castShadows, visibility, flipNormal, name);
     }
 
 

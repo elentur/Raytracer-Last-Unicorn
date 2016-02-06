@@ -11,21 +11,21 @@ import java.util.List;
  *
  * @author Robert Dziuba on 21.12.2015
  */
- abstract class SubdivisionPattern {
+abstract class SubdivisionPattern {
 
     /**
-     *  size of the pattern
+     * size of the pattern
      */
-    public final double size;
+    final double size;
     /**
-     *  Square number  of the Rays for each pixel
+     * Square number  of the Rays for each pixel
      */
-    public final int subdiv;
+    final int subdiv;
 
     /**
      * List of Points which represents the coordinates of the ray.
      */
-    protected final List<Point2> points;
+    final List<Point2> points;
 
     /**
      * SamplingPattern constructor which generate the List of points
@@ -33,12 +33,12 @@ import java.util.List;
      * @param size the subdivision of the pattern
      * @throws IllegalArgumentException if size is lower then one.
      */
-    public SubdivisionPattern(final double size, final int subdiv) {
+    SubdivisionPattern(final double size, final int subdiv) {
 
-        if(size < 0) throw new IllegalArgumentException("The size cannot be smaller than 0!");
-        if(subdiv < 1) throw new IllegalArgumentException("The subdivisions cannot be smaller than 1!");
+        if (size < 0) throw new IllegalArgumentException("The size cannot be smaller than 0!");
+        if (subdiv < 1) throw new IllegalArgumentException("The subdivisions cannot be smaller than 1!");
         this.size = size;
-        this.subdiv=subdiv;
+        this.subdiv = subdiv;
 
         points = new ArrayList<>();
 
@@ -48,7 +48,7 @@ import java.util.List;
     /**
      * generate the list of points (coordinates) of the ray random differences.
      */
-    protected abstract List<Point2> generateSampling() ;
+    protected abstract List<Point2> generateSampling();
 
     @Override
     public String toString() {

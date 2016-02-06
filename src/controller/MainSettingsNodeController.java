@@ -85,7 +85,7 @@ public class MainSettingsNodeController extends AController {
             loader.setController(this);
             try {
                 if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof OShapeFromFile) {
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsShapeFromFileView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsShapeFromFileView.fxml"));
                     nodeView.getChildren().add(0, v);
                 }
             } catch (IOException e) {
@@ -110,7 +110,8 @@ public class MainSettingsNodeController extends AController {
         txtRotationX.doubleProperty.bindBidirectional(n.rotationx);
         txtRotationY.doubleProperty.bindBidirectional(n.rotationy);
         txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
-        if(!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode))material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
+        if (!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode))
+            material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
 
         cmbMaterial.setItems(materialList);
         chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
@@ -134,8 +135,8 @@ public class MainSettingsNodeController extends AController {
         }
         setMaterialComboBox();
         MaterialView materialView = MaterialView.getInstance2();
-        if(!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode)) {
-            materialView.setUpTracer(material);
+        if (!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode)) {
+            materialView.setUpTracer();
             materialViewHBox.getChildren().add(materialView);
         }
     }
@@ -193,7 +194,7 @@ public class MainSettingsNodeController extends AController {
         AOMaterial m = cmbMaterial.getSelectionModel().getSelectedItem();
         if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
             try {
-                m =  cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
+                m = cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
                 materialList.add(m);
             } catch (InstantiationException | IllegalAccessException e) {
                 //TODO vernüftige Exception Behandlung

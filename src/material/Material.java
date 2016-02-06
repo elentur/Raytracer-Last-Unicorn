@@ -14,33 +14,33 @@ import utils.World;
 public abstract class Material {
 
 
-    public final Texture texture;
+    final Texture texture;
     public final Texture bumpMap;
     public final double bumpScale;
-    public final Texture irradiance;
-    public final boolean ambientOcllusion;
-    public final double ambientSize;
-    public final int ambientSubdiv;
+    private final Texture irradiance;
+    final boolean ambientOcllusion;
+    final double ambientSize;
+    final int ambientSubdiv;
 
-    public Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
-                    boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
+    Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
+             boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
         if (texture == null) {
             throw new IllegalArgumentException("Texture cannot be null!");
         }
         this.texture = texture;
-        this.bumpMap=bumpMap;
-        this.bumpScale=bumpScale;
-        this.irradiance=irradiance;
-        this.ambientOcllusion=ambientOcllusion;
-        this.ambientSize=ambientSize;
-        this.ambientSubdiv=ambientSubdiv;
+        this.bumpMap = bumpMap;
+        this.bumpScale = bumpScale;
+        this.irradiance = irradiance;
+        this.ambientOcllusion = ambientOcllusion;
+        this.ambientSize = ambientSize;
+        this.ambientSubdiv = ambientSubdiv;
     }
 
     /**
      * Returns the right illuminated color for the hit point
      *
-     * @param hit   The Hit-Object for the hit Point
-     * @param world The WorldObject for this scene
+     * @param hit    The Hit-Object for the hit Point
+     * @param world  The WorldObject for this scene
      * @param tracer calculates the color
      * @return the Color-Object for the hit point
      */

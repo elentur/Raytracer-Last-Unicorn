@@ -10,26 +10,26 @@ import geometries.Geometry;
 public class Tracer {
 
     public int recursionDepth = 0;
-    public boolean in;
+    private final boolean in;
 
     public Tracer(int recursionDepth) {
         this.recursionDepth = recursionDepth;
         this.in = true;
     }
 
-    public Color reflection(Ray reflectionRay,World world){
+    public Color reflection(Ray reflectionRay, World world) {
 
-        if(recursionDepth > 0) {
+        if (recursionDepth > 0) {
             recursionDepth--;
             Hit hit = null;
             for (Geometry g : world.geometries) {
-                if(!g.visibility) continue;
+                if (!g.visibility) continue;
                 final Hit h = g.hit(reflectionRay);
                 if (hit == null || (h != null && h.t < hit.t && h.t > 0.0001)) hit = h;
             }
 
-            if(hit != null && hit.t > 0.0001){
-                return hit.geo.material.colorFor(hit, world,this);
+            if (hit != null && hit.t > 0.0001) {
+                return hit.geo.material.colorFor(hit, world, this);
             }
         }
 

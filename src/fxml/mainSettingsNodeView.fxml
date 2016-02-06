@@ -1,6 +1,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import UI.NumberTextField?>
+<?import UI.*?>
 <VBox fx:id="nodeView" fx:controller="controller.MainSettingsNodeController" xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
@@ -10,27 +10,27 @@
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Translation"/>
-        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationX" />
-        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationY" />
-        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationZ" />
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationX"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationY"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtTranslationZ"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Scaling"/>
-        <NumberTextField styleClass="number-text-field" fx:id="txtScalingX" />
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingX"/>
         <NumberTextField styleClass="number-text-field" fx:id="txtScalingY"/>
-        <NumberTextField styleClass="number-text-field" fx:id="txtScalingZ" />
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingZ"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Rotation"/>
-        <NumberTextField styleClass="number-text-field" fx:id="txtRotationX" />
-        <NumberTextField styleClass="number-text-field" fx:id="txtRotationY" />
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationX"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotationY"/>
         <NumberTextField styleClass="number-text-field" fx:id="txtRotationZ"/>
     </HBox>
     <HBox fx:id="materialViewHBox" styleClass="form-group-4, element-center">
 
     </HBox>
     <HBox styleClass="form-group-4">
-        <Label  text="Material" />
+        <Label text="Material"/>
         <ComboBox styleClass="col-3" fx:id="cmbMaterial" onAction="#handleComboBoxMaterialAction"/>
     </HBox>
     <HBox styleClass="form-group-4">
@@ -39,15 +39,15 @@
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
-        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true" />
+        <CheckBox fx:id="chkReceiveShadows" text="Receive Shadows" selected="true"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
-        <CheckBox fx:id="chkVisible" text="Visible" selected="true" />
+        <CheckBox fx:id="chkVisible" text="Visible" selected="true"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
-        <CheckBox fx:id="chkFlipNormals" text="Flip Normals" />
+        <CheckBox fx:id="chkFlipNormals" text="Flip Normals"/>
     </HBox>
 
 </VBox>

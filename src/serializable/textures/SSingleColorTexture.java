@@ -20,16 +20,16 @@ public class SSingleColorTexture extends STexture implements SElement {
 
     public SSingleColorTexture(final double red, final double green, final double blue, final String name) {
         super("");
-        this.red=red;
-        this.blue=blue;
-        this.green=green;
+        this.red = red;
+        this.blue = blue;
+        this.green = green;
         this.name = name;
     }
 
 
     @Override
     public OSingleColorTexture generate() {
-        OSingleColorTexture t = new OSingleColorTexture(new Color(red,green,blue,1));
+        OSingleColorTexture t = new OSingleColorTexture(new Color(red, green, blue, 1));
         t.name.setValue(name);
         return t;
     }

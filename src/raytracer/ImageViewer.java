@@ -13,7 +13,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-public class ImageViewer extends Application {
+class ImageViewer extends Application {
 
     /**
      * The Javafx start class.

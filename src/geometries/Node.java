@@ -20,22 +20,23 @@ public class Node extends Geometry {
     /**
      * A object with all transform operations
      */
-    public final Transform t;
+    private final Transform t;
     /**
      * A list with all geometries which will be rendered
      */
-    public final List<Geometry> geos;
+    private final List<Geometry> geos;
 
 
     /**
      * Instantiates a new Geometry.
+     *
      * @param geos is a List of containing geometries.
      * @throws IllegalArgumentException if the given argument is null.
      */
     public Node(final Transform transform, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
-                new SingleColorTexture(new Color(0,0,0)),0,false,2,16),reciveShadows,castShadows,
-                visibility,flipNormal);
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0, 0, 0)),
+                        new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), reciveShadows, castShadows,
+                visibility, flipNormal);
 
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
         this.t = transform;
@@ -44,12 +45,13 @@ public class Node extends Geometry {
 
     /**
      * Instantiates a new Geometry.
+     *
      * @param geo is a geometry.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform transform, Geometry geo,final boolean reciveShadows,
-                final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(transform, new ArrayList<>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+    public Node(final Transform transform, Geometry geo, final boolean reciveShadows,
+                final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        this(transform, new ArrayList<>(Arrays.asList(geo)), reciveShadows, castShadows, visibility, flipNormal);
     }
 
 
@@ -60,12 +62,12 @@ public class Node extends Geometry {
         Hit hit = null;
 
         for (final Geometry g : geos) {
-            if(!g.visibility) continue;
+            if (!g.visibility) continue;
             final Hit h = g.hit(tr);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return (hit == null) ? null : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
+        return (hit == null) ? null : new Hit(hit.t, t.mul(hit.n), r, hit.geo, hit.texCoord);
     }
 
 

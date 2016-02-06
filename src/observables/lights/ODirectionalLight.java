@@ -13,9 +13,9 @@ import utils.Color;
  * Robert Dziuba on 02/02/16.
  */
 public class ODirectionalLight extends AOLight {
-    public DoubleProperty dx = new SimpleDoubleProperty();
-    public DoubleProperty dy = new SimpleDoubleProperty();
-    public DoubleProperty dz = new SimpleDoubleProperty();
+    public final DoubleProperty dx = new SimpleDoubleProperty();
+    public final DoubleProperty dy = new SimpleDoubleProperty();
+    public final DoubleProperty dz = new SimpleDoubleProperty();
 
     public ODirectionalLight() {
         name.set("Directional Light");
@@ -27,20 +27,20 @@ public class ODirectionalLight extends AOLight {
     @Override
     public DirectionalLight generate() {
         return new DirectionalLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Vector3(dx.get(),dy.get(),dz.get()),
+                new Color(color.get().getRed(), color.get().getGreen(), color.get().getBlue()),
+                new Vector3(dx.get(), dy.get(), dz.get()),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get())
+                new LightShadowPattern(patternSize.get(), patternSubdiv.get())
         );
     }
 
-    public SDirectionalLight serialize(){
+    public SDirectionalLight serialize() {
         return new SDirectionalLight(
                 color.get().getRed(),
                 color.get().getGreen(),
                 color.get().getBlue(),
-                dx.get(),dy.get(),dz.get(),
+                dx.get(), dy.get(), dz.get(),
                 castShadow.get(),
                 photons.get(),
                 patternSize.get(),

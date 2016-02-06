@@ -70,7 +70,7 @@ public class MainSettingsLightController extends AController {
             loader.setController(this);
             try {
                 if (selectedTreeItem.get().getValue() instanceof ODirectionalLight) {
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
                     lightView.getChildren().add(v);
                     lightView.getChildren().removeAll(
                             txtLightSize.getParent(),
@@ -78,14 +78,14 @@ public class MainSettingsLightController extends AController {
 
                     );
                 } else if (selectedTreeItem.get().getValue() instanceof OPointLight) {
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
                     lightView.getChildren().add(v);
                 } else {
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsPointLightView.fxml"));
                     lightView.getChildren().add(v);
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsDirectionalLightView.fxml"));
                     lightView.getChildren().add(v);
-                    v = loader.load(getClass().getResource("/fxml/mainSettingsSpotLightView.fxml"));
+                    v = FXMLLoader.load(getClass().getResource("/fxml/mainSettingsSpotLightView.fxml"));
                     lightView.getChildren().add(v);
                 }
 
@@ -116,12 +116,12 @@ public class MainSettingsLightController extends AController {
         AOLight l = (AOLight) selectedTreeItem.get().getValue();
         clpLightColor.valueProperty().bindBidirectional(l.color);
         if (txtPositionX != null) {
-            if(l instanceof OPointLight){
+            if (l instanceof OPointLight) {
                 OPointLight p = (OPointLight) l;
                 txtPositionX.doubleProperty.bindBidirectional(p.px);
                 txtPositionY.doubleProperty.bindBidirectional(p.py);
                 txtPositionZ.doubleProperty.bindBidirectional(p.pz);
-            }else{
+            } else {
                 OSpotLight p = (OSpotLight) l;
                 txtPositionX.doubleProperty.bindBidirectional(p.px);
                 txtPositionY.doubleProperty.bindBidirectional(p.py);
@@ -131,12 +131,12 @@ public class MainSettingsLightController extends AController {
 
         }
         if (txtDirectionX != null) {
-            if(l instanceof ODirectionalLight){
+            if (l instanceof ODirectionalLight) {
                 ODirectionalLight d = (ODirectionalLight) l;
                 txtDirectionX.doubleProperty.bindBidirectional(d.dx);
                 txtDirectionY.doubleProperty.bindBidirectional(d.dy);
                 txtDirectionZ.doubleProperty.bindBidirectional(d.dz);
-            }else{
+            } else {
                 OSpotLight d = (OSpotLight) l;
                 txtDirectionX.doubleProperty.bindBidirectional(d.dx);
                 txtDirectionY.doubleProperty.bindBidirectional(d.dy);

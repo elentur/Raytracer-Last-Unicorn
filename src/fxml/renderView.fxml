@@ -2,8 +2,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <VBox xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
-<ScrollPane fx:id="scrollPane">
-    <ImageView fx:id="imageView"></ImageView>
-</ScrollPane>
-<fx:include source="statusbar.fxml"/>
+    <ScrollPane fx:id="scrollPane">
+        <ImageView fx:id="imageView"/>
+    </ScrollPane>
+    <fx:include source="statusbar.fxml"/>
 </VBox>

@@ -48,7 +48,7 @@ public class World {
         this.geometries = new ArrayList<>();
         this.lights = new ArrayList<>();
         this.ambientLight = ambientLight;
-        this.ambientOcclusion=ambientOcclusion;
+        this.ambientOcclusion = ambientOcclusion;
     }
 
 
@@ -64,14 +64,14 @@ public class World {
         Hit hit = null;
 
         for (Geometry g : geometries) {
-            if(!g.visibility) continue;
+            if (!g.visibility) continue;
             final Hit h = g.hit(r);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
         Color back;
-            back = backgroundColor;
+        back = backgroundColor;
 
-        return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer(AController.raytracer.recursionDepth)) : back;
+        return hit != null ? hit.geo.material.colorFor(hit, this, new Tracer(AController.raytracer.recursionDepth)) : back;
     }
 
     @Override

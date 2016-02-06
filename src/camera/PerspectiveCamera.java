@@ -19,7 +19,7 @@ public class PerspectiveCamera extends Camera {
     /**
      * the opening angle
      */
-    public final double angle;
+    private final double angle;
 
     /**
      * Constructor initializes e. g and t.
@@ -51,7 +51,7 @@ public class PerspectiveCamera extends Camera {
 
         List<Point2> points = samplingPattern.generateSampling();
 
-        for(Point2 point : points) {
+        for (Point2 point : points) {
             final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));
             final Vector3 summand3 = this.v.mul(y + point.y - ((h - 1.0) / 2));
             final Vector3 r = summand1.add(summand2).add(summand3);

@@ -7,13 +7,15 @@ package observables.lights;
  */
 public class DefaultLight {
 
-    public static AOLight getDirectionalLight(){
+    public static AOLight getDirectionalLight() {
         return new ODirectionalLight();
     }
-    public static AOLight getPointLight(){
+
+    public static AOLight getPointLight() {
         return new OPointLight();
     }
-    public static AOLight getSpotLight(){
+
+    public static AOLight getSpotLight() {
         return new OSpotLight();
     }
 }

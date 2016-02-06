@@ -5,6 +5,6 @@
 <VBox xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
         <Label styleClass="col-2" text="Roughness" fx:id="lblRoughness"/>
-        <Slider styleClass="col-2" fx:id="sldRoughness" />
+        <Slider styleClass="col-2" fx:id="sldRoughness"/>
     </HBox>
 </VBox>

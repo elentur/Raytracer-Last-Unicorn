@@ -18,11 +18,11 @@ public class Sphere extends Geometry {
     /**
      * The point of center of the Sphere.
      */
-    public final Point3 c;
+    private final Point3 c;
     /**
      * The radius of the Sphere.
      */
-    public final double r;
+    private final double r;
 
     /**
      * Instantiates a new Sphere Object.
@@ -30,9 +30,9 @@ public class Sphere extends Geometry {
      * @param material of the Sphere. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows,castShadows,visibility,flipNormal);
-        this.c = new Point3(0,0,0);
+    public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, reciveShadows, castShadows, visibility, flipNormal);
+        this.c = new Point3(0, 0, 0);
         this.r = 1;
     }
 
@@ -70,12 +70,12 @@ public class Sphere extends Geometry {
 
         if (t >= 0.00001) {
             Normal3 n = r.at(t).sub(this.c).normalized().asNormal();
-            final double u = 0.5 - Math.atan2(n.z,n.x)/(2*Math.PI);
+            final double u = 0.5 - Math.atan2(n.z, n.x) / (2 * Math.PI);
 
-            final double v = 0.5 - 2.0 * (Math.asin(n.y)/(2*Math.PI));
-            Color normalC = material.bumpMap.getColor(u,v);
+            final double v = 0.5 - 2.0 * (Math.asin(n.y) / (2 * Math.PI));
+            Color normalC = material.bumpMap.getColor(u, v);
             Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
-            Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+            Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
             if (flipNormal) n1 = n1.mul(-1);
             return new Hit(t, n1, r, this, new TexCoord2(u, v));
 

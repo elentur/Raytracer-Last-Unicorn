@@ -6,7 +6,7 @@ package utils;
  *
  * @author Marcus Bätz
  */
-public class Color  {
+public class Color {
     /**
      * represents the Red Color value of this Color object. The Value have to be between 0.0 and 1.0
      */
@@ -37,7 +37,6 @@ public class Color  {
     }
 
 
-
     /**
      * Adds a material to this material.
      *
@@ -47,20 +46,6 @@ public class Color  {
     public Color add(final Color c) {
         if (c == null) throw new IllegalArgumentException("c must not be null!");
         return new Color(r + c.r, g + c.g, b + c.b);
-    }
-
-    /**
-     * Subtracts a material from this material.
-     *
-     * @param c The Color object that has to be subtracted from this material.
-     * @return the new Color that results in this subtraction.
-     */
-    public Color sub(final Color c) {
-        if (c == null) throw new IllegalArgumentException("c must not be null!");
-        return new Color(
-                r - c.r < 0.0 ? 0.0 : r - c.r,
-                g - c.g < 0.0 ? 0.0 : g - c.g,
-                b - c.b < 0.0 ? 0.0 : b - c.b);
     }
 
     /**
@@ -81,7 +66,9 @@ public class Color  {
      * @return the new Color that results in this multiplication.
      */
     public Color mul(final double v) {
-        if (v < 0){throw new IllegalArgumentException("v have to be positive!");}
+        if (v < 0) {
+            throw new IllegalArgumentException("v have to be positive!");
+        }
         return new Color(r * v, g * v, b * v);
     }
 

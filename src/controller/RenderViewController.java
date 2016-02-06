@@ -19,11 +19,11 @@ import java.io.IOException;
  * Created by
  * Robert Dziuba on 04.02.16.
  */
-public class RenderViewController extends Stage {
+class RenderViewController extends Stage {
 
     private ImageView image;
 
-    protected Parent root;
+    private Parent root;
 
     public RenderViewController() {
         super();
@@ -52,7 +52,7 @@ public class RenderViewController extends Stage {
         this.show();
     }
 
-    public ImageView getImageView(){
+    public ImageView getImageView() {
         return image;
     }
 

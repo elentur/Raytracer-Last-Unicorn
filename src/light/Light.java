@@ -14,20 +14,20 @@ import utils.World;
  *
  * @author Marcus Bätz
  */
-public abstract class Light  {
+public abstract class Light {
     /**
      * Represents the Color of the Light
      */
     public final Color color;
-    public final boolean castsShadow;
-    public final int photons;
+    final boolean castsShadow;
+    private final int photons;
     public final LightShadowPattern lightShadowPattern;
 
-    public Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
-        if(color == null) throw new IllegalArgumentException("color must not be null");
+    Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        if (color == null) throw new IllegalArgumentException("color must not be null");
         this.color = color;
         this.castsShadow = castShadow;
-        this.photons=photons;
+        this.photons = photons;
         this.lightShadowPattern = lightShadowPattern;
     }
 

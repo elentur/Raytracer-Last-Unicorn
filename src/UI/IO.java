@@ -61,11 +61,11 @@ public class IO {
         }
         ObservableElementLists list = ObservableElementLists.getInstance();
         SElement camera = null;
-        if ( list.camera!=null)  camera = list.camera.serialize();
+        if (list.camera != null) camera = list.camera.serialize();
         List<SElement> lights = list.lights.stream().map(AOLight::serialize).collect(Collectors.toList());
         List<SElement> geometries = list.geometries.stream().map(AOGeometry::serialize).collect(Collectors.toList());
 
-        Scene scene = new Scene(geometries,lights,camera);
+        Scene scene = new Scene(geometries, lights, camera);
 
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
@@ -117,7 +117,7 @@ public class IO {
             if (scene != null) {
                 ObservableElementLists list = ObservableElementLists.getInstance();
                 list.clearAll();
-                if(scene.getCamera()!=null)list.addElement(scene.getCamera());
+                if (scene.getCamera() != null) list.addElement(scene.getCamera());
 
                 scene.getLights().forEach(list::addElement);
 
@@ -128,8 +128,8 @@ public class IO {
         }
     }
 
-    public static Map<String, String> readFile(String source) {
-        Path path = Paths.get(source);
+    public static Map<String, String> readFile() {
+        Path path = Paths.get("settings.cfg");
         BufferedReader br;
         Map<String, String> input = new HashMap<>();
         try {
@@ -146,8 +146,8 @@ public class IO {
         return input;
     }
 
-    public static void writeFile(String source, Map<String, String> output) {
-        Path path = Paths.get(source);
+    public static void writeFile(Map<String, String> output) {
+        Path path = Paths.get("settings.cfg");
         BufferedWriter br;
 
         try {

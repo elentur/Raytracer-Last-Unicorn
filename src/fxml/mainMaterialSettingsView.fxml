@@ -1,71 +1,67 @@
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import UI.MaterialView?>
 <?import UI.NumberTextField?>
-<Tab closable="false" fx:controller="controller.MainMaterialSettingsController" xmlns:fx="http://javafx.com/fxml" >
-    <content>
-        <VBox fx:id="materialView">
-            <HBox styleClass="form-group-4">
-                <Label text="Name"/>
-                <TextField styleClass="col-3" fx:id="txtMaterialName"/>
-            </HBox>
-           <HBox styleClass="form-group-4">
-               <Label text="Material"/>
-                <HBox  fx:id="materialRenderViewHBox" styleClass="col-3, element-center">
+<Tab closable="false" fx:controller="controller.MainMaterialSettingsController" xmlns:fx="http://javafx.com/fxml">
+    <VBox fx:id="materialView">
+        <HBox styleClass="form-group-4">
+            <Label text="Name"/>
+            <TextField styleClass="col-3" fx:id="txtMaterialName"/>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label text="Material"/>
+            <HBox fx:id="materialRenderViewHBox" styleClass="col-3, element-center">
 
-                </HBox>
-           </HBox>
-            <HBox styleClass="form-group-4">
-                <Label  styleClass="col-2"  text="Ambient Occlusion"/>
-                <CheckBox fx:id="chkAmbientOcclusion" />
             </HBox>
-            <HBox styleClass="form-group-4">
-                <Label text="Size"/>
-                <NumberTextField fx:id="txtAmbientSize" />
-                <Label text="Subdiv"/>
-                <NumberTextField fx:id="txtAmbientSubdive" />
-            </HBox>
-            <HBox styleClass="form-group-4">
-                <Label text="Diffuse"/>
-                <ColorPicker fx:id="clpDiffuse" />
-                <ComboBox styleClass="col-1" fx:id="cmbDiffuse" />
-                <Button fx:id="btnNewDiffuse">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/icons/texture.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <Button text="X" fx:id="btnClearDiffuse"/>
-            </HBox>
-            <HBox styleClass="form-group-4">
-                <Label text="Normal"/>
-                <NumberTextField styleClass="number-text-field" fx:id="txtNormalScale" />
-                <ComboBox styleClass="col-1" fx:id="cmbNormal"  />
-                <Button fx:id="btnNewNormal">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/icons/texture.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <Button text="X" fx:id="btnClearNormal"/>
-            </HBox>
-            <HBox styleClass="form-group-4">
-                <Label text="Irradiance"/>
-                <ColorPicker fx:id="clpIrradiance" />
-                <ComboBox  styleClass="col-1" fx:id="cmbIrradiance" />
-                <Button fx:id="btnNewIrradiance">
-                    <graphic>
-                        <ImageView>
-                            <Image url="@/icons/texture.png"/>
-                        </ImageView>
-                    </graphic>
-                </Button>
-                <Button text="X" fx:id="btnClearIrradiance"/>
-            </HBox>
-        </VBox>
-    </content>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label styleClass="col-2" text="Ambient Occlusion"/>
+            <CheckBox fx:id="chkAmbientOcclusion"/>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label text="Size"/>
+            <NumberTextField fx:id="txtAmbientSize"/>
+            <Label text="Subdiv"/>
+            <NumberTextField fx:id="txtAmbientSubdive"/>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label text="Diffuse"/>
+            <ColorPicker fx:id="clpDiffuse"/>
+            <ComboBox styleClass="col-1" fx:id="cmbDiffuse"/>
+            <Button fx:id="btnNewDiffuse">
+                <graphic>
+                    <ImageView>
+                        <Image url="@/icons/texture.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button text="X" fx:id="btnClearDiffuse"/>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label text="Normal"/>
+            <NumberTextField styleClass="number-text-field" fx:id="txtNormalScale"/>
+            <ComboBox styleClass="col-1" fx:id="cmbNormal"/>
+            <Button fx:id="btnNewNormal">
+                <graphic>
+                    <ImageView>
+                        <Image url="@/icons/texture.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button text="X" fx:id="btnClearNormal"/>
+        </HBox>
+        <HBox styleClass="form-group-4">
+            <Label text="Irradiance"/>
+            <ColorPicker fx:id="clpIrradiance"/>
+            <ComboBox styleClass="col-1" fx:id="cmbIrradiance"/>
+            <Button fx:id="btnNewIrradiance">
+                <graphic>
+                    <ImageView>
+                        <Image url="@/icons/texture.png"/>
+                    </ImageView>
+                </graphic>
+            </Button>
+            <Button text="X" fx:id="btnClearIrradiance"/>
+        </HBox>
+    </VBox>
 </Tab>

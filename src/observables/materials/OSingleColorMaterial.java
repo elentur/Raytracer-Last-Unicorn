@@ -9,7 +9,7 @@ import serializable.materials.SSingleColorMaterial;
  */
 public class OSingleColorMaterial extends AOMaterial {
 
-    public OSingleColorMaterial(){
+    public OSingleColorMaterial() {
         name.set("Single Color Material");
     }
 

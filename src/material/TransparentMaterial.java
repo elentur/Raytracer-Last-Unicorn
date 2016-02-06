@@ -15,19 +15,20 @@ import utils.*;
  * @author Marcus Bätz
  */
 public class TransparentMaterial extends Material {
-    public final double iOR;
-    public final Texture specular;
-    public final  Texture reflection;
-    public final  int exponent;
-    public TransparentMaterial(final Texture texture, final  Texture specular, final  Texture reflection,
-                               final  int exponent, double indexOfRefraction, final Texture bumpMap,
+    private final double iOR;
+    private final Texture specular;
+    private final Texture reflection;
+    private final int exponent;
+
+    public TransparentMaterial(final Texture texture, final Texture specular, final Texture reflection,
+                               final int exponent, double indexOfRefraction, final Texture bumpMap,
                                final double bumpScale, final Texture irradiance,
-                               boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
-        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
-        this.specular=specular;
-        this.reflection=reflection;
-        this.exponent=exponent;
-        this.iOR=indexOfRefraction;
+                               boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+        this.specular = specular;
+        this.reflection = reflection;
+        this.exponent = exponent;
+        this.iOR = indexOfRefraction;
     }
 
 
@@ -54,35 +55,35 @@ public class TransparentMaterial extends Material {
         Normal3 n;
         final Vector3 e = hit.ray.d.mul(-1).reflectedOn(hit.n);
         double insideColorIntensity = 0;
-        if(e.dot(hit.n) < 0){
-            ref = iOR/ AController.raytracer.iOR;
+        if (e.dot(hit.n) < 0) {
+            ref = iOR / AController.raytracer.iOR;
             n = hit.n.mul(-1);
-        }else{
-            ref = AController.raytracer.iOR/iOR;
+        } else {
+            ref = AController.raytracer.iOR / iOR;
             n = hit.n;
         }
         double cosA1 = n.dot(e);
         double co = 1 - (ref * ref) * (1 - cosA1 * cosA1);
-        double a=1;
-        if(co>=0) {
+        double a = 1;
+        if (co >= 0) {
             double cosA2 = Math.sqrt(co);
             final double a0 = Math.pow((AController.raytracer.iOR - iOR) / (AController.raytracer.iOR + iOR), 2);
-             a = a0 + (1 - a0) * Math.pow(1 - cosA1, 5);
+            a = a0 + (1 - a0) * Math.pow(1 - cosA1, 5);
             final double b = 1 - a;
-            Vector3 t = hit.ray.d.mul(ref).sub(n.mul(cosA2-ref*cosA1));
-            Ray refractionRay = new Ray(hit.ray.at(hit.t+0.00001),t);
+            Vector3 t = hit.ray.d.mul(ref).sub(n.mul(cosA2 - ref * cosA1));
+            Ray refractionRay = new Ray(hit.ray.at(hit.t + 0.00001), t);
             Tracer tracer2 = new Tracer(tracer.recursionDepth);
-            basicColor = basicColor.add(tracer2.reflection(refractionRay,world).mul(b));
+            basicColor = basicColor.add(tracer2.reflection(refractionRay, world).mul(b));
 
-                Hit refHit = hit.geo.hit(refractionRay);
-                if(refHit != null && refHit.t>0.00001)
-                    insideColorIntensity=refHit.t/3;
+            Hit refHit = hit.geo.hit(refractionRay);
+            if (refHit != null && refHit.t > 0.00001)
+                insideColorIntensity = refHit.t / 3;
 
 
         }
-        Vector3 r =  hit.ray.d.normalized().add(n.mul(2*cosA1));
-        final Point3 p = hit.ray.at(hit.t-0.00001);
-        Ray reflectionRay = new Ray(p,r);
+        Vector3 r = hit.ray.d.normalized().add(n.mul(2 * cosA1));
+        final Point3 p = hit.ray.at(hit.t - 0.00001);
+        Ray reflectionRay = new Ray(p, r);
 
         for (Light light : world.lights) {
 
@@ -92,25 +93,25 @@ public class TransparentMaterial extends Material {
                 light.lightShadowPattern.generateSampling();
 
                 for (Point2 point : light.lightShadowPattern.generateSampling()) {
-            if (light.illuminates(p,point, world,hit.geo)) {
+                    if (light.illuminates(p, point, world, hit.geo)) {
 
-                basicColor = basicColor.add(
-                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
-                                .mul(light.color)
-                                .mul(Math.pow(
-                                        Math.max(0, rl.dot(e)), exponent)
-                                )
-                );
+                        basicColor = basicColor.add(
+                                specular.getColor(hit.texCoord.u, hit.texCoord.v)
+                                        .mul(light.color)
+                                        .mul(Math.pow(
+                                                Math.max(0, rl.dot(e)), exponent)
+                                        )
+                        );
+                    }
+
+                }
+                basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
             }
-
-        }
-        basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
-    }
 
             basicColor = basicColor.add(
                     light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(insideColorIntensity)
             );
-            basicColor = basicColor.add(reflection.getColor(hit.texCoord.u,hit.texCoord.v).mul(tracer.reflection(reflectionRay,world)).mul(a));
+            basicColor = basicColor.add(reflection.getColor(hit.texCoord.u, hit.texCoord.v).mul(tracer.reflection(reflectionRay, world)).mul(a));
         }
 
         return basicColor;

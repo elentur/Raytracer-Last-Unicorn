@@ -11,12 +11,13 @@ import serializable.SElement;
  * Robert Dziuba on 02/02/16.
  */
 public abstract class AOLight extends AOElement {
-    public ObjectProperty<Color> color =  new SimpleObjectProperty<>(Color.WHITE);
-    public BooleanProperty castShadow = new SimpleBooleanProperty(true);
-    public IntegerProperty photons = new SimpleIntegerProperty(500);
-    public DoubleProperty patternSize = new SimpleDoubleProperty(0.0);
-    public IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
+    public final ObjectProperty<Color> color = new SimpleObjectProperty<>(Color.WHITE);
+    public final BooleanProperty castShadow = new SimpleBooleanProperty(true);
+    public final IntegerProperty photons = new SimpleIntegerProperty(500);
+    public final DoubleProperty patternSize = new SimpleDoubleProperty(0.0);
+    public final IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
 
     public abstract Light generate();
+
     public abstract SElement serialize();
 }

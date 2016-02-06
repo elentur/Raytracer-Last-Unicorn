@@ -14,15 +14,15 @@ import java.io.Serializable;
 public abstract class SGeometry implements SElement, Serializable {
 
     private static final long serialVersionUID = 1L;
-    protected final SMaterial material;
-    protected final boolean reciveShadows;
-    protected final boolean castShadows;
-    protected final boolean visibility;
-    protected final boolean flipNormal;
-    protected final String name;
+    final SMaterial material;
+    final boolean reciveShadows;
+    final boolean castShadows;
+    final boolean visibility;
+    final boolean flipNormal;
+    final String name;
 
-    public SGeometry(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
-                     final boolean visibility, final boolean flipNormal, final String name) {
+    SGeometry(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
+              final boolean visibility, final boolean flipNormal, final String name) {
         this.material = material;
         this.reciveShadows = reciveShadows;
         this.castShadows = castShadows;
@@ -30,6 +30,7 @@ public abstract class SGeometry implements SElement, Serializable {
         this.flipNormal = flipNormal;
         this.name = name;
     }
+
     @Override
     public abstract AOGeometry generate();
 }

@@ -10,7 +10,7 @@ import serializable.geometries.SSphere;
 public class OSphere extends AOGeometry {
 
     public OSphere() {
-       name.set("Sphere");
+        name.set("Sphere");
     }
 
     @Override

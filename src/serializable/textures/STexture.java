@@ -10,13 +10,13 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class STexture implements SElement,Serializable {
+public abstract class STexture implements SElement, Serializable {
 
     private static final long serialVersionUID = 1L;
-    protected final String name;
+    final String name;
 
-    public STexture(final String name){
-        this.name=name;
+    STexture(final String name) {
+        this.name = name;
     }
 
     @Override

@@ -47,7 +47,7 @@ public class AmbienOcclusion {
                 }
 
             }
-            if(numOfHits>0)return (ambientOcclusion) / (numOfHits * 1.0);
+            if (numOfHits > 0) return (ambientOcclusion) / (numOfHits * 1.0);
         }
         return 1;
     }

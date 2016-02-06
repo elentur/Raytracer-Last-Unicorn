@@ -7,29 +7,37 @@ package observables.materials;
  */
 public class DefaultMaterial {
     private final static AOMaterial defaultMaterial = getDefaultMaterial();
-    private static AOMaterial getDefaultMaterial(){
+
+    private static AOMaterial getDefaultMaterial() {
         OLambertMaterial oLambertMaterial = new OLambertMaterial();
         oLambertMaterial.name.set("Default Material");
-        oLambertMaterial.uniqueID="1";
+        oLambertMaterial.uniqueID = "1";
         return oLambertMaterial;
     }
-    public static AOMaterial getLambert(){
+
+    public static AOMaterial getLambert() {
         return new OLambertMaterial();
     }
-    public static AOMaterial getSingleColorMaterial(){
+
+    public static AOMaterial getSingleColorMaterial() {
         return new OSingleColorMaterial();
     }
-    public static AOMaterial getOrenNayar(){
+
+    public static AOMaterial getOrenNayar() {
         return new OOrenNayarMaterial();
     }
-    public static AOMaterial getPhong(){
+
+    public static AOMaterial getPhong() {
         return new OPhongMaterial();
     }
-    public static AOMaterial getReflectiveMaterial(){
+
+    public static AOMaterial getReflectiveMaterial() {
         return new OReflectiveMaterial();
     }
-    public static AOMaterial getTransparentMaterial(){
-        return new OTransparentMaterial();    }
+
+    public static AOMaterial getTransparentMaterial() {
+        return new OTransparentMaterial();
+    }
 
     public static AOMaterial getDefaultLambert() {
         return defaultMaterial;

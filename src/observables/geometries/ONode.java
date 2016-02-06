@@ -17,18 +17,18 @@ import java.util.stream.Collectors;
  */
 public class ONode extends AOGeometry {
 
-    public DoubleProperty translationx = new SimpleDoubleProperty(0.0);
-    public DoubleProperty translationy = new SimpleDoubleProperty(0.0);
-    public DoubleProperty translationz = new SimpleDoubleProperty(0.0);
+    public final DoubleProperty translationx = new SimpleDoubleProperty(0.0);
+    public final DoubleProperty translationy = new SimpleDoubleProperty(0.0);
+    public final DoubleProperty translationz = new SimpleDoubleProperty(0.0);
 
-    public DoubleProperty scalingx = new SimpleDoubleProperty(1.0);
-    public DoubleProperty scalingy = new SimpleDoubleProperty(1.0);
-    public DoubleProperty scalingz = new SimpleDoubleProperty(1.0);
+    public final DoubleProperty scalingx = new SimpleDoubleProperty(1.0);
+    public final DoubleProperty scalingy = new SimpleDoubleProperty(1.0);
+    public final DoubleProperty scalingz = new SimpleDoubleProperty(1.0);
 
-    public DoubleProperty rotationx = new SimpleDoubleProperty(0.0);
-    public DoubleProperty rotationy = new SimpleDoubleProperty(0.0);
-    public DoubleProperty rotationz = new SimpleDoubleProperty(0.0);
-    public ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
+    public final DoubleProperty rotationx = new SimpleDoubleProperty(0.0);
+    public final DoubleProperty rotationy = new SimpleDoubleProperty(0.0);
+    public final DoubleProperty rotationz = new SimpleDoubleProperty(0.0);
+    public final ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
     public ONode(String name, List<AOGeometry> oGeos) {
         this.name.set(name);
@@ -46,9 +46,9 @@ public class ONode extends AOGeometry {
                                 scalingx.get(),
                                 scalingy.get(),
                                 scalingz.get()).
-                        rotateX(rotationx.get()*Math.PI/180).
-                        rotateY(rotationy.get()*Math.PI/180).
-                        rotateZ(rotationz.get()*Math.PI/180),
+                        rotateX(rotationx.get() * Math.PI / 180).
+                        rotateY(rotationy.get() * Math.PI / 180).
+                        rotateZ(rotationz.get() * Math.PI / 180),
                 oGeos.stream().map(AOGeometry::generate).collect(Collectors.toList()),
                 reciveShadows.get(),
                 castShadows.get(),

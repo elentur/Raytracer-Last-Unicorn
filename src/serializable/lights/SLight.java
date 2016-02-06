@@ -10,20 +10,20 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class SLight implements SElement,Serializable {
+public abstract class SLight implements SElement, Serializable {
     private static final long serialVersionUID = 1L;
-    protected final double red;
-    protected final double green;
-    protected final double blue;
-    protected final boolean castShadows;
-    protected final int photons;
-    protected final double size;
-    protected final int subdiv;
-    protected final String name;
+    final double red;
+    final double green;
+    final double blue;
+    final boolean castShadows;
+    final int photons;
+    final double size;
+    final int subdiv;
+    final String name;
 
-    public SLight(final double red, final double green, final double blue,
-                  final boolean castShadows, final int photons,
-                  final double size, final int subdiv, final String name) {
+    SLight(final double red, final double green, final double blue,
+           final boolean castShadows, final int photons,
+           final double size, final int subdiv, final String name) {
         this.red = red;
         this.green = green;
         this.blue = blue;
@@ -33,6 +33,7 @@ public abstract class SLight implements SElement,Serializable {
         this.subdiv = subdiv;
         this.name = name;
     }
+
     @Override
     public abstract AOLight generate();
 }

@@ -38,9 +38,9 @@ public class Hit {
      * Generates a Hit object that represents the hit Geometry, the Ray that hit the Geometry and the smallest
      * intersect between Ray and Geometry.
      *
-     * @param t   the smallest intersect between Ray and Geometry.
-     * @param ray the Ray that hit this Geometry.
-     * @param geo the Geometry that is hit by that Ray.
+     * @param t        the smallest intersect between Ray and Geometry.
+     * @param ray      the Ray that hit this Geometry.
+     * @param geo      the Geometry that is hit by that Ray.
      * @param texCoord the coordinate ot the texture.
      */
     public Hit(final double t, Normal3 n, final Ray ray, final Geometry geo, final TexCoord2 texCoord) {
@@ -75,8 +75,8 @@ public class Hit {
         long temp;
         temp = Double.doubleToLongBits(t);
         result = (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (ray != null ? ray.hashCode() : 0);
-        result = 31 * result + (geo != null ? geo.hashCode() : 0);
+        result = 31 * result + (ray.hashCode());
+        result = 31 * result + (geo.hashCode());
         return result;
     }
 

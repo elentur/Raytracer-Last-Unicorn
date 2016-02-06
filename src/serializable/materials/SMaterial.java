@@ -13,18 +13,18 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class SMaterial implements SElement ,Serializable {
+public abstract class SMaterial implements SElement, Serializable {
     protected static final long serialVersionUID = 1L;
-    protected final String uniqueID;
-    protected final String name;
-    protected final STexture texture;
-    protected final STexture bumpMap;
-    protected final double bumpScale;
-    protected final boolean ambientOcllusion;
-    protected final double ambientSize;
-    protected final int ambientSubdiv;
+    final String uniqueID;
+    final String name;
+    final STexture texture;
+    final STexture bumpMap;
+    final double bumpScale;
+    final boolean ambientOcllusion;
+    final double ambientSize;
+    final int ambientSubdiv;
 
-    public SMaterial(final String uniqueID, final String name, final STexture texture, final STexture bumpMap, final double bumpScale, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv) {
+    SMaterial(final String uniqueID, final String name, final STexture texture, final STexture bumpMap, final double bumpScale, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv) {
         this.uniqueID = uniqueID;
         this.name = name;
         this.texture = texture;
@@ -34,17 +34,18 @@ public abstract class SMaterial implements SElement ,Serializable {
         this.ambientSize = ambientSize;
         this.ambientSubdiv = ambientSubdiv;
     }
+
     @Override
     public abstract AOMaterial generate();
 
-    protected void add2MaterialList(AOMaterial m){
+    void add2MaterialList(AOMaterial m) {
 
         ObservableList<AOMaterial> list = AController.materialList;
-        
-        if(!list.contains(m)) {
+
+        if (!list.contains(m)) {
             list.add(m);
-        }else{
-            if(list.indexOf(m) > 5) {
+        } else {
+            if (list.indexOf(m) > 5) {
                 list.set(list.indexOf(m), m);
             }
         }

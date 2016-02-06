@@ -16,26 +16,26 @@ public class SPhongMaterial extends SMaterial {
     private final STexture specular;
     private final int exponent;
 
-    public SPhongMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final STexture specular,final int exponent, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
-        this.irradiance=irradiance;
-        this.exponent=exponent;
-        this.specular=specular;
+    public SPhongMaterial(final String uniqueID, final STexture texture, final STexture bumpMap, final double bumpScale, final STexture irradiance, final STexture specular, final int exponent, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv, final String name) {
+        super(uniqueID, name, texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+        this.irradiance = irradiance;
+        this.exponent = exponent;
+        this.specular = specular;
     }
 
     @Override
     public OPhongMaterial generate() {
-        OPhongMaterial s =  new OPhongMaterial();
+        OPhongMaterial s = new OPhongMaterial();
         s.uniqueID = uniqueID;
         s.name.setValue(name);
-        s.texture.setValue( texture.generate());
-        s.bumpMap.setValue( bumpMap.generate());
-        s.bumpScale.setValue( bumpScale);
+        s.texture.setValue(texture.generate());
+        s.bumpMap.setValue(bumpMap.generate());
+        s.bumpScale.setValue(bumpScale);
         s.irradiance.setValue(irradiance.generate());
         s.specular.setValue(specular.generate());
         s.exponent.setValue(exponent);
-        s.ambientOcclusion.setValue( ambientOcllusion);
-        s.ambientSize.setValue( ambientSize);
+        s.ambientOcclusion.setValue(ambientOcllusion);
+        s.ambientSize.setValue(ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
         add2MaterialList(s);
         return s;

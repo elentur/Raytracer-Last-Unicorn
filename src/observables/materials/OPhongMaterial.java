@@ -14,17 +14,17 @@ import serializable.materials.SPhongMaterial;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public class OPhongMaterial extends AOMaterial{
+public class OPhongMaterial extends AOMaterial {
 
-    public ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
-    public IntegerProperty exponent = new SimpleIntegerProperty();
+    public final ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
+    public final IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OPhongMaterial() {
         name.set("Phong Material");
         specular.set(new OSingleColorTexture(Color.WHITE));
         exponent.set(64);
-        specular.addListener(a->refreshMaterial());
-        exponent.addListener(a->refreshMaterial());
+        specular.addListener(a -> refreshMaterial());
+        exponent.addListener(a -> refreshMaterial());
     }
 
     @Override

@@ -21,9 +21,8 @@ import java.util.Map;
 
 /**
  * Created by roberto on 12.01.16.
- *
  */
-public class RenderSettingsController extends Stage {
+class RenderSettingsController extends Stage {
     @FXML
     private CheckBox chkMultithreading;
     @FXML
@@ -104,9 +103,9 @@ public class RenderSettingsController extends Stage {
         chbResolution.setOnAction(a -> setResolution());
         txtWidth.setOnKeyReleased(a -> keepRation(txtWidth));
         txtHeight.setOnKeyReleased(a -> keepRation(txtHeight));
-        chkKeepRatio.setOnAction(a -> aspectration = txtWidth.getDouble()/ txtHeight.getDouble());
-        btnCancel.setOnAction(a-> onCancel());
-        btnOK.setOnAction(a->onOK());
+        chkKeepRatio.setOnAction(a -> aspectration = txtWidth.getDouble() / txtHeight.getDouble());
+        btnCancel.setOnAction(a -> onCancel());
+        btnOK.setOnAction(a -> onOK());
         loadConfig();
     }
 
@@ -119,16 +118,16 @@ public class RenderSettingsController extends Stage {
     private void keepRation(NumberTextField txt) {
         if (chkKeepRatio.isSelected()) {
             if (txt.equals(txtWidth)) {
-                txtHeight.setNumber( txtWidth.getInteger()/aspectration);
+                txtHeight.setNumber(txtWidth.getInteger() / aspectration);
 
             } else {
-                txtWidth.setNumber( txtHeight.getInteger()*aspectration);
+                txtWidth.setNumber(txtHeight.getInteger() * aspectration);
             }
         }
     }
 
     private void loadConfig() {
-        Map<String, String> input = IO.readFile("settings.cfg");
+        Map<String, String> input = IO.readFile();
         if (input.size() > 0) {
             try {
                 if (AController.raytracer.getWorld() == null) {
@@ -140,7 +139,7 @@ public class RenderSettingsController extends Stage {
                             Double.parseDouble(input.get("ambientColorGreen")),
                             Double.parseDouble(input.get("ambientColorBlue")),
                             1));
-                }else{
+                } else {
                     cpColorPicker.setValue(new Color(AController.raytracer.getWorld().backgroundColor.r,
                             AController.raytracer.getWorld().backgroundColor.g,
                             AController.raytracer.getWorld().backgroundColor.b,
@@ -172,19 +171,20 @@ public class RenderSettingsController extends Stage {
         output.put("hdr", chkHDRRendering.isSelected() + "");
         output.put("cores", (chbCores.getSelectionModel().getSelectedIndex() + 1) + "");
         output.put("pattern", chbPattern.getSelectionModel().getSelectedIndex() + "");
-        output.put("backgroundColorRed", cpColorPicker.getValue().getRed()+"");
-        output.put("backgroundColorGreen", cpColorPicker.getValue().getGreen()+"");
-        output.put("backgroundColorBlue", cpColorPicker.getValue().getBlue()+"");
-        output.put("ambientColorRed", cpAmbientColor.getValue().getRed()+"");
-        output.put("ambientColorGreen", cpAmbientColor.getValue().getGreen()+"");
-        output.put("ambientColorBlue", cpAmbientColor.getValue().getBlue()+"");
-        output.put("width", txtWidth.getInteger()+"");
-        output.put("height", txtHeight.getInteger()+"");
-        output.put("recursion", txtRecursion.getDouble()+"");
-        output.put("ior", txtIOR.getDouble()+"");
+        output.put("backgroundColorRed", cpColorPicker.getValue().getRed() + "");
+        output.put("backgroundColorGreen", cpColorPicker.getValue().getGreen() + "");
+        output.put("backgroundColorBlue", cpColorPicker.getValue().getBlue() + "");
+        output.put("ambientColorRed", cpAmbientColor.getValue().getRed() + "");
+        output.put("ambientColorGreen", cpAmbientColor.getValue().getGreen() + "");
+        output.put("ambientColorBlue", cpAmbientColor.getValue().getBlue() + "");
+        output.put("width", txtWidth.getInteger() + "");
+        output.put("height", txtHeight.getInteger() + "");
+        output.put("recursion", txtRecursion.getDouble() + "");
+        output.put("ior", txtIOR.getDouble() + "");
         output.put("ambient", chkAmbientOcclusion.isSelected() + "");
-        IO.writeFile("settings.cfg", output);
+        IO.writeFile(output);
     }
+
     private void onCancel() {
         this.close();
     }
@@ -215,7 +215,7 @@ public class RenderSettingsController extends Stage {
                 cpAmbientColor.getValue().getGreen(),
                 cpAmbientColor.getValue().getBlue());
         World w = AController.raytracer.getWorld();
-        AController.raytracer.setWorld(new World(back, ambient,chkAmbientOcclusion.isSelected()));
+        AController.raytracer.setWorld(new World(back, ambient, chkAmbientOcclusion.isSelected()));
         AController.raytracer.getWorld().lights.addAll(w.lights);
         AController.raytracer.getWorld().geometries.addAll(w.geometries);
         this.close();

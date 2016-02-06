@@ -7,11 +7,11 @@ import serializable.materials.SLambertMaterial;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public class OLambertMaterial extends AOMaterial{
+public class OLambertMaterial extends AOMaterial {
 
     public OLambertMaterial() {
         name.set("Lambert Material");
-       // uniqueID = name.get();
+        // uniqueID = name.get();
 
     }
 

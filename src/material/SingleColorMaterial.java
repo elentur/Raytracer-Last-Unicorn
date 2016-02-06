@@ -15,7 +15,7 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
-    final public Texture texture;
+    private final Texture texture;
 
     /**
      * Generates a SinglColor Object with the given texture
@@ -24,8 +24,8 @@ public class SingleColorMaterial extends Material {
      */
 
     public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
-                               boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
-        super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)),ambientOcllusion,ambientSize,ambientSubdiv);
+                               boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, new SingleColorTexture(new Color(0, 0, 0)), ambientOcllusion, ambientSize, ambientSubdiv);
         this.texture = texture;
     }
 
@@ -35,7 +35,7 @@ public class SingleColorMaterial extends Material {
         if (hit == null) throw new IllegalArgumentException("hit must not be null ");
         if (world == null) throw new IllegalArgumentException("world must not be null ");
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v);
     }
 
 

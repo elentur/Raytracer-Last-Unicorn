@@ -66,7 +66,7 @@ public class MainMaterialSettingsController extends AController {
     @FXML
     private ColorPicker clpSpecular;
     @FXML
-    private ComboBox <AOTexture>cmbSpecular;
+    private ComboBox<AOTexture> cmbSpecular;
     @FXML
     private NumberTextField txtExponent;
     @FXML
@@ -79,7 +79,7 @@ public class MainMaterialSettingsController extends AController {
     private Slider sldIOR;
 
 
-    private final Callback<ListView<AOTexture>, ListCell<AOTexture>> cell=  new Callback<ListView<AOTexture>, ListCell<AOTexture>>() {
+    private final Callback<ListView<AOTexture>, ListCell<AOTexture>> cell = new Callback<ListView<AOTexture>, ListCell<AOTexture>>() {
         @Override
         public ListCell<AOTexture> call(ListView<AOTexture> c) {
 
@@ -88,11 +88,12 @@ public class MainMaterialSettingsController extends AController {
                 protected void updateItem(AOTexture item, boolean empty) {
                     super.updateItem(item, empty);
                     if (item != null) {
-                       textProperty().bind(item.name);
+                        textProperty().bind(item.name);
                     }
                 }
             };
-        }};
+        }
+    };
 
 
     private boolean initialized = false;
@@ -107,30 +108,30 @@ public class MainMaterialSettingsController extends AController {
      */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
-        material.setValue(((ONode)selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
+        material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
 
-        if(!initialized) {
+        if (!initialized) {
             VBox v;
             FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
                 if (material.get() instanceof OOrenNayarMaterial) {
-                    v = loader.load(this.getClass().getResource("/fxml/mainOrenNayarMaterialSettingsView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainOrenNayarMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
                 } else if (material.get() instanceof OPhongMaterial) {
-                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                }else if (material.get() instanceof OReflectiveMaterial) {
-                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                } else if (material.get() instanceof OReflectiveMaterial) {
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                    v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                } else  if (material.get() instanceof OTransparentMaterial){
-                    v = loader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
+                } else if (material.get() instanceof OTransparentMaterial) {
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainPhongMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                    v = loader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainReflectiveMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
-                    v = loader.load(this.getClass().getResource("/fxml/mainTransparentMaterialSettingsView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainTransparentMaterialSettingsView.fxml"));
                     materialView.getChildren().add(v);
                 }
             } catch (IOException e) {
@@ -149,14 +150,15 @@ public class MainMaterialSettingsController extends AController {
 
             initializeFields();
             loadTextureTabs();
-            initialized=true;
+            initialized = true;
             MaterialView materialRenderView = MaterialView.getInstance1();
-            materialRenderView.setUpTracer(material);
+            materialRenderView.setUpTracer();
             materialRenderViewHBox.getChildren().add(materialRenderView);
 
         }
 
     }
+
     private void initializeFields() {
         AOMaterial m = material.get();
         txtMaterialName.textProperty().bindBidirectional(m.name);
@@ -165,18 +167,19 @@ public class MainMaterialSettingsController extends AController {
         txtAmbientSubdive.doubleProperty.bindBidirectional(m.ambientSubdiv);
         clpDiffuse.valueProperty().bindBidirectional(m.texture.get().color);
         cmbDiffuse.setItems(textureList);
-        if(cmbDiffuse.getItems().contains(m.texture.get()))cmbDiffuse.getSelectionModel().select(m.texture.get());
+        if (cmbDiffuse.getItems().contains(m.texture.get())) cmbDiffuse.getSelectionModel().select(m.texture.get());
         cmbDiffuse.setCellFactory(cell);
         cmbDiffuse.setButtonCell(new ButtonCell());
 
         txtNormalScale.doubleProperty.bindBidirectional(m.bumpScale);
         cmbNormal.setItems(textureList);
-        if(cmbNormal.getItems().contains(m.bumpMap.get()))cmbNormal.getSelectionModel().select(m.bumpMap.get());
+        if (cmbNormal.getItems().contains(m.bumpMap.get())) cmbNormal.getSelectionModel().select(m.bumpMap.get());
         cmbNormal.setCellFactory(cell);
         cmbNormal.setButtonCell(new ButtonCell());
 
         cmbIrradiance.setItems(textureList);
-        if(cmbIrradiance.getItems().contains(m.irradiance.get())) cmbIrradiance.getSelectionModel().select(m.irradiance.get());
+        if (cmbIrradiance.getItems().contains(m.irradiance.get()))
+            cmbIrradiance.getSelectionModel().select(m.irradiance.get());
         cmbIrradiance.setCellFactory(cell);
         cmbIrradiance.setButtonCell(new ButtonCell());
 
@@ -184,154 +187,171 @@ public class MainMaterialSettingsController extends AController {
             lblRoughness.textProperty().bind(Bindings.concat("Roughness: ").concat(Bindings.format("%.1f", sldRoughness.valueProperty())));
             sldRoughness.setMin(0);
             sldRoughness.setMax(1);
-            sldRoughness.valueProperty().bindBidirectional(((OOrenNayarMaterial)m).roughness);
+            sldRoughness.valueProperty().bindBidirectional(((OOrenNayarMaterial) m).roughness);
         }
-        if(clpSpecular !=null){
+        if (clpSpecular != null) {
             ObjectProperty<Color> c;
             IntegerProperty exp;
             cmbSpecular.setItems(textureList);
             cmbSpecular.setCellFactory(cell);
             cmbSpecular.setButtonCell(new ButtonCell());
-            if(m instanceof OPhongMaterial){
-                c = ((OPhongMaterial)m).specular.getValue().color;
-                exp = ((OPhongMaterial)m).exponent;
-                if(cmbSpecular.getItems().contains(((OPhongMaterial) m).specular.get())) cmbSpecular.getSelectionModel().select(((OPhongMaterial) m).specular.get());
-            }else if(m instanceof OReflectiveMaterial){
-                c = ((OReflectiveMaterial)m).specular.getValue().color;
-                exp = ((OReflectiveMaterial)m).exponent;
-                if(cmbSpecular.getItems().contains(((OReflectiveMaterial) m).specular.get()))  cmbSpecular.getSelectionModel().select(((OReflectiveMaterial) m).specular.get());
-            }else {
-                c = ((OTransparentMaterial)m).specular.getValue().color;
-                exp = ((OTransparentMaterial)m).exponent;
-                if(cmbSpecular.getItems().contains(((OTransparentMaterial) m).specular.get()))  cmbSpecular.getSelectionModel().select(((OTransparentMaterial) m).specular.get());
+            if (m instanceof OPhongMaterial) {
+                c = ((OPhongMaterial) m).specular.getValue().color;
+                exp = ((OPhongMaterial) m).exponent;
+                if (cmbSpecular.getItems().contains(((OPhongMaterial) m).specular.get()))
+                    cmbSpecular.getSelectionModel().select(((OPhongMaterial) m).specular.get());
+            } else if (m instanceof OReflectiveMaterial) {
+                c = ((OReflectiveMaterial) m).specular.getValue().color;
+                exp = ((OReflectiveMaterial) m).exponent;
+                if (cmbSpecular.getItems().contains(((OReflectiveMaterial) m).specular.get()))
+                    cmbSpecular.getSelectionModel().select(((OReflectiveMaterial) m).specular.get());
+            } else {
+                c = ((OTransparentMaterial) m).specular.getValue().color;
+                exp = ((OTransparentMaterial) m).exponent;
+                if (cmbSpecular.getItems().contains(((OTransparentMaterial) m).specular.get()))
+                    cmbSpecular.getSelectionModel().select(((OTransparentMaterial) m).specular.get());
             }
 
             clpSpecular.valueProperty().bindBidirectional(c);
 
             txtExponent.doubleProperty.bindBidirectional(exp);
         }
-        if(clpReflection !=null){
+        if (clpReflection != null) {
             ObjectProperty<Color> c;
             cmbReflection.setItems(textureList);
             cmbReflection.setCellFactory(cell);
             cmbReflection.setButtonCell(new ButtonCell());
-            if(m instanceof OReflectiveMaterial){
-                c = ((OReflectiveMaterial)m).reflection.get().color;
-                if(cmbReflection.getItems().contains(((OReflectiveMaterial) m).reflection.get()))  cmbReflection.getSelectionModel().select(((OReflectiveMaterial) m).reflection.get());
-            }else{
-                c = ((OTransparentMaterial)m).reflection.get().color;
-                if(cmbReflection.getItems().contains(((OTransparentMaterial) m).reflection.get()))cmbReflection.getSelectionModel().select(((OTransparentMaterial) m).reflection.get());
+            if (m instanceof OReflectiveMaterial) {
+                c = ((OReflectiveMaterial) m).reflection.get().color;
+                if (cmbReflection.getItems().contains(((OReflectiveMaterial) m).reflection.get()))
+                    cmbReflection.getSelectionModel().select(((OReflectiveMaterial) m).reflection.get());
+            } else {
+                c = ((OTransparentMaterial) m).reflection.get().color;
+                if (cmbReflection.getItems().contains(((OTransparentMaterial) m).reflection.get()))
+                    cmbReflection.getSelectionModel().select(((OTransparentMaterial) m).reflection.get());
             }
 
             clpReflection.valueProperty().bindBidirectional(c);
         }
-        if (sldIOR!= null) {
+        if (sldIOR != null) {
             lblIOR.textProperty().bind(Bindings.concat("Index of Refraction: ").concat(Bindings.format("%.3f", sldIOR.valueProperty())));
             sldIOR.setMin(0);
             sldIOR.setMax(2);
-            sldIOR.valueProperty().bindBidirectional(((OTransparentMaterial)m).indexOfRefraction);
+            sldIOR.valueProperty().bindBidirectional(((OTransparentMaterial) m).indexOfRefraction);
         }
-        materialView.lookup("#btnNewDiffuse").setOnMouseClicked(a->newTexture(cmbDiffuse));
-        materialView.lookup("#btnNewNormal").setOnMouseClicked(a->newTexture(cmbNormal));
-        materialView.lookup("#btnNewIrradiance").setOnMouseClicked(a->newTexture(cmbIrradiance));
-        if(materialView.lookup("#btnNewSpecular")!=null)materialView.lookup("#btnNewSpecular").setOnMouseClicked(a->newTexture(cmbSpecular));
-        if(materialView.lookup("#btnNewReflection")!=null)materialView.lookup("#btnNewReflection").setOnMouseClicked(a->newTexture(cmbReflection));
+        materialView.lookup("#btnNewDiffuse").setOnMouseClicked(a -> newTexture(cmbDiffuse));
+        materialView.lookup("#btnNewNormal").setOnMouseClicked(a -> newTexture(cmbNormal));
+        materialView.lookup("#btnNewIrradiance").setOnMouseClicked(a -> newTexture(cmbIrradiance));
+        if (materialView.lookup("#btnNewSpecular") != null)
+            materialView.lookup("#btnNewSpecular").setOnMouseClicked(a -> newTexture(cmbSpecular));
+        if (materialView.lookup("#btnNewReflection") != null)
+            materialView.lookup("#btnNewReflection").setOnMouseClicked(a -> newTexture(cmbReflection));
 
 
-        materialView.lookup("#btnClearDiffuse").setOnMouseClicked(a->clearTexture(m.texture,cmbDiffuse,clpDiffuse));
-        materialView.lookup("#btnClearNormal").setOnMouseClicked(a->clearTexture(m.bumpMap,cmbNormal,null));
-        materialView.lookup("#btnClearIrradiance").setOnMouseClicked(a->clearTexture(m.irradiance,cmbIrradiance,clpIrradiance));
-        if(materialView.lookup("#btnClearSpecular")!=null){
-            if(m instanceof OPhongMaterial) materialView.lookup("#btnClearSpecular").setOnMouseClicked(a->clearTexture(((OPhongMaterial)m).specular,cmbSpecular,clpSpecular));
-            if(m instanceof OReflectiveMaterial) materialView.lookup("#btnClearSpecular").setOnMouseClicked(a->clearTexture(((OReflectiveMaterial)m).specular,cmbSpecular,clpSpecular));
-            if(m instanceof OTransparentMaterial)materialView.lookup("#btnClearSpecular").setOnMouseClicked(a->clearTexture(((OTransparentMaterial)m).specular,cmbSpecular,clpSpecular));
+        materialView.lookup("#btnClearDiffuse").setOnMouseClicked(a -> clearTexture(m.texture, cmbDiffuse, clpDiffuse));
+        materialView.lookup("#btnClearNormal").setOnMouseClicked(a -> clearTexture(m.bumpMap, cmbNormal, null));
+        materialView.lookup("#btnClearIrradiance").setOnMouseClicked(a -> clearTexture(m.irradiance, cmbIrradiance, clpIrradiance));
+        if (materialView.lookup("#btnClearSpecular") != null) {
+            if (m instanceof OPhongMaterial)
+                materialView.lookup("#btnClearSpecular").setOnMouseClicked(a -> clearTexture(((OPhongMaterial) m).specular, cmbSpecular, clpSpecular));
+            if (m instanceof OReflectiveMaterial)
+                materialView.lookup("#btnClearSpecular").setOnMouseClicked(a -> clearTexture(((OReflectiveMaterial) m).specular, cmbSpecular, clpSpecular));
+            if (m instanceof OTransparentMaterial)
+                materialView.lookup("#btnClearSpecular").setOnMouseClicked(a -> clearTexture(((OTransparentMaterial) m).specular, cmbSpecular, clpSpecular));
             cmbSpecular.getSelectionModel().clearSelection();
         }
-        if(materialView.lookup("#btnClearReflection")!=null){
-            if(m instanceof OReflectiveMaterial) materialView.lookup("#btnClearReflection").setOnMouseClicked(a->clearTexture(((OReflectiveMaterial)m).reflection,cmbReflection,clpReflection));
-            if(m instanceof OTransparentMaterial)materialView.lookup("#btnClearReflection").setOnMouseClicked(a->clearTexture(((OTransparentMaterial)m).reflection,cmbReflection,clpReflection));
+        if (materialView.lookup("#btnClearReflection") != null) {
+            if (m instanceof OReflectiveMaterial)
+                materialView.lookup("#btnClearReflection").setOnMouseClicked(a -> clearTexture(((OReflectiveMaterial) m).reflection, cmbReflection, clpReflection));
+            if (m instanceof OTransparentMaterial)
+                materialView.lookup("#btnClearReflection").setOnMouseClicked(a -> clearTexture(((OTransparentMaterial) m).reflection, cmbReflection, clpReflection));
             cmbReflection.getSelectionModel().clearSelection();
         }
 
 
-        cmbDiffuse.setOnAction(a-> setTexture(m.texture,cmbDiffuse));
-        cmbNormal.setOnAction(a-> setTexture(m.bumpMap,cmbNormal));
-        cmbIrradiance.setOnAction(a-> setTexture(m.irradiance,cmbIrradiance));
-        if(cmbSpecular!=null){
-            if(m instanceof OPhongMaterial)cmbSpecular.setOnAction(a-> setTexture(((OPhongMaterial)m).specular,cmbSpecular));
-            if(m instanceof OReflectiveMaterial)cmbSpecular.setOnAction(a-> setTexture(((OReflectiveMaterial)m).specular,cmbSpecular));
-            if(m instanceof OTransparentMaterial)cmbSpecular.setOnAction(a-> setTexture(((OTransparentMaterial)m).specular,cmbSpecular));
+        cmbDiffuse.setOnAction(a -> setTexture(m.texture, cmbDiffuse));
+        cmbNormal.setOnAction(a -> setTexture(m.bumpMap, cmbNormal));
+        cmbIrradiance.setOnAction(a -> setTexture(m.irradiance, cmbIrradiance));
+        if (cmbSpecular != null) {
+            if (m instanceof OPhongMaterial)
+                cmbSpecular.setOnAction(a -> setTexture(((OPhongMaterial) m).specular, cmbSpecular));
+            if (m instanceof OReflectiveMaterial)
+                cmbSpecular.setOnAction(a -> setTexture(((OReflectiveMaterial) m).specular, cmbSpecular));
+            if (m instanceof OTransparentMaterial)
+                cmbSpecular.setOnAction(a -> setTexture(((OTransparentMaterial) m).specular, cmbSpecular));
         }
-        if(cmbReflection!=null){
-            if(m instanceof OReflectiveMaterial)cmbReflection.setOnAction(a-> setTexture(((OReflectiveMaterial)m).reflection,cmbReflection));
-            if(m instanceof OTransparentMaterial)cmbReflection.setOnAction(a-> setTexture(((OTransparentMaterial)m).reflection,cmbReflection));
+        if (cmbReflection != null) {
+            if (m instanceof OReflectiveMaterial)
+                cmbReflection.setOnAction(a -> setTexture(((OReflectiveMaterial) m).reflection, cmbReflection));
+            if (m instanceof OTransparentMaterial)
+                cmbReflection.setOnAction(a -> setTexture(((OTransparentMaterial) m).reflection, cmbReflection));
         }
     }
 
     private void clearTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture, final ColorPicker clpColorPicker) {
         cmbTexture.getSelectionModel().clearSelection();
-        if(clpColorPicker != null) {
-            texture.setValue( new OSingleColorTexture(clpColorPicker.getValue()));
+        if (clpColorPicker != null) {
+            texture.setValue(new OSingleColorTexture(clpColorPicker.getValue()));
             clpColorPicker.valueProperty().bindBidirectional(texture.get().color);
-        }else{
+        } else {
             material.get().bumpScale.setValue(0.0);
         }
         masterTabPane.getSelectionModel().select(1);
     }
 
     private void setTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture) {
-       if(!cmbTexture.getSelectionModel().isEmpty()) texture.setValue(cmbTexture.getSelectionModel().getSelectedItem());
+        if (!cmbTexture.getSelectionModel().isEmpty())
+            texture.setValue(cmbTexture.getSelectionModel().getSelectedItem());
         loadTextureTabs();
     }
 
-    private void newTexture( final ComboBox<AOTexture> comboBox) {
-            FileChooser dlg = new FileChooser();
-            dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Jpeg  (*.jpg)", "*.jpg"));
-            dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG. (*.png)", "*.png"));
-            File file = dlg.showOpenDialog(materialView.getScene().getWindow());
-            if (file != null) {
-                AOTexture newTex = new OImageTexture(
-                        file.getPath()
-                );
-                comboBox.getItems().add(newTex);
-                comboBox.setValue(newTex);
-            }
+    private void newTexture(final ComboBox<AOTexture> comboBox) {
+        FileChooser dlg = new FileChooser();
+        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Jpeg  (*.jpg)", "*.jpg"));
+        dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG. (*.png)", "*.png"));
+        File file = dlg.showOpenDialog(materialView.getScene().getWindow());
+        if (file != null) {
+            AOTexture newTex = new OImageTexture(
+                    file.getPath()
+            );
+            comboBox.getItems().add(newTex);
+            comboBox.setValue(newTex);
+        }
 
 
     }
 
 
-
     private void loadTextureTabs() {
-       TabPane tabPane = masterTabPane;
+        TabPane tabPane = masterTabPane;
 
-        FXMLLoader loader  = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
         loader.setController(this);
         Set<AOTexture> textures = new HashSet<>();
-        if(!cmbDiffuse.getSelectionModel().isEmpty())
+        if (!cmbDiffuse.getSelectionModel().isEmpty())
             textures.add(cmbDiffuse.getSelectionModel().getSelectedItem());
-        if(!cmbNormal.getSelectionModel().isEmpty())
+        if (!cmbNormal.getSelectionModel().isEmpty())
             textures.add(cmbNormal.getSelectionModel().getSelectedItem());
-        if(!cmbIrradiance.getSelectionModel().isEmpty())
+        if (!cmbIrradiance.getSelectionModel().isEmpty())
             textures.add(cmbIrradiance.getSelectionModel().getSelectedItem());
-        if(cmbSpecular!= null && !cmbSpecular.getSelectionModel().isEmpty())
+        if (cmbSpecular != null && !cmbSpecular.getSelectionModel().isEmpty())
             textures.add(cmbSpecular.getSelectionModel().getSelectedItem());
-        if(cmbReflection!= null && !cmbReflection.getSelectionModel().isEmpty())
+        if (cmbReflection != null && !cmbReflection.getSelectionModel().isEmpty())
             textures.add(cmbReflection.getSelectionModel().getSelectedItem());
 
         for (Iterator<Tab> tab = tabPane.getTabs().iterator(); tab.hasNext(); ) {
-            Tab t =  tab.next();
-            if(t.getText().equals("Texture"))tab.remove();
+            Tab t = tab.next();
+            if (t.getText().equals("Texture")) tab.remove();
         }
         try {
-            for(AOTexture tex : textures){
+            for (AOTexture tex : textures) {
                 Tab tab = new Tab();
                 tab.setClosable(false);
                 tab.setText("Texture");
 
-                VBox v = loader.load(this.getClass().getResource("/fxml/mainSettingsTextureView.fxml"));
+                VBox v = FXMLLoader.load(this.getClass().getResource("/fxml/mainSettingsTextureView.fxml"));
                 tab.setContent(v);
-                initializeTexture(v, tex,tab);
+                initializeTexture(v, tex, tab);
                 masterTabPane.getTabs().add(tab);
             }
         } catch (IOException e) {
@@ -344,40 +364,43 @@ public class MainMaterialSettingsController extends AController {
     private void initializeTexture(final VBox v, final AOTexture texture, final Tab tab) {
         ((TextField) v.lookup("#txtTextureName")).textProperty().bindBidirectional(texture.name);
         ((TextField) v.lookup("#txtPath")).textProperty().bindBidirectional(texture.path);
-        ((Button) v.lookup("#btnNewPath")).setOnAction(a->{
+        ((Button) v.lookup("#btnNewPath")).setOnAction(a -> {
             FileChooser dlg = new FileChooser();
             dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Jpeg  (*.jpg)", "*.jpg"));
             dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG. (*.png)", "*.png"));
             File file = dlg.showOpenDialog(materialView.getScene().getWindow());
             if (file != null) {
-               texture.path.setValue(file.getPath());
-                initializeTexture(v,texture,tab);
+                texture.path.setValue(file.getPath());
+                initializeTexture(v, texture, tab);
             }
         });
         ((CheckBox) v.lookup("#chkBilinearFilter")).setSelected(texture instanceof OInterpolatedImageTexture);
-        ((CheckBox) v.lookup("#chkBilinearFilter")).setOnAction(a->{
+        ((CheckBox) v.lookup("#chkBilinearFilter")).setOnAction(a -> {
             AOTexture newTex = null;
-           if(texture instanceof OImageTexture) {
-               newTex = new OInterpolatedImageTexture(texture.path.get());
-           }else{
-               newTex = new OImageTexture(texture.path.get());
-           }
-            newTex.offsetU=texture.offsetU;
-            newTex.offsetV=texture.offsetV;
-            newTex.scaleU=texture.scaleU;
-            newTex.scaleV=texture.scaleV;
-            newTex.rotate=texture.rotate;
-            newTex.name=texture.name;
-            textureList.set(textureList.indexOf(texture),newTex);
-            initializeTexture(v,newTex,tab);
-            if(cmbDiffuse.getValue()!=null && cmbDiffuse.getValue().equals(texture))cmbDiffuse.setValue(newTex);
-            if(cmbIrradiance.getValue()!=null && cmbIrradiance.getValue().equals(texture))cmbIrradiance.setValue(newTex);
-            if(cmbNormal.getValue()!=null && cmbNormal.getValue().equals(texture))cmbNormal.setValue(newTex);
+            if (texture instanceof OImageTexture) {
+                newTex = new OInterpolatedImageTexture(texture.path.get());
+            } else {
+                newTex = new OImageTexture(texture.path.get());
+            }
+            newTex.offsetU = texture.offsetU;
+            newTex.offsetV = texture.offsetV;
+            newTex.scaleU = texture.scaleU;
+            newTex.scaleV = texture.scaleV;
+            newTex.rotate = texture.rotate;
+            newTex.name = texture.name;
+            textureList.set(textureList.indexOf(texture), newTex);
+            initializeTexture(v, newTex, tab);
+            if (cmbDiffuse.getValue() != null && cmbDiffuse.getValue().equals(texture)) cmbDiffuse.setValue(newTex);
+            if (cmbIrradiance.getValue() != null && cmbIrradiance.getValue().equals(texture))
+                cmbIrradiance.setValue(newTex);
+            if (cmbNormal.getValue() != null && cmbNormal.getValue().equals(texture)) cmbNormal.setValue(newTex);
 
-            if(cmbSpecular != null && cmbSpecular.getValue()!=null && cmbSpecular.getValue().equals(texture))cmbSpecular.setValue(newTex);
-            if(cmbReflection != null && cmbReflection.getValue()!=null &&  cmbReflection.getValue().equals(texture))cmbReflection.setValue(newTex);
+            if (cmbSpecular != null && cmbSpecular.getValue() != null && cmbSpecular.getValue().equals(texture))
+                cmbSpecular.setValue(newTex);
+            if (cmbReflection != null && cmbReflection.getValue() != null && cmbReflection.getValue().equals(texture))
+                cmbReflection.setValue(newTex);
         });
-        if(texture.img.get() != null) ((ImageView) v.lookup("#imgTexture")).setImage(texture.img.get());
+        if (texture.img.get() != null) ((ImageView) v.lookup("#imgTexture")).setImage(texture.img.get());
         ((NumberTextField) v.lookup("#txtOffsetU")).doubleProperty.bindBidirectional(texture.offsetU);
         ((NumberTextField) v.lookup("#txtOffsetV")).doubleProperty.bindBidirectional(texture.offsetV);
         ((NumberTextField) v.lookup("#txtScalingU")).doubleProperty.bindBidirectional(texture.scaleU);
@@ -393,7 +416,8 @@ public class MainMaterialSettingsController extends AController {
         @Override
         protected void updateItem(AOTexture item, boolean empty) {
             super.updateItem(item, empty);
-            if (empty) {textProperty().unbind();
+            if (empty) {
+                textProperty().unbind();
                 setText("");
             } else {
                 textProperty().bind(item.name);

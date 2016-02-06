@@ -20,14 +20,14 @@ import java.util.List;
  * @author Marcus Bätz
  */
 public class ObservableElementLists {
-    private static ObservableElementLists ourInstance = new ObservableElementLists();
+    private static final ObservableElementLists ourInstance = new ObservableElementLists();
     private TreeView<AOElement> treeView;
     private TreeItem<AOElement> nodeTree;
     private TreeItem<AOElement> lightTree;
     private TreeItem<AOElement> cameraTree;
-    public ObservableList<AOGeometry> geometries = FXCollections.observableArrayList();
-    public ObservableList<AOLight> lights = FXCollections.observableArrayList();
-    public AOCamera camera=null;
+    public final ObservableList<AOGeometry> geometries = FXCollections.observableArrayList();
+    public final ObservableList<AOLight> lights = FXCollections.observableArrayList();
+    public AOCamera camera = null;
 
     public static ObservableElementLists getInstance() {
         return ourInstance;
@@ -57,7 +57,6 @@ public class ObservableElementLists {
     }
 
 
-
     public void removeElement(AOElement e) {
         if (e instanceof AOCamera) {
             removeCamera();
@@ -73,11 +72,11 @@ public class ObservableElementLists {
 
     private void addCamera(AOCamera c) {
 
-            cameraTree.getChildren().clear();
-            TreeItem<AOElement> treeItem = new TreeItem<>(c);
-            cameraTree.getChildren().add(treeItem);
-            treeView.getSelectionModel().select(treeItem);
-        camera=c;
+        cameraTree.getChildren().clear();
+        TreeItem<AOElement> treeItem = new TreeItem<>(c);
+        cameraTree.getChildren().add(treeItem);
+        treeView.getSelectionModel().select(treeItem);
+        camera = c;
     }
 
 
@@ -85,7 +84,7 @@ public class ObservableElementLists {
 
         cameraTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
         treeView.getSelectionModel().clearSelection();
-        camera=null;
+        camera = null;
     }
 
     private void addLight(AOLight l) {
@@ -104,13 +103,13 @@ public class ObservableElementLists {
     }
 
     private void addNode(ONode n) {
-        if(!(n.oGeos.get(0) instanceof ONode)) {
+        if (!(n.oGeos.get(0) instanceof ONode)) {
             TreeItem<AOElement> treeItem = new TreeItem<>(n);
             nodeTree.getChildren().add(treeItem);
             treeView.getSelectionModel().select(treeItem);
             geometries.add(n);
-        }else{
-            TreeItem<AOElement> treeItem =addNodeRecursive(n);
+        } else {
+            TreeItem<AOElement> treeItem = addNodeRecursive(n);
             nodeTree.getChildren().add(treeItem);
             treeView.getSelectionModel().select(treeItem);
             geometries.add(n);
@@ -118,11 +117,11 @@ public class ObservableElementLists {
     }
 
     private TreeItem<AOElement> addNodeRecursive(ONode n) {
-        if(!(n.oGeos.get(0) instanceof ONode)) {
-          return new TreeItem<>(n);
-        }else{
-            TreeItem<AOElement> treeItem =new TreeItem<>(n);
-            for(AOGeometry node : n.oGeos ){
+        if (!(n.oGeos.get(0) instanceof ONode)) {
+            return new TreeItem<>(n);
+        } else {
+            TreeItem<AOElement> treeItem = new TreeItem<>(n);
+            for (AOGeometry node : n.oGeos) {
                 treeItem.getChildren().add(addNodeRecursive((ONode) node));
             }
             return treeItem;
@@ -143,19 +142,19 @@ public class ObservableElementLists {
                 if (parent.oGeos.isEmpty()) {
                     ONode parentParent = null;
                     TreeItem<AOElement> parentParentItem = null;
-                    while (parentItem!= nodeTree){
+                    while (parentItem != nodeTree) {
                         parentParent = parent;
                         parent = getParentNode(geometries, parent);
                         parentParentItem = parentItem;
-                        parentItem= parentItem.getParent();
-                        if(parentItem.getChildren().size()>1){
+                        parentItem = parentItem.getParent();
+                        if (parentItem.getChildren().size() > 1) {
                             break;
                         }
 
                     }
                     treeView.getSelectionModel().clearSelection();
                     parentItem.getChildren().remove(parentParentItem);
-                    if(parent!=null)parent.oGeos.remove(parentParent);
+                    if (parent != null) parent.oGeos.remove(parentParent);
                     else geometries.remove(parentParent);
                 }
             }
@@ -165,23 +164,23 @@ public class ObservableElementLists {
     private ONode getParentNode(ObservableList<AOGeometry> nodes, ONode n) {
         ONode node = null;
         for (AOGeometry p : nodes) {
-            if(p instanceof ONode ) {
+            if (p instanceof ONode) {
                 if (((ONode) p).oGeos.contains(n)) return (ONode) p;
-                node =  getParentNode(((ONode) p).oGeos, n);
+                node = getParentNode(((ONode) p).oGeos, n);
             }
         }
         return node;
     }
 
-    public void groupNodes(List<AOGeometry> nodes){
-        ONode parent = getParentNode(geometries,(ONode)nodes.get(0));
+    public void groupNodes(List<AOGeometry> nodes) {
+        ONode parent = getParentNode(geometries, (ONode) nodes.get(0));
         ONode n = new ONode(
                 "Group",
                 nodes
         );
         TreeItem<AOElement> t = new TreeItem<>(n);
-        if(parent==null){
-            for(TreeItem<AOElement> tItem : treeView.getSelectionModel().getSelectedItems()){
+        if (parent == null) {
+            for (TreeItem<AOElement> tItem : treeView.getSelectionModel().getSelectedItems()) {
                 TreeItem<AOElement> treeItem = new TreeItem<>(tItem.getValue());
                 treeItem.getChildren().addAll(tItem.getChildren());
                 t.getChildren().addAll(treeItem);
@@ -189,10 +188,10 @@ public class ObservableElementLists {
             }
             nodeTree.getChildren().removeAll(treeView.getSelectionModel().getSelectedItems());
             nodeTree.getChildren().add(t);
-        }else{
+        } else {
 
             parent.oGeos.add(n);
-            for(TreeItem<AOElement> tItem : treeView.getSelectionModel().getSelectedItems()){
+            for (TreeItem<AOElement> tItem : treeView.getSelectionModel().getSelectedItems()) {
                 TreeItem<AOElement> treeItem = new TreeItem<>(tItem.getValue());
                 treeItem.getChildren().addAll(tItem.getChildren());
                 t.getChildren().addAll(treeItem);
@@ -211,13 +210,13 @@ public class ObservableElementLists {
 
 
     public void ungroupNodes(final ObservableList<TreeItem<AOElement>> children, final TreeItem<AOElement> parent) {
-        TreeItem<AOElement> selectedItem =  treeView.getSelectionModel().getSelectedItem();
+        TreeItem<AOElement> selectedItem = treeView.getSelectionModel().getSelectedItem();
         parent.getChildren().remove(selectedItem);
-        ONode parentNode = getParentNode(geometries,(ONode)selectedItem.getValue());
-        if(parentNode == null)geometries.remove(selectedItem.getValue());
-        else  parentNode.oGeos.remove(selectedItem.getValue());
+        ONode parentNode = getParentNode(geometries, (ONode) selectedItem.getValue());
+        if (parentNode == null) geometries.remove(selectedItem.getValue());
+        else parentNode.oGeos.remove(selectedItem.getValue());
         for (TreeItem<AOElement> item : children) {
-            if(parentNode == null)geometries.add((AOGeometry) item.getValue());
+            if (parentNode == null) geometries.add((AOGeometry) item.getValue());
             else parentNode.oGeos.add((AOGeometry) item.getValue());
             TreeItem<AOElement> t = new TreeItem(item.getValue());
             if (!item.getChildren().isEmpty()) t.getChildren().addAll(item.getChildren());
@@ -226,7 +225,7 @@ public class ObservableElementLists {
 
     }
 
-    public void clearAll(){
+    public void clearAll() {
         ObservableList<AOMaterial> list = AController.materialList;
         list.remove(7, list.size());
         treeView.getSelectionModel().clearSelection();
@@ -237,6 +236,6 @@ public class ObservableElementLists {
         geometries.clear();
         camera = null;
         AController.textureList.clear();
-        AController.materialList.set(6,DefaultMaterial.getDefaultLambert());
+        AController.materialList.set(6, DefaultMaterial.getDefaultLambert());
     }
 }

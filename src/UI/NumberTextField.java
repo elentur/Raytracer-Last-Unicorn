@@ -20,48 +20,56 @@ import java.util.Locale;
 public class NumberTextField extends TextField {
 
     private final NumberFormat nf;
-    private ObjectProperty<BigDecimal> number = new SimpleObjectProperty<>();
-    public DoubleProperty doubleProperty = new SimpleDoubleProperty();
-    public IntegerProperty integerProperty = new SimpleIntegerProperty();
+    private final ObjectProperty<BigDecimal> number = new SimpleObjectProperty<>();
+    public final DoubleProperty doubleProperty = new SimpleDoubleProperty();
+    private final IntegerProperty integerProperty = new SimpleIntegerProperty();
 
 
     public final BigDecimal getNumber() {
         return number.get();
     }
+
     public final double getDouble() {
 
         return number.get().doubleValue();
     }
+
     public final int getInteger() {
         return number.get().intValue();
     }
 
-    public final void setNumber(BigDecimal value) {
+    private void setNumber(BigDecimal value) {
         number.set(value);
     }
-    public final void setNumber(int i) {
+
+    private void setNumber(int i) {
         number.set(new BigDecimal(i));
     }
+
     public final void setNumber(double d) {
         number.set(new BigDecimal(d));
     }
-    public final void setNumber(String  s) {
+
+    public final void setNumber(String s) {
         number.set(new BigDecimal(s));
     }
 
-    public ObjectProperty<BigDecimal> numberProperty() {
+    private ObjectProperty<BigDecimal> numberProperty() {
         return number;
     }
 
     public NumberTextField() {
         this(BigDecimal.ZERO);
     }
+
     public NumberTextField(int i) {
-        this(new BigDecimal(i),NumberFormat.getIntegerInstance(Locale.US));
+        this(new BigDecimal(i), NumberFormat.getIntegerInstance(Locale.US));
     }
+
     public NumberTextField(double d) {
-        this(new BigDecimal(d),NumberFormat.getInstance(Locale.US));
+        this(new BigDecimal(d), NumberFormat.getInstance(Locale.US));
     }
+
     public NumberTextField(BigDecimal value) {
         this(value, NumberFormat.getInstance());
         //initHandlers();
@@ -77,17 +85,17 @@ public class NumberTextField extends TextField {
     }
 
     private void initHandlers() {
-        doubleProperty.addListener(a->{
+        doubleProperty.addListener(a -> {
             setNumber(doubleProperty.getValue());
         });
-        integerProperty.addListener(a->{
+        integerProperty.addListener(a -> {
             setNumber(integerProperty.getValue());
         });
         // try to parse when focus is lost or RETURN is hit
         addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-        if(event.getCode().equals(KeyCode.ENTER)) {
-            parseAndFormatInput();
-        }
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                parseAndFormatInput();
+            }
             //}
 
 
@@ -122,7 +130,7 @@ public class NumberTextField extends TextField {
             integerProperty.setValue(newValue);
             doubleProperty.setValue(newValue);
             selectAll();
-          //  fireEvent(new ActionEvent());
+            //  fireEvent(new ActionEvent());
         } catch (ParseException ex) {
             // If parsing fails keep old number
             setText(nf.format(number.get()));

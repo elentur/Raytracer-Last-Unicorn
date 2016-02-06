@@ -15,15 +15,15 @@ import utils.Color;
  */
 public class OSpotLight extends AOLight {
 
-    public DoubleProperty px = new SimpleDoubleProperty();
-    public DoubleProperty py = new SimpleDoubleProperty();
-    public DoubleProperty pz = new SimpleDoubleProperty();
+    public final DoubleProperty px = new SimpleDoubleProperty();
+    public final DoubleProperty py = new SimpleDoubleProperty();
+    public final DoubleProperty pz = new SimpleDoubleProperty();
 
-    public DoubleProperty dx = new SimpleDoubleProperty();
-    public DoubleProperty dy = new SimpleDoubleProperty();
-    public DoubleProperty dz = new SimpleDoubleProperty();
+    public final DoubleProperty dx = new SimpleDoubleProperty();
+    public final DoubleProperty dy = new SimpleDoubleProperty();
+    public final DoubleProperty dz = new SimpleDoubleProperty();
 
-    public DoubleProperty halfAngle = new SimpleDoubleProperty();
+    public final DoubleProperty halfAngle = new SimpleDoubleProperty();
 
     public OSpotLight() {
         name.set("Spot Light");
@@ -42,26 +42,26 @@ public class OSpotLight extends AOLight {
     @Override
     public SpotLight generate() {
         return new SpotLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Point3(px.get(),py.get(),pz.get()),
-                new Vector3(dx.get(),dy.get(),dz.get()),
-                halfAngle.get()*(Math.PI/180),
+                new Color(color.get().getRed(), color.get().getGreen(), color.get().getBlue()),
+                new Point3(px.get(), py.get(), pz.get()),
+                new Vector3(dx.get(), dy.get(), dz.get()),
+                halfAngle.get() * (Math.PI / 180),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get())
+                new LightShadowPattern(patternSize.get(), patternSubdiv.get())
         );
     }
 
     @Override
     public SSpotLight serialize() {
         return new SSpotLight(
-               color.get().getRed(),color.get().getGreen(),color.get().getBlue(),
-                px.get(),py.get(),pz.get(),
-              dx.get(),dy.get(),dz.get(),
+                color.get().getRed(), color.get().getGreen(), color.get().getBlue(),
+                px.get(), py.get(), pz.get(),
+                dx.get(), dy.get(), dz.get(),
                 halfAngle.get(),
                 castShadow.get(),
                 photons.get(),
-                patternSize.get(),patternSubdiv.get(),
+                patternSize.get(), patternSubdiv.get(),
                 name.get()
         );
     }

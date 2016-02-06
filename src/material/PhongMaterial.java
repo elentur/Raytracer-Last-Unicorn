@@ -21,13 +21,13 @@ public class PhongMaterial extends Material {
     /**
      * The color of our reflection.
      */
-    public final Texture specular;
+    private final Texture specular;
 
     /**
      * The value to change the size of the highlight.
      * The larger exponent, the smaller will be the highlight.
      */
-    public final int exponent;
+    private final int exponent;
 
     /**
      * Instantiates a new PhongMaterial Object.
@@ -39,8 +39,8 @@ public class PhongMaterial extends Material {
      */
     public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
                          final Texture bumpMap, final double bumpScale, final Texture irradiance,
-            boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
-        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
+                         boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
@@ -50,7 +50,6 @@ public class PhongMaterial extends Material {
         this.specular = specular;
         this.exponent = exponent;
     }
-
 
 
     @Override
@@ -88,13 +87,12 @@ public class PhongMaterial extends Material {
                         );
                     }
                 }
-                basicColor = basicColor.mul(1.0/light.lightShadowPattern.generateSampling().size());
+                basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
             }
         }
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
-
 
 
     @Override

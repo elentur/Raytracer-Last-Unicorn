@@ -12,39 +12,39 @@ import java.util.Set;
  *
  * @author Marcus Bätz
  */
-public abstract class Camera{
+public abstract class Camera {
     /**
      * the eye position
      */
-    public Point3 e;
+    Point3 e;
     /**
      * the gaze direction (Blickrichtung)
      */
-    public Vector3 g;
+    private Vector3 g;
     /**
      * the up-vector
      */
-    public Vector3 t;
+    private Vector3 t;
 
     /**
      * u-axis of the local coordinate-system
      */
-    public Vector3 u;
+    Vector3 u;
 
     /**
      * v-axis of the local coordinate-system
      */
-    public Vector3 v;
+    Vector3 v;
 
     /**
      * w-axis of the local coordinate-system
      */
-    public Vector3 w;
+    Vector3 w;
 
     /**
      * the Sampling Pattern of the camera
      */
-    public SamplingPattern samplingPattern;
+    SamplingPattern samplingPattern;
 
     /**
      * constructor initializes e. g and t.
@@ -53,7 +53,7 @@ public abstract class Camera{
      * @param g gaze vector (Blickrichtung)
      * @param t up vector
      */
-    public Camera(final Point3 e, final Vector3 g, final Vector3 t, final SamplingPattern samplingPattern) {
+    Camera(final Point3 e, final Vector3 g, final Vector3 t, final SamplingPattern samplingPattern) {
         if (e == null) throw new IllegalArgumentException("e must not be null");
         if (g == null) throw new IllegalArgumentException("e must not be null");
         if (t == null) throw new IllegalArgumentException("e must not be null");
@@ -81,7 +81,6 @@ public abstract class Camera{
      * @return beamset for certain pixel
      */
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
-
 
 
 }

@@ -3,7 +3,7 @@ package matVect;
 /**
  * s class represents a Point2 Object.
  *
- * @author  Robert Dziuba on 03/12/15.
+ * @author Robert Dziuba on 03/12/15.
  */
 public class Point2 {
 

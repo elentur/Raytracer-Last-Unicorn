@@ -16,11 +16,11 @@ import javafx.stage.Stage;
  */
 public class Dialog extends Stage {
 
-    private StringProperty title = new SimpleStringProperty("Info Dialog");
-    private StringProperty text = new SimpleStringProperty("Info Dialog");
+    private final StringProperty title = new SimpleStringProperty("Info Dialog");
+    private final StringProperty text = new SimpleStringProperty("Info Dialog");
 
 
-    public void setNewTitle(String title) {
+    private void setNewTitle(String title) {
         this.title.set(title);
     }
 

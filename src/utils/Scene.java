@@ -23,18 +23,19 @@ public class Scene implements Serializable {
      */
     private final SElement camera;
     private final List<SElement> geometries;
-    private  final List<SElement> lights;
+    private final List<SElement> lights;
 
     /**
      * Generates a new Scene object.
+     *
      * @param geometries Represents the Geometries of this Scene
-     * @param lights Represents the lights of this Scene
-     * @param camera  Represents the Camera of this Scene
+     * @param lights     Represents the lights of this Scene
+     * @param camera     Represents the Camera of this Scene
      */
     public Scene(final List<SElement> geometries, final List<SElement> lights, final SElement camera) {
         this.camera = camera;
-        this.geometries=geometries;
-        this.lights=lights;
+        this.geometries = geometries;
+        this.lights = lights;
     }
 
     /**
@@ -42,7 +43,7 @@ public class Scene implements Serializable {
      */
     public AOCamera getCamera() {
 
-        return camera!=null?(AOCamera) camera.generate():null;
+        return camera != null ? (AOCamera) camera.generate() : null;
     }
 
     /**

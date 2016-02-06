@@ -12,22 +12,23 @@ import serializable.SElement;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public abstract class AOCamera extends AOElement{
+public abstract class AOCamera extends AOElement {
 
-    public DoubleProperty ex = new SimpleDoubleProperty(0);
-    public DoubleProperty ey = new SimpleDoubleProperty(0);
-    public DoubleProperty ez = new SimpleDoubleProperty(5);
+    public final DoubleProperty ex = new SimpleDoubleProperty(0);
+    public final DoubleProperty ey = new SimpleDoubleProperty(0);
+    public final DoubleProperty ez = new SimpleDoubleProperty(5);
 
-    public DoubleProperty gx = new SimpleDoubleProperty(0);
-    public DoubleProperty gy = new SimpleDoubleProperty(0);
-    public DoubleProperty gz = new SimpleDoubleProperty(-1);
+    public final DoubleProperty gx = new SimpleDoubleProperty(0);
+    public final DoubleProperty gy = new SimpleDoubleProperty(0);
+    public final DoubleProperty gz = new SimpleDoubleProperty(-1);
 
-    public DoubleProperty tx = new SimpleDoubleProperty(0);
-    public DoubleProperty ty = new SimpleDoubleProperty(1);
-    public DoubleProperty tz = new SimpleDoubleProperty(0);
+    public final DoubleProperty tx = new SimpleDoubleProperty(0);
+    public final DoubleProperty ty = new SimpleDoubleProperty(1);
+    public final DoubleProperty tz = new SimpleDoubleProperty(0);
 
-    public IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
+    public final IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
 
     public abstract Camera generate();
+
     public abstract SElement serialize();
 }

@@ -9,9 +9,8 @@ import java.util.ResourceBundle;
 
 /**
  * Created by roberto on 05.01.16.
- *
  */
-public class StatusController extends AController{
+public class StatusController extends AController {
     @FXML
     private Label lblTime;
     @FXML

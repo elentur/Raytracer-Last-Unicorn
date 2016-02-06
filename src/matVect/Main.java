@@ -4,7 +4,7 @@ package matVect;
  * Testclass, for the matrix-vector library
  * Created by Marcus Baetz on 07.10.2015.
  */
-public class Main {
+class Main {
 
     public static void main(String[] args) {
         normalTest();

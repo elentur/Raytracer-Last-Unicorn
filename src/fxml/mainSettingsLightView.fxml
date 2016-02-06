@@ -1,29 +1,26 @@
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import UI.NumberTextField?>
 <VBox fx:id="lightView" fx:controller="controller.MainSettingsLightController" xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
         <Label text="Color"/>
-        <ColorPicker styleClass="col-3" fx:id="clpLightColor" />
+        <ColorPicker styleClass="col-3" fx:id="clpLightColor"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>
-        <CheckBox styleClass="col-3" fx:id="chkCastShadows" text="casts Shadows" selected="true" />
+        <CheckBox styleClass="col-3" fx:id="chkCastShadows" text="casts Shadows" selected="true"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Irradiance"/>
-        <NumberTextField styleClass="col-3" fx:id="txtIrradiance" />
+        <NumberTextField styleClass="col-3" fx:id="txtIrradiance"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Light Size"/>
-        <NumberTextField styleClass="col-3" fx:id="txtLightSize" />
+        <NumberTextField styleClass="col-3" fx:id="txtLightSize"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Subdiv"/>
-        <NumberTextField styleClass="col-3" fx:id="txtLightSizeSubdiv" />
+        <NumberTextField styleClass="col-3" fx:id="txtLightSizeSubdiv"/>
     </HBox>
     <HBox styleClass="form-group-4">
         <HBox styleClass="col-1"/>

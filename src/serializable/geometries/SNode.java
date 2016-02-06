@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * Created by roberto on 05.02.16.
- *
  */
 public class SNode extends SGeometry {
 
@@ -24,29 +23,29 @@ public class SNode extends SGeometry {
     private final double rotationY;
     private final double rotationZ;
 
-    private final  List<SElement> sGeos;
+    private final List<SElement> sGeos;
 
     public SNode(final double translationX, final double translationY, final double translationZ,
                  final double scalingX, final double scalingY, final double scalingZ,
                  final double rotationX, final double rotationY, final double rotationZ,
                  final List<SElement> sGeos, final boolean reciveShadows, final boolean castShadows,
                  final boolean visibility, final boolean flipNormal, final String name) {
-        super(null,reciveShadows,castShadows,visibility,flipNormal,name);
+        super(null, reciveShadows, castShadows, visibility, flipNormal, name);
         this.translationX = translationX;
-        this.translationY=translationY;
-        this.translationZ=translationZ;
-        this.scalingX=scalingX;
-        this.scalingY=scalingY;
-        this.scalingZ=scalingZ;
-        this.rotationX=rotationX;
-        this.rotationY=rotationY;
-        this.rotationZ=rotationZ;
-        this.sGeos=sGeos;
+        this.translationY = translationY;
+        this.translationZ = translationZ;
+        this.scalingX = scalingX;
+        this.scalingY = scalingY;
+        this.scalingZ = scalingZ;
+        this.rotationX = rotationX;
+        this.rotationY = rotationY;
+        this.rotationZ = rotationZ;
+        this.sGeos = sGeos;
     }
 
 
     @Override
-    public ONode generate(){
+    public ONode generate() {
 
         ONode geo = new ONode(
                 name,
@@ -73,13 +72,13 @@ public class SNode extends SGeometry {
         return geo;
     }
 
-    private List<AOGeometry> sGoes2aGeos(){
+    private List<AOGeometry> sGoes2aGeos() {
         List<AOGeometry> oGeos = new ArrayList<>();
 
-        for(SElement sGeo : sGeos){
-            if(sGeo instanceof SNode){
+        for (SElement sGeo : sGeos) {
+            if (sGeo instanceof SNode) {
                 oGeos.add(((SNode) sGeo).generate());
-            }else {
+            } else {
                 oGeos.add((AOGeometry) sGeo.generate());
             }
         }

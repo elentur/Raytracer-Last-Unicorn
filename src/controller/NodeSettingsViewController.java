@@ -42,7 +42,7 @@ public class NodeSettingsViewController extends AController {
         tabPane.setVisible(true);
         tabPane.getTabs().clear();
         AOElement e = null;
-        if(selectedTreeItem.get() != null)  e = selectedTreeItem.get().getValue();
+        if (selectedTreeItem.get() != null) e = selectedTreeItem.get().getValue();
 
         if (!(e instanceof AOLight) && !(e instanceof AOCamera) && !(e instanceof AOGeometry)) {
             tabPane.setVisible(false);

@@ -6,15 +6,15 @@ package observables.cameras;
  * @author Marcus Bätz
  */
 public class DefaultCameras {
-    public static AOCamera getPerspectiveCamera(){
+    public static AOCamera getPerspectiveCamera() {
         return new OPerspectiveCamera();
     }
 
-    public static AOCamera getOrthographicCamera(){
+    public static AOCamera getOrthographicCamera() {
         return new OOrthographicCamera();
     }
 
-    public static AOCamera getDOFCamera(){
+    public static AOCamera getDOFCamera() {
         return new ODOFCamera();
     }
 }

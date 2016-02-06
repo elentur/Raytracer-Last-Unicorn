@@ -19,9 +19,9 @@ public class DOFCamera extends Camera {
     /**
      * the opening angle
      */
-    public final double angle;
-    public final DOFPattern dofPattern;
-    public final double focalLength;
+    private final double angle;
+    private final DOFPattern dofPattern;
+    private final double focalLength;
 
     /**
      * Constructor initializes e. g and t.
@@ -31,7 +31,7 @@ public class DOFCamera extends Camera {
      * @param t     up vector
      * @param angle the opening angle between ]0 and PI/2]
      */
-    public DOFCamera(final Point3 e, final Vector3 g, final Vector3 t, final double angle,final DOFPattern dofPattern,final double focalLength, final SamplingPattern samplingPattern) {
+    public DOFCamera(final Point3 e, final Vector3 g, final Vector3 t, final double angle, final DOFPattern dofPattern, final double focalLength, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
         if (angle <= 0 || angle > Math.PI / 2)
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
@@ -52,15 +52,15 @@ public class DOFCamera extends Camera {
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        for(Point2 point : samplingPattern.generateSampling()) {
+        for (Point2 point : samplingPattern.generateSampling()) {
             final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));
             final Vector3 summand3 = this.v.mul(y + point.y - ((h - 1.0) / 2));
             Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
             Ray ray = new Ray(this.e, r.normalized());
             rays.add(ray);
             Point3 p = ray.at(focalLength);
-            for(Point2 point1 : dofPattern.generateSampling()) {
-                Point3 e1 = new Point3(this.e.x+point1.x,this.e.y+point1.y,this.e.z);
+            for (Point2 point1 : dofPattern.generateSampling()) {
+                Point3 e1 = new Point3(this.e.x + point1.x, this.e.y + point1.y, this.e.z);
                 r = p.sub(e1);
                 rays.add(new Ray(e1, r.normalized()));
             }

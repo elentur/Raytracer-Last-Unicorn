@@ -14,9 +14,9 @@ import utils.Color;
  */
 public class OPointLight extends AOLight {
 
-    public DoubleProperty px = new SimpleDoubleProperty();
-    public DoubleProperty py = new SimpleDoubleProperty();
-    public DoubleProperty pz = new SimpleDoubleProperty();
+    public final DoubleProperty px = new SimpleDoubleProperty();
+    public final DoubleProperty py = new SimpleDoubleProperty();
+    public final DoubleProperty pz = new SimpleDoubleProperty();
 
     public OPointLight() {
         name.set("Poin Light");
@@ -28,11 +28,11 @@ public class OPointLight extends AOLight {
     @Override
     public PointLight generate() {
         return new PointLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Point3(px.get(),py.get(),pz.get()),
+                new Color(color.get().getRed(), color.get().getGreen(), color.get().getBlue()),
+                new Point3(px.get(), py.get(), pz.get()),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get())
+                new LightShadowPattern(patternSize.get(), patternSubdiv.get())
         );
     }
 
@@ -42,7 +42,7 @@ public class OPointLight extends AOLight {
                 color.get().getRed(),
                 color.get().getGreen(),
                 color.get().getBlue(),
-                px.get(),py.get(),pz.get(),
+                px.get(), py.get(), pz.get(),
                 castShadow.get(),
                 photons.get(),
                 patternSize.get(),

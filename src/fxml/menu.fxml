@@ -1,30 +1,20 @@
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-
 <VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MenuController">
     <MenuBar fx:id="menuBar">
-        <menus>
-            <Menu text="File">
-                <items>
-                    <MenuItem text="Save Scene" onAction="#handleSaveAction"/>
-                    <MenuItem text="Load Scene" onAction="#handleLoadAction"/>
-                    <MenuItem text="Import Model" onAction="#handleLoadModel"/>
-                    <MenuItem fx:id ="mnuSaveImage" text="Save Rendered Image"  disable="true"/>
-                    <SeparatorMenuItem  />
-                    <MenuItem text="Exit" onAction="#handleExitAction"/>
-                </items>
-            </Menu>
-            <Menu text="Run">
-                <items>
-                    <MenuItem text="Render" onAction="#handleRenderAction"/>
-                    <MenuItem text="Stop Render" onAction="#handleStopRenderAction"/>
-                    <SeparatorMenuItem />
-                    <MenuItem text="Rendersettings" onAction="#handleSettingsAction"/>
-                </items>
-            </Menu>
-        </menus>
+        <Menu text="File">
+            <MenuItem text="Save Scene" onAction="#handleSaveAction"/>
+            <MenuItem text="Load Scene" onAction="#handleLoadAction"/>
+            <MenuItem text="Import Model" onAction="#handleLoadModel"/>
+            <MenuItem fx:id="mnuSaveImage" text="Save Rendered Image" disable="true"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Exit" onAction="#handleExitAction"/>
+        </Menu>
+        <Menu text="Run">
+            <MenuItem text="Render" onAction="#handleRenderAction"/>
+            <MenuItem text="Stop Render" onAction="#handleStopRenderAction"/>
+            <SeparatorMenuItem/>
+            <MenuItem text="Rendersettings" onAction="#handleSettingsAction"/>
+        </Menu>
     </MenuBar>
 </VBox>

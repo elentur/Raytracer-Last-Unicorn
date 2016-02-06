@@ -25,8 +25,8 @@ public class LambertMaterial extends Material {
      * @param texture Represents the Color of the Lambert material
      */
     public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
-            boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
-        super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
+                           boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
     }
 
 
@@ -39,27 +39,26 @@ public class LambertMaterial extends Material {
         Color c = new Color(0, 0, 0);
         for (Light light : world.lights) {
             final Point3 p = hit.ray.at(hit.t);
-                synchronized (light.lightShadowPattern) {
-                    light.lightShadowPattern.generateSampling();
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
 
-                    for (Point2 point : light.lightShadowPattern.generateSampling()) {
-                        if (light.illuminates(p,point, world, hit.geo)) {
-                            c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
-                        }
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+                    if (light.illuminates(p, point, world, hit.geo)) {
+                        c = c.add(light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v)).mul(Math.max(0, hit.n.dot(light.directionFrom(p)))));
                     }
-                    c = c.mul(1.0/light.lightShadowPattern.generateSampling().size());
                 }
+                c = c.mul(1.0 / light.lightShadowPattern.generateSampling().size());
+            }
 
             ///ambient occlusion test
-                if(ambientOcllusion && world.ambientOcclusion) c= c.mul(new AmbienOcclusion().getOcclusion(ambientSize,ambientSubdiv,hit,p,world));
+            if (ambientOcllusion && world.ambientOcclusion)
+                c = c.mul(new AmbienOcclusion().getOcclusion(ambientSize, ambientSubdiv, hit, p, world));
 
             ////
         }
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(c);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(c);
     }
-
-
 
 
     @Override
@@ -68,7 +67,6 @@ public class LambertMaterial extends Material {
                 "material=" + texture +
                 '}';
     }
-
 
 
     @Override

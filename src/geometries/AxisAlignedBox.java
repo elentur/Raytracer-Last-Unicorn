@@ -18,16 +18,16 @@ public class AxisAlignedBox extends Geometry {
     /**
      * The left bottom far corner of the Axis Aligned Box.
      */
-    public final Point3 lbf;
+    private final Point3 lbf;
     /**
      * The right top near corner of the Axis Aligned Box.
      */
-    public final Point3 run;
+    private final Point3 run;
 
     /**
      * The 6 sites of the Box.
      */
-    public final Node[] faces = new Node[6];
+    private final Node[] faces = new Node[6];
 
 
     /**
@@ -37,35 +37,23 @@ public class AxisAlignedBox extends Geometry {
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows
-            ,final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows, castShadows,visibility,flipNormal);
+            , final boolean visibility, final boolean flipNormal) {
+        super(material, reciveShadows, castShadows, visibility, flipNormal);
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 
-        Plane p = new Plane(material,reciveShadows,castShadows,visibility,flipNormal);
+        Plane p = new Plane(material, reciveShadows, castShadows, visibility, flipNormal);
 
-        faces[0] = new Node(new Transform().translate(0,run.y,0),p,reciveShadows,castShadows,visibility,flipNormal); // up site
-        faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // down site
+        faces[0] = new Node(new Transform().translate(0, run.y, 0), p, reciveShadows, castShadows, visibility, flipNormal); // up site
+        faces[1] = new Node(new Transform().translate(0, lbf.y, 0).rotateX(Math.PI), p, reciveShadows, castShadows, visibility, flipNormal); // down site
 
-        faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // front site
-        faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // back site
+        faces[2] = new Node(new Transform().translate(0, 0, run.z).rotateX(Math.PI / 2), p, reciveShadows, castShadows, visibility, flipNormal); // front site
+        faces[3] = new Node(new Transform().translate(0, 0, lbf.z).rotateX(-Math.PI / 2).rotateY(Math.PI), p, reciveShadows, castShadows, visibility, flipNormal); // back site
 
-        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // left site
-        faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // right site
+        faces[4] = new Node(new Transform().translate(lbf.x, 0, 0).rotateY(-Math.PI / 2).rotateX(Math.PI / 2), p, reciveShadows, castShadows, visibility, flipNormal); // left site
+        faces[5] = new Node(new Transform().translate(run.x, 0, 0).rotateY(Math.PI / 2).rotateX(Math.PI / 2), p, reciveShadows, castShadows, visibility, flipNormal); // right site
     }
 
-
-    public AxisAlignedBox(final AxisAlignedBox box, final Material m) {
-        super(m, box.reciveShadows, box.castShadows, box.visibility, box.flipNormal);
-        this.lbf = box.lbf;
-        this.run = box.run;
-        this.faces[0] = box.faces[0];
-        this.faces[1] = box.faces[1];
-        this.faces[2] = box.faces[2];
-        this.faces[3] = box.faces[3];
-        this.faces[4] = box.faces[4];
-        this.faces[5] = box.faces[5];
-    }
 
     @Override
     public Hit hit(final Ray r) {
@@ -85,10 +73,10 @@ public class AxisAlignedBox extends Geometry {
         double t = Double.MAX_VALUE;
         Hit hit = null;
 
-        for(Hit h : hits){
-            if(h!= null){
+        for (Hit h : hits) {
+            if (h != null) {
                 final Point3 p = r.at(h.t);
-                if(comp(p,0.00001) && h.t < t && t > 0 && h.t > 0.00001) {
+                if (comp(p) && h.t < t && t > 0 && h.t > 0.00001) {
                     t = h.t;
                     hit = h;
                 }
@@ -100,11 +88,11 @@ public class AxisAlignedBox extends Geometry {
     }
 
 
-    private boolean comp(final Point3 p, final double e) {
+    private boolean comp(final Point3 p) {
 
-        return (lbf.x <= p.x + e && p.x <= run.x + e) &&
-                (lbf.y <= p.y + e && p.y <= run.y + e) &&
-                (lbf.z <= p.z + e && p.z <= run.z + e);
+        return (lbf.x <= p.x + 0.00001 && p.x <= run.x + 0.00001) &&
+                (lbf.y <= p.y + 0.00001 && p.y <= run.y + 0.00001) &&
+                (lbf.z <= p.z + 0.00001 && p.z <= run.z + 0.00001);
 
     }
 

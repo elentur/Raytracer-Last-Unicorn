@@ -69,7 +69,7 @@ public class NodeTreeViewController extends AController {
             // wenn nur ein Elmenet ausgewählt wurde
             if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
                 selectedTreeItem.set(newValue);
-            }else{
+            } else {
                 selectedTreeItem.set(new TreeItem<>(new AOElement()));
             }
         });
@@ -127,10 +127,10 @@ public class NodeTreeViewController extends AController {
         if (elementsTreeView.getSelectionModel().getSelectedItems().size() > 0) {
             ObservableList<TreeItem<AOElement>> selectedItems = elementsTreeView.getSelectionModel().getSelectedItems();
             List<AOGeometry> nodes = new ArrayList<>();
-            TreeItem<AOElement> p =selectedItems.get(0).getParent();
-            for(TreeItem<AOElement> t: selectedItems){
-                if(!(t.getValue()instanceof ONode) ||!t.getParent().equals(p))return;
-                nodes.add((ONode)t.getValue());
+            TreeItem<AOElement> p = selectedItems.get(0).getParent();
+            for (TreeItem<AOElement> t : selectedItems) {
+                if (!(t.getValue() instanceof ONode) || !t.getParent().equals(p)) return;
+                nodes.add((ONode) t.getValue());
             }
             elementLists.groupNodes(nodes);
         }
@@ -142,10 +142,11 @@ public class NodeTreeViewController extends AController {
             if (selectedItem.getChildren().size() > 0 && (selectedItem.getChildren().get(0).getValue() instanceof ONode)) {
                 ObservableList<TreeItem<AOElement>> selectedItems = selectedItem.getChildren();
                 TreeItem<AOElement> parent = selectedItem.getParent();
-                elementLists.ungroupNodes(selectedItems,parent);
+                elementLists.ungroupNodes(selectedItems, parent);
             }
         }
     }
+
     public void handleDeleteAction() {
         elementLists.removeElement(selectedTreeItem.get().getValue());
     }
@@ -153,15 +154,15 @@ public class NodeTreeViewController extends AController {
     @FXML
     private void handleNewElementAction() {
         if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
-          AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
-            if(e instanceof AOLight || e instanceof AOCamera || e instanceof ONode){
-                if(e instanceof ONode){
-                    AOGeometry g = ((ONode)e).oGeos.get(0);
-                    if( g instanceof OPlane) e = DefaultGeometries.getPlane();
-                    else if(g instanceof OSphere) e = DefaultGeometries.getSphere();
-                    else if(g instanceof OAxisAlignedBox) e = DefaultGeometries.getAxisAlignedBox();
-                    else if(g instanceof OTriangle) e = DefaultGeometries.getTriangle();
-                }else {
+            AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
+            if (e instanceof AOLight || e instanceof AOCamera || e instanceof ONode) {
+                if (e instanceof ONode) {
+                    AOGeometry g = ((ONode) e).oGeos.get(0);
+                    if (g instanceof OPlane) e = DefaultGeometries.getPlane();
+                    else if (g instanceof OSphere) e = DefaultGeometries.getSphere();
+                    else if (g instanceof OAxisAlignedBox) e = DefaultGeometries.getAxisAlignedBox();
+                    else if (g instanceof OTriangle) e = DefaultGeometries.getTriangle();
+                } else {
                     if (e instanceof ODirectionalLight) e = DefaultLight.getDirectionalLight();
                     else if (e instanceof OPointLight) e = DefaultLight.getPointLight();
                     else if (e instanceof OSpotLight) e = DefaultLight.getSpotLight();
@@ -169,8 +170,7 @@ public class NodeTreeViewController extends AController {
                     else if (e instanceof OPerspectiveCamera) e = DefaultCameras.getPerspectiveCamera();
                     else if (e instanceof ODOFCamera) e = DefaultCameras.getDOFCamera();
                 }
-                    elementLists.addElement( e);
-
+                elementLists.addElement(e);
 
 
             }

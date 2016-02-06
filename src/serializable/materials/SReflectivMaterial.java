@@ -8,7 +8,7 @@ import serializable.textures.STexture;
  *
  * @author Marcus Bätz
  */
-public class SReflectivMaterial  extends SMaterial {
+public class SReflectivMaterial extends SMaterial {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,14 +17,14 @@ public class SReflectivMaterial  extends SMaterial {
     private final STexture reflection;
     private final int exponent;
 
-    public SReflectivMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale ,
-                              final STexture irradiance,final STexture specular,final int exponent,
-                              final STexture reflection, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
-        this.irradiance=irradiance;
-        this.exponent=exponent;
-        this.specular=specular;
-        this.reflection=reflection;
+    public SReflectivMaterial(final String uniqueID, final STexture texture, final STexture bumpMap, final double bumpScale,
+                              final STexture irradiance, final STexture specular, final int exponent,
+                              final STexture reflection, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv, final String name) {
+        super(uniqueID, name, texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+        this.irradiance = irradiance;
+        this.exponent = exponent;
+        this.specular = specular;
+        this.reflection = reflection;
     }
 
     @Override
@@ -62,18 +62,18 @@ public class SReflectivMaterial  extends SMaterial {
 
     @Override
     public OReflectiveMaterial generate() {
-        OReflectiveMaterial s =  new OReflectiveMaterial();
+        OReflectiveMaterial s = new OReflectiveMaterial();
         s.uniqueID = uniqueID;
         s.name.setValue(name);
-        s.texture.setValue( texture.generate());
-        s.bumpMap.setValue( bumpMap.generate());
-        s.bumpScale.setValue( bumpScale);
+        s.texture.setValue(texture.generate());
+        s.bumpMap.setValue(bumpMap.generate());
+        s.bumpScale.setValue(bumpScale);
         s.irradiance.setValue(irradiance.generate());
         s.specular.setValue(specular.generate());
         s.exponent.setValue(exponent);
         s.reflection.setValue(reflection.generate());
-        s.ambientOcclusion.setValue( ambientOcllusion);
-        s.ambientSize.setValue( ambientSize);
+        s.ambientOcclusion.setValue(ambientOcllusion);
+        s.ambientSize.setValue(ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
         add2MaterialList(s);
         return s;

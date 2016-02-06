@@ -77,13 +77,13 @@ public class MainSettingsCameraController extends AController {
             try {
                 if (selectedTreeItem.get().getValue() instanceof OOrthographicCamera) {
 
-                    v = loader.load(this.getClass().getResource("/fxml/mainSettingsOrthographicCameraView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainSettingsOrthographicCameraView.fxml"));
                     cameraView.getChildren().add(v);
                 } else if (selectedTreeItem.get().getValue() instanceof OPerspectiveCamera) {
-                    v = loader.load(this.getClass().getResource("/fxml/mainSettingsPerspectiveCameraView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainSettingsPerspectiveCameraView.fxml"));
                     cameraView.getChildren().add(v);
                 } else {
-                    v = loader.load(this.getClass().getResource("/fxml/mainSettingsDOFCameraView.fxml"));
+                    v = FXMLLoader.load(this.getClass().getResource("/fxml/mainSettingsDOFCameraView.fxml"));
                     cameraView.getChildren().add(v);
                 }
             } catch (IOException e) {
@@ -122,24 +122,23 @@ public class MainSettingsCameraController extends AController {
             lblAngle.textProperty().bind(Bindings.concat("Opening Angle: ").concat(Bindings.format("%.1f", sldAngle.valueProperty())).concat("°"));
             sldAngle.setMin(1);
             sldAngle.setMax(90);
-            if(c instanceof OPerspectiveCamera){
-                sldAngle.valueProperty().bindBidirectional(((OPerspectiveCamera)c).angle);
-            }else{
-                sldAngle.valueProperty().bindBidirectional(((ODOFCamera)c).angle);
+            if (c instanceof OPerspectiveCamera) {
+                sldAngle.valueProperty().bindBidirectional(((OPerspectiveCamera) c).angle);
+            } else {
+                sldAngle.valueProperty().bindBidirectional(((ODOFCamera) c).angle);
             }
         }
         if (txtFStop != null) {
-            txtFStop.doubleProperty.bindBidirectional(((ODOFCamera)c).dPatternFStop);
+            txtFStop.doubleProperty.bindBidirectional(((ODOFCamera) c).dPatternFStop);
         }
         if (txtFocalLength != null) {
-            txtFocalLength.doubleProperty.bindBidirectional(((ODOFCamera)c).focalLength);
+            txtFocalLength.doubleProperty.bindBidirectional(((ODOFCamera) c).focalLength);
         }
         if (txtSubdiv != null) {
-            txtSubdiv.doubleProperty.bindBidirectional(((ODOFCamera)c).dPatternSubdiv);
+            txtSubdiv.doubleProperty.bindBidirectional(((ODOFCamera) c).dPatternSubdiv);
 
         }
     }
-
 
 
 }

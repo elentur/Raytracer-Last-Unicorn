@@ -15,14 +15,13 @@ import raytracer.Raytracer;
 
 /**
  * Created by roberto on 05.01.16.
- *
  */
-public abstract class AController  implements Initializable {
+public abstract class AController implements Initializable {
     public final static Raytracer raytracer = new Raytracer(true);
-   // public final static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
-    public final static ObjectProperty<TreeItem<AOElement>> selectedTreeItem = new SimpleObjectProperty<>();
-    protected ObservableElementLists elementLists = ObservableElementLists.getInstance();
-    public final static ObjectProperty<AOMaterial> material= new SimpleObjectProperty<>();
+    // public final static ObjectProperty<Element> selectedElement = new SimpleObjectProperty<>();
+    final static ObjectProperty<TreeItem<AOElement>> selectedTreeItem = new SimpleObjectProperty<>();
+    final ObservableElementLists elementLists = ObservableElementLists.getInstance();
+    public final static ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>();
     public final static ObservableList<AOMaterial> materialList = FXCollections.observableArrayList(
             DefaultMaterial.getSingleColorMaterial(),
             DefaultMaterial.getLambert(),
@@ -33,6 +32,6 @@ public abstract class AController  implements Initializable {
             DefaultMaterial.getDefaultLambert()
     );
     public final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();
-    protected static TabPane masterTabPane;
-    protected final TreeItem<AOElement> rootItem = new TreeItem<>(new AOElement("Elements"));
+    static TabPane masterTabPane;
+    final TreeItem<AOElement> rootItem = new TreeItem<>(new AOElement("Elements"));
 }

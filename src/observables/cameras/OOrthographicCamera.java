@@ -12,9 +12,9 @@ import serializable.cameras.SOrthographicCamera;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public class OOrthographicCamera extends AOCamera{
+public class OOrthographicCamera extends AOCamera {
 
-    public IntegerProperty s = new SimpleIntegerProperty();
+    public final IntegerProperty s = new SimpleIntegerProperty();
 
     public OOrthographicCamera() {
         name.set("Orthographic Camera");
@@ -22,18 +22,18 @@ public class OOrthographicCamera extends AOCamera{
     }
 
     @Override
-    public OrthographicCamera generate(){
+    public OrthographicCamera generate() {
         return new OrthographicCamera(
-                new Point3(ex.get(),ey.get(),ez.get()),
-                new Vector3(gx.get(),gy.get(),gz.get()),
-                new Vector3(tx.get(),ty.get(),tz.get()),
+                new Point3(ex.get(), ey.get(), ez.get()),
+                new Vector3(gx.get(), gy.get(), gz.get()),
+                new Vector3(tx.get(), ty.get(), tz.get()),
                 this.s.get(),
                 new SamplingPattern(patternSubdiv.get())
         );
     }
 
     @Override
-    public SOrthographicCamera serialize(){
+    public SOrthographicCamera serialize() {
         return new SOrthographicCamera(
                 ex.get(), ey.get(), ez.get(),
                 gx.get(), gy.get(), gz.get(),

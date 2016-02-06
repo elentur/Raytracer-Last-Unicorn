@@ -21,26 +21,28 @@ public abstract class AOTexture extends AOElement {
     public DoubleProperty offsetU = new SimpleDoubleProperty(0);
     public DoubleProperty offsetV = new SimpleDoubleProperty(0);
     public DoubleProperty rotate = new SimpleDoubleProperty(0);
-    public StringProperty path  = new SimpleStringProperty();
-    public ObjectProperty<Color> color = new SimpleObjectProperty<>(Color.GRAY);
-    public ObjectProperty<Image> img = new SimpleObjectProperty<>();
+    public final StringProperty path = new SimpleStringProperty();
+    public final ObjectProperty<Color> color = new SimpleObjectProperty<>(Color.GRAY);
+    public final ObjectProperty<Image> img = new SimpleObjectProperty<>();
+
     public abstract Texture generate();
+
     public abstract STexture serialize();
 
-    public AOTexture(){
-        this.color.addListener(a->refreshMaterial());
-        this.scaleU.addListener(a->refreshMaterial());
-        this.scaleV.addListener(a->refreshMaterial());
-        this.offsetU.addListener(a->refreshMaterial());
-        this.offsetV.addListener(a->refreshMaterial());
-        this.rotate.addListener(a->refreshMaterial());
-        this.path.addListener(a->{
-            if(!path.get().equals("")) img.set(new Image(new File(path.get()).toURI().toString()));
+    AOTexture() {
+        this.color.addListener(a -> refreshMaterial());
+        this.scaleU.addListener(a -> refreshMaterial());
+        this.scaleV.addListener(a -> refreshMaterial());
+        this.offsetU.addListener(a -> refreshMaterial());
+        this.offsetV.addListener(a -> refreshMaterial());
+        this.rotate.addListener(a -> refreshMaterial());
+        this.path.addListener(a -> {
+            if (!path.get().equals("")) img.set(new Image(new File(path.get()).toURI().toString()));
             refreshMaterial();
         });
     }
 
-    protected void refreshMaterial(){
+    private void refreshMaterial() {
         AOMaterial m = AController.material.get();
         AController.material.setValue(null);
         AController.material.setValue(m);

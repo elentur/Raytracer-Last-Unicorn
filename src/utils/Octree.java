@@ -14,20 +14,20 @@ import java.util.List;
  * @author Marcus Bätz
  */
 public class Octree {
-    public BoundingBox box;
+    private BoundingBox box;
 
-    private List<Geometry> g;
+    private final List<Geometry> g;
 
-    public Octree[] subtrees;
+    private Octree[] subtrees;
 
-    public List<Geometry>[] octreeList;
+    private List<Geometry>[] octreeList;
 
-    double lbfX = 999999.0;
-    double lbfY = 999999.0;
-    double lbfZ = 999999.0;
-    double runX = -999999.0;
-    double runY = -999999.0;
-    double runZ = -999999.0;
+    private double lbfX = 999999.0;
+    private double lbfY = 999999.0;
+    private double lbfZ = 999999.0;
+    private double runX = -999999.0;
+    private double runY = -999999.0;
+    private double runZ = -999999.0;
 
     public Octree(List<Geometry> g) {
         this.g = g;
@@ -61,7 +61,7 @@ public class Octree {
         generateOctrees();
     }
 
-    public Octree(List<Geometry> g, double runX, double runY, double runZ, double lbfX, double lbfY, double lbfZ) {
+    private Octree(List<Geometry> g, double runX, double runY, double runZ, double lbfX, double lbfY, double lbfZ) {
         this.g = g;
         this.runX = runX;
         this.runY = runY;

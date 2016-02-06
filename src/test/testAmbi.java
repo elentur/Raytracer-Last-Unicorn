@@ -12,17 +12,17 @@ import java.util.Random;
  *
  * @author Marcus Bätz
  */
-public class testAmbi {
+class testAmbi {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         List<Vector3> testDirections = new ArrayList<>();
         int numberOfRays = 16;
-        int numOfHits=0;
+        int numOfHits = 0;
         Random rnd = new Random();
-        Normal3 n = new Normal3(0,1,0);
-        while(testDirections.size()<numberOfRays){
-            Vector3 v = new Vector3(rnd.nextDouble()-0.5,rnd.nextDouble()-0.5,rnd.nextDouble()-0.5);
-            if(n.dot(v.normalized())<Math.PI/2) {
+        Normal3 n = new Normal3(0, 1, 0);
+        while (testDirections.size() < numberOfRays) {
+            Vector3 v = new Vector3(rnd.nextDouble() - 0.5, rnd.nextDouble() - 0.5, rnd.nextDouble() - 0.5);
+            if (n.dot(v.normalized()) < Math.PI / 2) {
                 testDirections.add(v);
                 System.out.println(v);
             }

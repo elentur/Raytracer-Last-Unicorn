@@ -1,11 +1,7 @@
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.BorderPane?>
-
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <VBox fx:controller="controller.MainController" xmlns:fx="http://javafx.com/fxml" stylesheets="/css/rootStyle.css">
-        <fx:include source="menu.fxml"/>
+    <fx:include source="menu.fxml"/>
     <HBox fx:id="mainHBox">
         <fx:include source="nodeTreeView.fxml"/>
         <fx:include source="nodeSettingsView.fxml"/>

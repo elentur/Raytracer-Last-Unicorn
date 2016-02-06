@@ -14,14 +14,15 @@ import serializable.SElement;
  * Created by
  * Robert Dziuba on 02/02/16.
  */
-public abstract class AOGeometry extends AOElement{
+public abstract class AOGeometry extends AOElement {
 
-    public ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>(DefaultMaterial.getDefaultLambert());
-    public BooleanProperty reciveShadows = new SimpleBooleanProperty(true);
-    public BooleanProperty castShadows  = new SimpleBooleanProperty(true);
-    public BooleanProperty visibility  = new SimpleBooleanProperty(true);
-    public BooleanProperty flipNormal = new SimpleBooleanProperty(false);
+    public final ObjectProperty<AOMaterial> material = new SimpleObjectProperty<>(DefaultMaterial.getDefaultLambert());
+    public final BooleanProperty reciveShadows = new SimpleBooleanProperty(true);
+    public final BooleanProperty castShadows = new SimpleBooleanProperty(true);
+    public final BooleanProperty visibility = new SimpleBooleanProperty(true);
+    public final BooleanProperty flipNormal = new SimpleBooleanProperty(false);
 
     public abstract Geometry generate();
+
     public abstract SElement serialize();
 }

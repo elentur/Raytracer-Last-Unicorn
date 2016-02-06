@@ -6,8 +6,8 @@
 <VBox xmlns:fx="http://javafx.com/fxml">
     <HBox styleClass="form-group-4">
         <Label text="Reflection Color"/>
-        <ColorPicker fx:id="clpReflection" />
-        <ComboBox styleClass="col-1" fx:id="cmbReflection" />
+        <ColorPicker fx:id="clpReflection"/>
+        <ComboBox styleClass="col-1" fx:id="cmbReflection"/>
         <Button fx:id="btnNewReflection">
             <graphic>
                 <ImageView>
@@ -15,6 +15,6 @@
                 </ImageView>
             </graphic>
         </Button>
-        <Button fx:id="btnClearReflection" text="X" />
+        <Button fx:id="btnClearReflection" text="X"/>
     </HBox>
 </VBox>

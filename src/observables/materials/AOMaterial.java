@@ -17,26 +17,29 @@ import java.util.UUID;
  */
 public abstract class AOMaterial extends AOElement {
 
-    public ObjectProperty<AOTexture> texture = new SimpleObjectProperty<>(new OSingleColorTexture(Color.GRAY));
-    public ObjectProperty<AOTexture> bumpMap = new SimpleObjectProperty<>(new OSingleColorTexture(Color.BLACK));
-    public DoubleProperty bumpScale = new SimpleDoubleProperty(0);
-    public ObjectProperty<AOTexture> irradiance = new SimpleObjectProperty<>(new OSingleColorTexture(Color.WHITE));
-    public BooleanProperty ambientOcclusion = new SimpleBooleanProperty(false);
-    public DoubleProperty ambientSize = new SimpleDoubleProperty(2);
-    public IntegerProperty ambientSubdiv = new SimpleIntegerProperty(16);
+    public final ObjectProperty<AOTexture> texture = new SimpleObjectProperty<>(new OSingleColorTexture(Color.GRAY));
+    public final ObjectProperty<AOTexture> bumpMap = new SimpleObjectProperty<>(new OSingleColorTexture(Color.BLACK));
+    public final DoubleProperty bumpScale = new SimpleDoubleProperty(0);
+    public final ObjectProperty<AOTexture> irradiance = new SimpleObjectProperty<>(new OSingleColorTexture(Color.WHITE));
+    public final BooleanProperty ambientOcclusion = new SimpleBooleanProperty(false);
+    public final DoubleProperty ambientSize = new SimpleDoubleProperty(2);
+    public final IntegerProperty ambientSubdiv = new SimpleIntegerProperty(16);
     public String uniqueID = UUID.randomUUID().toString();
 
-    public AOMaterial(){
-        texture.addListener(a->refreshMaterial());
-        bumpMap.addListener(a->refreshMaterial());
-        bumpScale.addListener(a->refreshMaterial());
-        irradiance.addListener(a->refreshMaterial());
+    AOMaterial() {
+        texture.addListener(a -> refreshMaterial());
+        bumpMap.addListener(a -> refreshMaterial());
+        bumpScale.addListener(a -> refreshMaterial());
+        irradiance.addListener(a -> refreshMaterial());
 
     }
+
     public abstract Material generate();
+
     public abstract SMaterial serialize();
-    protected void refreshMaterial(){
-        
+
+    void refreshMaterial() {
+
         AOMaterial m = AController.material.get();
         AController.material.setValue(null);
         AController.material.setValue(m);

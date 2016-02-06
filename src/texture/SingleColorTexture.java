@@ -3,14 +3,14 @@ package texture;
 import utils.Color;
 
 /**
- * @author  Robert Dziuba on 03/12/15.
+ * @author Robert Dziuba on 03/12/15.
  */
 public class SingleColorTexture extends Texture {
 
-    public final Color color;
+    private final Color color;
 
     public SingleColorTexture(final Color color) {
-        super(1,1,1,1,0,null);
+        super(1, 1, 1, 1, 0, null);
         if (color == null) {
             throw new IllegalArgumentException("The color cannot be null!");
         }

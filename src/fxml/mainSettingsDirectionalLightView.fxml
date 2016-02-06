@@ -2,12 +2,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import UI.NumberTextField?>
-<VBox  xmlns:fx="http://javafx.com/fxml" >
-        <HBox styleClass="form-group-4">
-            <Label text="Direction"/>
-            <NumberTextField fx:id="txtDirectionX"/>
-            <NumberTextField fx:id="txtDirectionY"/>
-            <NumberTextField fx:id="txtDirectionZ"/>
-        </HBox>
+<VBox xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <Label text="Direction"/>
+        <NumberTextField fx:id="txtDirectionX"/>
+        <NumberTextField fx:id="txtDirectionY"/>
+        <NumberTextField fx:id="txtDirectionZ"/>
+    </HBox>
 
 </VBox>

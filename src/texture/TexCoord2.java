@@ -1,9 +1,9 @@
 package texture;
 
 /**
- * @author  Robert Dziuba on 03/12/15.
+ * @author Robert Dziuba on 03/12/15.
  */
-public class TexCoord2{
+public class TexCoord2 {
 
 
     final public double u;

@@ -36,7 +36,7 @@ public class ImageSaver extends Application {
      * @see javafx.stage.Stage
      */
     @Override
-    public void start(final Stage primaryStage) throws Exception{
+    public void start(final Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
         primaryStage.setTitle("Unicorn RayTracer");
         Scene scene = new Scene(root);
@@ -48,8 +48,8 @@ public class ImageSaver extends Application {
         pane.minHeightProperty().bind(primaryStage.heightProperty());
         nodeTreeView.minHeightProperty().bind(primaryStage.heightProperty());
         primaryStage.show();
-      // TODO was macht der Befehl? // ImageView image  = (ImageView)scene.lookup("#image");
-        MenuItem menuItem =  ((MenuBar)scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);
+        // TODO was macht der Befehl? // ImageView image  = (ImageView)scene.lookup("#image");
+        MenuItem menuItem = ((MenuBar) scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);
         menuItem.disableProperty().bind(image.imageProperty().isNull());
         menuItem.setOnAction(a -> IO.saveImage(scene.getWindow(), image.getImage()));
         primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
@@ -57,7 +57,7 @@ public class ImageSaver extends Application {
             if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
         });
         primaryStage.setOnCloseRequest(
-                a->Platform.exit()
+                a -> Platform.exit()
         );
 
     }

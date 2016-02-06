@@ -4,17 +4,17 @@ import observables.cameras.ODOFCamera;
 
 /**
  * Created by roberto on 05.02.16.
- *
  */
 public class SPerspectiveCamera extends SCamera {
     private final double angle;
+
     public SPerspectiveCamera(final double ex, final double ey, final double ez,
-                      final double gx, final double gy, final double gz,
-                      final double tx, final double ty, final double tz,
-                      final double angle,
-                      final int subdiv, final String name) {
-        super(name,ex,ey,ez,gx,gy,gz,tx,ty,tz,subdiv);
-        this.angle=angle;
+                              final double gx, final double gy, final double gz,
+                              final double tx, final double ty, final double tz,
+                              final double angle,
+                              final int subdiv, final String name) {
+        super(name, ex, ey, ez, gx, gy, gz, tx, ty, tz, subdiv);
+        this.angle = angle;
     }
 
     @Override

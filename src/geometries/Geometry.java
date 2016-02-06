@@ -9,7 +9,7 @@ import utils.Ray;
  *
  * @author Robert Dziuba on 25/10/15.
  */
-public abstract class Geometry  {
+public abstract class Geometry {
 
     /**
      * The current material of the Geometry child class.
@@ -19,13 +19,13 @@ public abstract class Geometry  {
     /**
      * represents if a geometry recieves shadows
      */
-    public  boolean reciveShadows;
+    public boolean reciveShadows;
     /**
      * represents if a geometry casts shadows
      */
-    public  boolean castShadows;
-    public  boolean visibility;
-    public  boolean flipNormal;
+    public boolean castShadows;
+    public boolean visibility;
+    boolean flipNormal;
 
 
     /**
@@ -34,8 +34,8 @@ public abstract class Geometry  {
      * @param material of child class. Can't be null.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Geometry(final Material material, final boolean reciveShadows,
-                    final boolean castShadows,final boolean visibility,final boolean flipNormal) {
+    protected Geometry(final Material material, final boolean reciveShadows,
+                       final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         if (material == null) {
             throw new IllegalArgumentException("The Material cannot be null!");
         }
