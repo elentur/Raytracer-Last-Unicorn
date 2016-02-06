@@ -220,6 +220,7 @@ public class MainSettingsNodeController extends AController {
 
         }
         material.setValue(m);
+
         AOGeometry g = ((ONode) selectedTreeItem.get().getValue()).oGeos.get(0);
         g.material.set(m);
         TreeItem<AOElement> treeItem = selectedTreeItem.getValue();
