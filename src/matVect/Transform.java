@@ -3,17 +3,14 @@ package matVect;
 
 import utils.Ray;
 
-import java.io.Serializable;
-
 /**
  * This class represents a Transform Object.
  * For transform any geometries (translate, scale and rotate).
  *
  * @author Robert Dziuba on 15/12/15 and Marcus sitting next to him.
  */
-public class Transform implements Serializable {
+public class Transform {
 
-    private static final long serialVersionUID = 1L;
     /**
      * Represents the transformation matrix
      */

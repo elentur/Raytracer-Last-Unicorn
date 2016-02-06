@@ -1,15 +1,12 @@
 package utils;
 
-import java.io.Serializable;
-
 /**
  * This class represents a Color without any transparency.
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class Color implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Color  {
     /**
      * represents the Red Color value of this Color object. The Value have to be between 0.0 and 1.0
      */

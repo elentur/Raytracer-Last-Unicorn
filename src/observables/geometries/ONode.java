@@ -5,11 +5,9 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import matVect.Point3;
-import serializable.SElement;
+import matVect.Transform;
 import serializable.geometries.SNode;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +30,7 @@ public class ONode extends AOGeometry {
     public DoubleProperty rotationz = new SimpleDoubleProperty(0.0);
     public ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
-    public ONode(String name,List<AOGeometry> oGeos) {
+    public ONode(String name, List<AOGeometry> oGeos) {
         this.name.set(name);
         this.oGeos.setAll(oGeos);
     }
@@ -40,9 +38,17 @@ public class ONode extends AOGeometry {
     @Override
     public Node generate() {
         return new Node(
-                new Point3(rotationx.get(),translationy.get(),translationz.get()),
-                new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
-                new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
+                new Transform().translate(
+                        translationx.get(),
+                        translationy.get(),
+                        translationz.get()).
+                        scale(
+                                scalingx.get(),
+                                scalingy.get(),
+                                scalingz.get()).
+                        rotateX(rotationx.get()*Math.PI/180).
+                        rotateY(rotationy.get()*Math.PI/180).
+                        rotateZ(rotationz.get()*Math.PI/180),
                 oGeos.stream().map(AOGeometry::generate).collect(Collectors.toList()),
                 reciveShadows.get(),
                 castShadows.get(),
@@ -54,9 +60,9 @@ public class ONode extends AOGeometry {
     @Override
     public SNode serialize() {
         return new SNode(
-                new Point3(rotationx.get(),translationy.get(),translationz.get()),
-                new Point3(scalingx.get(), scalingy.get(), scalingz.get()),
-                new Point3(rotationx.get(), rotationy.get(), rotationz.get()),
+                rotationx.get(), translationy.get(), translationz.get(),
+                scalingx.get(), scalingy.get(), scalingz.get(),
+                rotationx.get(), rotationy.get(), rotationz.get(),
                 oGeos.stream().map(AOGeometry::serialize).collect(Collectors.toList()),
                 reciveShadows.get(),
                 castShadows.get(),

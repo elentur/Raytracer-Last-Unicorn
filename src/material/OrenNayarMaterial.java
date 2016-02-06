@@ -34,7 +34,6 @@ public class OrenNayarMaterial extends Material {
                              final Texture bumpMap, final double bumpScale, final Texture irradiance,
                              boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,irradiance, ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Oren-Nayar Material";
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }
@@ -42,11 +41,7 @@ public class OrenNayarMaterial extends Material {
         this.rough_sq = roughness * roughness;
     }
 
-    public OrenNayarMaterial(final OrenNayarMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-         name=m.name;
-        this.rough_sq = m.rough_sq;
-    }
+
 
     /*
      * This formula can be described as follows: θi is the angle between the normal and the light vector.
@@ -132,15 +127,7 @@ public class OrenNayarMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new OrenNayarMaterial(this);
-    }
+
 
     @Override
     public String toString() {

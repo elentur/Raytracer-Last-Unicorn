@@ -26,18 +26,12 @@ public class SingleColorMaterial extends Material {
     public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
                                boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)),ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Single-Color Material";
         if(texture == null){
             throw new IllegalArgumentException("texture must not be null");
         }
         this.texture = texture;
     }
 
-    public SingleColorMaterial(final SingleColorMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,new SingleColorTexture(new Color(0,0,0)),m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-        name=m.name;
-        this.texture = m.texture;
-    }
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
@@ -47,15 +41,6 @@ public class SingleColorMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v);
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new SingleColorMaterial(this);
-    }
 
     @Override
     public String toString() {

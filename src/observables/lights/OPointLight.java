@@ -39,11 +39,14 @@ public class OPointLight extends AOLight {
     @Override
     public SPointLight serialize() {
         return new SPointLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Point3(px.get(),py.get(),pz.get()),
+                color.get().getRed(),
+                color.get().getGreen(),
+                color.get().getBlue(),
+                px.get(),py.get(),pz.get(),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get()),
+                patternSize.get(),
+                patternSubdiv.get(),
                 name.get()
         );
     }

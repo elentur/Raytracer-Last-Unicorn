@@ -1,45 +1,54 @@
 package serializable.lights;
 
-import light.SpotLight;
-import matVect.Point3;
-import matVect.Vector3;
 import observables.lights.OSpotLight;
-import sampling.LightShadowPattern;
-import serializable.SElement;
-import utils.Color;
 
 /**
  * Created by roberto on 05.02.16.
  */
-public class SSpotLight extends SpotLight implements SElement {
+public class SSpotLight  extends SLight {
 
     private static final long serialVersionUID = 1L;
-
-    private final String name;
-
-    public SSpotLight(Color color, Point3 position, Vector3 direction, double halfAngle, boolean castShadow, int photons, LightShadowPattern lightShadowPattern, String name) {
-        super(color, position, direction, halfAngle, castShadow, photons, lightShadowPattern);
-        this.name = name;
+    private final double px;
+    private final double py;
+    private final double pz;
+    private final double dx;
+    private final double dy;
+    private final double dz;
+    private final double angle;
+    public SSpotLight(final double red, final double green, final double blue,
+                       final double px, final double py, final double pz,
+                       final double dx, final double dy, final double dz,
+                       final double angle,
+                       final boolean castShadows, final int photons,
+                       final double size, final int subdiv, final String name) {
+        super(red,green,blue,castShadows,photons,size,subdiv,name);
+        this.px =px;
+        this.py =py;
+        this.pz =pz;
+        this.dx=dx;
+        this.dy=dy;
+        this.dz=dz;
+        this.angle=angle;
     }
 
+
+    @Override
     public OSpotLight generate(){
         OSpotLight light = new OSpotLight();
 
-        light.color.set(new javafx.scene.paint.Color(color.r,color.g,color.b,1));
-        light.castShadow.set(castsShadow);
+        light.color.set(new javafx.scene.paint.Color(red,green,blue,1));
+        light.castShadow.set(castShadows);
         light.photons.set(photons);
-        light.patternSize.set(lightShadowPattern.size);
-        light.patternSubdiv.set(lightShadowPattern.subdiv);
-
-        light.px.set(position.x);
-        light.py.set(position.y);
-        light.pz.set(position.z);
-
-        light.dx.set(direction.x);
-        light.dy.set(direction.y);
-        light.dz.set(direction.z);
+        light.patternSize.set(size);
+        light.patternSubdiv.set(subdiv);
+        light.px.set(px);
+        light.py.set(py);
+        light.pz.set(pz);
+        light.dx.set(dx);
+        light.dy.set(dy);
+        light.dz.set(dz);
+        light.halfAngle.set(angle);
         light.name.set(name);
-
         return light;
     }
 }

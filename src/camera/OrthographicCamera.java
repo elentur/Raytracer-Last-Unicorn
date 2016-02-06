@@ -35,22 +35,11 @@ public class OrthographicCamera extends Camera {
     public OrthographicCamera(final Point3 e, final Vector3 g, final Vector3 t, final double s, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
         if (s <= 0) throw new IllegalArgumentException("s must not be 0 or lower");
-        this.name = "Orthographic Camera";
         this.s = s;
 
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param camera
-     */
-    public OrthographicCamera(OrthographicCamera camera) {
-        super(camera.e, camera.g, camera.t, camera.samplingPattern);
-        this.name = camera.name;
-        this.s = camera.s;
-        this.rays = camera.rays;
-    }
+
 
     @Override
     public String toString() {
@@ -86,10 +75,6 @@ public class OrthographicCamera extends Camera {
         return rays;
     }
 
-    @Override
-    public OrthographicCamera deepCopy() {
-        return new OrthographicCamera(this);
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -54,19 +54,11 @@ public class SpotLight extends Light {
         if (halfAngle < 0 || halfAngle > 90) {
             throw new IllegalArgumentException("The angle must be between 0 and 90 degrees!");
         }
-        this.name = "Spotlight";
         this.position = position;
         this.direction = direction.normalized();
         this.halfAngle = halfAngle;
     }
 
-    public SpotLight(SpotLight light) {
-        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
-        this.name = light.name;
-        this.position = light.position;
-        this.direction = light.direction;
-        this.halfAngle = light.halfAngle;
-    }
 
     @Override
     public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
@@ -111,10 +103,6 @@ public class SpotLight extends Light {
         return position.sub(point).normalized();
     }
 
-    @Override
-    public SpotLight deepCopy() {
-        return new SpotLight(this);
-    }
 
     @Override
     public String toString() {

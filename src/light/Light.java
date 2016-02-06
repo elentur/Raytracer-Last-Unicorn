@@ -6,10 +6,7 @@ import matVect.Point3;
 import matVect.Vector3;
 import sampling.LightShadowPattern;
 import utils.Color;
-import utils.Element;
 import utils.World;
-
-import java.io.Serializable;
 
 /**
  * The Abstract Class of Lights
@@ -17,8 +14,7 @@ import java.io.Serializable;
  *
  * @author Marcus Bätz
  */
-public abstract class Light extends Element implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Light  {
     /**
      * Represents the Color of the Light
      */
@@ -52,10 +48,5 @@ public abstract class Light extends Element implements Serializable {
      */
     public abstract Vector3 directionFrom(final Point3 point);
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Light;
-     */
-    public abstract Light deepCopy();
+
 }

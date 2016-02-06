@@ -41,7 +41,6 @@ public class PhongMaterial extends Material {
                          final Texture bumpMap, final double bumpScale, final Texture irradiance,
             boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Phong Material";
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
@@ -52,12 +51,7 @@ public class PhongMaterial extends Material {
         this.exponent = exponent;
     }
 
-    public PhongMaterial(final PhongMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-        name=m.name;
-        this.specular = m.specular;
-        this.exponent = m.exponent;
-    }
+
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
@@ -101,15 +95,7 @@ public class PhongMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new PhongMaterial(this);
-    }
+
 
     @Override
     public String toString() {

@@ -31,25 +31,10 @@ public class Plane extends Geometry {
      */
     public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
-        this.name = "Plane";
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }
 
-    /**
-     * Copy Constructor
-     * @param plane
-     */
-    public Plane(Plane plane) {
-        this(plane,plane.material);
-    }
-
-    public Plane(final Plane plane, final Material m) {
-        super(m,plane.reciveShadows,plane.castShadows,plane.visibility,plane.flipNormal);
-        this.name = "Plane";
-        this.a = plane.a;
-        this.n = plane.n;
-    }
 
     @Override
     public Hit hit(final Ray r) {
@@ -77,15 +62,6 @@ public class Plane extends Geometry {
         return null;
     }
 
-    @Override
-    public Plane deepCopy() {
-        return new Plane(this);
-    }
-
-    @Override
-    public Geometry deepCopy(final Material m) {
-        return new Plane(this,m);
-    }
 
     @Override
     public String toString() {
@@ -95,16 +71,16 @@ public class Plane extends Geometry {
                 '}';
     }
 
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Plane)) return false;
 
         Plane plane = (Plane) o;
 
         if (a != null ? !a.equals(plane.a) : plane.a != null) return false;
-        if (n != null ? !n.equals(plane.n) : plane.n != null) return false;
-        return material.equals(plane.material) && name.equals(plane.name);
+        return !(n != null ? !n.equals(plane.n) : plane.n != null);
 
     }
 

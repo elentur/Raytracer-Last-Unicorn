@@ -63,7 +63,6 @@ public class Triangle extends Geometry {
         if (c == null) {
             throw new IllegalArgumentException("The c cannot be null!");
         }
-        this.name = "Triangle";
         this.a = a;
         this.b = b;
         this.c = c;
@@ -109,27 +108,6 @@ public class Triangle extends Geometry {
         );
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param triangle
-     */
-    public Triangle(Triangle triangle) {
-        this(triangle,triangle.material);
-    }
-
-    public Triangle(final Triangle triangle, final Material m) {
-        super(m, triangle.reciveShadows,triangle.castShadows,triangle.visibility,triangle.flipNormal);
-        this.a = triangle.a;
-        this.b = triangle.b;
-        this.c = triangle.c;
-        this.na = triangle.na;
-        this.nb = triangle.nb;
-        this.nc = triangle.nc;
-        this.texCoordA = triangle.texCoordA;
-        this.texCoordB = triangle.texCoordB;
-        this.texCoordC = triangle.texCoordC;
-    }
 
     @Override
     public Hit hit(final Ray r) {
@@ -180,15 +158,7 @@ public class Triangle extends Geometry {
         return null;
     }
 
-    @Override
-    public Triangle deepCopy() {
-        return new Triangle(this);
-    }
 
-    @Override
-    public Geometry deepCopy(final Material m) {
-        return new Triangle(this,m);
-    }
 
     @Override
     public String toString() {
@@ -200,17 +170,21 @@ public class Triangle extends Geometry {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof Triangle)) return false;
 
         Triangle triangle = (Triangle) o;
 
         if (a != null ? !a.equals(triangle.a) : triangle.a != null) return false;
         if (b != null ? !b.equals(triangle.b) : triangle.b != null) return false;
         if (c != null ? !c.equals(triangle.c) : triangle.c != null) return false;
-        return material.equals(triangle.material) && name.equals(triangle.name);
+        if (na != null ? !na.equals(triangle.na) : triangle.na != null) return false;
+        if (nb != null ? !nb.equals(triangle.nb) : triangle.nb != null) return false;
+        if (nc != null ? !nc.equals(triangle.nc) : triangle.nc != null) return false;
+        if (texCoordA != null ? !texCoordA.equals(triangle.texCoordA) : triangle.texCoordA != null) return false;
+        if (texCoordB != null ? !texCoordB.equals(triangle.texCoordB) : triangle.texCoordB != null) return false;
+        return !(texCoordC != null ? !texCoordC.equals(triangle.texCoordC) : triangle.texCoordC != null);
 
     }
 

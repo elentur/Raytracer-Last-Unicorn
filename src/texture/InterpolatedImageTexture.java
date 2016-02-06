@@ -4,8 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import utils.Color;
 
-import java.io.File;
-
 /**
  * @author  Robert Dziuba on 03/12/15.
  */
@@ -17,7 +15,6 @@ public class InterpolatedImageTexture extends Texture {
 
     public InterpolatedImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate) {
         super(scaleU,scaleV,offsetU,offsetV,rotate,img);
-        name = "Interpolated Image Texture";
     }
 
     @Override

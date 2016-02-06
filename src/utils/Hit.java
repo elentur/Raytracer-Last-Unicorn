@@ -4,16 +4,14 @@ import geometries.Geometry;
 import matVect.Normal3;
 import texture.TexCoord2;
 
-import java.io.Serializable;
-
 /**
  * This class represents a intersection between a given Ray and a given Geometry.
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class Hit implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Hit {
+
     /**
      * represents the intersect of the geometry of this hit with the ray of this Hit object.
      */

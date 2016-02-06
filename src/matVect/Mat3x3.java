@@ -1,13 +1,10 @@
 package matVect;
 
-import java.io.Serializable;
-
 /**
  * This Object represents a 3x3 matrix and offers relevant operations for a matrix.
  * Created by Marcus Baetz on 07.10.2015.
  */
-public class Mat3x3 implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Mat3x3 {
     /**
      * This Component represent the m11-Value of the matVect.Mat3x3 as Double.
      */

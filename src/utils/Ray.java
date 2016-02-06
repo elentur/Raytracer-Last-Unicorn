@@ -3,15 +3,12 @@ package utils;
 import matVect.Point3;
 import matVect.Vector3;
 
-import java.io.Serializable;
-
 /**
  * Created by Marcus Baetz on 03.11.2015.
  *
  * @author Marcus Bätz
  */
-public class Ray implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Ray {
     /**
      * the origin of the beam
      */

@@ -7,7 +7,6 @@ import utils.Hit;
 import utils.Ray;
 import utils.World;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -17,8 +16,7 @@ import java.util.Random;
  *
  * @author Marcus Bätz
  */
-public class AmbienOcclusion implements Serializable{
-    private static final long serialVersionUID = 1L;
+public class AmbienOcclusion {
 
     public double getOcclusion(double size, int subdiv, Hit hit, Point3 p, World world) {
         List<Vector3> testDirections = new ArrayList<>();

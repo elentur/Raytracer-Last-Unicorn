@@ -14,18 +14,22 @@ public class SSingleColorTexture extends STexture implements SElement {
     private static final long serialVersionUID = 1L;
 
     private final String name;
-    private final utils.Color color;
+    private final double red;
+    private final double green;
+    private final double blue;
 
-    public SSingleColorTexture(final utils.Color color, final String name) {
+    public SSingleColorTexture(final double red, final double green, final double blue, final String name) {
         super("");
-        this.color=color;
+        this.red=red;
+        this.blue=blue;
+        this.green=green;
         this.name = name;
     }
 
 
     @Override
     public OSingleColorTexture generate() {
-        OSingleColorTexture t = new OSingleColorTexture(new Color(color.r,color.g,color.b,1));
+        OSingleColorTexture t = new OSingleColorTexture(new Color(red,green,blue,1));
         t.name.setValue(name);
         return t;
     }

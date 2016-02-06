@@ -1,46 +1,42 @@
 package serializable.cameras;
 
-import camera.DOFCamera;
-import camera.PerspectiveCamera;
-import matVect.Point3;
-import matVect.Vector3;
-import observables.cameras.OPerspectiveCamera;
-import sampling.SamplingPattern;
-import serializable.SElement;
+import observables.cameras.ODOFCamera;
 
 /**
  * Created by roberto on 05.02.16.
  */
-public class SPerspectiveCamera extends PerspectiveCamera implements SElement {
-
-    private static final long serialVersionUID = 1L;
-
-    private final String name;
-
-    public SPerspectiveCamera(Point3 e, Vector3 g, Vector3 t, double angle, SamplingPattern samplingPattern, String name) {
-        super(e, g, t, angle*Math.PI/180, samplingPattern);
-        this.name = name;
+public class SPerspectiveCamera extends SCamera {
+    private final double angle;
+    public SPerspectiveCamera(final double ex, final double ey, final double ez,
+                      final double gx, final double gy, final double gz,
+                      final double tx, final double ty, final double tz,
+                      final double angle,
+                      final int subdiv, final String name) {
+        super(name,ex,ey,ez,gx,gy,gz,tx,ty,tz,subdiv);
+        this.angle=angle;
     }
 
     @Override
-    public OPerspectiveCamera generate() {
-        OPerspectiveCamera camera = new OPerspectiveCamera();
+    public ODOFCamera generate() {
+
+        ODOFCamera camera = new ODOFCamera();
         camera.name.set(name);
-        camera.ex.set(e.x);
-        camera.ey.set(e.y);
-        camera.ez.set(e.z);
+        camera.ex.set(ex);
+        camera.ey.set(ey);
+        camera.ez.set(ez);
 
-        camera.gx.set(g.x);
-        camera.gy.set(g.y);
-        camera.gz.set(g.z);
+        camera.gx.set(gx);
+        camera.gy.set(gy);
+        camera.gz.set(gz);
 
-        camera.tx.set(t.x);
-        camera.ty.set(t.y);
-        camera.tz.set(t.z);
+        camera.tx.set(tx);
+        camera.ty.set(ty);
+        camera.tz.set(tz);
 
-        camera.patternSubdiv.set(samplingPattern.subdiv);
+        camera.patternSubdiv.set(subdiv);
 
-        camera.angle.set(angle*180/Math.PI);
+        camera.angle.set(angle);
+
 
         return camera;
     }

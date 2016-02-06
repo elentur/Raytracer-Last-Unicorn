@@ -5,7 +5,6 @@ import geometries.Geometry;
 import javafx.scene.image.Image;
 import light.Light;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,7 @@ import java.util.List;
  *
  * @author Marcus Bätz
  */
-public class World implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class World {
     /**
      * represents the background color of the scene.
      */

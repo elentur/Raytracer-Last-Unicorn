@@ -4,7 +4,6 @@ import geometries.Geometry;
 import geometries.Triangle;
 import matVect.Point3;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,8 +13,7 @@ import java.util.List;
  *
  * @author Marcus Bätz
  */
-public class Octree implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Octree {
     public BoundingBox box;
 
     private List<Geometry> g;

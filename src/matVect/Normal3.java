@@ -1,14 +1,10 @@
 package matVect;
 
-import java.io.Serializable;
-
 /**
  * This Object represents a 3 dimensional normal and offers relevant operations for a normal.
  * Created by Marcus Baetz on 07.10.2015.
  */
-public class Normal3 implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Normal3  {
     /**
      * This Component represent the x-Value of the Normal3 as Double.
      */

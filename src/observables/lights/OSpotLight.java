@@ -55,13 +55,13 @@ public class OSpotLight extends AOLight {
     @Override
     public SSpotLight serialize() {
         return new SSpotLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Point3(px.get(),py.get(),pz.get()),
-                new Vector3(dx.get(),dy.get(),dz.get()),
-                halfAngle.get()*(Math.PI/180),
+               color.get().getRed(),color.get().getGreen(),color.get().getBlue(),
+                px.get(),py.get(),pz.get(),
+              dx.get(),dy.get(),dz.get(),
+                halfAngle.get(),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get()),
+                patternSize.get(),patternSubdiv.get(),
                 name.get()
         );
     }

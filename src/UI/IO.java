@@ -93,11 +93,13 @@ public class IO {
 
     public static void loadScene(final Stage stage, final TreeItem<AOElement> rootItem) {
 
+
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
         final File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
+
             Path path = file.toPath();
             Scene scene = null;
             try {

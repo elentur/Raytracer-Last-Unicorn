@@ -32,20 +32,10 @@ public class DirectionalLight extends Light {
     public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color,castShadow,photons,lightShadowPattern);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
-        this.name = "Directional Light";
         this.direction = direction.normalized();
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param light
-     */
-    public DirectionalLight(DirectionalLight light) {
-        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
-        this.name = light.name;
-        this.direction = light.direction;
-    }
+
 
     @Override
     public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
@@ -76,10 +66,6 @@ public class DirectionalLight extends Light {
         return direction.mul(-1);
     }
 
-    @Override
-    public DirectionalLight deepCopy() {
-        return new DirectionalLight(this);
-    }
 
     @Override
     public String toString() {
@@ -89,13 +75,13 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof DirectionalLight)) return false;
 
         DirectionalLight that = (DirectionalLight) o;
 
-        return !(direction != null ? !direction.equals(that.direction)&& name.equals(that.name) : that.direction != null);
+        return !(direction != null ? !direction.equals(that.direction) : that.direction != null);
 
     }
 

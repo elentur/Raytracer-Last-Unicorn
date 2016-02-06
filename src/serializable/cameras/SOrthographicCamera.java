@@ -1,44 +1,38 @@
 package serializable.cameras;
 
-import camera.OrthographicCamera;
-import matVect.Point3;
-import matVect.Vector3;
 import observables.cameras.OOrthographicCamera;
-import observables.cameras.OPerspectiveCamera;
-import sampling.SamplingPattern;
-import serializable.SElement;
 
 /**
  * Created by roberto on 05.02.16.
  */
-public class SOrthographicCamera extends OrthographicCamera implements SElement {
+public class SOrthographicCamera extends SCamera{
+    private final int s;
 
-    private static final long serialVersionUID = 1L;
-
-    private final String name;
-
-    public SOrthographicCamera(Point3 e, Vector3 g, Vector3 t, double s, SamplingPattern samplingPattern, String name) {
-        super(e, g, t, s, samplingPattern);
-        this.name = name;
+    public SOrthographicCamera(final double ex, final double ey, final double ez,
+                               final double gx, final double gy, final double gz,
+                               final double tx, final double ty, final double tz,
+                               final int s, final int subdiv, final String name) {
+        super(name,ex,ey,ez,gx,gy,gz,tx,ty,tz,subdiv);
+        this.s=s;
     }
 
     @Override
     public OOrthographicCamera generate() {
         OOrthographicCamera camera = new OOrthographicCamera();
         camera.name.set(name);
-        camera.ex.set(e.x);
-        camera.ey.set(e.y);
-        camera.ez.set(e.z);
+        camera.ex.set(ex);
+        camera.ey.set(ey);
+        camera.ez.set(ez);
 
-        camera.gx.set(g.x);
-        camera.gy.set(g.y);
-        camera.gz.set(g.z);
+        camera.gx.set(gx);
+        camera.gy.set(gy);
+        camera.gz.set(gz);
 
-        camera.tx.set(t.x);
-        camera.ty.set(t.y);
-        camera.tz.set(t.z);
+        camera.tx.set(tx);
+        camera.ty.set(ty);
+        camera.tz.set(tz);
 
-        camera.patternSubdiv.set(samplingPattern.subdiv);
+        camera.patternSubdiv.set(subdiv);
 
         camera.s.set(s);
 

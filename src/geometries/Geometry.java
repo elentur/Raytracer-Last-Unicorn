@@ -1,19 +1,16 @@
 package geometries;
 
 import material.Material;
-import utils.Element;
 import utils.Hit;
 import utils.Ray;
-
-import java.io.Serializable;
 
 /**
  * This abstract class provides a parent for all Geometry Objects
  *
  * @author Robert Dziuba on 25/10/15.
  */
-public abstract class Geometry extends Element implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Geometry  {
+
     /**
      * The current material of the Geometry child class.
      */
@@ -57,12 +54,4 @@ public abstract class Geometry extends Element implements Serializable {
      */
     public abstract Hit hit(final Ray r);
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Geometry;
-     */
-    public abstract Geometry deepCopy();
-
-    public abstract Geometry deepCopy(final Material m);
 }

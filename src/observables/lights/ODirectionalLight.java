@@ -37,11 +37,14 @@ public class ODirectionalLight extends AOLight {
 
     public SDirectionalLight serialize(){
         return new SDirectionalLight(
-                new Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
-                new Vector3(dx.get(),dy.get(),dz.get()),
+                color.get().getRed(),
+                color.get().getGreen(),
+                color.get().getBlue(),
+                dx.get(),dy.get(),dz.get(),
                 castShadow.get(),
                 photons.get(),
-                new LightShadowPattern(patternSize.get(),patternSubdiv.get()),
+                patternSize.get(),
+                patternSubdiv.get(),
                 name.get()
         );
     }

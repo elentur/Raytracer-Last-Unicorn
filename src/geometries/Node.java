@@ -1,8 +1,6 @@
 package geometries;
 
-import matVect.Point3;
 import matVect.Transform;
-import material.Material;
 import material.SingleColorMaterial;
 import texture.SingleColorTexture;
 import utils.Color;
@@ -27,40 +25,21 @@ public class Node extends Geometry {
      * A list with all geometries which will be rendered
      */
     public final List<Geometry> geos;
-    public final Point3 translation;
-    public final Point3 scaling;
-    public final Point3 rotation;
+
 
     /**
      * Instantiates a new Geometry.
      * @param geos is a List of containing geometries.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Point3 translation,final Point3 scaling , final Point3 rotation, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+    public Node(final Transform transform, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
                 new SingleColorTexture(new Color(0,0,0)),0,false,2,16),reciveShadows,castShadows,
                 visibility,flipNormal);
 
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
-
-        this.t = new Transform().rotateX(rotation.x).rotateY(rotation.y).rotateZ(rotation.z).scale(
-                scaling.x,scaling.y,scaling.z
-        ).translate(
-                translation.x,translation.y,translation.z
-        );
-        this.translation=translation;
-        this.scaling=scaling;
-        this.rotation=rotation;
+        this.t = transform;
         this.geos = geos;
-    }
-
-    /**
-     * Copy Constructor
-     *
-     * @param node
-     */
-    public Node(Node node) {
-        this(node,null);
     }
 
     /**
@@ -68,20 +47,11 @@ public class Node extends Geometry {
      * @param geo is a geometry.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Point3 translation,final Point3 scaling , final Point3 rotation, Geometry geo,final boolean reciveShadows,
+    public Node(final Transform transform, Geometry geo,final boolean reciveShadows,
                 final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(translation,scaling,rotation, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+        this(transform, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
     }
 
-    public Node(final Node node, final Material m) {
-        super(node.material, node.reciveShadows, node.castShadows, node.visibility, node.flipNormal);
-        this.t = node.t;
-        this.name=node.name;
-        this.rotation=node.rotation;
-        this.scaling=node.scaling;
-        this.translation=node.translation;
-        this.geos = node.geos;
-    }
 
     @Override
     public Hit hit(final Ray r) {
@@ -98,23 +68,13 @@ public class Node extends Geometry {
         return (hit == null) ? hit : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
     }
 
-    @Override
-    public Node deepCopy() {
-        return new Node(this);
-    }
-
-    @Override
-    public Geometry deepCopy(final Material m) {
-         return new Node(this,m);
-    }
 
     @Override
     public String toString() {
-        return name;
-        /*return "Node{" +
+        return "Node{" +
                 "t=" + t +
                 ", geos=" + geos +
-                '}';*/
+                '}';
     }
 
     @Override

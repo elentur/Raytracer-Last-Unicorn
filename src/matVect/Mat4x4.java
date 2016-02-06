@@ -1,14 +1,11 @@
 package matVect;
 
-import java.io.Serializable;
-
 /**
  * This class represents a Mat4x4 Object.
  *
  * @author Robert Dziuba on 15/12/15.
  */
-public class Mat4x4 implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Mat4x4  {
     /**
      * This Component represent the m11-Value of the matVect.Mat4x4 as Double.
      */

@@ -27,12 +27,8 @@ public class LambertMaterial extends Material {
     public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
             boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Lambert Material";
     }
-    private LambertMaterial(LambertMaterial m){
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-        name = m.name;
-    }
+
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
@@ -63,15 +59,8 @@ public class LambertMaterial extends Material {
         return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(c);
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new LambertMaterial(this);
-    }
+
+
 
     @Override
     public String toString() {

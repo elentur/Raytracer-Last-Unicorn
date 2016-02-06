@@ -1,33 +1,48 @@
 package serializable.geometries;
 
-import geometries.Geometry;
-import geometries.Node;
-import matVect.Point3;
-import observables.AOElement;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import serializable.SElement;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by roberto on 05.02.16.
  */
-public class SNode extends Node implements SElement {
+public class SNode extends SGeometry {
 
-    private static final long serialVersionUID = 1L;
 
-    private final String name;
+    private final double translationX;
+    private final double translationY;
+    private final double translationZ;
+    private final double scalingX;
+    private final double scalingY;
+    private final double scalingZ;
+    private final double rotationX;
+    private final double rotationY;
+    private final double rotationZ;
 
     private final  List<SElement> sGeos;
 
-    public SNode(Point3 translation, Point3 scaling, Point3 rotation, List<SElement> sGeos, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, String name) {
-        super(translation, scaling, rotation, new ArrayList<Geometry>(), reciveShadows, castShadows, visibility, flipNormal);
-        this.name = name;
-        this.sGeos = sGeos;
+    public SNode(final double translationX, final double translationY, final double translationZ,
+                 final double scalingX, final double scalingY, final double scalingZ,
+                 final double rotationX, final double rotationY, final double rotationZ,
+                 final List<SElement> sGeos, final boolean reciveShadows, final boolean castShadows,
+                 final boolean visibility, final boolean flipNormal, final String name) {
+        super(null,reciveShadows,castShadows,visibility,flipNormal,name);
+        this.translationX = translationX;
+        this.translationY=translationY;
+        this.translationZ=translationZ;
+        this.scalingX=scalingX;
+        this.scalingY=scalingY;
+        this.scalingZ=scalingZ;
+        this.rotationX=rotationX;
+        this.rotationY=rotationY;
+        this.rotationZ=rotationZ;
+        this.sGeos=sGeos;
     }
+
 
     @Override
     public ONode generate(){
@@ -36,17 +51,17 @@ public class SNode extends Node implements SElement {
                 name,
                 sGoes2aGeos());
 
-        geo.translationx.set(translation.x);
-        geo.translationy.set(translation.y);
-        geo.translationz.set(translation.z);
+        geo.translationx.set(translationX);
+        geo.translationy.set(translationY);
+        geo.translationz.set(translationZ);
 
-        geo.scalingx.set(scaling.x);
-        geo.scalingy.set(scaling.y);
-        geo.scalingz.set(scaling.z);
+        geo.scalingx.set(scalingX);
+        geo.scalingy.set(scalingY);
+        geo.scalingz.set(scalingZ);
 
-        geo.rotationx.set(rotation.x);
-        geo.rotationy.set(rotation.y);
-        geo.rotationz.set(rotation.z);
+        geo.rotationx.set(rotationX);
+        geo.rotationy.set(rotationY);
+        geo.rotationz.set(rotationZ);
 
         geo.material.set(null);
         geo.reciveShadows.set(reciveShadows);

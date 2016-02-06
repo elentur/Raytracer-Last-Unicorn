@@ -33,20 +33,9 @@ public class PointLight extends Light {
     public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color,castShadow,photons,lightShadowPattern);
         if (position == null) throw new IllegalArgumentException("position must not be null ");
-        this.name = "Point Light";
         this.position = position;
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param light
-     */
-    public PointLight(PointLight light) {
-        super(light.color, light.castsShadow, light.photons,light.lightShadowPattern);
-        this.name = light.name;
-        this.position = light.position;
-    }
 
     @Override
     public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
@@ -87,11 +76,6 @@ public class PointLight extends Light {
     }
 
     @Override
-    public PointLight deepCopy() {
-        return new PointLight(this);
-    }
-
-    @Override
     public String toString() {
         return "PointLight{" +
                 "position=" + position +
@@ -99,13 +83,13 @@ public class PointLight extends Light {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PointLight)) return false;
 
         PointLight that = (PointLight) o;
 
-        return !(position != null ? !position.equals(that.position) && name.equals(that.name) : that.position != null);
+        return !(position != null ? !position.equals(that.position) : that.position != null);
 
     }
 

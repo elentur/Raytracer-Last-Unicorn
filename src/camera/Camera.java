@@ -3,10 +3,8 @@ package camera;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.SamplingPattern;
-import utils.Element;
 import utils.Ray;
 
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -14,8 +12,7 @@ import java.util.Set;
  *
  * @author Marcus Bätz
  */
-public abstract class Camera extends Element implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Camera{
     /**
      * the eye position
      */
@@ -85,11 +82,6 @@ public abstract class Camera extends Element implements Serializable {
      */
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Camera;
-     */
-    public abstract Camera deepCopy();
+
 
 }

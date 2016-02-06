@@ -1,8 +1,8 @@
 package observables.cameras;
 
 import camera.OrthographicCamera;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import matVect.Point3;
 import matVect.Vector3;
 import sampling.SamplingPattern;
@@ -14,7 +14,7 @@ import serializable.cameras.SOrthographicCamera;
  */
 public class OOrthographicCamera extends AOCamera{
 
-    public DoubleProperty s = new SimpleDoubleProperty();
+    public IntegerProperty s = new SimpleIntegerProperty();
 
     public OOrthographicCamera() {
         name.set("Orthographic Camera");
@@ -35,11 +35,11 @@ public class OOrthographicCamera extends AOCamera{
     @Override
     public SOrthographicCamera serialize(){
         return new SOrthographicCamera(
-                new Point3(ex.get(),ey.get(),ez.get()),
-                new Vector3(gx.get(),gy.get(),gz.get()),
-                new Vector3(tx.get(),ty.get(),tz.get()),
+                ex.get(), ey.get(), ez.get(),
+                gx.get(), gy.get(), gz.get(),
+                tx.get(), ty.get(), tz.get(),
                 this.s.get(),
-                new SamplingPattern(patternSubdiv.get()),
+                patternSubdiv.get(),
                 name.get()
         );
     }

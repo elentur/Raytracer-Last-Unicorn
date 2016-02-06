@@ -1,13 +1,10 @@
 package texture;
 
-import java.io.Serializable;
-
 /**
  * @author  Robert Dziuba on 03/12/15.
  */
-public class TexCoord2 implements Serializable {
+public class TexCoord2{
 
-    private static final long serialVersionUID = 1L;
 
     final public double u;
 

@@ -36,25 +36,11 @@ public class DOFCamera extends Camera {
         super(e, g, t, samplingPattern);
         if (angle <= 0 || angle > Math.PI / 2)
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
-        this.name = "DOF Camera";
         this.angle = angle;
         this.dofPattern = dofPattern;
         this.focalLength = focalLength;
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param camera
-     */
-    public DOFCamera(DOFCamera camera) {
-        super(camera.e, camera.g, camera.t, camera.samplingPattern);
-        this.name = camera.name;
-        this.angle = camera.angle;
-        this.focalLength = camera.focalLength;
-        this.dofPattern = camera.dofPattern;
-        this.rays = camera.rays;
-    }
 
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
@@ -82,11 +68,6 @@ public class DOFCamera extends Camera {
         }
 
         return rays;
-    }
-
-    @Override
-    public DOFCamera deepCopy() {
-        return new DOFCamera(this);
     }
 
     @Override

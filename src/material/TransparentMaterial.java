@@ -24,21 +24,12 @@ public class TransparentMaterial extends Material {
                                final double bumpScale, final Texture irradiance,
                                boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Transparent Material";
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
         this.iOR=indexOfRefraction;
     }
 
-    public TransparentMaterial(final TransparentMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-        name=m.name;
-        this.specular=m.specular;
-        this.reflection=m.reflection;
-        this.exponent=m.exponent;
-        this.iOR=m.iOR;
-    }
 
     /**
      * Returns the right illuminated color for the hit point
@@ -125,15 +116,6 @@ public class TransparentMaterial extends Material {
         return basicColor;
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new TransparentMaterial(this);
-    }
 
     @Override
     public boolean equals(final Object o) {

@@ -2,7 +2,6 @@ package sampling;
 
 import matVect.Point2;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,7 @@ import java.util.List;
  *
  * @author Robert Dziuba on 21.12.2015
  */
- abstract class SubdivisionPattern implements Serializable {
-    private static final long serialVersionUID = 1L;
+ abstract class SubdivisionPattern {
 
     /**
      *  size of the pattern

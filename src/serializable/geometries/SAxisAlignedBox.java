@@ -1,26 +1,18 @@
 package serializable.geometries;
 
-import geometries.AxisAlignedBox;
 import observables.geometries.OAxisAlignedBox;
-import observables.materials.DefaultMaterial;
-import serializable.SElement;
 import serializable.materials.SMaterial;
 
 /**
  * Created by roberto on 05.02.16.
  */
-public class SAxisAlignedBox extends AxisAlignedBox implements SElement {
+public class SAxisAlignedBox extends SGeometry{
 
-    private static final long serialVersionUID = 1L;
-
-    private final String name;
-    private final SMaterial material;
-
-    public SAxisAlignedBox(SMaterial material, boolean reciveShadows, boolean castShadows, boolean visibility, boolean flipNormal, String name) {
-        super(DefaultMaterial.getSingleColorMaterial().generate(), reciveShadows, castShadows, visibility, flipNormal);
-        this.name = name;
-        this.material=material;
+    public SAxisAlignedBox(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
+                           final boolean visibility, final boolean flipNormal, final String name) {
+        super(material,reciveShadows,castShadows,visibility,flipNormal,name);
     }
+
 
     @Override
     public OAxisAlignedBox generate() {

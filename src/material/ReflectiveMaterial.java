@@ -38,19 +38,11 @@ public class ReflectiveMaterial extends Material {
                               final Texture irradiance,
                               boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,irradiance,ambientOcllusion,ambientSize,ambientSubdiv);
-        name="Reflective Material";
         this.specular=specular;
         this.reflection=reflection;
         this.exponent=exponent;
     }
 
-    public ReflectiveMaterial(final ReflectiveMaterial m) {
-        super(m.texture,m.bumpMap,m.bumpScale,m.irradiance,m.ambientOcllusion,m.ambientSize,m.ambientSubdiv);
-        name=m.name;
-        this.specular=m.specular;
-        this.reflection=m.reflection;
-        this.exponent=m.exponent;
-    }
 
     @Override
     public Color colorFor(Hit hit, World world, Tracer tracer) {
@@ -97,15 +89,7 @@ public class ReflectiveMaterial extends Material {
         return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
 
-    /**
-     * deepCopy Method
-     *
-     * @return a copied Object from Material;
-     */
-    @Override
-    public Material deepCopy() {
-        return new ReflectiveMaterial(this);
-    }
+
 
     @Override
     public String toString() {

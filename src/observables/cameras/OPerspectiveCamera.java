@@ -35,11 +35,11 @@ public class OPerspectiveCamera extends AOCamera {
     @Override
     public SPerspectiveCamera serialize(){
         return new SPerspectiveCamera(
-                new Point3(ex.get(),ey.get(),ez.get()),
-                new Vector3(gx.get(),gy.get(),gz.get()),
-                new Vector3(tx.get(),ty.get(),tz.get()),
+                ex.get(), ey.get(), ez.get(),
+                gx.get(), gy.get(), gz.get(),
+                tx.get(), ty.get(), tz.get(),
                 this.angle.get(),
-                new SamplingPattern(patternSubdiv.get()),
+                patternSubdiv.get(),
                 name.get()
         );
     }

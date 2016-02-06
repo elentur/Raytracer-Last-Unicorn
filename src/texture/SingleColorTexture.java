@@ -15,7 +15,6 @@ public class SingleColorTexture extends Texture {
             throw new IllegalArgumentException("The color cannot be null!");
         }
         this.color = color;
-        name = "SingleColorTexture";
     }
 
     @Override

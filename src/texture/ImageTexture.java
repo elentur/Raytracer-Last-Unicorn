@@ -15,7 +15,6 @@ public class ImageTexture extends Texture {
 
     public ImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
         super(scaleU,scaleV,offsetU,offsetV,rotate,img);
-        name = "Image Texture";
     }
 
     @Override

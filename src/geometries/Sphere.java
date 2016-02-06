@@ -32,7 +32,6 @@ public class Sphere extends Geometry {
      */
     public Sphere(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,flipNormal);
-        this.name = "Sphere";
         this.c = new Point3(0,0,0);
         this.r = 1;
     }
@@ -97,36 +96,10 @@ public class Sphere extends Geometry {
 
 
         }
-        /*Vector3 l = c.sub(r.o);
-        double s = l.dot(r.d.normalized());
-        double l2 = l.dot(l);
-        double r2 = this.r*this.r;
-        if(s < 0 && l2 > r2) return null;
-        double m2 = l2 -s*s;
-        if(m2> r2) return null;
-        double q= Math.sqrt(r2-m2);
-        double t = s-q;
-        Normal3 n = r.at(t).sub(this.c).normalized().asNormal();
-        if(l2 -0.00001<r2){
-            t = s+q;
-            n = r.at(t).sub(this.c).normalized().asNormal();
-        }
 
-        if(t > 0){
-            return new Hit(t, n, r, this);
-        }*/
         return null;
     }
 
-    @Override
-    public Sphere deepCopy() {
-        return new Sphere(this);
-    }
-
-    @Override
-    public Geometry deepCopy(final Material m) {
-        return new Sphere(this,m);
-    }
 
     @Override
     public String toString() {
@@ -138,15 +111,14 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Sphere)) return false;
 
         Sphere sphere = (Sphere) o;
 
         if (Double.compare(sphere.r, r) != 0) return false;
-        if (!c.equals(sphere.c)) return false;
-        return material.equals(sphere.material) && name.equals(sphere.name);
+        return !(c != null ? !c.equals(sphere.c) : sphere.c != null);
 
     }
 

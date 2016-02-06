@@ -2,7 +2,6 @@ package geometries;
 
 
 import UI.Dialog;
-import controller.AController;
 import matVect.Normal3;
 import matVect.Point3;
 import material.Material;
@@ -38,7 +37,6 @@ public class ShapeFromFile extends Geometry {
     public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
         super(material,reciveShadows,castShadows,visibility,castShadows);
         this.file = path;
-       // name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
         v = new ArrayList<>();
         vn = new ArrayList<>();
@@ -108,64 +106,13 @@ public class ShapeFromFile extends Geometry {
         // System.out.println(ImageSaver.fTriangle.size());
     }
 
-    public ShapeFromFile(ShapeFromFile shapeFromFile) {
-        this(shapeFromFile,shapeFromFile.material);
-    }
-
-    public ShapeFromFile(final ShapeFromFile shapeFromFile, final Material m) {
-        super(m, shapeFromFile.reciveShadows, shapeFromFile.castShadows, shapeFromFile.visibility, shapeFromFile.castShadows);
-        this.file = shapeFromFile.file;
-        this.triangles = shapeFromFile.triangles;
-        this.v = shapeFromFile.v;
-        this.vn = shapeFromFile.vn;
-        this.vt = shapeFromFile.vt;
-        this.f = shapeFromFile.f;
-        this.octree = shapeFromFile.octree;
-    }
 
     @Override
     public Hit hit(Ray r) {
-       /* Hit h = null;
-        if(octree !=null){
-            if(octree.box.hit(r) == null) return null;
-        }
-        for (Geometry t : triangles) {
-            Hit hit = t.hit(r);
-            if (h == null || (hit != null && h.t > hit.t)) h = hit;
-        }
-        return h;*/
         return octree.hit(r);
     }
 
-    @Override
-    public ShapeFromFile deepCopy() {
-        return new ShapeFromFile(this);
-    }
 
-    @Override
-    public Geometry deepCopy(final Material m) {
-        return new ShapeFromFile(this,m);
-    }
-
-    private String nameTest(String n) {
-        int index = 1;
-        boolean run = false;
-        for (Geometry g : AController.raytracer.getWorld().geometries) {
-            if (g.name.equals(n)) run = true;
-        }
-        while (run) {
-            int i = index;
-            for (Geometry g : AController.raytracer.getWorld().geometries) {
-                if (g.name == n + index) index++;
-            }
-            if (i == index) {
-                run = false;
-                return n + index;
-            }
-        }
-
-        return n;
-    }
 
     /**
      * Reads an Wavefront obj File and converts it into a group of triangles.

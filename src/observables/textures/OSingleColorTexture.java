@@ -36,7 +36,9 @@ public class OSingleColorTexture extends AOTexture {
     @Override
     public SSingleColorTexture serialize() {
         return new SSingleColorTexture(
-                new utils.Color(color.get().getRed(),color.get().getGreen(),color.get().getBlue()),
+              color.get().getRed(),
+                color.get().getGreen(),
+                color.get().getBlue(),
                 name.get()
         );
     }
