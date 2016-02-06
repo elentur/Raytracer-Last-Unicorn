@@ -120,7 +120,15 @@ public class TransparentMaterial extends Material {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof TransparentMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        TransparentMaterial that = (TransparentMaterial) o;
+
+        if (Double.compare(that.iOR, iOR) != 0) return false;
+        if (exponent != that.exponent) return false;
+        if (specular != null ? !specular.equals(that.specular) : that.specular != null) return false;
+        return !(reflection != null ? !reflection.equals(that.reflection) : that.reflection != null);
 
     }
 

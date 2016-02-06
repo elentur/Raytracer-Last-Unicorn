@@ -141,7 +141,6 @@ public class Triangle extends Geometry {
                 if (t > 0) {
                     Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
 
-                    final Point3 p = r.at(t);
 
                     final double u = texCoordA.u*(1 - beta - gamma) +  texCoordB.u * beta + texCoordC.u * gamma;
                     final double v = texCoordA.v*(1 - beta - gamma) +  texCoordB.v * beta + texCoordC.v * gamma;

@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -36,14 +35,6 @@ import java.util.Set;
  * @author Marcus Bätz
  */
 public class MainMaterialSettingsController extends AController {
-    /**
-     * Called to initialize a controller after its root element has been
-     * completely processed.
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
-     */
     @FXML
     private HBox materialRenderViewHBox;
     @FXML
@@ -88,7 +79,6 @@ public class MainMaterialSettingsController extends AController {
     private Slider sldIOR;
 
 
-
     private final Callback<ListView<AOTexture>, ListCell<AOTexture>> cell=  new Callback<ListView<AOTexture>, ListCell<AOTexture>>() {
         @Override
         public ListCell<AOTexture> call(ListView<AOTexture> c) {
@@ -107,6 +97,14 @@ public class MainMaterialSettingsController extends AController {
 
     private boolean initialized = false;
 
+    /**
+     * Called to initialize a controller after its root element has been
+     * completely processed.
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  <tt>null</tt> if the location is not known.
+     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     */
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         material.setValue(((ONode)selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
@@ -202,7 +200,7 @@ public class MainMaterialSettingsController extends AController {
                 c = ((OReflectiveMaterial)m).specular.getValue().color;
                 exp = ((OReflectiveMaterial)m).exponent;
                 if(cmbSpecular.getItems().contains(((OReflectiveMaterial) m).specular.get()))  cmbSpecular.getSelectionModel().select(((OReflectiveMaterial) m).specular.get());
-            }else{
+            }else {
                 c = ((OTransparentMaterial)m).specular.getValue().color;
                 exp = ((OTransparentMaterial)m).exponent;
                 if(cmbSpecular.getItems().contains(((OTransparentMaterial) m).specular.get()))  cmbSpecular.getSelectionModel().select(((OTransparentMaterial) m).specular.get());
@@ -233,11 +231,11 @@ public class MainMaterialSettingsController extends AController {
             sldIOR.setMax(2);
             sldIOR.valueProperty().bindBidirectional(((OTransparentMaterial)m).indexOfRefraction);
         }
-        materialView.lookup("#btnNewDiffuse").setOnMouseClicked(a->newTexture(a,cmbDiffuse));
-        materialView.lookup("#btnNewNormal").setOnMouseClicked(a->newTexture(a,cmbNormal));
-        materialView.lookup("#btnNewIrradiance").setOnMouseClicked(a->newTexture(a,cmbIrradiance));
-        if(materialView.lookup("#btnNewSpecular")!=null)materialView.lookup("#btnNewSpecular").setOnMouseClicked(a->newTexture(a,cmbSpecular));
-        if(materialView.lookup("#btnNewReflection")!=null)materialView.lookup("#btnNewReflection").setOnMouseClicked(a->newTexture(a,cmbReflection));
+        materialView.lookup("#btnNewDiffuse").setOnMouseClicked(a->newTexture(cmbDiffuse));
+        materialView.lookup("#btnNewNormal").setOnMouseClicked(a->newTexture(cmbNormal));
+        materialView.lookup("#btnNewIrradiance").setOnMouseClicked(a->newTexture(cmbIrradiance));
+        if(materialView.lookup("#btnNewSpecular")!=null)materialView.lookup("#btnNewSpecular").setOnMouseClicked(a->newTexture(cmbSpecular));
+        if(materialView.lookup("#btnNewReflection")!=null)materialView.lookup("#btnNewReflection").setOnMouseClicked(a->newTexture(cmbReflection));
 
 
         materialView.lookup("#btnClearDiffuse").setOnMouseClicked(a->clearTexture(m.texture,cmbDiffuse,clpDiffuse));
@@ -286,7 +284,7 @@ public class MainMaterialSettingsController extends AController {
         loadTextureTabs();
     }
 
-    private void newTexture(final MouseEvent a, final ComboBox<AOTexture> comboBox) {
+    private void newTexture( final ComboBox<AOTexture> comboBox) {
             FileChooser dlg = new FileChooser();
             dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Jpeg  (*.jpg)", "*.jpg"));
             dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG. (*.png)", "*.png"));
@@ -337,6 +335,8 @@ public class MainMaterialSettingsController extends AController {
                 masterTabPane.getTabs().add(tab);
             }
         } catch (IOException e) {
+            //TODO schöne Ausgabe
+            System.out.println("Fehler beim laden");
         }
 
     }

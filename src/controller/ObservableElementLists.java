@@ -11,7 +11,6 @@ import observables.geometries.ONode;
 import observables.lights.AOLight;
 import observables.materials.AOMaterial;
 import observables.materials.DefaultMaterial;
-import raytracer.Raytracer;
 
 import java.util.List;
 
@@ -21,7 +20,6 @@ import java.util.List;
  * @author Marcus Bätz
  */
 public class ObservableElementLists {
-    private final Raytracer r = AController.raytracer;
     private static ObservableElementLists ourInstance = new ObservableElementLists();
     private TreeView<AOElement> treeView;
     private TreeItem<AOElement> nodeTree;

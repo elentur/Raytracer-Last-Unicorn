@@ -140,10 +140,6 @@ public class MainSettingsCameraController extends AController {
         }
     }
 
-    @FXML
-    private void handleUpdateCamera() {
-
-    }
 
 
 }

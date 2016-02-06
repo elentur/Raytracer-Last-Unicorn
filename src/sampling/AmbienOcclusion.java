@@ -20,11 +20,10 @@ public class AmbienOcclusion {
 
     public double getOcclusion(double size, int subdiv, Hit hit, Point3 p, World world) {
         List<Vector3> testDirections = new ArrayList<>();
-        int numberOfRays = subdiv;
         int numOfHits = 0;
         Random rnd = new Random();
 
-        while (testDirections.size() < numberOfRays) {
+        while (testDirections.size() < subdiv) {
             Vector3 v = new Vector3(rnd.nextDouble() - 0.5, rnd.nextDouble() - 0.5, rnd.nextDouble() - 0.5);
             double alpha = Math.acos(hit.n.dot(v.normalized()));
             if (alpha < Math.PI / 4 && alpha > 0) {

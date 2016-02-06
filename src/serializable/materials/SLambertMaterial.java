@@ -1,6 +1,6 @@
 package serializable.materials;
 
-import controller.AController;
+
 import observables.materials.OLambertMaterial;
 import serializable.textures.STexture;
 

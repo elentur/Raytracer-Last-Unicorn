@@ -103,7 +103,14 @@ public class ReflectiveMaterial extends Material {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof ReflectiveMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        ReflectiveMaterial that = (ReflectiveMaterial) o;
+
+        if (exponent != that.exponent) return false;
+        if (specular != null ? !specular.equals(that.specular) : that.specular != null) return false;
+        return !(reflection != null ? !reflection.equals(that.reflection) : that.reflection != null);
 
     }
 

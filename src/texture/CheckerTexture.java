@@ -3,19 +3,12 @@ package texture;
 import utils.Color;
 
 /**
- * Created by roberto on 03/12/15.
+ * Created by Marcus Baetz on 03/12/15.
+ * @author Marcus Bätz
  */
 public class CheckerTexture extends Texture {
 
     final Color color;
-
-    public CheckerTexture(final Color color) {
-        super(1,1,1,1,0,null);
-        if (color == null) {
-            throw new IllegalArgumentException("The color cannot be null!");
-        }
-        this.color = color;
-    }
     public CheckerTexture(final Color color, final double ScaleU, final double ScaleV, final double OffsetU, final double OffsetV, final double rotate) {
         super(ScaleU,ScaleV,OffsetU,OffsetV,rotate,null);
         if (color == null) {

@@ -4,6 +4,7 @@ import observables.cameras.ODOFCamera;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SDOFCamera  extends SCamera{
 

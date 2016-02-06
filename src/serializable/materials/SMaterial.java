@@ -7,7 +7,6 @@ import serializable.SElement;
 import serializable.textures.STexture;
 
 import java.io.Serializable;
-import java.util.Observable;
 
 /**
  * Created by Marcus Baetz on 05.02.2016.

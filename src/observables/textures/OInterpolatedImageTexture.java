@@ -1,6 +1,6 @@
 package observables.textures;
 
-import serializable.textures.SImageTexture;
+import serializable.textures.SInterpolatedImageTexture;
 import texture.InterpolatedImageTexture;
 
 /**
@@ -27,8 +27,8 @@ public class OInterpolatedImageTexture extends AOTexture {
     }
 
     @Override
-    public SImageTexture serialize() {
-        return new SImageTexture(
+    public SInterpolatedImageTexture serialize() {
+        return new SInterpolatedImageTexture(
                 path.get(),
                 name.get());
     }

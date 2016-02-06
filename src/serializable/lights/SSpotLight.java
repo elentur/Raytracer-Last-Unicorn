@@ -4,6 +4,7 @@ import observables.lights.OSpotLight;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SSpotLight  extends SLight {
 

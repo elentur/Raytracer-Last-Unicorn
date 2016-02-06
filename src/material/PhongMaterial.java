@@ -107,9 +107,15 @@ public class PhongMaterial extends Material {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof PhongMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        PhongMaterial that = (PhongMaterial) o;
+
+        if (exponent != that.exponent) return false;
+        return !(specular != null ? !specular.equals(that.specular) : that.specular != null);
 
     }
 

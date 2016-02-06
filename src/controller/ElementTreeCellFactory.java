@@ -25,7 +25,7 @@ public class ElementTreeCellFactory implements Callback<TreeView<AOElement>, Tre
             protected void updateItem(AOElement item, boolean empty) {
                 super.updateItem(item, empty);
 
-                if (item != null || !empty) {
+                if (item != null ) {
                     textProperty().bind(item.name);
                     if (item instanceof AOGeometry) {
                         setGraphic(new ImageView(new Image("icons/mesh.png")));

@@ -1,7 +1,6 @@
 package serializable.textures;
 
 import controller.AController;
-import observables.AOElement;
 import observables.textures.OImageTexture;
 
 /**

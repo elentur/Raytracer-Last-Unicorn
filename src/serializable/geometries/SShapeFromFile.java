@@ -5,6 +5,7 @@ import serializable.materials.SMaterial;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SShapeFromFile extends SGeometry{
 

@@ -84,7 +84,7 @@
     </TabPane>
 
     <HBox styleClass="setting-group-2">
-        <Button fx:id = "btnOK" text="OK"/>
         <Button fx:id = "btnCancel" text="Cancle"/>
+        <Button fx:id = "btnOK" text="OK"/>
     </HBox>
 </VBox>

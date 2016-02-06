@@ -46,4 +46,36 @@ public abstract class Material {
      */
     public abstract Color colorFor(final Hit hit, final World world, final Tracer tracer);
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Material)) return false;
+
+        Material material = (Material) o;
+
+        if (Double.compare(material.bumpScale, bumpScale) != 0) return false;
+        if (ambientOcllusion != material.ambientOcllusion) return false;
+        if (Double.compare(material.ambientSize, ambientSize) != 0) return false;
+        if (ambientSubdiv != material.ambientSubdiv) return false;
+        if (!texture.equals(material.texture)) return false;
+        if (bumpMap != null ? !bumpMap.equals(material.bumpMap) : material.bumpMap != null) return false;
+        return !(irradiance != null ? !irradiance.equals(material.irradiance) : material.irradiance != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = texture.hashCode();
+        result = 31 * result + (bumpMap != null ? bumpMap.hashCode() : 0);
+        temp = Double.doubleToLongBits(bumpScale);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (irradiance != null ? irradiance.hashCode() : 0);
+        result = 31 * result + (ambientOcllusion ? 1 : 0);
+        temp = Double.doubleToLongBits(ambientSize);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + ambientSubdiv;
+        return result;
+    }
 }

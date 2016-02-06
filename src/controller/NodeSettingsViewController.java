@@ -57,7 +57,7 @@ public class NodeSettingsViewController extends AController {
                 else if (e instanceof AOLight) t.setText("Light");
                 else if (e instanceof AOCamera) t.setText("Camera");
 
-                if (e instanceof AOGeometry) {
+                if (e instanceof ONode) {
                     if (!((ONode) e).oGeos.isEmpty() && !(((ONode) e).oGeos.get(0) instanceof ONode)) {
                         Tab t2 = FXMLLoader.load(getClass().getResource("/fxml/mainMaterialSettingsView.fxml"));
                         t2.setText("Material");

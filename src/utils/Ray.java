@@ -66,15 +66,15 @@ public class Ray {
 
         Ray ray = (Ray) o1;
 
-        if (o != null ? !o.equals(ray.o) : ray.o != null) return false;
-        return !(d != null ? !d.equals(ray.d) : ray.d != null);
+        if (!o.equals(ray.o)) return false;
+        return d.equals(ray.d);
 
     }
 
     @Override
     public int hashCode() {
-        int result = o != null ? o.hashCode() : 0;
-        result = 31 * result + (d != null ? d.hashCode() : 0);
+        int result = o.hashCode();
+        result = 31 * result + (d.hashCode());
         return result;
     }
 }

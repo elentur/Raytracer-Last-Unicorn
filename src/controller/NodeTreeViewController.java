@@ -70,7 +70,7 @@ public class NodeTreeViewController extends AController {
             if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
                 selectedTreeItem.set(newValue);
             }else{
-                selectedTreeItem.set(new TreeItem<AOElement>(new AOElement()));
+                selectedTreeItem.set(new TreeItem<>(new AOElement()));
             }
         });
     }

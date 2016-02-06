@@ -49,7 +49,7 @@ public class Node extends Geometry {
      */
     public Node(final Transform transform, Geometry geo,final boolean reciveShadows,
                 final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(transform, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+        this(transform, new ArrayList<>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
     }
 
 
@@ -65,7 +65,7 @@ public class Node extends Geometry {
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return (hit == null) ? hit : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
+        return (hit == null) ? null : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
     }
 
 

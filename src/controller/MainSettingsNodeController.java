@@ -2,9 +2,6 @@ package controller;
 
 import UI.MaterialView;
 import UI.NumberTextField;
-import geometries.Geometry;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -17,12 +14,10 @@ import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
 import observables.materials.AOMaterial;
-import observables.materials.DefaultMaterial;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -105,7 +100,6 @@ public class MainSettingsNodeController extends AController {
     }
 
     private void initializeFields() {
-        TabPane t = null;
         ONode n = (ONode) selectedTreeItem.get().getValue();
         txtTranslationX.doubleProperty.bindBidirectional(n.translationx);
         txtTranslationY.doubleProperty.bindBidirectional(n.translationy);
@@ -116,7 +110,6 @@ public class MainSettingsNodeController extends AController {
         txtRotationX.doubleProperty.bindBidirectional(n.rotationx);
         txtRotationY.doubleProperty.bindBidirectional(n.rotationy);
         txtRotationZ.doubleProperty.bindBidirectional(n.rotationz);
-        //material.bindBidirectional(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material);
         if(!(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode))material.setValue(((ONode) selectedTreeItem.get().getValue()).oGeos.get(0).material.getValue());
 
         cmbMaterial.setItems(materialList);
@@ -159,7 +152,6 @@ public class MainSettingsNodeController extends AController {
     private void setMaterialComboBox() {
         if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode) {
             ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
-           // ((HBox) materialView.getParent()).getChildren().remove(materialView);
         }
         cmbMaterial.setCellFactory(new Callback<ListView<AOMaterial>, ListCell<AOMaterial>>() {
             @Override
@@ -187,9 +179,6 @@ public class MainSettingsNodeController extends AController {
                     textProperty().unbind();
                     setText("");
                 } else {
-                   // String prefix = "";
-                   //if (this.getIndex() < 6) prefix = "New";
-                  //  setText(prefix + " " + item.name.get());
                     textProperty().bind(item.name);
                 }
             }
@@ -199,23 +188,15 @@ public class MainSettingsNodeController extends AController {
 
     }
 
-    @FXML
-    private void handleUpdateNode(Event a) {
-        updateNode(null);
-    }
-
-    private void updateNode(List<Geometry> geos) {
-
-    }
-    public void handleComboBoxMaterialAction(ActionEvent actionEvent) {
+    public void handleComboBoxMaterialAction() {
 
         AOMaterial m = cmbMaterial.getSelectionModel().getSelectedItem();
         if (cmbMaterial.getSelectionModel().getSelectedIndex() < 6) {
             try {
                 m =  cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
                 materialList.add(m);
-            } catch (InstantiationException e) {
-            } catch (IllegalAccessException e) {
+            } catch (InstantiationException | IllegalAccessException e) {
+                //TODO vernüftige Exception Behandlung
             }
 
         }

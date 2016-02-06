@@ -70,12 +70,6 @@ public class LambertMaterial extends Material {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        return false;
-
-    }
 
     @Override
     public int hashCode() {

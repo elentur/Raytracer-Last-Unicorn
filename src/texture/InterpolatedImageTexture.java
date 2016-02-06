@@ -9,10 +9,6 @@ import utils.Color;
  */
 public class InterpolatedImageTexture extends Texture {
 
-    public InterpolatedImageTexture(final Image img) {
-        this(img,1,1,1,1,0);
-    }
-
     public InterpolatedImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV,final double rotate) {
         super(scaleU,scaleV,offsetU,offsetV,rotate,img);
     }
@@ -59,24 +55,12 @@ public class InterpolatedImageTexture extends Texture {
         fxColor = reader.getColor(x + 1, y + 1);
         Color color4 = new Color(fxColor.getRed(), fxColor.getGreen(), fxColor.getBlue());
 
-        // (tex[x][y] * u_opposite  + tex[x+1][y]   * u_ratio) * v_opposite
-        // +
-        // (tex[x][y+1] * u_opposite  + tex[x+1][y+1] * u_ratio) * v_ratio;
-
         Color a = color1.mul(u_opposite).add(color2.mul(u_ratio));
         Color b = a.mul(v_opposite);
         Color c = color3.mul(u_opposite).add(color4.mul(u_ratio));
         Color d = c.mul(v_ratio);
 
-        Color e = b.add(d);
-
-        return e;
-
-    }
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        return false;
+        return b.add(d);
 
     }
 

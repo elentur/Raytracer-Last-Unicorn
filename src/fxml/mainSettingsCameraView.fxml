@@ -10,24 +10,24 @@
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Position"/>
-        <NumberTextField fx:id="txtPositionX" onAction="#handleUpdateCamera" />
-        <NumberTextField fx:id="txtPositionY" onAction="#handleUpdateCamera"/>
-        <NumberTextField fx:id="txtPositionZ" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtPositionX"  />
+        <NumberTextField fx:id="txtPositionY"/>
+        <NumberTextField fx:id="txtPositionZ" />
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Direction"/>
-        <NumberTextField fx:id="txtDirectionX" onAction="#handleUpdateCamera"/>
-        <NumberTextField fx:id="txtDirectionY" onAction="#handleUpdateCamera"/>
-        <NumberTextField fx:id="txtDirectionZ" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtDirectionX" />
+        <NumberTextField fx:id="txtDirectionY" />
+        <NumberTextField fx:id="txtDirectionZ" />
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="UpVector"/>
-        <NumberTextField fx:id="txtUpVectorX" onAction="#handleUpdateCamera"/>
-        <NumberTextField fx:id="txtUpVectorY" onAction="#handleUpdateCamera"/>
-        <NumberTextField fx:id="txtUpVectorZ" onAction="#handleUpdateCamera"/>
+        <NumberTextField fx:id="txtUpVectorX" />
+        <NumberTextField fx:id="txtUpVectorY" />
+        <NumberTextField fx:id="txtUpVectorZ" />
     </HBox>
     <HBox styleClass="form-group-4">
         <Label text="Sampling"/>
-        <NumberTextField styleClass="col-3" fx:id="txtSampling" onAction="#handleUpdateCamera"/>
+        <NumberTextField styleClass="col-3" fx:id="txtSampling" />
     </HBox>
 </VBox>

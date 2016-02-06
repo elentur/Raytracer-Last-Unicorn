@@ -4,6 +4,7 @@ import observables.lights.ODirectionalLight;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SDirectionalLight extends SLight {
 

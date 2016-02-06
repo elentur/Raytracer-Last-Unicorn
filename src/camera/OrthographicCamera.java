@@ -22,8 +22,6 @@ public class OrthographicCamera extends Camera {
     public final double s;
 
 
-    private Set<Ray> rays;
-
     /**
      * Constructor initializes e. g and t.
      *
@@ -55,7 +53,7 @@ public class OrthographicCamera extends Camera {
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
-        rays = new HashSet<>();
+        Set<Ray> rays = new HashSet<>();
 
         double aspectRatio = (double) w / (double) h;
 

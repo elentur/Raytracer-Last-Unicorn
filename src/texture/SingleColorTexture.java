@@ -21,10 +21,15 @@ public class SingleColorTexture extends Texture {
     public Color getColor(double u, double v) {
         return color;
     }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof SingleColorTexture)) return false;
+
+        SingleColorTexture that = (SingleColorTexture) o;
+
+        return !(color != null ? !color.equals(that.color) : that.color != null);
 
     }
 

@@ -9,9 +9,6 @@ import utils.Color;
  */
 public class ImageTexture extends Texture {
 
-    public ImageTexture(final Image img) {
-        this(img,1,1,0,0,0);
-    }
 
     public ImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
         super(scaleU,scaleV,offsetU,offsetV,rotate,img);
@@ -37,12 +34,7 @@ public class ImageTexture extends Texture {
         return new Color(fxColor.getRed(), fxColor.getGreen(), fxColor.getBlue());
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        return false;
 
-    }
 
     @Override
     public int hashCode() {

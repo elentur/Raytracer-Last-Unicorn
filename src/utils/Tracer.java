@@ -36,19 +36,4 @@ public class Tracer {
 
         return world.backgroundColor;
     }
-/*
-    public Color refraction(Ray reflectionRay,World world, boolean in){
-        this.in = !in;
-        if(recursionDepth > 0) {
-            recursionDepth--;
-            Hit hit =  world.hit(reflectionRay,0,0);
-
-            if(hit != null && hit.t > 0.0001){
-                return hit.geo.material.colorFor(hit, world,this);
-            }
-        }
-
-
-        return world.backgroundColor;
-    }*/
 }

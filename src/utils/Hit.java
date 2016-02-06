@@ -64,8 +64,8 @@ public class Hit {
         Hit hit = (Hit) o;
 
         if (Double.compare(hit.t, t) != 0) return false;
-        if (ray != null ? !ray.equals(hit.ray) : hit.ray != null) return false;
-        return !(geo != null ? !geo.equals(hit.geo) : hit.geo != null);
+        if (!ray.equals(hit.ray)) return false;
+        return geo.equals(hit.geo);
 
     }
 

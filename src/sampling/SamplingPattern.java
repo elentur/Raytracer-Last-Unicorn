@@ -4,7 +4,6 @@ import matVect.Point2;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * This class represents a SamplingPattern Object.
@@ -24,17 +23,12 @@ public class SamplingPattern extends SubdivisionPattern{
      */
     public List<Point2> generateSampling() {
 
-        Random rn = new Random();
         points.clear();
-        if(subdiv==1){
-           // points.add(new Point2(0,0));
-          //  return points;
-        }
-        final double v = 2*size/subdiv;
         if(subdiv ==1){
             points.add(new Point2(0,0));
             return points;
         }
+        final double v = 2*size/subdiv;
         for(int i = 0; i <subdiv+1; i++){
              final double z =  i*v-size;
                 points.add(new Point2(z,z));

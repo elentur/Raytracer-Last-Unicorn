@@ -1,9 +1,7 @@
 package observables.geometries;
 
 import geometries.Plane;
-import observables.materials.AOMaterial;
 import serializable.geometries.SPlane;
-import serializable.geometries.SSphere;
 
 /**
  * Created by

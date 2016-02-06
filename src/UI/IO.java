@@ -20,10 +20,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marcus Baetz on 04.11.2015.
@@ -62,14 +62,8 @@ public class IO {
         ObservableElementLists list = ObservableElementLists.getInstance();
         SElement camera = null;
         if ( list.camera!=null)  camera = list.camera.serialize();
-        List<SElement> lights = new ArrayList<>();
-        for (AOLight light : list.lights){
-            lights.add(light.serialize());
-        }
-        List<SElement> geometries = new ArrayList<>();
-        for (AOGeometry geometry : list.geometries){
-            geometries.add(geometry.serialize());
-        }
+        List<SElement> lights = list.lights.stream().map(AOLight::serialize).collect(Collectors.toList());
+        List<SElement> geometries = list.geometries.stream().map(AOGeometry::serialize).collect(Collectors.toList());
 
         Scene scene = new Scene(geometries,lights,camera);
 
@@ -91,7 +85,7 @@ public class IO {
         }
     }
 
-    public static void loadScene(final Stage stage, final TreeItem<AOElement> rootItem) {
+    public static void loadScene(final Stage stage) {
 
 
         final FileChooser fileChooser = new FileChooser();
@@ -125,13 +119,9 @@ public class IO {
                 list.clearAll();
                 if(scene.getCamera()!=null)list.addElement(scene.getCamera());
 
-                for(AOLight light : scene.getLights()){
-                    list.addElement(light);
-                }
+                scene.getLights().forEach(list::addElement);
 
-                for(AOGeometry geometry : scene.getGeometries()){
-                    list.addElement(geometry);
-                }
+                scene.getGeometries().forEach(list::addElement);
             }
 
 

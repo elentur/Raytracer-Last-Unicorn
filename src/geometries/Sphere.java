@@ -36,20 +36,6 @@ public class Sphere extends Geometry {
         this.r = 1;
     }
 
-    /**
-     * Copy Constructor
-     *
-     * @param sphere
-     */
-    public Sphere(Sphere sphere) {
-        this(sphere,sphere.material);
-    }
-
-    public Sphere(final Sphere sphere, final Material m) {
-        super(m, sphere.reciveShadows, sphere.castShadows, sphere.visibility, sphere.flipNormal);
-        this.c = sphere.c;
-        this.r = sphere.r;
-    }
 
     @Override
     public Hit hit(Ray r) {
@@ -57,12 +43,11 @@ public class Sphere extends Geometry {
             throw new IllegalArgumentException("The r cannot be null!");
         }
 
-        // t = (-b +- wurzel b2 - 4 * ac) / 2a
         final double a = r.d.dot(r.d);
         final double b = r.d.dot(r.o.sub(c).mul(2));
         final double cn = r.o.sub(c).dot(r.o.sub(c)) - (this.r * this.r);
 
-        // d = b2 - 4ac
+
         final double d = (b * b) - (4 * a * cn);
 
         double t = -1;

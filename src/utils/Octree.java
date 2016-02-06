@@ -58,14 +58,6 @@ public class Octree {
             if (t.c.y > runY) runY = t.c.y;
             if (t.c.z > runZ) runZ = t.c.z;
         }
-
-      /*  double e = 0;
-        runX += e;
-        runY += e;
-        runZ += e;
-        lbfX -= e;
-        lbfY -= e;
-        lbfZ -= e;*/
         generateOctrees();
     }
 

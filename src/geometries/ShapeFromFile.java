@@ -35,7 +35,7 @@ public class ShapeFromFile extends Geometry {
     private final Octree octree;
 
     public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows,castShadows,visibility,castShadows);
+        super(material,reciveShadows,castShadows,visibility,flipNormal);
         this.file = path;
         triangles = new ArrayList<>();
         v = new ArrayList<>();
@@ -48,12 +48,11 @@ public class ShapeFromFile extends Geometry {
 
     protected void loadFile(){
 
-        List<Point3> points = new ArrayList<>();
         if (readFile(file.getPath())) {
             try {
                 for (String s : f) {
                     String[] fs = s.split("\\s+");
-                    //F�r einfaches f
+                    //Für einfaches f
                     if (fs[0].matches("^\\d+(\\.\\d+)?") && fs.length == 3) {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;

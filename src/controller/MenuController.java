@@ -4,11 +4,8 @@ import UI.Dialog;
 import UI.IO;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;
@@ -19,31 +16,29 @@ import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.geometries.OShapeFromFile;
 import observables.lights.AOLight;
+import raytracer.ImageSaver;
 
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * Created by roberto on 05.01.16.
+ *
  */
 public class MenuController extends AController{
 
-    @FXML
-    Parent embeddedView;
 
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private MenuItem mnuSaveImage;
 
     /**
-     * Handle action related to "About" menu item.
+     * Handle action related to  menu item.
      *
-     * @param event Event on "About" menu item.
      */
     @FXML
-    private void handleSettingsAction(final ActionEvent event)
+    private void handleSettingsAction()
     {
         new RenderSettingsController();
     }
@@ -75,10 +70,9 @@ public class MenuController extends AController{
         }
     }
 
-    public void handleExitAction(ActionEvent actionEvent) {
+    public void handleExitAction() {
 
         Stage stage = (Stage) menuBar.getScene().getWindow();
-        // do what you have to do
         stage.close();
     }
 
@@ -88,7 +82,7 @@ public class MenuController extends AController{
 
     }
 
-    public void handleLoadModel(ActionEvent actionEvent) {
+    public void handleLoadModel() {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
         File file = dlg.showOpenDialog(menuBar.getScene().getWindow());
@@ -99,12 +93,12 @@ public class MenuController extends AController{
                    FXCollections.observableArrayList(e)
            );
             n.name=e.name;
-            if(e!= null) ObservableElementLists.getInstance().addElement(n);
+            ObservableElementLists.getInstance().addElement(n);
         }
 
     }
 
-    public void handleSaveAction(ActionEvent actionEvent) {
+    public void handleSaveAction() {
         saveAction();
     }
 
@@ -112,16 +106,16 @@ public class MenuController extends AController{
         IO.saveScene((Stage)menuBar.getScene().getWindow(), rootItem);
     }
 
-    public void handleLoadAction(ActionEvent actionEvent) {
+    public void handleLoadAction() {
         loadAction();
     }
 
     public void loadAction(){
-        IO.loadScene((Stage)menuBar.getScene().getWindow(),rootItem);
+        IO.loadScene((Stage)menuBar.getScene().getWindow());
     }
 
 
-    public void handleRenderAction(ActionEvent actionEvent) {
+    public void handleRenderAction() {
         ObservableElementLists list = ObservableElementLists.getInstance();
         if(list.camera!=null){
             raytracer.setCamera(list.camera.generate());
@@ -133,20 +127,19 @@ public class MenuController extends AController{
         }
         raytracer.getWorld().lights.clear();
         raytracer.getWorld().geometries.clear();
-        for(AOLight light : list.lights){
-            raytracer.getWorld().lights.add(light.generate());
-        }
-        for(AOGeometry geo : list.geometries){
-            raytracer.getWorld().geometries.add(geo.generate());
-        }
+        raytracer.getWorld().lights.addAll(list.lights.stream().map(AOLight::generate).collect(Collectors.toList()));
+        raytracer.getWorld().geometries.addAll(list.geometries.stream().map(AOGeometry::generate).collect(Collectors.toList()));
         if(list.camera!=null) raytracer.setCamera(list.camera.generate());
         raytracer.progress = new SimpleDoubleProperty(0);
         RenderViewController rvc = new RenderViewController();
         ImageView image  = rvc.getImageView();
-        if(image!=null)raytracer.render(image);
+        if(image!=null){
+            raytracer.render(image);
+            ImageSaver.image.setImage(image.getImage());
+        }
     }
 
-    public void handleStopRenderAction(ActionEvent actionEvent) {
+    public void handleStopRenderAction() {
         raytracer.stopRender();
     }
 }

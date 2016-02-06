@@ -62,22 +62,21 @@ public class OrenNayarMaterial extends Material {
 
         Color basicColor = new Color(0, 0, 0);
 
-        final Point3 h = hit.ray.at(hit.t);
+       /* final Point3 h = hit.ray.at(hit.t);
         final Vector3 v = hit.ray.o.sub(h).normalized();
 
-        //x = v - n * dot( v, n )
         final Vector3 x = v.sub(hit.n).mul(hit.n.dot(v));
 
         final double c1 = 1.0 - 0.5 * (rough_sq / (rough_sq + 0.33));
 
         double c2 = 0.45f * (rough_sq / (rough_sq + 0.09));
-        double c3 = (1.0 / 8.0) * (rough_sq / (rough_sq + 0.09));
+        double c3 = (1.0 / 8.0) * (rough_sq / (rough_sq + 0.09));*/
 
         //Simple Variant
-        /*
-        final Point3 h = hit.ray.at(hit.t);
-        final Vector3 v = hit.ray.o.sub(h).normalized();*/
 
+        final Point3 h = hit.ray.at(hit.t);
+        final Vector3 v = hit.ray.o.sub(h).normalized();
+        ////////////////////
         for (Light light : world.lights) {
             synchronized (light.lightShadowPattern) {
                 light.lightShadowPattern.generateSampling();
@@ -107,6 +106,8 @@ public class OrenNayarMaterial extends Material {
                 basicColor = basicColor.add(
                         texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(Math.max(0.0, hit.n.dot(l)) * (c1 + a + b))
                 );*/
+
+
                 //simple variant
 
                 final Vector3 l = light.directionFrom(h).normalized();
@@ -117,6 +118,7 @@ public class OrenNayarMaterial extends Material {
                 basicColor = basicColor.add(light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v)).mul(Math.max(0, hit.n.dot(l))).mul(
                         a+b*Math.max( 0.0, hit.n.dot(l) )* Math.sin(alpha)*Math.tan(beta)
                 ));
+                ////////////////
 
             }
                 }
@@ -140,7 +142,12 @@ public class OrenNayarMaterial extends Material {
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof OrenNayarMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        OrenNayarMaterial that = (OrenNayarMaterial) o;
+
+        return Double.compare(that.rough_sq, rough_sq) == 0;
 
     }
 

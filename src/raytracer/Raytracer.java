@@ -55,7 +55,7 @@ public class Raytracer {
     /**
      * Represents if hdr Render.
      */
-    public static boolean hdr = false;
+    public  boolean hdr = false;
     /**
      * represents the Scene with all its lights and geometries.
      */
@@ -65,10 +65,6 @@ public class Raytracer {
      * Represents the Camera of this scene.
      */
     private Camera camera;
-    /**
-     * represents the render pattern.
-     */
-    private Point[] quadrant;
 
     /**
      * size of the area that is rendered from one core at a time;
@@ -218,7 +214,7 @@ public class Raytracer {
     /**
      * Begins the render process
      *
-     * @param image
+     * @param image The image the raytracer will render into
      */
     public void render(ImageView image) {
         {
@@ -237,13 +233,12 @@ public class Raytracer {
             }
             prepare();
             image.setImage(img);
-            // actualProgress.set(0);
             threadBreak = false;
             quadrantCounter = 0;
-            quadrant = newQuadrants(pattern);
+            final Point[] quadrant = newQuadrants(pattern);
             startTime = System.currentTimeMillis();
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
-            Task rt = null;
+            Task rt;
             if (def) {
                  rt = new Task() {
                     @Override
@@ -267,12 +262,12 @@ public class Raytracer {
 
 
             } else {
-                rt = new RenderTask();
+                rt = new RenderTask(quadrant);
                 progress.bind(rt.progressProperty());
             }
-            Thread t = new Thread(rt, 0 + "");
-            t.setDaemon(true);
-            t.start();
+            Thread mainRenderThread = new Thread(rt, 0 + "");
+            mainRenderThread.setDaemon(true);
+            mainRenderThread.start();
         }
     }
 
@@ -367,7 +362,7 @@ public class Raytracer {
             rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
         }
         for (Ray r : rays) {
-            c = c.add(world.hit(r, x, y));
+            c = c.add(world.hit(r));
         }
 
         c = c.mul(1.0 / rays.size());
@@ -387,17 +382,21 @@ public class Raytracer {
     /**
      * The Task-class for the render-threads.
      *
-     * @param <Void>
+     * @param <Empty>
      */
-    private class RenderTask<Void> extends Task<Void> {
+    private class RenderTask<Empty> extends Task<Empty> {
+        private final Point[] quadrant;
 
+        public RenderTask( final Point[] quadrant){
+            this.quadrant=quadrant;
+        }
         @Override
-        protected Void call() throws Exception {
+        protected Empty call() throws Exception {
             PixelWriter pixelWriter = img.getPixelWriter();
             PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
             byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
             final int[] threadProgress = new int[cores];
-            renderThread(imageData, threadProgress);
+            renderThread(imageData, threadProgress, quadrant);
             while (running > 0) {
                 if (threadBreak) return null;
                 try {
@@ -424,12 +423,11 @@ public class Raytracer {
             if (hdr) hdrFilter.getImage(imageData);
             pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
                     imgWidth.get() * 3);
-            // this.updateProgress(maxProgress.get(), maxProgress.get());
             return null;
         }
     }
 
-    private void renderThread(byte[] imageData, final int[] threadProgress) {
+    private void renderThread(byte[] imageData, final int[] threadProgress, final Point[] quadrant) {
             for (int i = 0; i < imageData.length; i++) {
 
                 if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
@@ -452,11 +450,8 @@ public class Raytracer {
                             quadrantX = quadrant[quadrantCounter].x;
                             quadrantY = quadrant[quadrantCounter].y;
                         }
-
                         quadrantCounter++;
                     }
-
-
                     final int fromX = quadrantX * bWidth;
                     int toX = (quadrantX + 1) * bWidth;
                     final int fromY = quadrantY * bHeight;
@@ -474,10 +469,7 @@ public class Raytracer {
                             if (threadBreak) break;
                             threadProgress[num]++;
                             byte[] b = draw(x, y);
-                            for (int j = 0; j < 3; j++) {
-                                a[count + j] = b[j];
-
-                            }
+                            System.arraycopy(b, 0, a, count, 3);
                             count += 3;
                         }
                         if (threadBreak) break;
@@ -486,11 +478,8 @@ public class Raytracer {
                     for (int j = 0; j < toY - fromY; j++) {
                         System.arraycopy(a, (toX - fromX) * j * 3, imageData, (fromY + j) * imgWidth.get() * 3 + fromX * 3, a.length / (toY - fromY));
                     }
-
-
                 }
                 running--;
-
             }, "tracingThread " + i);
             t.setDaemon(true);
             t.start();

@@ -20,15 +20,12 @@ public class SingleColorMaterial extends Material {
     /**
      * Generates a SinglColor Object with the given texture
      *
-     * @param texture
+     * @param texture The Diffuse Color Texture Material
      */
 
     public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
                                boolean ambientOcllusion,double ambientSize, int ambientSubdiv) {
         super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)),ambientOcllusion,ambientSize,ambientSubdiv);
-        if(texture == null){
-            throw new IllegalArgumentException("texture must not be null");
-        }
         this.texture = texture;
     }
 
@@ -50,9 +47,14 @@ public class SingleColorMaterial extends Material {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        return false;
+        if (!(o instanceof SingleColorMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        SingleColorMaterial that = (SingleColorMaterial) o;
+
+        return !(texture != null ? !texture.equals(that.texture) : that.texture != null);
 
     }
 

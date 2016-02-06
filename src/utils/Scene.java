@@ -6,8 +6,8 @@ import observables.lights.AOLight;
 import serializable.SElement;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Combines a World object and a Camera object for saving and loading as a File.
@@ -27,9 +27,9 @@ public class Scene implements Serializable {
 
     /**
      * Generates a new Scene object.
-     * @param geometries
-     * @param lights
-     * @param camera  Represents the treeview object of this Scene.
+     * @param geometries Represents the Geometries of this Scene
+     * @param lights Represents the lights of this Scene
+     * @param camera  Represents the Camera of this Scene
      */
     public Scene(final List<SElement> geometries, final List<SElement> lights, final SElement camera) {
         this.camera = camera;
@@ -49,21 +49,13 @@ public class Scene implements Serializable {
      * @return the TreeView object of this Scene.
      */
     public List<AOLight> getLights() {
-        List<AOLight> oLights = new ArrayList<>();
-        for(SElement light : lights){
-            oLights.add((AOLight) light.generate());
-        }
-        return oLights;
+        return lights.stream().map(light -> (AOLight) light.generate()).collect(Collectors.toList());
     }
 
     /**
      * @return the TreeView object of this Scene.
      */
     public List<AOGeometry> getGeometries() {
-        List<AOGeometry> oGeometry = new ArrayList<>();
-        for(SElement geometry : geometries){
-            oGeometry.add((AOGeometry) geometry.generate());
-        }
-        return oGeometry;
+        return geometries.stream().map(geometry -> (AOGeometry) geometry.generate()).collect(Collectors.toList());
     }
 }

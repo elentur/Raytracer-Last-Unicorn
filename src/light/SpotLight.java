@@ -45,9 +45,6 @@ public class SpotLight extends Light {
     public SpotLight(final Color color, final Point3 position, final Vector3 direction,
                      final double halfAngle, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color,castShadow,photons,lightShadowPattern);
-        if (color == null) {
-            throw new IllegalArgumentException("The color cannot be null!");
-        }
         if (direction == null) {
             throw new IllegalArgumentException("The direction cannot be null!");
         }

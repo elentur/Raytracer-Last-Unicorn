@@ -158,7 +158,4 @@ public class MainSettingsLightController extends AController {
         txtLightSizeSubdiv.doubleProperty.bindBidirectional(l.patternSubdiv);
     }
 
-    @FXML
-    private void handleUpdateLight() {
-    }
 }

@@ -2,7 +2,6 @@ package utils;
 
 import controller.AController;
 import geometries.Geometry;
-import javafx.scene.image.Image;
 import light.Light;
 
 import java.util.ArrayList;
@@ -37,7 +36,6 @@ public class World {
 
     public final boolean ambientOcclusion;
 
-    public Image backImg;
 
     /**
      * Generates a new world with predefined Background material
@@ -61,7 +59,7 @@ public class World {
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background material.
      */
-    public Color hit(final Ray r, int x, int y) {
+    public Color hit(final Ray r) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
 

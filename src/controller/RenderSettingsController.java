@@ -17,10 +17,11 @@ import utils.World;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;;
+import java.util.Map;
 
 /**
  * Created by roberto on 12.01.16.
+ *
  */
 public class RenderSettingsController extends Stage {
     @FXML

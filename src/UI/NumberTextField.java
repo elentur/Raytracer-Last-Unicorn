@@ -1,7 +1,6 @@
 package UI;
 
 import javafx.beans.property.*;
-import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -85,19 +84,16 @@ public class NumberTextField extends TextField {
             setNumber(integerProperty.getValue());
         });
         // try to parse when focus is lost or RETURN is hit
-        addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(final KeyEvent event) {
-            if(event.getCode().equals(KeyCode.ENTER)) {
-                parseAndFormatInput();
-            }
-                //}
+        addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            parseAndFormatInput();
+        }
+            //}
 
 
-            }
         });
         focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.booleanValue()) {
+            if (!newValue) {
                 parseAndFormatInput();
             }
         });

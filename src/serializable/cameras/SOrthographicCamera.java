@@ -4,6 +4,7 @@ import observables.cameras.OOrthographicCamera;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SOrthographicCamera extends SCamera{
     private final int s;

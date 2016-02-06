@@ -4,6 +4,7 @@ import observables.cameras.ODOFCamera;
 
 /**
  * Created by roberto on 05.02.16.
+ *
  */
 public class SPerspectiveCamera extends SCamera {
     private final double angle;

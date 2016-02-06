@@ -1,7 +1,6 @@
 package observables.geometries;
 
 import geometries.AxisAlignedBox;
-import observables.materials.AOMaterial;
 import serializable.geometries.SAxisAlignedBox;
 
 /**

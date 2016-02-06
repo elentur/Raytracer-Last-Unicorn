@@ -18,6 +18,11 @@ import java.util.ResourceBundle;
  * @author Marcus Bätz
  */
 public class MainSettingsController extends AController {
+
+    @FXML
+    private TextField txtName;
+    @FXML
+    private VBox mainSettingsView;
     /**
      * Called to initialize a controller after its root element has been
      * completely processed.
@@ -26,11 +31,6 @@ public class MainSettingsController extends AController {
      * <tt>null</tt> if the location is not known.
      * @param resources The resources used to localize the root object, or <tt>null</tt> if
      */
-    @FXML
-    private TextField txtName;
-    @FXML
-    private VBox mainSettingsView;
-
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
         txtName.setText(selectedTreeItem.get().getValue().name.getValue());
