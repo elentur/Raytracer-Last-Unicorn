@@ -1,10 +1,7 @@
 package observables.materials;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import material.LambertMaterial;
 import serializable.materials.SLambertMaterial;
-
-import java.util.UUID;
 
 /**
  * Created by
@@ -14,7 +11,8 @@ public class OLambertMaterial extends AOMaterial{
 
     public OLambertMaterial() {
         name.set("Lambert Material");
-        uniqueID = name.get();
+       // uniqueID = name.get();
+
     }
 
     @Override

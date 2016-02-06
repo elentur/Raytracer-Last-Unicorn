@@ -31,8 +31,7 @@ public abstract class AOMaterial extends AOElement {
         bumpMap.addListener(a->refreshMaterial());
         bumpScale.addListener(a->refreshMaterial());
         irradiance.addListener(a->refreshMaterial());
-        /*System.out.println(this);
-        System.out.println(uniqueID);*/
+
     }
     public abstract Material generate();
     public abstract SMaterial serialize();

@@ -10,6 +10,7 @@ public class DefaultMaterial {
     private static AOMaterial getDefaultMaterial(){
         OLambertMaterial oLambertMaterial = new OLambertMaterial();
         oLambertMaterial.name.set("Default Material");
+        oLambertMaterial.uniqueID="1";
         return oLambertMaterial;
     }
     public static AOMaterial getLambert(){

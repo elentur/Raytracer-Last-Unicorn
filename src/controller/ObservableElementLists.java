@@ -230,7 +230,7 @@ public class ObservableElementLists {
 
     public void clearAll(){
         ObservableList<AOMaterial> list = AController.materialList;
-        list.remove(6, list.size());
+        list.remove(7, list.size());
         treeView.getSelectionModel().clearSelection();
         nodeTree.getChildren().clear();
         lightTree.getChildren().clear();
@@ -239,6 +239,6 @@ public class ObservableElementLists {
         geometries.clear();
         camera = null;
         AController.textureList.clear();
-        AController.materialList.add(DefaultMaterial.getDefaultLambert());
+        AController.materialList.set(6,DefaultMaterial.getDefaultLambert());
     }
 }
