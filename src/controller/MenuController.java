@@ -60,19 +60,19 @@ public class MenuController extends AController{
         if (event instanceof KeyEvent)
         {
             final KeyEvent keyEvent = (KeyEvent) event;
-            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.A)
+
+            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S)
             {
-                provideAboutFunctionality();
+                System.out.println("ctr + s");
+                saveAction();
+            }
+
+            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.L)
+            {
+                System.out.println("ctr + s");
+                loadAction();
             }
         }
-    }
-
-    /**
-     * Perform functionality associated with "About" menu selection or CTRL-A.
-     */
-    private void provideAboutFunctionality()
-    {
-        System.out.println("You clicked on About!");
     }
 
     public void handleExitAction(ActionEvent actionEvent) {
@@ -105,10 +105,18 @@ public class MenuController extends AController{
     }
 
     public void handleSaveAction(ActionEvent actionEvent) {
+        saveAction();
+    }
+
+    private void saveAction(){
         IO.saveScene((Stage)menuBar.getScene().getWindow(), rootItem);
     }
 
     public void handleLoadAction(ActionEvent actionEvent) {
+        loadAction();
+    }
+
+    public void loadAction(){
         IO.loadScene((Stage)menuBar.getScene().getWindow(),rootItem);
     }
 

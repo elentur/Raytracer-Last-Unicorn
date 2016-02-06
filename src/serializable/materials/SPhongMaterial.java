@@ -16,8 +16,8 @@ public class SPhongMaterial extends SMaterial {
     private final STexture specular;
     private final int exponent;
 
-    public SPhongMaterial(final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final STexture specular,final int exponent, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
-        super(name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
+    public SPhongMaterial(final String uniqueID,final STexture texture, final STexture bumpMap, final double bumpScale , final STexture irradiance,final STexture specular,final int exponent, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv , final String name) {
+        super(uniqueID,name,texture, bumpMap, bumpScale, ambientOcllusion, ambientSize, ambientSubdiv);
         this.irradiance=irradiance;
         this.exponent=exponent;
         this.specular=specular;
@@ -26,6 +26,7 @@ public class SPhongMaterial extends SMaterial {
     @Override
     public OPhongMaterial generate() {
         OPhongMaterial s =  new OPhongMaterial();
+        s.uniqueID = uniqueID;
         s.name.setValue(name);
         s.texture.setValue( texture.generate());
         s.bumpMap.setValue( bumpMap.generate());
@@ -36,6 +37,7 @@ public class SPhongMaterial extends SMaterial {
         s.ambientOcclusion.setValue( ambientOcllusion);
         s.ambientSize.setValue( ambientSize);
         s.ambientSubdiv.setValue(ambientSubdiv);
+        add2MaterialList(s);
         return s;
     }
 }

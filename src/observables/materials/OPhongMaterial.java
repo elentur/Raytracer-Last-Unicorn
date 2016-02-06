@@ -45,6 +45,7 @@ public class OPhongMaterial extends AOMaterial{
     @Override
     public SPhongMaterial serialize() {
         return new SPhongMaterial(
+                uniqueID,
                 texture.get().serialize(),
                 bumpMap.get().serialize(),
                 bumpScale.get(),
@@ -56,5 +57,13 @@ public class OPhongMaterial extends AOMaterial{
                 ambientSubdiv.get(),
                 name.get()
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AOMaterial that = (AOMaterial) o;
+        return uniqueID.equals(that.uniqueID);
     }
 }
