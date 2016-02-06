@@ -9,6 +9,7 @@ import observables.cameras.AOCamera;
 import observables.geometries.AOGeometry;
 import observables.geometries.ONode;
 import observables.lights.AOLight;
+import observables.materials.AOMaterial;
 import observables.materials.DefaultMaterial;
 import raytracer.Raytracer;
 
@@ -228,7 +229,8 @@ public class ObservableElementLists {
     }
 
     public void clearAll(){
-        AController.materialList.remove(6, AController.materialList.size());
+        ObservableList<AOMaterial> list = AController.materialList;
+        list.remove(6, list.size());
         treeView.getSelectionModel().clearSelection();
         nodeTree.getChildren().clear();
         lightTree.getChildren().clear();

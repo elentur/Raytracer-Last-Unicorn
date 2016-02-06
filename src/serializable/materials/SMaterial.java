@@ -1,11 +1,13 @@
 package serializable.materials;
 
 import controller.AController;
+import javafx.collections.ObservableList;
 import observables.materials.AOMaterial;
 import serializable.SElement;
 import serializable.textures.STexture;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 /**
  * Created by Marcus Baetz on 05.02.2016.
@@ -37,11 +39,14 @@ public abstract class SMaterial implements SElement ,Serializable {
     public abstract AOMaterial generate();
 
     protected void add2MaterialList(AOMaterial m){
-        if(!AController.materialList.contains(m)) {
-            AController.materialList.add(m);
+
+        ObservableList<AOMaterial> list = AController.materialList;
+        
+        if(!list.contains(m)) {
+            list.add(m);
         }else{
-            if(AController.materialList.indexOf(m) > 5) {
-                AController.materialList.set(AController.materialList.indexOf(m), m);
+            if(list.indexOf(m) > 5) {
+                list.set(list.indexOf(m), m);
             }
         }
     }
