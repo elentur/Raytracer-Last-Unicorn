@@ -69,7 +69,7 @@ public class ONode extends AOGeometry {
     @Override
     public SNode serialize() {
         return new SNode(
-                rotationx.get(), translationy.get(), translationz.get(),
+                translationx.get(), translationy.get(), translationz.get(),
                 scalingx.get(), scalingy.get(), scalingz.get(),
                 rotationx.get(), rotationy.get(), rotationz.get(),
                 oGeos.stream().map(AOGeometry::serialize).collect(Collectors.toList()),

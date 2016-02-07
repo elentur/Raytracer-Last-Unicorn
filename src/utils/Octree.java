@@ -131,7 +131,15 @@ public class Octree {
 
     public Hit hit(Ray r) {
         Hit h = null;
-        if (box.hit(r) == null) return null;
+
+        if (box.hit(r) == null){
+            if(r.o.x+0.00001 <=box.run.x && r.o.x-0.00001>= box.lbf.x &&
+                    r.o.y+0.00001 <=box.run.y && r.o.y-0.00001>= box.lbf.y &&
+                    r.o.z+0.00001 <=box.run.z && r.o.z-0.00001>= box.lbf.z){
+            }else{
+                return null;
+            }
+        }
 
         if (subtrees == null) {
             for (Geometry t : g) {

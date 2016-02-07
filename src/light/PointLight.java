@@ -54,7 +54,7 @@ public class PointLight extends Light {
             for (final Geometry g : world.geometries) {
                 if (g.visibility) {
                     final Hit h = g.hit(r);
-                    if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
+                    if ((h != null && h.t > 0.0001 && h.t< tl && h.geo.castShadows)) {
 
                         return false;
                     }

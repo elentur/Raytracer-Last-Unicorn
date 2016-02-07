@@ -138,7 +138,7 @@ public class Triangle extends Geometry {
             if (gamma > 0 && beta + gamma <= 1) {
                 final double detA3 = m.col3(vec).determinant;
                 final double t = detA3 / detA;
-                if (t > 0) {
+                if (t +0.000001> 0) {
                     Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
 
 
