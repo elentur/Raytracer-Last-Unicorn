@@ -15,7 +15,6 @@ public class OSingleColorTexture extends AOTexture {
         name.set("Single Color Texture");
         path.set("");
         this.color.setValue(color);
-
     }
 
     public void setColor(final utils.Color color) {
