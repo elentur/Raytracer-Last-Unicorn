@@ -26,9 +26,9 @@ public class OReflectiveMaterial extends AOMaterial {
         exponent.set(64);
         specular.addListener(a -> refreshMaterial());
         reflection.addListener(a -> refreshMaterial());
-        exponent.addListener(a -> refreshMaterial());
 
         exponent.addListener(a -> {
+            System.out.println(exponent.get());
             if(exponent.get() < 1) exponent.set(1);
             refreshMaterial();
         });

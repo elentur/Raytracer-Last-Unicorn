@@ -24,10 +24,20 @@ public class OTransparentMaterial extends AOMaterial {
         specular.set(new OSingleColorTexture(Color.WHITE));
         reflection.set(new OSingleColorTexture(Color.GRAY));
         exponent.set(64);
-        specular.addListener(a -> refreshMaterial());
-        reflection.addListener(a -> refreshMaterial());
-        exponent.addListener(a -> refreshMaterial());
-        indexOfRefraction.addListener(a -> refreshMaterial());
+
+        specular.addListener(a -> {
+            if(reflection.get() != null)
+            refreshMaterial();
+        });
+        reflection.addListener(a -> {
+            if(reflection.get() != null)
+            refreshMaterial();
+        });
+
+        indexOfRefraction.addListener(a -> {
+            if(indexOfRefraction.get() < 0.0 && indexOfRefraction.get() > 2.0) indexOfRefraction.set(0.0);
+                refreshMaterial();
+        });
 
         exponent.addListener(a -> {
             if(exponent.get() < 1) exponent.set(1);

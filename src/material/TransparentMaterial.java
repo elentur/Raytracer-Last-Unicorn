@@ -29,6 +29,19 @@ public class TransparentMaterial extends Material {
             throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
 
+        if (specular != null) {
+            throw new IllegalArgumentException("The specular cannot be null!");
+        }
+
+        if (reflection != null) {
+            throw new IllegalArgumentException("The reflection cannot be null!");
+        }
+
+        if (indexOfRefraction < 0.0 && indexOfRefraction > 2.0) {
+            throw new IllegalArgumentException("The indexOfRefraction must be in the range of 0.0 and 2.0!");
+        }
+
+
         this.specular = specular;
         this.reflection = reflection;
         this.exponent = exponent;

@@ -42,7 +42,6 @@ public class MaterialView extends ImageView {
         MaterialView that = this;
         matTracer.getWorld().lights.clear();
         matTracer.getWorld().geometries.clear();
-
         matTracer.setCamera(new OrthographicCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 2.2, new SamplingPattern(1)));
         matTracer.getWorld().lights.add(new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4), false, 500, new LightShadowPattern(0, 1)));
         matTracer.getWorld().geometries.add(new Node(new Transform(), new Sphere(controller.AController.material.get().generate(), true, true, true, false), true, true, true, false));

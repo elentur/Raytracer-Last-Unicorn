@@ -39,9 +39,20 @@ public class ReflectiveMaterial extends Material {
                               final Texture irradiance,
                               boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
         super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+
         if (exponent <= 0) {
             throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
+
+        if (specular != null) {
+            throw new IllegalArgumentException("The specular cannot be null!");
+        }
+
+        if (reflection != null) {
+            throw new IllegalArgumentException("The reflection cannot be null!");
+        }
+
+
         this.specular = specular;
         this.reflection = reflection;
         this.exponent = exponent;

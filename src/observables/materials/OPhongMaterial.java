@@ -24,7 +24,6 @@ public class OPhongMaterial extends AOMaterial {
         specular.set(new OSingleColorTexture(Color.WHITE));
         exponent.set(64);
         specular.addListener(a -> refreshMaterial());
-        exponent.addListener(a -> refreshMaterial());
 
         exponent.addListener(a -> {
             if(exponent.get() < 1) exponent.set(1);
