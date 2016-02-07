@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.VBox?>
 <VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MenuController">
     <MenuBar fx:id="menuBar">
-        <Menu text="File">
+        <Menu text="File" fx:id="fileMenu">
             <MenuItem text="Save Scene" onAction="#handleSaveAction"/>
             <MenuItem text="Load Scene" onAction="#handleLoadAction"/>
             <MenuItem text="Import Model" onAction="#handleLoadModel"/>
@@ -10,7 +10,7 @@
             <SeparatorMenuItem/>
             <MenuItem text="Exit" onAction="#handleExitAction"/>
         </Menu>
-        <Menu text="Run">
+        <Menu text="Run" fx:id="runMenu">
             <MenuItem text="Render" onAction="#handleRenderAction"/>
             <MenuItem text="Stop Render" onAction="#handleStopRenderAction"/>
             <SeparatorMenuItem/>

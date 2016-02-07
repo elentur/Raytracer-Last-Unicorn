@@ -36,6 +36,14 @@ public class OSpotLight extends AOLight {
         this.dz.set(-1.0);
 
         this.halfAngle.set(20);
+
+        patternSize.addListener(a->{
+            if(patternSize.get() < 0) patternSize.set(0);
+        });
+
+        patternSubdiv.addListener(a->{
+            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        });
     }
 
 

@@ -25,6 +25,11 @@ public class OPhongMaterial extends AOMaterial {
         exponent.set(64);
         specular.addListener(a -> refreshMaterial());
         exponent.addListener(a -> refreshMaterial());
+
+        exponent.addListener(a -> {
+            if(exponent.get() < 1) exponent.set(1);
+            refreshMaterial();
+        });
     }
 
     @Override

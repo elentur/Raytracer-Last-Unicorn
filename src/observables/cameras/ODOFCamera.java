@@ -27,6 +27,25 @@ public class ODOFCamera extends AOCamera {
         dPatternSubdiv.setValue(3);
         dPatternFStop.setValue(8);
         focalLength.setValue(5);
+
+        patternSubdiv.addListener(a->{
+            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        });
+
+        dPatternSubdiv.addListener(a -> {
+            if(dPatternSubdiv.get() < 1) dPatternSubdiv.set(1);
+        });
+
+        dPatternFStop.addListener(a->{
+            if(dPatternFStop.get() < 0) dPatternFStop.set(0);
+        });
+
+        angle.addListener(a ->{
+            if(angle.get() < 1 || angle.get() > 90)
+                angle.set(1);
+        });
+
+
     }
 
     @Override

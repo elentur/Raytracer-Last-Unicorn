@@ -2,10 +2,12 @@ package observables.geometries;
 
 import geometries.Node;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import matVect.Transform;
+import observables.materials.AOMaterial;
 import serializable.geometries.SNode;
 
 import java.util.List;
@@ -30,9 +32,16 @@ public class ONode extends AOGeometry {
     public final DoubleProperty rotationz = new SimpleDoubleProperty(0.0);
     public final ObservableList<AOGeometry> oGeos = FXCollections.observableArrayList();
 
+
+
     public ONode(String name, List<AOGeometry> oGeos) {
         this.name.set(name);
         this.oGeos.setAll(oGeos);
+    }
+
+    public ONode getIstance(ONode oldNode) {
+        SNode s = oldNode.serialize();
+        return s.generate();
     }
 
     @Override

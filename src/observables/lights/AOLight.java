@@ -1,5 +1,6 @@
 package observables.lights;
 
+import controller.AController;
 import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 import light.Light;

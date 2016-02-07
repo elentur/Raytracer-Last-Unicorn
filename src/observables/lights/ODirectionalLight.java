@@ -22,6 +22,14 @@ public class ODirectionalLight extends AOLight {
         dx.set(0.0);
         dy.set(0.0);
         dz.set(-1.0);
+
+        patternSize.addListener(a->{
+            if(patternSize.get() < 0) patternSize.set(0);
+        });
+
+        patternSubdiv.addListener(a->{
+            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        });
     }
 
     @Override

@@ -23,6 +23,14 @@ public class OPointLight extends AOLight {
         px.set(5.0);
         py.set(5.0);
         pz.set(5.0);
+
+        patternSize.addListener(a->{
+            if(patternSize.get() < 0) patternSize.set(0);
+        });
+
+        patternSubdiv.addListener(a->{
+            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        });
     }
 
     @Override

@@ -16,7 +16,10 @@ public class OOrenNayarMaterial extends AOMaterial {
     public OOrenNayarMaterial() {
         name.set("Oren Nayar Material");
         roughness.set(0.5);
-        roughness.addListener(a -> refreshMaterial());
+        roughness.addListener(a -> {
+            if(roughness.get() < 0.0 && roughness.get() > 1.0) roughness.set(0.0);
+            refreshMaterial();
+        });
     }
 
     @Override
