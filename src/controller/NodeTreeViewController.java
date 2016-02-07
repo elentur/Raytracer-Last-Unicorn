@@ -124,7 +124,7 @@ public class NodeTreeViewController extends AController {
     }
 
     public void handleGroupAction() {
-        if (elementsTreeView.getSelectionModel().getSelectedItems().size() > 0) {
+        if (elementsTreeView != null && elementsTreeView.getSelectionModel().getSelectedItems().size() > 0) {
             ObservableList<TreeItem<AOElement>> selectedItems = elementsTreeView.getSelectionModel().getSelectedItems();
             List<AOGeometry> nodes = new ArrayList<>();
             TreeItem<AOElement> p = selectedItems.get(0).getParent();
@@ -137,7 +137,7 @@ public class NodeTreeViewController extends AController {
     }
 
     public void handleUngroupAction() {
-        if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
+        if (elementsTreeView != null && elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
             TreeItem<AOElement> selectedItem = elementsTreeView.getSelectionModel().getSelectedItem();
             if (selectedItem.getChildren().size() > 0 && (selectedItem.getChildren().get(0).getValue() instanceof ONode)) {
                 ObservableList<TreeItem<AOElement>> selectedItems = selectedItem.getChildren();
@@ -148,12 +148,14 @@ public class NodeTreeViewController extends AController {
     }
 
     public void handleDeleteAction() {
-        elementLists.removeElement(selectedTreeItem.get().getValue());
+        if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null && selectedTreeItem.get().getValue() instanceof ONode) {
+            elementLists.removeElement(selectedTreeItem.get().getValue());
+        }
     }
 
     @FXML
     private void handleNewElementAction() {
-        if (cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
+        if (cmbNewElement != null && cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
             AOElement e = cmbNewElement.getSelectionModel().getSelectedItem();
             if (e instanceof AOLight || e instanceof AOCamera || e instanceof ONode) {
                 if (e instanceof ONode) {
@@ -174,9 +176,13 @@ public class NodeTreeViewController extends AController {
 
 
             }
-
-
         }
+    }
+
+    @FXML
+    private void handleDuplicateAction(){
+        if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null && selectedTreeItem.get().getValue() instanceof ONode)
+        elementLists.duplicateElement(selectedTreeItem.get().getValue());
     }
 
 
