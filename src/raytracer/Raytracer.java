@@ -30,6 +30,8 @@ import java.util.Set;
  * @author Marcus Bätz
  */
 public class Raytracer {
+
+    public boolean rendering = false;
     private HDRFilter hdrFilter;
     /**
      * threadBreak exits all Threads.
@@ -243,6 +245,7 @@ public class Raytracer {
                 rt = new Task() {
                     @Override
                     protected Object call() throws Exception {
+                        rendering=true;
                         final PixelWriter pixelWriter = img.getPixelWriter();
                         final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
                         final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
@@ -256,6 +259,7 @@ public class Raytracer {
                         }
                         pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
                                 imgWidth.get() * 3);
+                        rendering=false;
                         return null;
                     }
                 };

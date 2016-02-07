@@ -45,8 +45,8 @@ public class ImageSaver extends Application {
         primaryStage.setHeight(610);
         ScrollPane pane = (ScrollPane) scene.lookup("#scrollPaneSettings");
         VBox nodeTreeView = (VBox) scene.lookup("#nodeTreeView");
-        pane.minHeightProperty().bind(primaryStage.heightProperty());
-        nodeTreeView.minHeightProperty().bind(primaryStage.heightProperty());
+       // pane.minHeightProperty().bind(primaryStage.heightProperty());
+       // nodeTreeView.minHeightProperty().bind(primaryStage.heightProperty());
         primaryStage.show();
         // TODO was macht der Befehl? // ImageView image  = (ImageView)scene.lookup("#image");
         MenuItem menuItem = ((MenuBar) scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);

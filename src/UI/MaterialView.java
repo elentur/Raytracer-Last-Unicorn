@@ -50,7 +50,7 @@ public class MaterialView extends ImageView {
                 new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0)), new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), true, true, true, false), true, true, true, false));
 
         controller.AController.material.addListener(a -> {
-            if (controller.AController.material.getValue() != null) {
+            if (controller.AController.material.getValue() != null&& !matTracer.rendering) {
                 matTracer.stopRender();
                 matTracer.getWorld().geometries.clear();
                 matTracer.getWorld().geometries.add(new Node(new Transform(), new Sphere(controller.AController.material.get().generate(), true, true, true, false), true, true, true, false));

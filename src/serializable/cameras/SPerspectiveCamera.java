@@ -1,6 +1,6 @@
 package serializable.cameras;
 
-import observables.cameras.ODOFCamera;
+import observables.cameras.OPerspectiveCamera;
 
 /**
  * Created by roberto on 05.02.16.
@@ -18,9 +18,9 @@ public class SPerspectiveCamera extends SCamera {
     }
 
     @Override
-    public ODOFCamera generate() {
+    public OPerspectiveCamera generate() {
 
-        ODOFCamera camera = new ODOFCamera();
+        OPerspectiveCamera camera = new OPerspectiveCamera();
         camera.name.set(name);
         camera.ex.set(ex);
         camera.ey.set(ey);
