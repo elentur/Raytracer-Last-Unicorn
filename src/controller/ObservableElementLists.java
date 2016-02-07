@@ -56,15 +56,16 @@ public class ObservableElementLists {
         }
     }
 
-    public void duplicateElement(AOElement e){
+    public void duplicateElement(ONode e){
         treeView.getSelectionModel().clearSelection();
-        if (e instanceof ONode){
-            addNode(((ONode) e).getIstance((ONode) e));
-        } else {
-            throw new IllegalArgumentException("Wrong typ of Object. Must be Camera, Light or Node");
+
+        ONode parent = getParentNode(geometries,e);
+        if(parent != null) {
+            parent.oGeos.add(e.getIstance(e));
+        }else{
+            addNode(e.getIstance(e));
         }
     }
-
 
     public void removeElement(AOElement e) {
         if (e instanceof AOCamera) {

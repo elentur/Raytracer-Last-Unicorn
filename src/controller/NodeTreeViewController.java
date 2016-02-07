@@ -185,7 +185,7 @@ public class NodeTreeViewController extends AController {
     @FXML
     private void handleDuplicateAction(){
         if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null && selectedTreeItem.get().getValue() instanceof ONode)
-        elementLists.duplicateElement(selectedTreeItem.get().getValue());
+        elementLists.duplicateElement((ONode) selectedTreeItem.get().getValue());
     }
 
 
