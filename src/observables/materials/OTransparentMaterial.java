@@ -26,11 +26,9 @@ public class OTransparentMaterial extends AOMaterial {
         exponent.set(64);
 
         specular.addListener(a -> {
-            if(reflection.get() != null)
             refreshMaterial();
         });
         reflection.addListener(a -> {
-            if(reflection.get() != null)
             refreshMaterial();
         });
 
@@ -47,6 +45,7 @@ public class OTransparentMaterial extends AOMaterial {
 
     @Override
     public TransparentMaterial generate() {
+
         return new TransparentMaterial(
                 texture.get().generate(),
                 specular.get().generate(),

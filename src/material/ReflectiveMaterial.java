@@ -44,14 +44,13 @@ public class ReflectiveMaterial extends Material {
             throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
 
-        if (specular != null) {
+        if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
 
-        if (reflection != null) {
+        if (reflection == null) {
             throw new IllegalArgumentException("The reflection cannot be null!");
         }
-
 
         this.specular = specular;
         this.reflection = reflection;
