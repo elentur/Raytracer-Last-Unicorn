@@ -4,6 +4,7 @@ import observables.materials.OReflectiveMaterial;
 import serializable.textures.STexture;
 
 /**
+ * Wrapper class to serialize the OReflectivMaterial object.
  * Created by Marcus Baetz on 05.02.2016.
  *
  * @author Marcus Bätz
@@ -12,11 +13,40 @@ public class SReflectivMaterial extends SMaterial {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * represents the irradiance Color and intensity of the material.
+     */
     private final STexture irradiance;
+    /**
+     * Represents the Specular color
+     */
     private final STexture specular;
+    /**
+     * The color of our reflection.
+     */
     private final STexture reflection;
+    /**
+     * The value to change the size of the highlight.
+     * The larger exponent, the smaller will be the highlight.
+     */
     private final int exponent;
 
+    /**
+     * Instantiates a new SReflectivMaterial Object.
+     *
+     * @param uniqueID to indentify the material.
+     * @param name of the material.
+     * @param texture of the material.
+     * @param bumpMap normalMap of the Material.
+     * @param bumpScale amount of the normalMap displacement.
+     * @param irradiance Color and intensity of the material.
+     * @param specular is the Specular color.
+     * @param exponent is the value size of the highlight.
+     * @param reflection is the size of the highlight.
+     * @param ambientOcllusion allows ambient occlusion.
+     * @param ambientSize pattern size.
+     * @param ambientSubdiv ambient occlusion Subdivisions.
+     */
     public SReflectivMaterial(final String uniqueID, final STexture texture, final STexture bumpMap, final double bumpScale,
                               final STexture irradiance, final STexture specular, final int exponent,
                               final STexture reflection, final boolean ambientOcllusion, final double ambientSize, final int ambientSubdiv, final String name) {
