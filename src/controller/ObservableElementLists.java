@@ -59,18 +59,19 @@ public class ObservableElementLists {
     public void duplicateElement(ONode e){
 
         ONode parent = getParentNode(geometries,e);
+        ONode newNode = e.getInstance();
 
         if(parent != null) {
-            parent.oGeos.add(e.getIstance(e));
-            TreeItem<AOElement> newTreeItem = addNodeRecursive(parent);
-            TreeItem<AOElement> selectedTreeItem = treeView.getSelectionModel().getSelectedItem();
-            TreeItem<AOElement> parentTreeView = selectedTreeItem.getParent();
-            nodeTree.getChildren().removeAll(selectedTreeItem);
-            parentTreeView.getChildren().add(newTreeItem);
-        }else{
-            addNode(e.getIstance(e));
+            TreeItem<AOElement> ti = treeView.getSelectionModel().getSelectedItem();
+            TreeItem<AOElement> tiParent = ti.getParent();
+            treeView.getSelectionModel().clearSelection();
+            treeView.getSelectionModel().select(tiParent);
+            //treeView.getSelectionModel().getSelectedItem().getChildren().remove(ti);
         }
+
         treeView.getSelectionModel().clearSelection();
+        addNode(newNode);
+
     }
 
     public void removeElement(AOElement e) {
