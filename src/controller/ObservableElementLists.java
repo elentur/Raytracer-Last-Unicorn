@@ -61,16 +61,24 @@ public class ObservableElementLists {
         ONode parent = getParentNode(geometries,e);
         ONode newNode = e.getInstance();
 
+
         if(parent != null) {
+            parent.oGeos.add(newNode);
             TreeItem<AOElement> ti = treeView.getSelectionModel().getSelectedItem();
             TreeItem<AOElement> tiParent = ti.getParent();
             treeView.getSelectionModel().clearSelection();
             treeView.getSelectionModel().select(tiParent);
-            //treeView.getSelectionModel().getSelectedItem().getChildren().remove(ti);
+            TreeItem<AOElement> t = addNodeRecursive(newNode);
+            tiParent.getChildren().add(t);
+            treeView.getSelectionModel().clearSelection();
+            treeView.getSelectionModel().select(t);
+        }else{
+            treeView.getSelectionModel().clearSelection();
+            addNode(newNode);
         }
 
-        treeView.getSelectionModel().clearSelection();
-        addNode(newNode);
+        //treeView.getSelectionModel().clearSelection();
+       // addNode(newNode);
 
     }
 
