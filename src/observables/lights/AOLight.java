@@ -6,6 +6,8 @@ import javafx.scene.paint.Color;
 import light.Light;
 import observables.AOElement;
 import serializable.SElement;
+import serializable.geometries.SNode;
+import serializable.lights.SLight;
 
 /**
  * Created by
@@ -20,5 +22,10 @@ public abstract class AOLight extends AOElement {
 
     public abstract Light generate();
 
-    public abstract SElement serialize();
+    public abstract SLight serialize();
+
+    public AOLight getInstance() {
+        SLight l = this.serialize();
+        return l.generate();
+    }
 }

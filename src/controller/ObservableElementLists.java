@@ -56,23 +56,30 @@ public class ObservableElementLists {
         }
     }
 
-    public void duplicateElement(ONode e){
+    public void duplicateElement(AOElement e){
 
-        ONode parent = getParentNode(geometries,e);
-        ONode newNode = e.getInstance();
+        if(e instanceof ONode) {
 
-        if(parent != null) {
-            parent.oGeos.add(newNode);
-            TreeItem<AOElement> tiParent = treeView.getSelectionModel().getSelectedItem().getParent();
+            ONode parent = getParentNode(geometries, (ONode) e);
+            ONode newNode = ((ONode) e).getInstance();
+
+            if (parent != null) {
+                parent.oGeos.add(newNode);
+                TreeItem<AOElement> tiParent = treeView.getSelectionModel().getSelectedItem().getParent();
+                treeView.getSelectionModel().clearSelection();
+                treeView.getSelectionModel().select(tiParent);
+                TreeItem<AOElement> recTreeItem = addNodeRecursive(newNode);
+                tiParent.getChildren().add(recTreeItem);
+                treeView.getSelectionModel().clearSelection();
+                treeView.getSelectionModel().select(recTreeItem);
+            } else {
+                treeView.getSelectionModel().clearSelection();
+                addNode(newNode);
+            }
+        }else if(e instanceof AOLight){
+            AOLight newLight = ((AOLight) e).getInstance();
             treeView.getSelectionModel().clearSelection();
-            treeView.getSelectionModel().select(tiParent);
-            TreeItem<AOElement> recTreeItem = addNodeRecursive(newNode);
-            tiParent.getChildren().add(recTreeItem);
-            treeView.getSelectionModel().clearSelection();
-            treeView.getSelectionModel().select(recTreeItem);
-        }else{
-            treeView.getSelectionModel().clearSelection();
-            addNode(newNode);
+            addLight(newLight);
         }
     }
 
