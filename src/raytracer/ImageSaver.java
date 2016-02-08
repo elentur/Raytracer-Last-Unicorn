@@ -9,10 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -43,14 +41,7 @@ public class ImageSaver extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMaxWidth(900);
         primaryStage.setHeight(610);
-        ScrollPane pane = (ScrollPane) scene.lookup("#scrollPaneSettings");
-        VBox nodeTreeView = (VBox) scene.lookup("#nodeTreeView");
-
-        /*pane.minHeightProperty().bind(primaryStage.heightProperty());
-        nodeTreeView.minHeightProperty().bind(primaryStage.heightProperty());*/
-
         primaryStage.show();
-        // TODO was macht der Befehl? // ImageView image  = (ImageView)scene.lookup("#image");
 
         MenuItem menuItem = ((MenuBar) scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);
         menuItem.disableProperty().bind(image.imageProperty().isNull());

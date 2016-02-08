@@ -29,6 +29,8 @@ public class PointLight extends Light {
      * @param color      Represents the color of the light
      * @param position   Represents the position of the light
      * @param castShadow Shadows on or of
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      */
     public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color, castShadow, photons, lightShadowPattern);
@@ -46,7 +48,7 @@ public class PointLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if (castsShadow && geo.reciveShadows) {
+        if (castsShadow && geo.receiveShadows) {
             final Ray r = new Ray(point, directionFrom(point, samplePoint));
 
             final double tl = r.tOf(position);

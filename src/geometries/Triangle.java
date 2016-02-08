@@ -45,14 +45,18 @@ public class Triangle extends Geometry {
      * @param b        corner point of the Sphere. Can't be null.
      * @param c        corner point of the Sphere. Can't be null.
      * @param material of the Sphere. Can't be null.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Triangle(final Point3 a, final Point3 b, final Point3 c,
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
                     final Material material,
                     final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC,
-                    final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
-        super(material, reciveShadows, castShadows, visibility, flipNormal);
+                    final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
 
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
@@ -147,7 +151,10 @@ public class Triangle extends Geometry {
                     Color normalC = material.bumpMap.getColor(u, v);
                     Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
                     Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
-                    if (flipNormal) n1 = n1.mul(-1);
+                    if (flipNormal){
+                        n1 = n1.mul(-1);
+                        System.out.println("fliped");
+                    }
                     return new Hit(t, n1, r, this, new TexCoord2(u, v));
                 }
             }

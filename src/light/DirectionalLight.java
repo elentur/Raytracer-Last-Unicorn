@@ -28,6 +28,8 @@ public class DirectionalLight extends Light {
      * @param color      The Color of the Light
      * @param direction  The direction of the light
      * @param castShadow Shadows on or of
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      */
     public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         super(color, castShadow, photons, lightShadowPattern);
@@ -45,7 +47,7 @@ public class DirectionalLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if (castsShadow && geo.reciveShadows) {
+        if (castsShadow && geo.receiveShadows) {
             final Ray r = new Ray(point, directionFrom(point));
 
             for (final Geometry g : world.geometries) {

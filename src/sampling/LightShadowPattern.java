@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class represents a SamplingPattern Object.
- * The SamplingPattern involves a Pattern for a fixed number of rays for each pixel
+ * This class represents a SamplingPattern to simulate sized LightSources
  *
  * @author Robert Dziuba on 21.12.2015
  */

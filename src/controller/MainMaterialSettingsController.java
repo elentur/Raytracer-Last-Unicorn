@@ -33,6 +33,8 @@ import java.util.Set;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * The Controller for the Material and Texture settings
  */
 public class MainMaterialSettingsController extends AController {
     @FXML
@@ -95,6 +97,18 @@ public class MainMaterialSettingsController extends AController {
         }
     };
 
+    private class ButtonCell extends ListCell<AOTexture> {
+        @Override
+        protected void updateItem(AOTexture item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                textProperty().unbind();
+                setText("");
+            } else {
+                textProperty().bind(item.name);
+            }
+        }
+    }
 
     private boolean initialized = false;
 
@@ -112,7 +126,7 @@ public class MainMaterialSettingsController extends AController {
 
         if (!initialized) {
             VBox v;
-            FXMLLoader loader = new FXMLLoader();
+            final FXMLLoader loader = new FXMLLoader();
             loader.setController(this);
             try {
                 if (material.get() instanceof OOrenNayarMaterial) {
@@ -159,8 +173,11 @@ public class MainMaterialSettingsController extends AController {
 
     }
 
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initializeFields() {
-        AOMaterial m = material.get();
+        final AOMaterial m = material.get();
         txtMaterialName.textProperty().bindBidirectional(m.name);
         chkAmbientOcclusion.selectedProperty().bindBidirectional(m.ambientOcclusion);
         txtAmbientSize.doubleProperty.bindBidirectional(m.ambientSize);
@@ -288,6 +305,12 @@ public class MainMaterialSettingsController extends AController {
         }
     }
 
+    /**
+     * frees a materialAttribute from its relation to this Texture
+     * @param texture The TextureObject to be reset
+     * @param cmbTexture the ComboBox that have to be unselect
+     * @param clpColorPicker the ColorPicker that have to be select
+     */
     private void clearTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture, final ColorPicker clpColorPicker) {
         cmbTexture.getSelectionModel().clearSelection();
         if (clpColorPicker != null) {
@@ -299,12 +322,21 @@ public class MainMaterialSettingsController extends AController {
         masterTabPane.getSelectionModel().select(1);
     }
 
+    /**
+     * Sets a Texture to a given TextureAttribute
+     * @param texture The TextureObject that have to be changed
+     * @param cmbTexture the  ComboBox where the relevant Texture that have to be used is selected
+     */
     private void setTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture) {
         if (!cmbTexture.getSelectionModel().isEmpty())
             texture.setValue(cmbTexture.getSelectionModel().getSelectedItem());
         loadTextureTabs();
     }
 
+    /**
+     * Creates a new Texture and sets it to the given ComboBox
+     * @param comboBox The ComboBox where the Texture have to be placed
+     */
     private void newTexture(final ComboBox<AOTexture> comboBox) {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Jpeg  (*.jpg)", "*.jpg"));
@@ -321,7 +353,9 @@ public class MainMaterialSettingsController extends AController {
 
     }
 
-
+    /**
+     * loads for all Textures that are in use for this Material a new TextureTab
+     */
     private void loadTextureTabs() {
         TabPane tabPane = masterTabPane;
 
@@ -355,12 +389,17 @@ public class MainMaterialSettingsController extends AController {
                 masterTabPane.getTabs().add(tab);
             }
         } catch (IOException e) {
-            //TODO schöne Ausgabe
-            System.out.println("Fehler beim laden");
+            e.printStackTrace();
         }
 
     }
 
+    /**
+     * setup all FieldValues for TextureTab and binds them to the related Object. And sets all necessary actions
+     * @param v The VBox where the Material have to be placed
+     * @param texture The Texture that have to be used
+     * @param tab The Tab where the VBox have to be placed
+     */
     private void initializeTexture(final VBox v, final AOTexture texture, final Tab tab) {
         ((TextField) v.lookup("#txtTextureName")).textProperty().bindBidirectional(texture.name);
         ((TextField) v.lookup("#txtPath")).textProperty().bindBidirectional(texture.path);
@@ -412,17 +451,5 @@ public class MainMaterialSettingsController extends AController {
     }
 
 
-    private class ButtonCell extends ListCell<AOTexture> {
-        @Override
-        protected void updateItem(AOTexture item, boolean empty) {
-            super.updateItem(item, empty);
-            if (empty) {
-                textProperty().unbind();
-                setText("");
-            } else {
-                textProperty().bind(item.name);
-            }
-        }
-    }
 
 }

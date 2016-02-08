@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * The Controller for the Camera settings
  */
 public class MainSettingsCameraController extends AController {
     @FXML
@@ -101,9 +103,11 @@ public class MainSettingsCameraController extends AController {
             initialized = true;
         }
     }
-
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initializeFields() {
-        AOCamera c = (AOCamera) selectedTreeItem.get().getValue();
+        final AOCamera c = (AOCamera) selectedTreeItem.get().getValue();
         txtPositionX.doubleProperty.bindBidirectional(c.ex);
         txtPositionY.doubleProperty.bindBidirectional(c.ey);
         txtPositionZ.doubleProperty.bindBidirectional(c.ez);

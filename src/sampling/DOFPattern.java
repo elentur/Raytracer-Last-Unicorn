@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class represents a SamplingPattern Object.
- * The SamplingPattern involves a Pattern for a fixed number of rays for each pixel
+ * This Pattern represents a SamplingPattern for simulate Depth of Field
  *
  * @author Robert Dziuba on 21.12.2015
  */
@@ -27,7 +26,7 @@ public class DOFPattern extends SubdivisionPattern {
         points.clear();
         Random rn = new Random();
         final double fStopVal = 1.0 / size;
-        final int to = subdiv;//(int)(subdiv*((fStopVal+1.0)*4));
+        final int to = subdiv;
         for (int i = 0; i < to; i++) {
             for (int y = 0; y < to; y++) {
                 final double rX = (rn.nextDouble() - 0.5) / 10;

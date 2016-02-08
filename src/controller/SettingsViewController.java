@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by roberto on 06.01.16.
+ * Controller for the SettingsView
  */
 class SettingsViewController extends AController {
     @Override

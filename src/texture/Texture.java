@@ -3,22 +3,44 @@ package texture;
 import javafx.scene.image.Image;
 import utils.Color;
 
-import java.io.Serializable;
-
 /**
  * @author Robert Dziuba on 03/12/15.
  */
-public abstract class Texture implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+public abstract class Texture {
+    /**
+     * represents scaling value for u-axis
+     */
     final double scaleU;
+    /**
+     * represents scaling value for v-axis
+     */
     final double scaleV;
+    /**
+     * represents offset value for u-axis
+     */
     final double offsetU;
+    /**
+     * represents offset value for v-axis
+     */
     final double offsetV;
+    /**
+     * represents rotation value
+     */
     final double rotate;
+    /**
+     * represents the image for the texture
+     */
     final Image image;
 
+    /**
+     *
+     * @param scaleU represents scaling value for u-axis
+     * @param scaleV represents scaling value for v-axis
+     * @param offsetU represents offset value for u-axis
+     * @param offsetV represents offset value for v-axis
+     * @param rotate represents rotation value
+     * @param img represents the image for the texture
+     */
     Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate, Image img) {
         this.scaleU = scaleU;
         this.scaleV = scaleV;

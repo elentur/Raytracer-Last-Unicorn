@@ -24,18 +24,52 @@ import java.util.List;
  * Created by Marcus Baetz on 22.10.2015.
  *
  * @author Marcus Baetz
+ *
+ * Creates a new Object out of an Wavefront obj File
  */
 public class ShapeFromFile extends Geometry {
+    /**
+     * represents the path of the obj File
+     */
     private final File file;
+    /**
+     * List of all Triangles
+     */
     private final List<Geometry> triangles;
+    /**
+     * List of all Vertices
+     */
     private final List<Point3> v;
+    /**
+     * List of all normalVertices
+     */
     private final List<Normal3> vn;
+    /**
+     * List of all TextureCoordinates
+     */
     private final List<TexCoord2> vt;
+    /**
+     * List of all Faces
+     */
     private final List<String> f;
+    /**
+     * Octree for the complex object
+     */
     private final Octree octree;
 
-    public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
-        super(material, reciveShadows, castShadows, visibility, flipNormal);
+    /**
+     * Instantiates a new ShapeFromFile Object.
+     *
+     * @param material of the Axis Aligned Box. Can't be null
+     * @param path the File Object with the path information of the obj-File
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
+     * @throws IllegalArgumentException if one of the given arguments are null
+     */
+    public ShapeFromFile(final File path, final Material material, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
         this.file = path;
         triangles = new ArrayList<>();
         v = new ArrayList<>();
@@ -44,8 +78,12 @@ public class ShapeFromFile extends Geometry {
         f = new ArrayList<>();
         loadFile();
         octree = new Octree(triangles);
+        System.out.println(flipNormal);
     }
 
+    /**
+     * parses the obj-File
+     */
     private void loadFile() {
 
         if (readFile(file.getPath())) {
@@ -57,7 +95,7 @@ public class ShapeFromFile extends Geometry {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material, new TexCoord2(1, 1), new TexCoord2(1, 1), new TexCoord2(1, 1), reciveShadows, castShadows, visibility, castShadows);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material, new TexCoord2(1, 1), new TexCoord2(1, 1), new TexCoord2(1, 1), receiveShadows, castShadows, visibility, flipNormal);
                         triangles.add(tri);
                     } //F�r f / v/vt
                     else {
@@ -77,17 +115,17 @@ public class ShapeFromFile extends Geometry {
                         if (n[0] != -1 && t[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
-                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), reciveShadows, castShadows, visibility, false);
+                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
                         } else if (n[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
-                                    material, new TexCoord2(0, 1), new TexCoord2(1, 1), new TexCoord2(1, 0), reciveShadows, castShadows, visibility, false);
+                                    material, new TexCoord2(0, 1), new TexCoord2(1, 1), new TexCoord2(1, 0), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
                         } else {
                             Normal3 normal = v.get(p[0]).sub(v.get(p[1])).x(v.get(p[2]).sub(v.get(p[1]))).normalized().asNormal().mul(-1);
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     normal, normal, normal,
-                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), reciveShadows, castShadows, visibility, false);
+                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
                         }
                     }
@@ -101,8 +139,6 @@ public class ShapeFromFile extends Geometry {
             }
 
         }
-
-        // System.out.println(ImageSaver.fTriangle.size());
     }
 
 

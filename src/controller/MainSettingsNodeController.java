@@ -24,6 +24,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 07.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * The Controller for the Node settings
  */
 public class MainSettingsNodeController extends AController {
     @FXML
@@ -98,7 +100,9 @@ public class MainSettingsNodeController extends AController {
             initialized = true;
         }
     }
-
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initializeFields() {
         ONode n = (ONode) selectedTreeItem.get().getValue();
         txtTranslationX.doubleProperty.bindBidirectional(n.translationx);
@@ -141,6 +145,9 @@ public class MainSettingsNodeController extends AController {
         }
     }
 
+    /**
+     * If ShapeFromFile-Object allows to set an new obj Path
+     */
     private void newPathLoad() {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
@@ -150,6 +157,9 @@ public class MainSettingsNodeController extends AController {
         }
     }
 
+    /**
+     * Initialize the Material ComboBox and sets its CellFactories
+     */
     private void setMaterialComboBox() {
         if (((ONode) selectedTreeItem.get().getValue()).oGeos.get(0) instanceof ONode) {
             ((HBox) cmbMaterial.getParent()).getChildren().remove(cmbMaterial);
@@ -197,7 +207,7 @@ public class MainSettingsNodeController extends AController {
                 m = cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
                 materialList.add(m);
             } catch (InstantiationException | IllegalAccessException e) {
-                //TODO vernüftige Exception Behandlung
+                e.printStackTrace();
             }
 
         }

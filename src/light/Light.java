@@ -19,10 +19,27 @@ public abstract class Light {
      * Represents the Color of the Light
      */
     public final Color color;
+    /**
+     * Represents if a light cast shadows or not
+     */
     final boolean castsShadow;
+    /**
+     * represents the photons cast by the light(not implemented)
+     */
     private final int photons;
+    /**
+     * represents the Light Shadow Pattern to simulate sized lightSources
+     */
     public final LightShadowPattern lightShadowPattern;
 
+    /**
+     * Generates a Light with given LightColor and direction
+     *
+     * @param color      The Color of the Light
+     * @param castShadow Shadows on or of
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
+     */
     Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
         if (color == null) throw new IllegalArgumentException("color must not be null");
         this.color = color;

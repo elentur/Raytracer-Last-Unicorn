@@ -29,6 +29,7 @@ public class OrthographicCamera extends Camera {
      * @param g gaze vector (Blickrichtung)
      * @param t up vector
      * @param s the scale factor(greater than 0)
+     * @param samplingPattern the Sampling Pattern of the camera
      */
     public OrthographicCamera(final Point3 e, final Vector3 g, final Vector3 t, final double s, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
@@ -38,12 +39,7 @@ public class OrthographicCamera extends Camera {
     }
 
 
-    @Override
-    public String toString() {
-        return "OrthographicCamera{" +
-                "s=" + s +
-                '}';
-    }
+
 
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
@@ -52,16 +48,16 @@ public class OrthographicCamera extends Camera {
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
-        Set<Ray> rays = new HashSet<>();
+        final Set<Ray> rays = new HashSet<>();
 
-        double aspectRatio = (double) w / (double) h;
+        final double aspectRatio = (double) w / (double) h;
 
-        List<Point2> points = samplingPattern.generateSampling();
+        final List<Point2> points = samplingPattern.generateSampling();
 
         for (Point2 point : points) {
 
-            double scalar1 = aspectRatio * s * (x + point.x - (w - 1) / 2) / (w - 1);
-            double scalar2 = s * (y + point.y - (h - 1) / 2) / (h - 1);
+            final double scalar1 = aspectRatio * s * (x + point.x - (w - 1) / 2) / (w - 1);
+            final double scalar2 = s * (y + point.y - (h - 1) / 2) / (h - 1);
 
             final Point3 o = this.e.add(this.u.mul(scalar1)).add(this.v.mul(scalar2));
             final Vector3 d = this.w.mul(-1);
@@ -72,7 +68,12 @@ public class OrthographicCamera extends Camera {
         return rays;
     }
 
-
+    @Override
+    public String toString() {
+        return "OrthographicCamera{" +
+                "s=" + s +
+                '}';
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

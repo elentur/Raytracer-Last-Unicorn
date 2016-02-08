@@ -14,16 +14,42 @@ import utils.*;
  * @author Marcus Bätz
  */
 public class TransparentMaterial extends Material {
+    /**
+     * represents the index of refraction of the material
+     */
     private final double iOR;
+    /**
+     * represents the specular color and amount of the material
+     */
     private final Texture specular;
+    /**
+     * represents the reflective color and amount of the material
+     */
     private final Texture reflection;
+    /**
+     * represents the intensity of the specular
+     */
     private final int exponent;
 
+    /**
+     *
+     * @param specular represents the specular color and amount of the material
+     * @param reflection represents the reflective color and amount of the material
+     * @param exponent represents the intensity of the specular
+     * @param indexOfRefraction represents the index of refraction of the material
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     */
     public TransparentMaterial(final Texture texture, final Texture specular, final Texture reflection,
                                final int exponent, double indexOfRefraction, final Texture bumpMap,
                                final double bumpScale, final Texture irradiance,
-                               boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
-        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+                               boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
         if (exponent <= 0) {
             throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
@@ -119,10 +145,11 @@ public class TransparentMaterial extends Material {
 
                 //}
                 //basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
+                basicColor = basicColor.add(reflection.getColor(hit.texCoord.u, hit.texCoord.v).mul(tracer.reflection(reflectionRay, world)).mul(a));
+
             }
 
 
-            basicColor = basicColor.add(reflection.getColor(hit.texCoord.u, hit.texCoord.v).mul(tracer.reflection(reflectionRay, world)).mul(a));
         }
 
         return basicColor;

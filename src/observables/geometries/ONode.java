@@ -2,12 +2,10 @@ package observables.geometries;
 
 import geometries.Node;
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import matVect.Transform;
-import observables.materials.AOMaterial;
 import serializable.geometries.SNode;
 
 import java.util.List;
@@ -37,6 +35,22 @@ public class ONode extends AOGeometry {
     public ONode(String name, List<AOGeometry> oGeos) {
         this.name.set(name);
         this.oGeos.setAll(oGeos);
+        if(!this.oGeos.isEmpty()&& !(this.oGeos.get(0) instanceof ONode)){
+            this.castShadows.addListener(a->syncAttributes());
+            this.reciveShadows.addListener(a->syncAttributes());
+            this.visibility.addListener(a->syncAttributes());
+            this.flipNormal.addListener(a->syncAttributes());
+        }
+
+    }
+
+    private void syncAttributes(){
+        for(AOGeometry g : this.oGeos){
+            g.castShadows.set(this.castShadows.get());
+            g.reciveShadows.set(this.reciveShadows.get());
+            g.visibility.set(this.visibility.get());
+            g.flipNormal.set(this.flipNormal.get());
+        }
     }
 
     public ONode getInstance() {

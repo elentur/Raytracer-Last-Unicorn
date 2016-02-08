@@ -6,10 +6,19 @@ import utils.Color;
 
 /**
  * @author Robert Dziuba on 03/12/15.
+ * Generates an ImageTexture
  */
 public class ImageTexture extends Texture {
 
-
+    /**
+     *
+     * @param scaleU represents scaling value for u-axis
+     * @param scaleV represents scaling value for v-axis
+     * @param offsetU represents offset value for u-axis
+     * @param offsetV represents offset value for v-axis
+     * @param rotate represents rotation value
+     * @param img represents the image for the texture
+     */
     public ImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
         super(scaleU, scaleV, offsetU, offsetV, rotate, img);
     }

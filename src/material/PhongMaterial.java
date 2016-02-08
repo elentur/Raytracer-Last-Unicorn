@@ -33,14 +33,21 @@ public class PhongMaterial extends Material {
      * Instantiates a new PhongMaterial Object.
      *
      * @param texture  of the Material. Can't be null.
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
      * @param specular of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
                          final Texture bumpMap, final double bumpScale, final Texture irradiance,
-                         boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
-        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+                         boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }

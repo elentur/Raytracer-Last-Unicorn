@@ -31,11 +31,15 @@ public class Node extends Geometry {
      * Instantiates a new Geometry.
      *
      * @param geos is a List of containing geometries.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform transform, final List<Geometry> geos, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+    public Node(final Transform transform, final List<Geometry> geos, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         super(new SingleColorMaterial(new SingleColorTexture(new Color(0, 0, 0)),
-                        new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), reciveShadows, castShadows,
+                        new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), receiveShadows, castShadows,
                 visibility, flipNormal);
 
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
