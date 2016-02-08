@@ -14,11 +14,25 @@ import serializable.cameras.SDOFCamera;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a ODOFCamera
  */
 public class ODOFCamera extends AOCamera {
+    /**
+     * represents the camera field of view angel
+     */
     public final DoubleProperty angle = new SimpleDoubleProperty();
+    /**
+     * represents the DOF pattern size
+     */
     public final IntegerProperty dPatternSubdiv = new SimpleIntegerProperty();
+    /**
+     * represents the DOF fStop value
+     */
     public final DoubleProperty dPatternFStop = new SimpleDoubleProperty();
+    /**
+     * represents the DOF focalLength
+     */
     public final DoubleProperty focalLength = new SimpleDoubleProperty();
 
     public ODOFCamera() {

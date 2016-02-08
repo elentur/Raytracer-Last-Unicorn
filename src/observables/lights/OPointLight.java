@@ -11,11 +11,21 @@ import utils.Color;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OPointLight Object
  */
 public class OPointLight extends AOLight {
-
+    /**
+     * represents the position x value
+     */
     public final DoubleProperty px = new SimpleDoubleProperty();
+    /**
+     * represents the position y value
+     */
     public final DoubleProperty py = new SimpleDoubleProperty();
+    /**
+     * represents the position z value
+     */
     public final DoubleProperty pz = new SimpleDoubleProperty();
 
     public OPointLight() {

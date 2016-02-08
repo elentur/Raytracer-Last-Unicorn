@@ -10,11 +10,19 @@ import java.io.File;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OShapeFromFile Object
  */
 public class OShapeFromFile extends AOGeometry {
-
+    /**
+     * represents the path of the obj file
+     */
     public final StringProperty path = new SimpleStringProperty();
 
+    /**
+     *
+     * @param path the path of the obj file
+     */
     public OShapeFromFile(String path) {
         name.set(new File(path).getName().split("\\.")[0]);
         this.path.set(path);
@@ -25,7 +33,7 @@ public class OShapeFromFile extends AOGeometry {
         return new ShapeFromFile(
                 new File(path.get()),
                 material.get().generate(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
@@ -37,7 +45,7 @@ public class OShapeFromFile extends AOGeometry {
         return new SShapeFromFile(
                 path.get(),
                 material.get().serialize(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get(),

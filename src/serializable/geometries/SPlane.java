@@ -22,7 +22,7 @@ public class SPlane extends SGeometry {
         OPlane geo = new OPlane();
         geo.name.set(name);
         geo.material.set(material.generate());
-        geo.reciveShadows.set(reciveShadows);
+        geo.receiveShadows.set(reciveShadows);
         geo.castShadows.set(castShadows);
         geo.visibility.set(visibility);
         geo.flipNormal.set(flipNormal);

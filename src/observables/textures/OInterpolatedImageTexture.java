@@ -6,6 +6,8 @@ import texture.InterpolatedImageTexture;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OInterpolatedImageTexture Object
  */
 public class OInterpolatedImageTexture extends AOTexture {
 

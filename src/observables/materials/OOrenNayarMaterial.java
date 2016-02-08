@@ -8,9 +8,13 @@ import serializable.materials.SOrenNayarMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OOrenNayarMaterial
  */
 public class OOrenNayarMaterial extends AOMaterial {
-
+    /**
+     * represents the roughness of the material
+     */
     public final DoubleProperty roughness = new SimpleDoubleProperty();
 
     public OOrenNayarMaterial() {

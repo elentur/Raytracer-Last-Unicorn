@@ -13,7 +13,9 @@ import serializable.cameras.SPerspectiveCamera;
  * Robert Dziuba on 02/02/16.
  */
 public class OPerspectiveCamera extends AOCamera {
-
+    /**
+     * represents the camera field of view angel
+     */
     public final DoubleProperty angle = new SimpleDoubleProperty();
 
     public OPerspectiveCamera() {

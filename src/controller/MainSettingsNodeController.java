@@ -119,7 +119,7 @@ public class MainSettingsNodeController extends AController {
 
         cmbMaterial.setItems(materialList);
         chkCastShadows.selectedProperty().bindBidirectional(n.castShadows);
-        chkReceiveShadows.selectedProperty().bindBidirectional(n.reciveShadows);
+        chkReceiveShadows.selectedProperty().bindBidirectional(n.receiveShadows);
         chkVisible.selectedProperty().bindBidirectional(n.visibility);
         chkFlipNormals.selectedProperty().bindBidirectional(n.flipNormal);
         if (!(n.oGeos.size() == 1 && !(n.oGeos.get(0) instanceof ONode))) {

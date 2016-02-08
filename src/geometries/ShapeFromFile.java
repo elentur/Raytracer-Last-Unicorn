@@ -78,7 +78,6 @@ public class ShapeFromFile extends Geometry {
         f = new ArrayList<>();
         loadFile();
         octree = new Octree(triangles);
-        System.out.println(flipNormal);
     }
 
     /**

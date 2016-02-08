@@ -6,6 +6,8 @@ import texture.ImageTexture;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OImageTexture Object
  */
 public class OImageTexture extends AOTexture {
     public OImageTexture(String path) {

@@ -7,6 +7,7 @@ import texture.SingleColorTexture;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ * Creates a new OSingleColorTexture Object
  */
 public class OSingleColorTexture extends AOTexture {
 
