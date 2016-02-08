@@ -45,8 +45,8 @@ public abstract class SMaterial implements SElement, Serializable {
         if (!list.contains(m)) {
             list.add(m);
         } else {
-            if (list.indexOf(m) > 5) {
-                list.set(list.indexOf(m), m);
+            if (list.indexOf(m)==6) {
+                list.set(6, m);
             }
         }
     }
