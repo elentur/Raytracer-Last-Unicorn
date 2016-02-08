@@ -3,11 +3,31 @@ package serializable.cameras;
 import observables.cameras.OOrthographicCamera;
 
 /**
- * Created by roberto on 05.02.16.
+ * Wrapper class to serialize the OOrthographicCamera object.
+ * Created by Robert Dziuba on 05.02.16.
  */
 public class SOrthographicCamera extends SCamera {
+    /**
+     * scale factor of the of image scene
+     */
     private final int s;
 
+    /**
+     * Instantiates a new SOrthographicCamera Object.
+     *
+     * @param ex coordinates for the eye position.
+     * @param ey coordinates for the eye position.
+     * @param ez coordinates for the eye position.
+     * @param gx Coordinates for the gaze vector .
+     * @param gy Coordinates for the gaze vector.
+     * @param gz Coordinates for the gaze vector.
+     * @param tx Coordinates for the up vector.
+     * @param ty Coordinates for the up vector.
+     * @param tz Coordinates for the up vector.
+     * @param s scale factor.
+     * @param subdiv the Square number of the Rays for each pixel.
+     * @param name of the camera.
+     */
     public SOrthographicCamera(final double ex, final double ey, final double ez,
                                final double gx, final double gy, final double gz,
                                final double tx, final double ty, final double tz,

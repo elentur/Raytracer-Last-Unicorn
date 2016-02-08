@@ -21,7 +21,7 @@ public class DOFCamera extends Camera {
      */
     private final double angle;
     /**
-     * The Patern relevant for Depth-of-Field Calculation
+     * The Pattern relevant for Depth-of-Field Calculation
      * includes subdiv for sampling rate and fStop for the amount of sharpness
      */
     private final DOFPattern dofPattern;
