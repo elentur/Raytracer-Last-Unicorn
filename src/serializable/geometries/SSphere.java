@@ -1,6 +1,9 @@
 package serializable.geometries;
 
+import controller.AController;
+import javafx.collections.ObservableList;
 import observables.geometries.OSphere;
+import observables.materials.AOMaterial;
 import serializable.materials.SMaterial;
 
 /**
@@ -23,6 +26,10 @@ public class SSphere extends SGeometry {
         geo.visibility.set(visibility);
         geo.flipNormal.set(flipNormal);
 
+        ObservableList<AOMaterial> list = AController.materialList;
+        if (list.contains(geo.material.get())) {
+            geo.material.set(list.get(list.indexOf(geo.material.get())));
+        }
         return geo;
     }
 }

@@ -39,8 +39,8 @@ public class ONode extends AOGeometry {
         this.oGeos.setAll(oGeos);
     }
 
-    public ONode getIstance(ONode oldNode) {
-        SNode s = oldNode.serialize();
+    public ONode getInstance() {
+        SNode s = this.serialize();
         return s.generate();
     }
 

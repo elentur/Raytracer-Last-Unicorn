@@ -1,6 +1,9 @@
 package serializable.geometries;
 
+import controller.AController;
+import javafx.collections.ObservableList;
 import observables.geometries.OAxisAlignedBox;
+import observables.materials.AOMaterial;
 import serializable.materials.SMaterial;
 
 /**
@@ -24,7 +27,10 @@ public class SAxisAlignedBox extends SGeometry {
         geo.castShadows.set(castShadows);
         geo.visibility.set(visibility);
         geo.flipNormal.set(flipNormal);
-
+        ObservableList<AOMaterial> list = AController.materialList;
+        if (list.contains(geo.material.get())) {
+            geo.material.set(list.get(list.indexOf(geo.material.get())));
+        }
         return geo;
     }
 }

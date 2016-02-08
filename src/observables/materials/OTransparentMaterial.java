@@ -19,7 +19,7 @@ public class OTransparentMaterial extends AOMaterial {
 
     public OTransparentMaterial() {
         name.set("Transparent Material");
-        texture.set(new OSingleColorTexture(Color.BLACK));
+        texture.set(new OSingleColorTexture(Color.WHITE));
         indexOfRefraction.set(1.0);
         specular.set(new OSingleColorTexture(Color.WHITE));
         reflection.set(new OSingleColorTexture(Color.GRAY));

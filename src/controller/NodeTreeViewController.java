@@ -148,10 +148,7 @@ public class NodeTreeViewController extends AController {
     }
 
     public void handleDeleteAction() {
-        if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null &&
-                (selectedTreeItem.get().getValue() instanceof AOGeometry ||
-                        selectedTreeItem.get().getValue() instanceof AOCamera ||
-                        selectedTreeItem.get().getValue() instanceof AOLight)) {
+        if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null && selectedTreeItem.get().getValue().getClass() != AOElement.class) {
             elementLists.removeElement(selectedTreeItem.get().getValue());
         }
     }
