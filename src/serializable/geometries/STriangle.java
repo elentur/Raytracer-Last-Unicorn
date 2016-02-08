@@ -7,10 +7,21 @@ import observables.materials.AOMaterial;
 import serializable.materials.SMaterial;
 
 /**
+ * Wrapper class to serialize the OTriangle object.
  * Created by roberto on 05.02.16.
  */
 public class STriangle extends SGeometry {
 
+    /**
+     * Instantiates a new STriangle Object.
+     *
+     * @param material current material of the Geometry.
+     * @param reciveShadows if a geometry receives shadows.
+     * @param castShadows if a geometry casts shadows.
+     * @param visibility if a geometry is visible.
+     * @param flipNormal if a geometry has its normal direction changed.
+     * @param name of the geometry.
+     */
     public STriangle(final SMaterial material, final boolean reciveShadows, final boolean castShadows,
                      final boolean visibility, final boolean flipNormal, final String name) {
         super(material, reciveShadows, castShadows, visibility, flipNormal, name);
