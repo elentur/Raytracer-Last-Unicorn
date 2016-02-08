@@ -34,6 +34,9 @@ public class World {
      */
     public final List<Light> lights;
 
+    /**
+     * Activates the ambient occlusion.
+     */
     public final boolean ambientOcclusion;
 
 
@@ -41,9 +44,13 @@ public class World {
      * Generates a new world with predefined Background material
      *
      * @param backgroundColor represents the background material of the scene. The material is from typ Color.
+     * @param ambientLight represents the ambient light of the scene.
+     * @param ambientOcclusion activates the ambient occlusion.
+     * @throws IllegalArgumentException if the given arguments are null.
      */
     public World(final Color backgroundColor, final Color ambientLight, final boolean ambientOcclusion) {
-        if (backgroundColor == null) throw new IllegalArgumentException("backgroundColor must not be null!");
+        if (backgroundColor == null) throw new IllegalArgumentException("The backgroundColor cannot not be null!");
+        if (ambientLight == null) throw new IllegalArgumentException("The ambientLight cannot not be null!");
         this.backgroundColor = backgroundColor;
         this.geometries = new ArrayList<>();
         this.lights = new ArrayList<>();
@@ -83,16 +90,13 @@ public class World {
     }
 
     @Override
-
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         final World world = (World) o;
 
-        if (!backgroundColor.equals(world.backgroundColor)) return false;
-        return geometries.equals(world.geometries);
-
+        return backgroundColor.equals(world.backgroundColor) && geometries.equals(world.geometries);
     }
 
     @Override
