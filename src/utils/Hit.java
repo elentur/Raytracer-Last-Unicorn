@@ -42,6 +42,7 @@ public class Hit {
      * @param ray      the Ray that hit this Geometry.
      * @param geo      the Geometry that is hit by that Ray.
      * @param texCoord the coordinate ot the texture.
+     * @throws IllegalArgumentException if one of the given argument is null.
      */
     public Hit(final double t, Normal3 n, final Ray ray, final Geometry geo, final TexCoord2 texCoord) {
         if (ray == null) throw new IllegalArgumentException("ray must not be null!");

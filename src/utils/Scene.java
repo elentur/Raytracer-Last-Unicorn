@@ -42,7 +42,6 @@ public class Scene implements Serializable {
      * @return the TreeView object of this Scene.
      */
     public AOCamera getCamera() {
-
         return camera != null ? (AOCamera) camera.generate() : null;
     }
 

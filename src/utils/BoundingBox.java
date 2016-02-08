@@ -22,6 +22,9 @@ public class BoundingBox extends Geometry {
      */
     public final Point3 run;
 
+    /**
+     * The 6 sites of the Box.
+     */
     private final Plane[] planes;
 
 
