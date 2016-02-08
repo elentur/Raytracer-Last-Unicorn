@@ -8,6 +8,10 @@ import javafx.collections.FXCollections;
  * @author Marcus Bätz
  */
 public class DefaultGeometries {
+    /**
+     *
+     * @return a default Plane
+     */
     public static AOGeometry getPlane() {
         return new ONode(
                 "Plane",
@@ -15,7 +19,10 @@ public class DefaultGeometries {
         );
 
     }
-
+    /**
+     *
+     * @return a default Sphere
+     */
     public static AOGeometry getSphere() {
         return new ONode(
                 "Sphere",
@@ -23,7 +30,10 @@ public class DefaultGeometries {
         );
 
     }
-
+    /**
+     *
+     * @return a default AxisAlignedBox
+     */
     public static AOGeometry getAxisAlignedBox() {
         return new ONode(
                 "Axis-Aligned-Box",
@@ -31,7 +41,10 @@ public class DefaultGeometries {
         );
 
     }
-
+    /**
+     *
+     * @return a default Triangle
+     */
     public static AOGeometry getTriangle() {
         return new ONode(
                 "Triangle",

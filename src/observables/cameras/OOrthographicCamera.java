@@ -13,7 +13,9 @@ import serializable.cameras.SOrthographicCamera;
  * Robert Dziuba on 02/02/16.
  */
 public class OOrthographicCamera extends AOCamera {
-
+    /**
+     * represents the scale value
+     */
     public final IntegerProperty s = new SimpleIntegerProperty();
 
     public OOrthographicCamera() {

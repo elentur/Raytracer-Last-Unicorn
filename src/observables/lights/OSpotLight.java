@@ -12,17 +12,39 @@ import utils.Color;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OSpotLight Object
  */
 public class OSpotLight extends AOLight {
-
+    /**
+     * represents the position x value
+     */
     public final DoubleProperty px = new SimpleDoubleProperty();
+    /**
+     * represents the position y value
+     */
     public final DoubleProperty py = new SimpleDoubleProperty();
+    /**
+     * represents the position z value
+     */
     public final DoubleProperty pz = new SimpleDoubleProperty();
 
+    /**
+     * represents the direction x value
+     */
     public final DoubleProperty dx = new SimpleDoubleProperty();
+    /**
+     * represents the direction y value
+     */
     public final DoubleProperty dy = new SimpleDoubleProperty();
+    /**
+     * represents the direction z value
+     */
     public final DoubleProperty dz = new SimpleDoubleProperty();
 
+    /**
+     * represents the spotlight angel
+     */
     public final DoubleProperty halfAngle = new SimpleDoubleProperty();
 
     public OSpotLight() {

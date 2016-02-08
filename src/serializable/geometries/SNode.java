@@ -64,7 +64,7 @@ public class SNode extends SGeometry {
         geo.rotationz.set(rotationZ);
 
         geo.material.set(null);
-        geo.reciveShadows.set(reciveShadows);
+        geo.receiveShadows.set(reciveShadows);
         geo.castShadows.set(castShadows);
         geo.visibility.set(visibility);
         geo.flipNormal.set(flipNormal);

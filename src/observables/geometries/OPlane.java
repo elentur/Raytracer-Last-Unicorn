@@ -6,6 +6,8 @@ import serializable.geometries.SPlane;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OPlane Object
  */
 public class OPlane extends AOGeometry {
 
@@ -17,7 +19,7 @@ public class OPlane extends AOGeometry {
     public Plane generate() {
         return new Plane(
                 material.get().generate(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
@@ -28,7 +30,7 @@ public class OPlane extends AOGeometry {
     public SPlane serialize() {
         return new SPlane(
                 material.get().serialize(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get(),

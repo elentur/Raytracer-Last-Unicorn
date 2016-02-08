@@ -6,6 +6,8 @@ import serializable.geometries.SSphere;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OSphere
  */
 public class OSphere extends AOGeometry {
 
@@ -17,7 +19,7 @@ public class OSphere extends AOGeometry {
     public Sphere generate() {
         return new Sphere(
                 material.get().generate(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
@@ -28,7 +30,7 @@ public class OSphere extends AOGeometry {
     public SSphere serialize() {
         return new SSphere(
                 material.get().serialize(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get(),

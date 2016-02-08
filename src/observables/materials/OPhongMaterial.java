@@ -13,10 +13,17 @@ import serializable.materials.SPhongMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OPhongMaterial Object
  */
 public class OPhongMaterial extends AOMaterial {
-
+    /**
+     * represents the specular Texture of this material
+     */
     public final ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
+    /**
+     * represents the specular intensity of this material
+     */
     public final IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OPhongMaterial() {

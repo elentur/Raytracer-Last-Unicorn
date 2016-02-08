@@ -6,6 +6,8 @@ import serializable.geometries.STriangle;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OTriangle
  */
 public class OTriangle extends AOGeometry {
 
@@ -17,7 +19,7 @@ public class OTriangle extends AOGeometry {
     public Triangle generate() {
         return new Triangle(
                 material.get().generate(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
@@ -28,7 +30,7 @@ public class OTriangle extends AOGeometry {
     public STriangle serialize() {
         return new STriangle(
                 material.get().serialize(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get(),

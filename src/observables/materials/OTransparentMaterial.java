@@ -10,11 +10,25 @@ import serializable.materials.STransparentMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OTransparentMaterial Object
  */
 public class OTransparentMaterial extends AOMaterial {
+    /**
+     * represents the index of refraction value of this material
+     */
     public final DoubleProperty indexOfRefraction = new SimpleDoubleProperty();
+    /**
+     * represents the specular Texture of this material
+     */
     public final ObjectProperty<AOTexture> specular = new SimpleObjectProperty<>();
+    /**
+     * represents the reflection Texture of this material
+     */
     public final ObjectProperty<AOTexture> reflection = new SimpleObjectProperty<>();
+    /**
+     * represents the specular intensity of this material
+     */
     public final IntegerProperty exponent = new SimpleIntegerProperty();
 
     public OTransparentMaterial() {

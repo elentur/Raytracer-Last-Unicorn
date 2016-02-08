@@ -11,10 +11,21 @@ import utils.Color;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new ODirectionalLight Object
  */
 public class ODirectionalLight extends AOLight {
+    /**
+     * represents the direction x value
+     */
     public final DoubleProperty dx = new SimpleDoubleProperty();
+    /**
+     * represents the direction y value
+     */
     public final DoubleProperty dy = new SimpleDoubleProperty();
+    /**
+     * represents the direction z value
+     */
     public final DoubleProperty dz = new SimpleDoubleProperty();
 
     public ODirectionalLight() {

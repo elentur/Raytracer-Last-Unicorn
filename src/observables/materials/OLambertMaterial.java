@@ -6,6 +6,8 @@ import serializable.materials.SLambertMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OLambertMaterial Object
  */
 public class OLambertMaterial extends AOMaterial {
 

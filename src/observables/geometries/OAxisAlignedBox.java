@@ -6,6 +6,8 @@ import serializable.geometries.SAxisAlignedBox;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
+ *
+ * Creates a new OAxisAlignedBox
  */
 public class OAxisAlignedBox extends AOGeometry {
 
@@ -17,7 +19,7 @@ public class OAxisAlignedBox extends AOGeometry {
     public AxisAlignedBox generate() {
         return new AxisAlignedBox(
                 material.get().generate(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get()
@@ -28,7 +30,7 @@ public class OAxisAlignedBox extends AOGeometry {
     public SAxisAlignedBox serialize() {
         return new SAxisAlignedBox(
                 material.get().serialize(),
-                reciveShadows.get(),
+                receiveShadows.get(),
                 castShadows.get(),
                 visibility.get(),
                 flipNormal.get(),
