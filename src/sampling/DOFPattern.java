@@ -2,79 +2,42 @@ package sampling;
 
 import matVect.Point2;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 /**
- * This class represents a SamplingPattern Object.
- * The SamplingPattern involves a Pattern for a fixed number of rays for each pixel
+ * This Pattern represents a SamplingPattern for simulate Depth of Field
  *
  * @author Robert Dziuba on 21.12.2015
  */
-public class DOFPattern {
+public class DOFPattern extends SubdivisionPattern {
 
 
-    private final double fStop;
-    /**
-     *  Square number  of the Rays for each pixel
-     */
-    public final int size;
-
-    /**
-     * List of Points which represents the coordinates of the ray.
-     */
-    public final List<Point2> points;
-
-    public DOFPattern(final int size, final double fStop) {
-        if(size < 1) throw new IllegalArgumentException("The rows cannot be smaller than 1!");
-        if(fStop < 1) throw new IllegalArgumentException("The F-Stop cannot be smaller than 1!");
-        this.fStop=fStop;
-        this.size=size;
-        points = new ArrayList<>();
+    public DOFPattern(final int subdiv, final double fStop) {
+        super(fStop, subdiv);
         generateSampling();
     }
 
     /**
      * generate the list of points (coordinates) of the ray random differences.
      */
-    private void generateSampling() {
-
+    public List<Point2> generateSampling() {
+        points.clear();
         Random rn = new Random();
-        final double fStopVal = 1.0/fStop;
-        final int to = (int)(size*(4*fStopVal)+1);
-        for(int x = 0; x < to; x++){
-            for(int y = 0; y < to; y++){
-                final double rX = (rn.nextDouble()-fStopVal) / 10;
-                final double rY = (rn.nextDouble()-fStopVal) / 10;
-                points.add(new Point2((2.0/size * x*fStopVal -fStopVal) +rX , (2.0/size * y*fStopVal - fStopVal)+rY));
+        final double fStopVal = 1.0 / size;
+        final int to = subdiv;
+        for (int i = 0; i < to; i++) {
+            for (int y = 0; y < to; y++) {
+                final double rX = (rn.nextDouble() - 0.5) / 10;
+                final double rY = (rn.nextDouble() - 0.5) / 10;
+                points.add(new Point2(
+                        (2.0 / (subdiv - 1) * i * fStopVal - fStopVal) + rX,
+                        (2.0 / (subdiv - 1) * y * fStopVal - fStopVal) + rY));
             }
         }
+        Collections.shuffle(points);
+        return points;
     }
 
-    @Override
-    public String toString() {
-        return "SamplingPattern{" +
-                "size=" + size +
-                ", points=" + points +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        DOFPattern that = (DOFPattern) o;
-
-        return size == that.size && (points != null ? points.equals(that.points) : that.points == null);
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = size;
-        result = 31 * result + (points != null ? points.hashCode() : 0);
-        return result;
-    }
 }

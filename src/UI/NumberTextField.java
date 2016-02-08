@@ -1,8 +1,9 @@
 package UI;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -14,49 +15,61 @@ import java.util.Locale;
  * BigDecimal property The user input is formatted when the focus is lost or the
  * user hits RETURN.
  *
- * @author Thomas Bolz
+ * @author Thomas Bolz, Marcus Bätz
  */
 public class NumberTextField extends TextField {
 
     private final NumberFormat nf;
-    private ObjectProperty<BigDecimal> number = new SimpleObjectProperty<>();
+    private final ObjectProperty<BigDecimal> number = new SimpleObjectProperty<>();
+    public final DoubleProperty doubleProperty = new SimpleDoubleProperty();
+    private final IntegerProperty integerProperty = new SimpleIntegerProperty();
+
 
     public final BigDecimal getNumber() {
         return number.get();
     }
+
     public final double getDouble() {
+
         return number.get().doubleValue();
     }
+
     public final int getInteger() {
         return number.get().intValue();
     }
 
-    public final void setNumber(BigDecimal value) {
+    private void setNumber(BigDecimal value) {
         number.set(value);
     }
-    public final void setNumber(int i) {
+
+    private void setNumber(int i) {
         number.set(new BigDecimal(i));
     }
+
     public final void setNumber(double d) {
         number.set(new BigDecimal(d));
     }
-    public final void setNumber(String  s) {
+
+    public final void setNumber(String s) {
         number.set(new BigDecimal(s));
     }
 
-    public ObjectProperty<BigDecimal> numberProperty() {
+    private ObjectProperty<BigDecimal> numberProperty() {
         return number;
     }
 
     public NumberTextField() {
         this(BigDecimal.ZERO);
     }
+
     public NumberTextField(int i) {
-        this(new BigDecimal(i),NumberFormat.getIntegerInstance(Locale.US));
+        this(new BigDecimal(i), NumberFormat.getIntegerInstance(Locale.US));
     }
+
     public NumberTextField(double d) {
-        this(new BigDecimal(d),NumberFormat.getInstance(Locale.US));
+        this(new BigDecimal(d), NumberFormat.getInstance(Locale.US));
     }
+
     public NumberTextField(BigDecimal value) {
         this(value, NumberFormat.getInstance());
         //initHandlers();
@@ -68,15 +81,27 @@ public class NumberTextField extends TextField {
         this.nf.setMaximumFractionDigits(8);
         initHandlers();
         setNumber(value);
+
     }
 
     private void initHandlers() {
-
+        doubleProperty.addListener(a -> {
+            setNumber(doubleProperty.getValue());
+        });
+        integerProperty.addListener(a -> {
+            setNumber(integerProperty.getValue());
+        });
         // try to parse when focus is lost or RETURN is hit
-        setOnAction(a->parseAndFormatInput());
+        addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getCode().equals(KeyCode.ENTER)) {
+                parseAndFormatInput();
+            }
+            //}
 
+
+        });
         focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.booleanValue()) {
+            if (!newValue) {
                 parseAndFormatInput();
             }
         });
@@ -85,6 +110,7 @@ public class NumberTextField extends TextField {
         numberProperty().addListener((obserable, oldValue, newValue) -> {
             setText(nf.format(newValue));
         });
+
     }
 
     /**
@@ -101,10 +127,14 @@ public class NumberTextField extends TextField {
             Number parsedNumber = nf.parse(input);
             BigDecimal newValue = new BigDecimal(parsedNumber.toString());
             setNumber(newValue);
+            integerProperty.setValue(newValue);
+            doubleProperty.setValue(newValue);
             selectAll();
+            //  fireEvent(new ActionEvent());
         } catch (ParseException ex) {
             // If parsing fails keep old number
             setText(nf.format(number.get()));
         }
+
     }
 }

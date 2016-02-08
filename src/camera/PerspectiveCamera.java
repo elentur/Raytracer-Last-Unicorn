@@ -7,6 +7,7 @@ import sampling.SamplingPattern;
 import utils.Ray;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,9 +19,7 @@ public class PerspectiveCamera extends Camera {
     /**
      * the opening angle
      */
-    public final double angle;
-
-    private Set<Ray> rays;
+    private final double angle;
 
     /**
      * Constructor initializes e. g and t.
@@ -29,6 +28,7 @@ public class PerspectiveCamera extends Camera {
      * @param g     gaze vector (gaze direction)
      * @param t     up vector
      * @param angle the opening angle between ]0 and PI/2]
+     * @param samplingPattern the Sampling Pattern of the camera
      */
     public PerspectiveCamera(final Point3 e, final Vector3 g, final Vector3 t, final double angle, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
@@ -36,6 +36,7 @@ public class PerspectiveCamera extends Camera {
             throw new IllegalArgumentException("angle have to be greater than 0 and lower than PI/2");
         this.angle = angle;
     }
+
 
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
@@ -45,20 +46,22 @@ public class PerspectiveCamera extends Camera {
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
-        rays = new HashSet<>();
+        final Set<Ray> rays = new HashSet<>();
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        final Vector3 summand2 = this.u.mul(x - ((w - 1.0) / 2));
-        final Vector3 summand3 = this.v.mul(y - ((h - 1.0) / 2));
+        final List<Point2> points = samplingPattern.generateSampling();
 
-        for(Point2 point : samplingPattern.points) {
-            final Vector3 r = summand1.add(summand2).add(summand3).add(this.u.mul(point.x)).add(this.v.mul(point.y));
+        for (Point2 point : points) {
+            final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));
+            final Vector3 summand3 = this.v.mul(y + point.y - ((h - 1.0) / 2));
+            final Vector3 r = summand1.add(summand2).add(summand3);
             rays.add(new Ray(this.e, r.normalized()));
         }
 
         return rays;
     }
+
 
     @Override
     public String toString() {

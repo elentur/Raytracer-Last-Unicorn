@@ -15,29 +15,32 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
-    final public Texture texture;
 
     /**
      * Generates a SinglColor Object with the given texture
-     *
-     * @param texture
+     *@param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     * @param texture The Diffuse Color Texture Material
      */
 
-    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale) {
-        super(texture,bumpMap,bumpScale,new SingleColorTexture(new Color(0,0,0)));
-        if(texture == null){
-            throw new IllegalArgumentException("texture must not be null");
-        }
-        this.texture = texture;
+    public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
+                               boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, new SingleColorTexture(new Color(0, 0, 0)), ambientOcclusion, ambientSize, ambientSubdiv);
     }
+
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
         if (hit == null) throw new IllegalArgumentException("hit must not be null ");
         if (world == null) throw new IllegalArgumentException("world must not be null ");
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v);
     }
+
 
     @Override
     public String toString() {
@@ -47,9 +50,10 @@ public class SingleColorMaterial extends Material {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof SingleColorMaterial)) return false;
+        if (!super.equals(o)) return false;
 
         SingleColorMaterial that = (SingleColorMaterial) o;
 

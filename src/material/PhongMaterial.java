@@ -1,6 +1,7 @@
 package material;
 
 import light.Light;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
 import texture.Texture;
@@ -20,34 +21,44 @@ public class PhongMaterial extends Material {
     /**
      * The color of our reflection.
      */
-    public final Texture specular;
+    private final Texture specular;
 
     /**
      * The value to change the size of the highlight.
      * The larger exponent, the smaller will be the highlight.
      */
-    public final int exponent;
+    private final int exponent;
 
     /**
      * Instantiates a new PhongMaterial Object.
      *
      * @param texture  of the Material. Can't be null.
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
      * @param specular of the Material. Can't be null.
      * @param exponent of the Material. Muss be bigger zero.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public PhongMaterial(final Texture texture, final Texture specular, final int exponent,
-                         final Texture bumpMap, final double bumpScale, final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
+                         final Texture bumpMap, final double bumpScale, final Texture irradiance,
+                         boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
         if (specular == null) {
             throw new IllegalArgumentException("The specular cannot be null!");
         }
         if (exponent <= 0) {
             throw new IllegalArgumentException("The exponent must be bigger than 0!");
         }
+
         this.specular = specular;
         this.exponent = exponent;
     }
+
 
     @Override
     public Color colorFor(final Hit hit, final World world, final Tracer tracer) {
@@ -66,23 +77,31 @@ public class PhongMaterial extends Material {
 
             Vector3 l = light.directionFrom(h);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(h, world, hit.geo)) {
-                basicColor = basicColor.add(
-                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
-                                .mul(Math.max(0, hit.n.dot(l.normalized()))
-                                )
-                ).add(
-                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
-                                .mul(light.color)
-                                .mul(Math.pow(
-                                        Math.max(0, rl.dot(e)), exponent)
-                                )
-                );
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
+
+                for (Point2 point : light.lightShadowPattern.generateSampling()) {
+                    if (light.illuminates(h, point, world, hit.geo)) {
+                        basicColor = basicColor.add(
+                                light.color.mul(texture.getColor(hit.texCoord.u, hit.texCoord.v))
+                                        .mul(Math.max(0, hit.n.dot(l.normalized()))
+                                        )
+                        ).add(
+                                specular.getColor(hit.texCoord.u, hit.texCoord.v)
+                                        .mul(light.color)
+                                        .mul(Math.pow(
+                                                Math.max(0, rl.dot(e)), exponent)
+                                        )
+                        );
+                    }
+                }
+                basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
             }
         }
 
-        return texture.getColor(hit.texCoord.u,hit.texCoord.v).mul(world.ambientLight).add(basicColor);
+        return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(basicColor);
     }
+
 
     @Override
     public String toString() {
@@ -94,15 +113,15 @@ public class PhongMaterial extends Material {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PhongMaterial)) return false;
+        if (!super.equals(o)) return false;
 
         PhongMaterial that = (PhongMaterial) o;
 
         if (exponent != that.exponent) return false;
-        if (!texture.equals(that.texture)) return false;
-        return specular.equals(that.specular);
+        return !(specular != null ? !specular.equals(that.specular) : that.specular != null);
 
     }
 

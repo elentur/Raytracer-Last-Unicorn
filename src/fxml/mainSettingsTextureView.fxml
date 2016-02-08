@@ -1,0 +1,42 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import UI.*?>
+<VBox fx:id="TextureView" xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <Label text="Name"/>
+        <TextField styleClass="col-3" fx:id="txtTextureName"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Path"/>
+        <TextField editable="false" styleClass="col-2" fx:id="txtPath"/>
+        <Button fx:id="btnNewPath" text="New Path"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <CheckBox fx:id="chkBilinearFilter" text="Bilinear Filter" selected="false"/>
+    </HBox>
+    <HBox styleClass="form-group-4, element-center">
+        <ImageView fx:id="imgTexture" fitWidth="80" fitHeight="80">
+        </ImageView>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <Label styleClass="text-field-head" text="U"/>
+        <Label styleClass="text-field-head" text="V"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Offset"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtOffsetU"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtOffsetV"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Scaling"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingU"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtScalingV"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Rotation"/>
+        <NumberTextField styleClass="number-text-field" fx:id="txtRotation"/>
+    </HBox>
+</VBox>

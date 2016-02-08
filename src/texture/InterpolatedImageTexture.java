@@ -4,39 +4,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
 import utils.Color;
 
-import java.io.File;
-
 /**
- * @author  Robert Dziuba on 03/12/15.
+ * @author Robert Dziuba on 03/12/15.
+ * represents an Interpolated ImageTexture
  */
 public class InterpolatedImageTexture extends Texture {
-
-    public Image image;
-
-    public InterpolatedImageTexture(final String path) {
-        this(path,1,1,1,1,0);
-    }
-
-    public InterpolatedImageTexture(final String path, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
-        super(scaleU,scaleV,offsetU,offsetV,rotate);
-        File file = new File(path);
-
-        if(!file.exists()) throw new IllegalArgumentException("Image "+path+" not found.");
-
-        this.image = new Image(file.toURI().toString());
+    /**
+     *
+     * @param scaleU represents scaling value for u-axis
+     * @param scaleV represents scaling value for v-axis
+     * @param offsetU represents offset value for u-axis
+     * @param offsetV represents offset value for v-axis
+     * @param rotate represents rotation value
+     * @param img represents the image for the texture
+     */
+    public InterpolatedImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
+        super(scaleU, scaleV, offsetU, offsetV, rotate, img);
     }
 
     @Override
     public Color getColor(double u, double v) {
-        double u1 = u*Math.cos(rotate) -v*Math.sin(rotate);
-        v = u*Math.sin(rotate) +v*Math.cos(rotate);
-        u=u1;
-        u = (u/ scaleU + offsetU) % 1.0;
-        v = (v/ scaleV + offsetV) % 1.0;
+        double u1 = u * Math.cos(rotate) - v * Math.sin(rotate);
+        v = u * Math.sin(rotate) + v * Math.cos(rotate);
+        u = u1;
+        u = (u / scaleU + offsetU) % 1.0;
+        v = (v / scaleV + offsetV) % 1.0;
 
+        u = (u / scaleU + offsetU) % 1.0;
+        v = (v / scaleV + offsetV) % 1.0;
 
-        if(u < 0) u += 1.0;
-        if(v < 0) v += 1.0;
+        if (u < 0) u += 1.0;
+        if (v < 0) v += 1.0;
 
 
         u = u * (image.getWidth() - 1);
@@ -66,18 +64,17 @@ public class InterpolatedImageTexture extends Texture {
         fxColor = reader.getColor(x + 1, y + 1);
         Color color4 = new Color(fxColor.getRed(), fxColor.getGreen(), fxColor.getBlue());
 
-        // (tex[x][y] * u_opposite  + tex[x+1][y]   * u_ratio) * v_opposite
-        // +
-        // (tex[x][y+1] * u_opposite  + tex[x+1][y+1] * u_ratio) * v_ratio;
-
         Color a = color1.mul(u_opposite).add(color2.mul(u_ratio));
         Color b = a.mul(v_opposite);
         Color c = color3.mul(u_opposite).add(color4.mul(u_ratio));
         Color d = c.mul(v_ratio);
 
-        Color e = b.add(d);
+        return b.add(d);
 
-        return e;
+    }
 
+    @Override
+    public int hashCode() {
+        return image != null ? image.hashCode() : 0;
     }
 }

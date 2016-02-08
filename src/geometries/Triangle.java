@@ -29,9 +29,9 @@ public class Triangle extends Geometry {
      */
     public final Point3 c;
 
-    public final Normal3 na;
-    public final Normal3 nb;
-    public final Normal3 nc;
+    private final Normal3 na;
+    private final Normal3 nb;
+    private final Normal3 nc;
 
     private final TexCoord2 texCoordA;
     private final TexCoord2 texCoordB;
@@ -45,14 +45,19 @@ public class Triangle extends Geometry {
      * @param b        corner point of the Sphere. Can't be null.
      * @param c        corner point of the Sphere. Can't be null.
      * @param material of the Sphere. Can't be null.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public Triangle(final Point3 a, final Point3 b, final Point3 c,
                     final Normal3 na, final Normal3 nb, final Normal3 nc,
                     final Material material,
                     final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC,
-                    final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material, reciveShadows,castShadows,visibility,flipNormal);
+                    final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
+
         if (a == null) {
             throw new IllegalArgumentException("The a cannot be null!");
         }
@@ -78,15 +83,35 @@ public class Triangle extends Geometry {
         this.texCoordC = texCoordC;
     }
 
-    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
+    public Triangle(final Point3 a, final Point3 b, final Point3 c, final Material material, final TexCoord2 texCoordA, final TexCoord2 texCoordB, final TexCoord2 texCoordC, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         this(a, b, c,
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 a.sub(b).x(c.sub(b)).normalized().asNormal().mul(-1),
                 material,
-                texCoordA, texCoordB, texCoordC,reciveShadows,castShadows,
-                visibility,flipNormal);
+                texCoordA, texCoordB, texCoordC, reciveShadows, castShadows,
+                visibility, flipNormal);
     }
+
+    public Triangle(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        this(
+                new Point3(-0.5, 1, 0),
+                new Point3(0.5, 1, 0),
+                new Point3(0.5, 0, 0),
+                new Normal3(0, 0, 1),
+                new Normal3(0, 0, 1),
+                new Normal3(0, 0, 1),
+                material,
+                new TexCoord2(0, 1),
+                new TexCoord2(1, 1),
+                new TexCoord2(1, 0),
+                reciveShadows,
+                castShadows,
+                visibility,
+                flipNormal
+        );
+    }
+
 
     @Override
     public Hit hit(final Ray r) {
@@ -117,18 +142,20 @@ public class Triangle extends Geometry {
             if (gamma > 0 && beta + gamma <= 1) {
                 final double detA3 = m.col3(vec).determinant;
                 final double t = detA3 / detA;
-                if (t > 0) {
+                if (t +0.000001> 0) {
                     Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
 
-                    final Point3 p = r.at(t);
 
-                    final double u = texCoordA.u*(1 - beta - gamma) +  texCoordB.u * beta + texCoordC.u * gamma;
-                    final double v = texCoordA.v*(1 - beta - gamma) +  texCoordB.v * beta + texCoordC.v * gamma;
-                    Color normalC = material.bumpMap.getColor(u,v);
+                    final double u = texCoordA.u * (1 - beta - gamma) + texCoordB.u * beta + texCoordC.u * gamma;
+                    final double v = texCoordA.v * (1 - beta - gamma) + texCoordB.v * beta + texCoordC.v * gamma;
+                    Color normalC = material.bumpMap.getColor(u, v);
                     Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
-                    Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
-                    if (flipNormal) n1 = n1.mul(-1);
-                    return new Hit(t, n1, r, this, new TexCoord2(u,v));
+                    Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
+                    if (flipNormal){
+                        n1 = n1.mul(-1);
+                        System.out.println("fliped");
+                    }
+                    return new Hit(t, n1, r, this, new TexCoord2(u, -v));
                 }
             }
 
@@ -136,6 +163,7 @@ public class Triangle extends Geometry {
 
         return null;
     }
+
 
     @Override
     public String toString() {
@@ -147,17 +175,21 @@ public class Triangle extends Geometry {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof Triangle)) return false;
 
         Triangle triangle = (Triangle) o;
 
         if (a != null ? !a.equals(triangle.a) : triangle.a != null) return false;
         if (b != null ? !b.equals(triangle.b) : triangle.b != null) return false;
         if (c != null ? !c.equals(triangle.c) : triangle.c != null) return false;
-        return material.equals(triangle.material) && name.equals(triangle.name);
+        if (na != null ? !na.equals(triangle.na) : triangle.na != null) return false;
+        if (nb != null ? !nb.equals(triangle.nb) : triangle.nb != null) return false;
+        if (nc != null ? !nc.equals(triangle.nc) : triangle.nc != null) return false;
+        if (texCoordA != null ? !texCoordA.equals(triangle.texCoordA) : triangle.texCoordA != null) return false;
+        if (texCoordB != null ? !texCoordB.equals(triangle.texCoordB) : triangle.texCoordB != null) return false;
+        return !(texCoordC != null ? !texCoordC.equals(triangle.texCoordC) : triangle.texCoordC != null);
 
     }
 

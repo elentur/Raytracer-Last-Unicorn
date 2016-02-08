@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -19,24 +21,26 @@ public class PointLight extends Light {
     /**
      * Represents the position of the Light
      */
-    public final Point3 position;
+    private final Point3 position;
 
     /**
      * Generates a new
      *
-     * @param color    Represents the color of the light
-     * @param position Represents the position of the light
+     * @param color      Represents the color of the light
+     * @param position   Represents the position of the light
      * @param castShadow Shadows on or of
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      */
-    public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons) {
-        super(color,castShadow,photons);
+    public PointLight(final Color color, final Point3 position, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        super(color, castShadow, photons, lightShadowPattern);
         if (position == null) throw new IllegalArgumentException("position must not be null ");
         this.position = position;
     }
 
 
     @Override
-    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
+    public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -44,22 +48,29 @@ public class PointLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if(castsShadow&& geo.reciveShadows) {
-            final Ray r = new Ray(point, directionFrom(point));
+        if (castsShadow && geo.receiveShadows) {
+            final Ray r = new Ray(point, directionFrom(point, samplePoint));
 
             final double tl = r.tOf(position);
 
             for (final Geometry g : world.geometries) {
+                if (g.visibility) {
+                    final Hit h = g.hit(r);
+                    if ((h != null && h.t > 0.0001 && h.t< tl && h.geo.castShadows)) {
 
-                final Hit h = g.hit(r);
-                if ((h != null && h.t >= 0.0001 && h.t < tl && h.geo.castShadows)) {
-
-                    return false;
+                        return false;
+                    }
                 }
             }
         }
 
         return true;
+    }
+
+    private Vector3 directionFrom(Point3 point, Point2 samplePoint) {
+        if (point == null) throw new IllegalArgumentException("point must not be null ");
+        Point3 p = new Point3(position.x + samplePoint.x, position.y + samplePoint.y, position.z);
+        return p.sub(point).normalized();
     }
 
     @Override
@@ -76,13 +87,13 @@ public class PointLight extends Light {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof PointLight)) return false;
 
         PointLight that = (PointLight) o;
 
-        return !(position != null ? !position.equals(that.position) && name.equals(that.name) : that.position != null);
+        return !(position != null ? !position.equals(that.position) : that.position != null);
 
     }
 

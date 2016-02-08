@@ -1,0 +1,33 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import UI.*?>
+<VBox fx:id="cameraView" fx:controller="controller.MainSettingsCameraController" xmlns:fx="http://javafx.com/fxml">
+    <HBox styleClass="form-group-4">
+        <HBox styleClass="col-1"/>
+        <Label styleClass="text-field-head" text="X"/>
+        <Label styleClass="text-field-head" text="Y"/>
+        <Label styleClass="text-field-head" text="Z"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Position"/>
+        <NumberTextField fx:id="txtPositionX"/>
+        <NumberTextField fx:id="txtPositionY"/>
+        <NumberTextField fx:id="txtPositionZ"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Direction"/>
+        <NumberTextField fx:id="txtDirectionX"/>
+        <NumberTextField fx:id="txtDirectionY"/>
+        <NumberTextField fx:id="txtDirectionZ"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="UpVector"/>
+        <NumberTextField fx:id="txtUpVectorX"/>
+        <NumberTextField fx:id="txtUpVectorY"/>
+        <NumberTextField fx:id="txtUpVectorZ"/>
+    </HBox>
+    <HBox styleClass="form-group-4">
+        <Label text="Sampling"/>
+        <NumberTextField styleClass="col-3" fx:id="txtSampling"/>
+    </HBox>
+</VBox>

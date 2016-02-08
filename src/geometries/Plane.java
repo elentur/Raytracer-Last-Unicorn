@@ -18,22 +18,28 @@ public class Plane extends Geometry {
     /**
      * A known Point.
      */
-    public final Point3 a;
+    private final Point3 a;
     /**
      * A Normal of the Plane.
      */
-    public final Normal3 n;
+    private final Normal3 n;
+
     /**
      * Instantiates a new Plane Object.
      *
      * @param material of the Plane. Can't be null.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Material material,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows,castShadows,visibility,flipNormal);
+    public Plane(final Material material, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }
+
 
     @Override
     public Hit hit(final Ray r) {
@@ -49,17 +55,18 @@ public class Plane extends Geometry {
 
             final Point3 p = r.at(t);
 
-            final double u = p.x+0.5;
-            final double v = p.z+0.5;
+            final double u = p.x + 0.5;
+            final double v = p.z + 0.5;
 
-            Color normalC = material.bumpMap.getColor(u,v);
+            Color normalC = material.bumpMap.getColor(u, v);
             Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
-            Normal3 n1 = new Vector3( n.x+nc.x*material.bumpScale, n.y+nc.y*material.bumpScale, n.z).normalized().asNormal();
+            Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
             if (flipNormal) n1 = n1.mul(-1);
-            if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u,v));
+            if (t > 0) return new Hit(t, n1, r, this, new TexCoord2(u, v));
         }
         return null;
     }
+
 
     @Override
     public String toString() {
@@ -69,16 +76,16 @@ public class Plane extends Geometry {
                 '}';
     }
 
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Plane)) return false;
 
         Plane plane = (Plane) o;
 
         if (a != null ? !a.equals(plane.a) : plane.a != null) return false;
-        if (n != null ? !n.equals(plane.n) : plane.n != null) return false;
-        return material.equals(plane.material) && name.equals(plane.name);
+        return !(n != null ? !n.equals(plane.n) : plane.n != null);
 
     }
 

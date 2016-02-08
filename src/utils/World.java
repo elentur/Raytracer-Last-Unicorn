@@ -1,11 +1,9 @@
 package utils;
 
+import controller.AController;
 import geometries.Geometry;
-import javafx.scene.image.Image;
 import light.Light;
-import raytracer.ImageSaver;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +14,7 @@ import java.util.List;
  *
  * @author Marcus Bätz
  */
-public class World implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class World {
     /**
      * represents the background color of the scene.
      */
@@ -37,19 +34,28 @@ public class World implements Serializable {
      */
     public final List<Light> lights;
 
-    public Image backImg;
+    /**
+     * Activates the ambient occlusion.
+     */
+    public final boolean ambientOcclusion;
+
 
     /**
      * Generates a new world with predefined Background material
      *
      * @param backgroundColor represents the background material of the scene. The material is from typ Color.
+     * @param ambientLight represents the ambient light of the scene.
+     * @param ambientOcclusion activates the ambient occlusion.
+     * @throws IllegalArgumentException if the given arguments are null.
      */
-    public World(final Color backgroundColor, final Color ambientLight) {
-        if (backgroundColor == null) throw new IllegalArgumentException("backgroundColor must not be null!");
+    public World(final Color backgroundColor, final Color ambientLight, final boolean ambientOcclusion) {
+        if (backgroundColor == null) throw new IllegalArgumentException("The backgroundColor cannot not be null!");
+        if (ambientLight == null) throw new IllegalArgumentException("The ambientLight cannot not be null!");
         this.backgroundColor = backgroundColor;
         this.geometries = new ArrayList<>();
         this.lights = new ArrayList<>();
         this.ambientLight = ambientLight;
+        this.ambientOcclusion = ambientOcclusion;
     }
 
 
@@ -60,24 +66,19 @@ public class World implements Serializable {
      * @param r the Ray that the scene have to check all geometries for a hit with it.
      * @return Color-object of the nearest Geometry that ist hit or of the background material.
      */
-    public Color hit(final Ray r, int x, int y) {
+    public Color hit(final Ray r) {
         if (r == null) throw new IllegalArgumentException("r must not be null!");
         Hit hit = null;
 
         for (Geometry g : geometries) {
-            if(!g.visibility) continue;
+            if (!g.visibility) continue;
             final Hit h = g.hit(r);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
         Color back;
-        if (backImg != null) {
-            javafx.scene.paint.Color c = backImg.getPixelReader().getColor(x, y);
-            back = new Color(c.getRed(), c.getGreen(), c.getBlue());
-        } else {
-            back = backgroundColor;
-        }
+        back = backgroundColor;
 
-        return hit != null ? hit.geo.material.colorFor(hit, this,new Tracer(ImageSaver.raytracer.recursionDepth)) : back;
+        return hit != null ? hit.geo.material.colorFor(hit, this, new Tracer(AController.raytracer.recursionDepth)) : back;
     }
 
     @Override
@@ -89,16 +90,13 @@ public class World implements Serializable {
     }
 
     @Override
-
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         final World world = (World) o;
 
-        if (!backgroundColor.equals(world.backgroundColor)) return false;
-        return geometries.equals(world.geometries);
-
+        return backgroundColor.equals(world.backgroundColor) && geometries.equals(world.geometries);
     }
 
     @Override

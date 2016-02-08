@@ -1,17 +1,17 @@
 package UI;
 
-import camera.Camera;
-import camera.PerspectiveCamera;
+import controller.ObservableElementLists;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import matVect.Point3;
-import matVect.Vector3;
-import raytracer.ImageSaver;
-import sampling.SamplingPattern;
+import javafx.stage.Window;
+import observables.AOElement;
+import observables.geometries.AOGeometry;
+import observables.lights.AOLight;
+import serializable.SElement;
 import utils.Scene;
-import utils.World;
 
 import javax.imageio.ImageIO;
 import java.awt.image.RenderedImage;
@@ -21,7 +21,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by Marcus Baetz on 04.11.2015.
@@ -34,7 +36,7 @@ public class IO {
      *
      * @param stage The PrimaryStage of this program.
      */
-    public static void saveImage(final Stage stage, final Image writableImage) {
+    public static void saveImage(final Window stage, final Image writableImage) {
         if (stage == null) throw new IllegalArgumentException("Stage can't be null");
         if (writableImage == null) throw new IllegalArgumentException("WritableImage must not be null.");
         final FileChooser fileChooser = new FileChooser();
@@ -49,20 +51,27 @@ public class IO {
         }
     }
 
-    public static void saveScene(final Stage stage, final World world, Camera camera) {
-        if (world == null) {
-            Dialog dlg = new Dialog("No Scene!");
+    /**
+     * This Method loads a new scene
+     * @param stage a stage that is used as parent for dialog window
+     * @param rootItem  The rootItem of the TreeView
+     */
+    public static void saveScene(final Stage stage, final TreeItem<AOElement> rootItem) {
+        if (rootItem == null) {
+            Dialog dlg = new Dialog("No Elements!");
 
-            dlg.setNewText("No Scene Created. You must Create a Scene first before you can try to save it.");
+            dlg.setNewText("No Elements created. You must Create a Element first before you can try to save it.");
             dlg.showAndWait();
             return;
         }
+        ObservableElementLists list = ObservableElementLists.getInstance();
+        SElement camera = null;
+        if (list.camera != null) camera = list.camera.serialize();
+        List<SElement> lights = list.lights.stream().map(AOLight::serialize).collect(Collectors.toList());
+        List<SElement> geometries = list.geometries.stream().map(AOGeometry::serialize).collect(Collectors.toList());
 
-        if (camera == null) {
-            // default camera
-            camera = new PerspectiveCamera(new Point3(0, 0, 0), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(1));
-        }
-        Scene scene = new Scene(world, camera);
+        Scene scene = new Scene(geometries, lights, camera);
+
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
@@ -75,20 +84,21 @@ public class IO {
                 out.writeObject(scene);
                 out.close();
             } catch (IOException e) {
+                e.printStackTrace();
                 System.out.println("IO Fehler");
             }
-
-
         }
     }
 
     public static void loadScene(final Stage stage) {
+
 
         final FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("./"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("UCN files (*.ucn)", "*.ucn"));
         final File file = fileChooser.showOpenDialog(stage);
         if (file != null) {
+
             Path path = file.toPath();
             Scene scene = null;
             try {
@@ -110,16 +120,21 @@ public class IO {
             }
 
             if (scene != null) {
-                ImageSaver.raytracer.setWorld(scene.getWorld());
-                ImageSaver.raytracer.setCamera(scene.getCamera());
+                ObservableElementLists list = ObservableElementLists.getInstance();
+                list.clearAll();
+                if (scene.getCamera() != null) list.addElement(scene.getCamera());
+
+                scene.getLights().forEach(list::addElement);
+
+                scene.getGeometries().forEach(list::addElement);
             }
 
 
         }
     }
 
-    public static Map<String, String> readFile(String source) {
-        Path path = Paths.get(source);
+    public static Map<String, String> readFile() {
+        Path path = Paths.get("settings.cfg");
         BufferedReader br;
         Map<String, String> input = new HashMap<>();
         try {
@@ -136,8 +151,8 @@ public class IO {
         return input;
     }
 
-    public static void writeFile(String source, Map<String, String> output) {
-        Path path = Paths.get(source);
+    public static void writeFile(Map<String, String> output) {
+        Path path = Paths.get("settings.cfg");
         BufferedWriter br;
 
         try {

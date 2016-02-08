@@ -20,40 +20,44 @@ public class Node extends Geometry {
     /**
      * A object with all transform operations
      */
-    public final Transform t;
+    private final Transform t;
     /**
      * A list with all geometries which will be rendered
      */
-    public final List<Geometry> geos;
+    private final List<Geometry> geos;
+
 
     /**
      * Instantiates a new Geometry.
-     * @param t is the transform object.
+     *
      * @param geos is a List of containing geometries.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, final List<Geometry> geos,final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),
-                new SingleColorTexture(new Color(0,0,0)),0),reciveShadows,castShadows,
-                visibility,flipNormal);
+    public Node(final Transform transform, final List<Geometry> geos, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0, 0, 0)),
+                        new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), receiveShadows, castShadows,
+                visibility, flipNormal);
 
-        if (t == null) throw new IllegalArgumentException("The t cannot be null!");
         if (geos == null) throw new IllegalArgumentException("The geos cannot be null!");
-
-        this.t = t;
+        this.t = transform;
         this.geos = geos;
     }
 
     /**
      * Instantiates a new Geometry.
-     * @param t is the transform object.
+     *
      * @param geo is a geometry.
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Node(final Transform t, Geometry geo,final boolean reciveShadows,
-                final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        this(t, new ArrayList<Geometry>(Arrays.asList(geo)),reciveShadows,castShadows,visibility,flipNormal);
+    public Node(final Transform transform, Geometry geo, final boolean reciveShadows,
+                final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        this(transform, new ArrayList<>(Arrays.asList(geo)), reciveShadows, castShadows, visibility, flipNormal);
     }
+
 
     @Override
     public Hit hit(final Ray r) {
@@ -62,13 +66,14 @@ public class Node extends Geometry {
         Hit hit = null;
 
         for (final Geometry g : geos) {
-            if(!g.visibility) continue;
+            if (!g.visibility) continue;
             final Hit h = g.hit(tr);
             if (hit == null || (h != null && h.t < hit.t)) hit = h;
         }
 
-        return (hit == null) ? hit : new Hit(hit.t, t.mul(hit.n),r,hit.geo,hit.texCoord);
+        return (hit == null) ? null : new Hit(hit.t, t.mul(hit.n), r, hit.geo, hit.texCoord);
     }
+
 
     @Override
     public String toString() {

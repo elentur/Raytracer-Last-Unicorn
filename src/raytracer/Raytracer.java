@@ -12,8 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import utils.*;
 import utils.Color;
+import utils.HDRFilter;
+import utils.Ray;
+import utils.World;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -28,6 +30,14 @@ import java.util.Set;
  * @author Marcus Bätz
  */
 public class Raytracer {
+
+    /**
+     * represents if raytracer actually is rendering
+     */
+    public boolean rendering = false;
+    /**
+     * represents the HDRFilter
+     */
     private HDRFilter hdrFilter;
     /**
      * threadBreak exits all Threads.
@@ -53,7 +63,7 @@ public class Raytracer {
     /**
      * Represents if hdr Render.
      */
-    public static boolean hdr = false;
+    public boolean hdr = false;
     /**
      * represents the Scene with all its lights and geometries.
      */
@@ -63,10 +73,6 @@ public class Raytracer {
      * Represents the Camera of this scene.
      */
     private Camera camera;
-    /**
-     * represents the render pattern.
-     */
-    private Point[] quadrant;
 
     /**
      * size of the area that is rendered from one core at a time;
@@ -89,7 +95,7 @@ public class Raytracer {
     /**
      * represents the render progress in a range between 0.0 and 1.0.
      */
-    public final DoubleProperty progress = new SimpleDoubleProperty(0);
+    public DoubleProperty progress = new SimpleDoubleProperty(0);
 
     /**
      * represent the recursion depth of the reflection.
@@ -100,22 +106,41 @@ public class Raytracer {
      */
     public double iOR = 1.0003;
 
+    private boolean ambientOcclusion = false;
+
     /**
      * represents the start time of the render process.
      */
     private long startTime = 0;
+    /**
+     * represents if in default mode for MaterialRenderView or not
+     */
     private boolean def = false;
+    /**
+     * represents the Image that is used for rendering
+     */
     private WritableImage img;
+
+    /**
+     * represents if the threads are running or not
+     */
     private int running;
 
 
+    /**
+     * loads raytracer renderSettings
+     * @param loadConfig if the settings have to be loaded or if there have to be ste default values
+     */
     public Raytracer(boolean loadConfig) {
-        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2));
+        world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2), ambientOcclusion);
         if (loadConfig) loadConfig();
         else setDefault();
         maxProgress.bind(imgHeight.multiply(imgWidth));
     }
 
+    /**
+     * sets default options
+     */
     private void setDefault() {
         cores = 1;
         pattern = 0;
@@ -123,6 +148,7 @@ public class Raytracer {
         imgHeight.set(80);
         hdr = false;
         def = true;
+        ambientOcclusion = false;
     }
 
 
@@ -147,10 +173,11 @@ public class Raytracer {
      * on start old configuration will be loaded.
      */
     private void loadConfig() {
-        Map<String, String> input = IO.readFile("settings.cfg");
+        Map<String, String> input = IO.readFile();
         if (input.size() > 0) {
             try {
                 hdr = input.get("hdr").equals("true");
+                ambientOcclusion = input.get("ambient").equals("true");
                 cores = Integer.parseInt(input.get("cores"));
                 pattern = Integer.parseInt(input.get("pattern"));
                 imgWidth.set((int) (Double.parseDouble(input.get("width"))));
@@ -164,7 +191,7 @@ public class Raytracer {
                         Double.parseDouble(input.get("ambientColorGreen")),
                         Double.parseDouble(input.get("ambientColorBlue")));
                 World w = world;
-                world = new World(back, ambient);
+                world = new World(back, ambient, ambientOcclusion);
                 world.lights.addAll(w.lights);
                 world.geometries.addAll(w.geometries);
             } catch (Exception e) {
@@ -212,7 +239,7 @@ public class Raytracer {
     /**
      * Begins the render process
      *
-     * @param image
+     * @param image The image the raytracer will render into
      */
     public void render(ImageView image) {
         {
@@ -231,33 +258,43 @@ public class Raytracer {
             }
             prepare();
             image.setImage(img);
-            // actualProgress.set(0);
             threadBreak = false;
             quadrantCounter = 0;
-            quadrant = newQuadrants(pattern);
+            final Point[] quadrant = newQuadrants(pattern);
             startTime = System.currentTimeMillis();
             if (hdr) hdrFilter = new HDRFilter(imgWidth.get(), imgHeight.get());
+            Task rt;
             if (def) {
-                final PixelWriter pixelWriter = img.getPixelWriter();
-                final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
-                final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
-                for (int y = 0; y < imgHeight.get(); y++) {
-                    for (int x = 0; x < imgWidth.get(); x++) {
-                        final byte[] b = draw(x, y);
-                        for (int i = 0; i < 3; i++) {
-                            imageData[y * imgWidth.get() * 3 + x * 3 + i] = b[i];
+                rt = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        rendering=true;
+                        final PixelWriter pixelWriter = img.getPixelWriter();
+                        final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
+                        final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
+                        for (int y = 0; y < imgHeight.get(); y++) {
+                            for (int x = 0; x < imgWidth.get(); x++) {
+                                final byte[] b = draw(x, y);
+                                for (int i = 0; i < 3; i++) {
+                                    imageData[y * imgWidth.get() * 3 + x * 3 + i] = b[i];
+                                }
+                            }
                         }
+                        pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
+                                imgWidth.get() * 3);
+                        rendering=false;
+                        return null;
                     }
-                }
-                pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
-                        imgWidth.get() * 3);
+                };
+
+
             } else {
-                Task rt = new RenderTask();
+                rt = new RenderTask(quadrant);
                 progress.bind(rt.progressProperty());
-                Thread t = new Thread(rt, 0 + "");
-                t.setDaemon(true);
-                t.start();
             }
+            Thread mainRenderThread = new Thread(rt, 0 + "");
+            mainRenderThread.setDaemon(true);
+            mainRenderThread.start();
         }
     }
 
@@ -269,6 +306,7 @@ public class Raytracer {
      */
     private Point[] newQuadrants(final int pattern) {
         Point[] q;
+
         if (pattern == 0) {
             tileX = 10;
             tileY = 10;
@@ -317,13 +355,20 @@ public class Raytracer {
      * Prepares the writableImage for rendering and sets its start-material.
      */
     private void prepare() {
+        WritableImage oldImg = img;
         img = new WritableImage(imgWidth.get(), imgHeight.get());
         final PixelWriter pixelWriter = img.getPixelWriter();
-        for (int x = 0; x < imgWidth.get(); x++) {
-            for (int y = 0; y < imgHeight.get(); y++) {
-                pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
+        if (!def) {
+
+            for (int x = 0; x < imgWidth.get(); x++) {
+                for (int y = 0; y < imgHeight.get(); y++) {
+                    pixelWriter.setColor(x, y, javafx.scene.paint.Color.MIDNIGHTBLUE);
+                }
             }
+        } else {
+            if (oldImg != null) img = oldImg;
         }
+
     }
 
     /**
@@ -344,7 +389,7 @@ public class Raytracer {
             rays = camera.rayFor(imgWidth.get(), imgHeight.get(), x, y);
         }
         for (Ray r : rays) {
-            c = c.add(world.hit(r, x, y));
+            c = c.add(world.hit(r));
         }
 
         c = c.mul(1.0 / rays.size());
@@ -364,17 +409,22 @@ public class Raytracer {
     /**
      * The Task-class for the render-threads.
      *
-     * @param <Void>
+     * @param <Empty>
      */
-    private class RenderTask<Void> extends Task<Void> {
+    private class RenderTask<Empty> extends Task<Empty> {
+        private final Point[] quadrant;
+
+        public RenderTask(final Point[] quadrant) {
+            this.quadrant = quadrant;
+        }
 
         @Override
-        protected Void call() throws Exception {
+        protected Empty call() throws Exception {
             PixelWriter pixelWriter = img.getPixelWriter();
             PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
             byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
             final int[] threadProgress = new int[cores];
-            renderThread(imageData, threadProgress);
+            renderThread(imageData, threadProgress, quadrant);
             while (running > 0) {
                 if (threadBreak) return null;
                 try {
@@ -401,14 +451,13 @@ public class Raytracer {
             if (hdr) hdrFilter.getImage(imageData);
             pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
                     imgWidth.get() * 3);
-            // this.updateProgress(maxProgress.get(), maxProgress.get());
             return null;
         }
     }
 
-    private void renderThread(byte[] imageData, final int[] threadProgress) {
-
+    private void renderThread(byte[] imageData, final int[] threadProgress, final Point[] quadrant) {
         for (int i = 0; i < imageData.length; i++) {
+
             if (i % 3 == 0) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getRed() * 255);
             if (i % 3 == 1) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getGreen() * 255);
             if (i % 3 == 2) imageData[i] = (byte) (javafx.scene.paint.Color.MIDNIGHTBLUE.getBlue() * 255);
@@ -429,11 +478,8 @@ public class Raytracer {
                             quadrantX = quadrant[quadrantCounter].x;
                             quadrantY = quadrant[quadrantCounter].y;
                         }
-
                         quadrantCounter++;
                     }
-
-
                     final int fromX = quadrantX * bWidth;
                     int toX = (quadrantX + 1) * bWidth;
                     final int fromY = quadrantY * bHeight;
@@ -451,10 +497,7 @@ public class Raytracer {
                             if (threadBreak) break;
                             threadProgress[num]++;
                             byte[] b = draw(x, y);
-                            for (int j = 0; j < 3; j++) {
-                                a[count + j] = b[j];
-
-                            }
+                            System.arraycopy(b, 0, a, count, 3);
                             count += 3;
                         }
                         if (threadBreak) break;
@@ -463,11 +506,8 @@ public class Raytracer {
                     for (int j = 0; j < toY - fromY; j++) {
                         System.arraycopy(a, (toX - fromX) * j * 3, imageData, (fromY + j) * imgWidth.get() * 3 + fromX * 3, a.length / (toY - fromY));
                     }
-
-
                 }
                 running--;
-
             }, "tracingThread " + i);
             t.setDaemon(true);
             t.start();

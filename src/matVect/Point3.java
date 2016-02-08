@@ -1,13 +1,11 @@
 package matVect;
 
-import java.io.Serializable;
-
 /**
  * This Object represents a 3 dimensional point and offers relevant operations for a point.
  * Created by Marcus Baetz on 07.10.2015.
  */
-public class Point3 implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Point3 {
+
     /**
      * This Component represent the x-Coordinate of the Point3 as Double.
      */
@@ -89,9 +87,9 @@ public class Point3 implements Serializable {
 
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Point3)) return false;
 
         Point3 point3 = (Point3) o;
 

@@ -1,0 +1,7 @@
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TabPane?>
+<ScrollPane fx:id="scrollPaneSettings" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.NodeSettingsViewController">
+    <TabPane fx:id="tabPane"/>
+</ScrollPane>
+

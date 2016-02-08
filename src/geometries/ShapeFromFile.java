@@ -5,7 +5,6 @@ import UI.Dialog;
 import matVect.Normal3;
 import matVect.Point3;
 import material.Material;
-import raytracer.ImageSaver;
 import texture.TexCoord2;
 import utils.Hit;
 import utils.Octree;
@@ -25,36 +24,77 @@ import java.util.List;
  * Created by Marcus Baetz on 22.10.2015.
  *
  * @author Marcus Baetz
+ *
+ * Creates a new Object out of an Wavefront obj File
  */
 public class ShapeFromFile extends Geometry {
-    public final File file;
-    public final List<Geometry> triangles;
+    /**
+     * represents the path of the obj File
+     */
+    private final File file;
+    /**
+     * List of all Triangles
+     */
+    private final List<Geometry> triangles;
+    /**
+     * List of all Vertices
+     */
     private final List<Point3> v;
+    /**
+     * List of all normalVertices
+     */
     private final List<Normal3> vn;
+    /**
+     * List of all TextureCoordinates
+     */
     private final List<TexCoord2> vt;
+    /**
+     * List of all Faces
+     */
     private final List<String> f;
+    /**
+     * Octree for the complex object
+     */
     private final Octree octree;
 
-    public ShapeFromFile(final File path, final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows,castShadows,visibility,castShadows);
+    /**
+     * Instantiates a new ShapeFromFile Object.
+     *
+     * @param material of the Axis Aligned Box. Can't be null
+     * @param path the File Object with the path information of the obj-File
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
+     * @throws IllegalArgumentException if one of the given arguments are null
+     */
+    public ShapeFromFile(final File path, final Material material, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
         this.file = path;
-        name = nameTest(path.getName().split("\\.")[0]);
         triangles = new ArrayList<>();
         v = new ArrayList<>();
         vn = new ArrayList<>();
         vt = new ArrayList<>();
         f = new ArrayList<>();
-        List<Point3> points = new ArrayList<>();
-        if (readFile(path.toString())) {
+        loadFile();
+        octree = new Octree(triangles);
+    }
+
+    /**
+     * parses the obj-File
+     */
+    private void loadFile() {
+
+        if (readFile(file.getPath())) {
             try {
                 for (String s : f) {
                     String[] fs = s.split("\\s+");
-                    //F�r einfaches f
+                    //Für einfaches f
                     if (fs[0].matches("^\\d+(\\.\\d+)?") && fs.length == 3) {
                         final int p1 = Integer.parseInt(fs[0]) - 1;
                         final int p2 = Integer.parseInt(fs[1]) - 1;
                         final int p3 = Integer.parseInt(fs[2]) - 1;
-                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material,new TexCoord2(1,1),new TexCoord2(1,1),new TexCoord2(1,1),reciveShadows,castShadows,visibility,castShadows);
+                        Triangle tri = new Triangle(v.get(p1), v.get(p2), v.get(p3), material, new TexCoord2(1, 1), new TexCoord2(1, 1), new TexCoord2(1, 1), receiveShadows, castShadows, visibility, flipNormal);
                         triangles.add(tri);
                     } //F�r f / v/vt
                     else {
@@ -74,23 +114,20 @@ public class ShapeFromFile extends Geometry {
                         if (n[0] != -1 && t[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     vn.get(n[0]), vn.get(n[1]), vn.get(n[2]),
-                                    material,vt.get(t[0]),vt.get(t[1]),vt.get(t[2]),reciveShadows,castShadows,visibility,false);
+                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
                         } else if (n[0] != -1) {
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
-                                    material,new TexCoord2(0,1),new TexCoord2(1,1),new TexCoord2(1,0),reciveShadows,castShadows,visibility,false);
+                                    material, new TexCoord2(0, 1), new TexCoord2(1, 1), new TexCoord2(1, 0), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
-                        }else{
+                        } else {
                             Normal3 normal = v.get(p[0]).sub(v.get(p[1])).x(v.get(p[2]).sub(v.get(p[1]))).normalized().asNormal().mul(-1);
                             Triangle tri = new Triangle(v.get(p[0]), v.get(p[1]), v.get(p[2]),
                                     normal, normal, normal,
-                                    material,vt.get(t[0]),vt.get(t[1]),vt.get(t[2]),reciveShadows,castShadows,visibility,false);
+                                    material, vt.get(t[0]), vt.get(t[1]), vt.get(t[2]), receiveShadows, castShadows, visibility, flipNormal);
                             triangles.add(tri);
                         }
-
-
                     }
-
                 }
 
             } catch (Exception e) {
@@ -101,44 +138,14 @@ public class ShapeFromFile extends Geometry {
             }
 
         }
-        octree = new Octree(triangles);
-        // System.out.println(ImageSaver.fTriangle.size());
-
     }
+
 
     @Override
     public Hit hit(Ray r) {
-       /* Hit h = null;
-        if(octree !=null){
-            if(octree.box.hit(r) == null) return null;
-        }
-        for (Geometry t : triangles) {
-            Hit hit = t.hit(r);
-            if (h == null || (hit != null && h.t > hit.t)) h = hit;
-        }
-        return h;*/
         return octree.hit(r);
     }
 
-    private String nameTest(String n) {
-        int index = 1;
-        boolean run = false;
-        for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
-            if (g.name.equals(n)) run = true;
-        }
-        while (run) {
-            int i = index;
-            for (Geometry g : ImageSaver.raytracer.getWorld().geometries) {
-                if (g.name == n + index) index++;
-            }
-            if (i == index) {
-                run = false;
-                return n + index;
-            }
-        }
-
-        return n;
-    }
 
     /**
      * Reads an Wavefront obj File and converts it into a group of triangles.

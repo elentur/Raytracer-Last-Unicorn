@@ -1,33 +1,17 @@
 package raytracer;
 
-import UI.*;
-import camera.Camera;
-import camera.DOFCamera;
-import geometries.Node;
-import geometries.Sphere;
+import UI.IO;
+import controller.AController;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import light.Light;
-import light.PointLight;
-import matVect.Point3;
-import matVect.Transform;
-import matVect.Vector3;
-import material.PhongMaterial;
-import sampling.DOFPattern;
-import sampling.SamplingPattern;
-import texture.InterpolatedImageTexture;
-import texture.SingleColorTexture;
-import utils.Color;
-import utils.World;
 
 
 /**
@@ -41,54 +25,7 @@ public class ImageSaver extends Application {
      * The ImageView where the image is shown.
      */
     public static final ImageView image = new ImageView();
-    public final static Raytracer raytracer = new Raytracer(true);
 
-
-    private void testScene() {
-
-        World world = new World(new Color(0, 0, 0), new Color(0.3, 0.3, 0.3));
-        raytracer.setWorld(world);
-
-
-        Light light1 = new PointLight(new Color(1,1,1),new Point3(10,0,30), true,500);
-        light1.name = "Pointlight1";
-        world.lights.add(light1);
-
-        Camera camera = new DOFCamera(new Point3(0,0,5),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new DOFPattern(5,5.6),4, new SamplingPattern(4));
-       // Camera camera = new PerspectiveCamera(new Point3(2,5,30),new Vector3(0,0,-1), new Vector3(0,1,0), Math.PI/4, new SamplingPattern(4));
-
-        raytracer.setCamera(camera);
-
-        Sphere geo = new Sphere(
-                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        64,
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                        ),
-                true,
-                true,
-                true,
-                false
-        );
-       /* ShapeFromFile geo = new ShapeFromFile(new File("c:/users/marcu_000/Desktop/bunny.obj"),
-                new PhongMaterial(new InterpolatedImageTexture("texture/world.jpg"),
-                        new SingleColorTexture(new Color(1,1,1)),
-                        64,
-                        new SingleColorTexture(new Color(1,1,1)),
-                        0,
-                        new SingleColorTexture(new Color(1,1,1))
-                ),
-                true,
-                true,
-                true,
-                false
-        );*/
-
-
-        world.geometries.add(new Node(new Transform(),geo,true,true,true,false));
-    }
 
     /**
      * The Javafx start class.
@@ -97,102 +34,29 @@ public class ImageSaver extends Application {
      * @see javafx.stage.Stage
      */
     @Override
-    public void start(final Stage primaryStage) {
-
-
-        testScene();
-
-        primaryStage.setScene(setScene(primaryStage));
-
-        primaryStage.setOnCloseRequest(a -> raytracer.stopRender());
+    public void start(final Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/mainView.fxml"));
+        primaryStage.setTitle("Unicorn RayTracer");
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setMaxWidth(900);
+        primaryStage.setHeight(610);
         primaryStage.show();
-    }
 
+        MenuItem menuItem = ((MenuBar) scene.lookup("#menuBar")).getMenus().get(0).getItems().get(3);
+        menuItem.disableProperty().bind(image.imageProperty().isNull());
+        menuItem.setOnAction(a -> IO.saveImage(scene.getWindow(), image.getImage()));
 
-    /**
-     * Initialize the GuiElements and set all necessary listeners.
-     *
-     * @param stage The PrimaryStage of this program.
-     * @return The Scene for this PrimaryStage.
-     */
-    private Scene setScene(final Stage stage) {
-        if (stage == null) throw new IllegalArgumentException("Stage can't be null");
-        final int elementsHeight = 80;
-        final Menu btnFile = new Menu("File");
-        final MenuItem btnSave = new MenuItem("Save Rendered Image");
-        final MenuItem btnSaveScene = new MenuItem("Save Scene");
-        final MenuItem btnLoadScene = new MenuItem("Load Scene");
-        final Menu btnEdit = new Menu("Edit");
-        final MenuItem btnObjects = new MenuItem("Objects");
-        final Menu btnCreate = new Menu("Create");
-        //final MenuItem btnNewScene = new MenuItem("New Scene");
-        final MenuItem btnNewCamera = new MenuItem("New Camera");
-        final MenuItem btnNewLight = new MenuItem("New Light");
-        final MenuItem btnNewPlane = new MenuItem("Add new Plane");
-        final MenuItem btnNewSphere = new MenuItem("Add new Sphere");
-        final MenuItem btnNewCube = new MenuItem("Add new Cube");
-        final MenuItem btnNewTriangle = new MenuItem("Add new Triangle");
-        final MenuItem btnNewOBJ = new MenuItem("Add new OBJ");
-        final Menu btnRendering = new Menu("Rendering");
-        final MenuItem btnRender = new MenuItem("Render");
-        final MenuItem btnStopRender = new MenuItem("Stop Render");
-        final MenuItem btnSettings = new MenuItem("Rendersettings");
-        final MenuBar menubar = new MenuBar();
-        final Label lblTime = new Label();
-
-        final ScrollPane scrollPane = new ScrollPane(image);
-        final ProgressBar progressBar = new ProgressBar(0);
-        final StringProperty resolution = new SimpleStringProperty();
-        final VBox statusPane = new VBox(progressBar, lblTime);
-        final BorderPane root = new BorderPane();
-        root.setTop(menubar);
-        root.setCenter(scrollPane);
-        root.setBottom(statusPane);
-
-        final Scene scene = new Scene(root, raytracer.imgWidth.get() + 10, raytracer.imgHeight.get() + elementsHeight);
-
-        scene.getStylesheets().add("css/rootStyle.css");
-
-        btnFile.getItems().addAll(btnSaveScene, btnLoadScene, btnSave);
-        btnEdit.getItems().addAll(btnObjects);
-        btnCreate.getItems().addAll( btnNewCamera, btnNewLight,
-                btnNewPlane, btnNewSphere, btnNewCube,
-                btnNewTriangle, btnNewOBJ);
-        btnRendering.getItems().addAll(btnRender, btnStopRender, btnSettings);
-        menubar.getMenus().addAll(btnFile, btnEdit, btnCreate, btnRendering);
-
-        btnSave.disableProperty().bind(image.imageProperty().isNull());
-
-        btnSave.setOnAction(a -> IO.saveImage(stage, image.getImage()));
-        btnSaveScene.setOnAction(a -> IO.saveScene(stage, raytracer.getWorld(), raytracer.getCamera()));
-        btnLoadScene.setOnAction(a -> IO.loadScene(stage));
-        btnObjects.setOnAction(a -> new EditObjects());
-      //  btnNewScene.setOnAction(a -> new NewWorldStage());
-        btnNewCamera.setOnAction(a -> new NewCameraStage(null));
-        btnNewLight.setOnAction(a -> new NewLightStage(null));
-        btnNewPlane.setOnAction(a -> new NewPlaneStage(null));
-        btnNewSphere.setOnAction(a -> new NewSphereStage(null));
-        btnNewCube.setOnAction(a -> new NewCubeStage(null));
-        btnNewTriangle.setOnAction(a -> new NewTriangleStage(null));
-        btnNewOBJ.setOnAction(a -> new NewOBJStage(null));
-        btnRender.setOnAction(a -> raytracer.render(image));
-        btnStopRender.setOnAction(a -> raytracer.stopRender());
-        btnSettings.setOnAction(a -> new RenderSettingsStage());
-        raytracer.progress.addListener(a -> lblTime.setText(raytracer.getStatus()));
-        progressBar.progressProperty().bind(raytracer.progress);
-        progressBar.prefWidthProperty().bind(scene.widthProperty());
-
-        scrollPane.minViewportHeightProperty().bind(image.fitHeightProperty());
-        scrollPane.minViewportWidthProperty().bind(image.fitWidthProperty());
-
-        resolution.bind(Bindings.concat("Last-Unicorn Ray-Tracer   Resolution: ", raytracer.imgWidth, " x ", raytracer.imgHeight));
-
-        stage.titleProperty().bind(resolution);
+        primaryStage.setOnCloseRequest(a -> AController.raytracer.stopRender());
         scene.setOnKeyPressed(a -> {
-            if (a.getCode() == KeyCode.ESCAPE) raytracer.stopRender();
+            if (a.getCode() == KeyCode.ESCAPE) AController.raytracer.stopRender();
         });
-        return scene;
+        primaryStage.setOnCloseRequest(
+                a -> Platform.exit()
+        );
+
     }
+
 
     public static void main(String[] args) {
         launch(args);

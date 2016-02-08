@@ -1,0 +1,27 @@
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import java.lang.String?>
+<VBox fx:id="nodeTreeView" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.NodeTreeViewController">
+    <HBox styleClass="form-group-3">
+        <ComboBox styleClass="col-3" fx:id="cmbNewElement">
+            <value>
+                <String fx:value="add new element"/>
+            </value>
+            <items>
+                <FXCollections fx:factory="observableArrayList"/>
+            </items>
+        </ComboBox>
+        <Button styleClass="col-2" text="Add" onAction="#handleNewElementAction"/>
+    </HBox>
+
+    <TreeView fx:id="elementsTreeView" VBox.vgrow="ALWAYS"/>
+
+    <HBox styleClass="form-group-4">
+        <Button styleClass="col-1" onAction="#handleDuplicateAction" text="Dublicate"/>
+        <Button styleClass="col-1" onAction="#handleGroupAction" text="Group"/>
+        <Button styleClass="col-1" onAction="#handleUngroupAction" text="Ungroup"/>
+        <Button styleClass="col-1" onAction="#handleDeleteAction" text="Delete"/>
+    </HBox>
+</VBox>

@@ -22,18 +22,21 @@ public class BoundingBox extends Geometry {
      */
     public final Point3 run;
 
+    /**
+     * The 6 sites of the Box.
+     */
     private final Plane[] planes;
 
 
     /**
      * Instantiates a new Axis Aligned Box Object.
-
-     * @param lbf   of the Axis Aligned Box. Can't be null.
-     * @param run   of the Axis Aligned Box. Can't be null.
+     *
+     * @param lbf of the Axis Aligned Box. Can't be null.
+     * @param run of the Axis Aligned Box. Can't be null.
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
     public BoundingBox(final Point3 run, final Point3 lbf) {
-        super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),true,true,true,true);
+        super(new SingleColorMaterial(new SingleColorTexture(new Color(0, 0, 0)), new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), true, true, true, false);
         if (lbf == null) {
             throw new IllegalArgumentException("The lbf cannot be null!");
         }
@@ -80,7 +83,6 @@ public class BoundingBox extends Geometry {
         }
 
 
-
         Hit max = null;
 
         for (final Plane plane : planes) {
@@ -91,13 +93,14 @@ public class BoundingBox extends Geometry {
                 // calculates the ray that intersects the selected layers
                 final double t = plane.a.sub(r.o).dot(plane.n) / r.d.dot(plane.n);
                 if (max == null || t > max.t) {
-                    max = new Hit(t,plane.n, r, this,new TexCoord2(0,0));
+                    max = new Hit(t, plane.n, r, this, new TexCoord2(0, 0));
                 }
             }
         }
 
         return comparison(max);
     }
+
 
     /**
      * The method checks if the results lies within the Axis Aligned Box coordinates.
@@ -133,12 +136,12 @@ public class BoundingBox extends Geometry {
         /**
          * Instantiates a new Plane Object.
          *
-         * @param a     of the Plane. Can't be null.
-         * @param n     of the Plane. Can't be null.
+         * @param a of the Plane. Can't be null.
+         * @param n of the Plane. Can't be null.
          * @throws IllegalArgumentException if one of the given arguments are null.
          */
         public Plane(final Point3 a, final Normal3 n) {
-            super(new SingleColorMaterial(new SingleColorTexture(new Color(0,0,0)),new SingleColorTexture(new Color(0,0,0)),0),true,true,true,true);
+            super(new SingleColorMaterial(new SingleColorTexture(new Color(0, 0, 0)), new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), true, true, true, false);
 
             if (a == null) {
                 throw new IllegalArgumentException("The a cannot be null!");
@@ -161,9 +164,10 @@ public class BoundingBox extends Geometry {
 
             if (nenner != 0) {
                 final double t = n.dot(a.sub(r.o)) / nenner;
-                if (t > 0) return new Hit(t, n, r, this, new TexCoord2(0,0));
+                if (t > 0) return new Hit(t, n, r, this, new TexCoord2(0, 0));
             }
             return null;
         }
+
     }
 }

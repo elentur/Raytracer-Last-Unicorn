@@ -1,8 +1,10 @@
 package light;
 
 import geometries.Geometry;
+import matVect.Point2;
 import matVect.Point3;
 import matVect.Vector3;
+import sampling.LightShadowPattern;
 import utils.Color;
 import utils.Hit;
 import utils.Ray;
@@ -18,23 +20,26 @@ public class DirectionalLight extends Light {
     /**
      * Represents the direction of the light
      */
-    public final Vector3 direction;
+    private final Vector3 direction;
 
     /**
      * Generates a Directional Light with given LightColor and direction
      *
-     * @param color     The Color of the Light
-     * @param direction The direction of the light
+     * @param color      The Color of the Light
+     * @param direction  The direction of the light
      * @param castShadow Shadows on or of
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      */
-    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons) {
-        super(color,castShadow,photons);
+    public DirectionalLight(final Color color, final Vector3 direction, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {
+        super(color, castShadow, photons, lightShadowPattern);
         if (direction == null) throw new IllegalArgumentException("direction must not be null ");
         this.direction = direction.normalized();
     }
 
+
     @Override
-    public boolean illuminates(final Point3 point, final World world, final Geometry geo) {
+    public boolean illuminates(final Point3 point, final Point2 samplePoint, final World world, final Geometry geo) {
         if (point == null) {
             throw new IllegalArgumentException("The point cannot be null!");
         }
@@ -42,7 +47,7 @@ public class DirectionalLight extends Light {
             throw new IllegalArgumentException("The world cannot be null!");
         }
 
-        if(castsShadow&& geo.reciveShadows) {
+        if (castsShadow && geo.receiveShadows) {
             final Ray r = new Ray(point, directionFrom(point));
 
             for (final Geometry g : world.geometries) {
@@ -62,6 +67,7 @@ public class DirectionalLight extends Light {
         return direction.mul(-1);
     }
 
+
     @Override
     public String toString() {
         return "DirectionalLight{" +
@@ -70,13 +76,13 @@ public class DirectionalLight extends Light {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof DirectionalLight)) return false;
 
         DirectionalLight that = (DirectionalLight) o;
 
-        return !(direction != null ? !direction.equals(that.direction)&& name.equals(that.name) : that.direction != null);
+        return !(direction != null ? !direction.equals(that.direction) : that.direction != null);
 
     }
 

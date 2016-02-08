@@ -1,49 +1,56 @@
 package geometries;
 
 import material.Material;
-import utils.Element;
 import utils.Hit;
 import utils.Ray;
-
-import java.io.Serializable;
 
 /**
  * This abstract class provides a parent for all Geometry Objects
  *
  * @author Robert Dziuba on 25/10/15.
  */
-public abstract class Geometry extends Element implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class Geometry {
+
     /**
      * The current material of the Geometry child class.
      */
     public final Material material;
 
     /**
-     * represents if a geometry recieves shadows
+     * represents if a geometry receives shadows
      */
-    public final boolean reciveShadows;
+    public final boolean receiveShadows;
     /**
      * represents if a geometry casts shadows
      */
     public final boolean castShadows;
+    /**
+     * represents if a geometry is visible
+     */
     public final boolean visibility;
-    public final boolean flipNormal;
+    /**
+     * represents if a geometry has its normal direction changed
+     */
+    public final boolean  flipNormal;
 
 
     /**
      * Instantiates a new Geometry.
      *
      * @param material of child class. Can't be null.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if the given argument is null.
      */
-    public Geometry(final Material material, final boolean reciveShadows,
-                    final boolean castShadows,final boolean visibility,final boolean flipNormal) {
+    protected Geometry(final Material material, final boolean receiveShadows,
+                       final boolean castShadows, final boolean visibility, final boolean flipNormal) {
         if (material == null) {
             throw new IllegalArgumentException("The Material cannot be null!");
         }
         this.material = material;
-        this.reciveShadows = reciveShadows;
+        this.receiveShadows = receiveShadows;
         this.castShadows = castShadows;
         this.visibility = visibility;
         this.flipNormal = flipNormal;
@@ -56,6 +63,5 @@ public abstract class Geometry extends Element implements Serializable {
      * @return a Hit
      */
     public abstract Hit hit(final Ray r);
-
 
 }

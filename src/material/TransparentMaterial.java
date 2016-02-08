@@ -1,10 +1,10 @@
 package material;
 
+import controller.AController;
 import light.Light;
 import matVect.Normal3;
 import matVect.Point3;
 import matVect.Vector3;
-import raytracer.ImageSaver;
 import texture.Texture;
 import utils.*;
 
@@ -14,19 +14,64 @@ import utils.*;
  * @author Marcus Bätz
  */
 public class TransparentMaterial extends Material {
-    public final double iOR;
-    public final Texture specular;
-    public final  Texture reflection;
-    public final  int exponent;
-    public TransparentMaterial(final Texture texture, final  Texture specular, final  Texture reflection,
-                               final  int exponent, double indexOfRefraction, final Texture bumpMap,
-                               final double bumpScale, final Texture irradiance) {
-        super(texture,bumpMap,bumpScale,irradiance);
-        this.specular=specular;
-        this.reflection=reflection;
-        this.exponent=exponent;
-        this.iOR=indexOfRefraction;
+    /**
+     * represents the index of refraction of the material
+     */
+    private final double iOR;
+    /**
+     * represents the specular color and amount of the material
+     */
+    private final Texture specular;
+    /**
+     * represents the reflective color and amount of the material
+     */
+    private final Texture reflection;
+    /**
+     * represents the intensity of the specular
+     */
+    private final int exponent;
+
+    /**
+     *
+     * @param specular represents the specular color and amount of the material
+     * @param reflection represents the reflective color and amount of the material
+     * @param exponent represents the intensity of the specular
+     * @param indexOfRefraction represents the index of refraction of the material
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     */
+    public TransparentMaterial(final Texture texture, final Texture specular, final Texture reflection,
+                               final int exponent, double indexOfRefraction, final Texture bumpMap,
+                               final double bumpScale, final Texture irradiance,
+                               boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
+        if (exponent <= 0) {
+            throw new IllegalArgumentException("The exponent must be bigger than 0!");
+        }
+
+        if (specular == null) {
+            throw new IllegalArgumentException("The specular cannot be null!");
+        }
+
+        if (reflection == null) {
+            throw new IllegalArgumentException("The reflection cannot be null!");
+        }
+
+        if (indexOfRefraction < 0.0 && indexOfRefraction > 2.0) {
+            throw new IllegalArgumentException("The indexOfRefraction must be in the range of 0.0 and 2.0!");
+        }
+
+        this.specular = specular;
+        this.reflection = reflection;
+        this.exponent = exponent;
+        this.iOR = indexOfRefraction;
     }
+
 
     /**
      * Returns the right illuminated color for the hit point
@@ -50,52 +95,101 @@ public class TransparentMaterial extends Material {
         double ref;
         Normal3 n;
         final Vector3 e = hit.ray.d.mul(-1).reflectedOn(hit.n);
-        if(e.dot(hit.n) < 0){
-            ref = iOR/ImageSaver.raytracer.iOR;
+        if (e.dot(hit.n) < 0) {
+            ref = iOR / AController.raytracer.iOR;
             n = hit.n.mul(-1);
-
-        }else{
-            ref = ImageSaver.raytracer.iOR/iOR;
+        } else {
+            ref = AController.raytracer.iOR / iOR;
             n = hit.n;
         }
         double cosA1 = n.dot(e);
         double co = 1 - (ref * ref) * (1 - cosA1 * cosA1);
-        double a=1;
-        if(co>=0) {
+        double a = 1;
+        if (co >= 0) {
             double cosA2 = Math.sqrt(co);
-            final double a0 = Math.pow((ImageSaver.raytracer.iOR - iOR) / (ImageSaver.raytracer.iOR + iOR), 2);
-             a = a0 + (1 - a0) * Math.pow(1 - cosA1, 5);
+            final double a0 = Math.pow((AController.raytracer.iOR - iOR) / (AController.raytracer.iOR + iOR), 2);
+            a = a0 + (1 - a0) * Math.pow(1 - cosA1, 5);
             final double b = 1 - a;
-            Vector3 t = hit.ray.d.mul(ref).sub(n.mul(cosA2-ref*cosA1));
-            Ray refractionRay = new Ray(hit.ray.at(hit.t+0.00001),t);
+            Vector3 t = hit.ray.d.mul(ref).sub(n.mul(cosA2 - ref * cosA1));
+            Ray refractionRay = new Ray(hit.ray.at(hit.t + 0.00001), t);
             Tracer tracer2 = new Tracer(tracer.recursionDepth);
-            basicColor = basicColor.add(tracer2.reflection(refractionRay,world).mul(b));
+            basicColor = basicColor.add(tracer2.reflection(refractionRay, world).mul(b));
+            basicColor = basicColor.mul(
+                    texture.getColor(hit.texCoord.u, hit.texCoord.v)
+            );
+
+
         }
-        Vector3 r =  hit.ray.d.normalized().add(n.mul(2*cosA1));
-        final Point3 p = hit.ray.at(hit.t-0.00001);
-        Ray reflectionRay = new Ray(p,r);
+        Vector3 r = hit.ray.d.normalized().add(n.mul(2 * cosA1));
+        final Point3 p = hit.ray.at(hit.t - 0.00001);
+        Ray reflectionRay = new Ray(p, r);
 
         for (Light light : world.lights) {
 
             Vector3 l = light.directionFrom(p);
             Vector3 rl = l.reflectedOn(hit.n);
-            if (light.illuminates(p, world,hit.geo)) {
-                basicColor = basicColor.add(
-                        light.color.mul(texture.getColor(hit.texCoord.u,hit.texCoord.v))
-                                .mul(Math.max(0, hit.n.dot(l.normalized()))
-                                )
-                ).add(
-                        specular.getColor(hit.texCoord.u,hit.texCoord.v)
-                                .mul(light.color)
-                                .mul(Math.pow(
-                                        Math.max(0, rl.dot(e)), exponent)
-                                )
-                );
+            synchronized (light.lightShadowPattern) {
+                light.lightShadowPattern.generateSampling();
+
+               // for (Point2 point : light.lightShadowPattern.generateSampling()) {
+                //    if (light.illuminates(p, point, world, hit.geo)) {
+
+                        basicColor = basicColor.add(
+                                specular.getColor(hit.texCoord.u, hit.texCoord.v)
+                                        .mul(light.color)
+                                        .mul(Math.pow(
+                                                Math.max(0,rl.dot( hit.ray.d.mul(-1).normalized())), exponent)
+                                        )
+                        );
+                  //  }
+
+                //}
+                //basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());
+                basicColor = basicColor.add(reflection.getColor(hit.texCoord.u, hit.texCoord.v).mul(tracer.reflection(reflectionRay, world)).mul(a));
+
             }
-            basicColor = basicColor.add(reflection.getColor(hit.texCoord.u,hit.texCoord.v).mul(tracer.reflection(reflectionRay,world)).mul(a));
+
+
         }
 
         return basicColor;
     }
 
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TransparentMaterial)) return false;
+        if (!super.equals(o)) return false;
+
+        TransparentMaterial that = (TransparentMaterial) o;
+
+        if (Double.compare(that.iOR, iOR) != 0) return false;
+        if (exponent != that.exponent) return false;
+        if (specular != null ? !specular.equals(that.specular) : that.specular != null) return false;
+        return !(reflection != null ? !reflection.equals(that.reflection) : that.reflection != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(iOR);
+        result = (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (specular != null ? specular.hashCode() : 0);
+        result = 31 * result + (reflection != null ? reflection.hashCode() : 0);
+        result = 31 * result + exponent;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "TransparentMaterial{" +
+                "iOR=" + iOR +
+                ", specular=" + specular +
+                ", reflection=" + reflection +
+                ", exponent=" + exponent +
+                '}';
+    }
 }

@@ -1,6 +1,6 @@
 package UI;
 
-import camera.PerspectiveCamera;
+import camera.OrthographicCamera;
 import geometries.Node;
 import geometries.Sphere;
 import javafx.scene.image.ImageView;
@@ -10,6 +10,7 @@ import matVect.Transform;
 import matVect.Vector3;
 import material.SingleColorMaterial;
 import raytracer.Raytracer;
+import sampling.LightShadowPattern;
 import sampling.SamplingPattern;
 import texture.CheckerTexture;
 import texture.SingleColorTexture;
@@ -19,33 +20,60 @@ import utils.Color;
  * Created by Marcus Baetz on 24.11.2015.
  *
  * @author Marcus Bätz
+ *
+ * This View alows a preview of a set material
  */
 public class MaterialView extends ImageView {
-    private final Raytracer matTracer = new Raytracer(false);
+    /**
+     * first instance of this Class
+     */
+    private static final MaterialView materialView1 = new MaterialView();
+    /**
+     * second instance of this Class
+     */
+    private static final MaterialView materialView2 = new MaterialView();
+    /**
+     * the instance of the raytracer used for this view
+     */
+    private final static Raytracer matTracer = new Raytracer(false);
 
-    public MaterialView(final NewGeoStage st) {
-        setUpTracer(st);
-      //  st.material.addListener(a -> refresh(st.material.get()));
+    private MaterialView() {
 
     }
 
+    public static MaterialView getInstance1() {
+        return materialView1;
+    }
 
-    private void setUpTracer(NewGeoStage st) {
-        matTracer.setCamera(new PerspectiveCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), Math.PI / 4, new SamplingPattern(4)));
-        matTracer.getWorld().lights.add(new PointLight(new utils.Color(1,1, 1), new Point3(4, 4, 4),false,500));
-        matTracer.getWorld().geometries.add(new Node(new Transform(),new Sphere(st.material.get(),true,true,true,false),true,true,true,false));
-        matTracer.getWorld().geometries.add(new Node(new Transform().scale(500,500,500),new Sphere(
-                new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
+    public static MaterialView getInstance2() {
+        return materialView2;
+    }
 
-        st.material.addListener(a -> {
-            matTracer.getWorld().geometries.clear();
-            matTracer.getWorld().geometries.add(new Node(new Transform(),new Sphere(st.material.get(),true,true,true,false),true,true,true,false));
-            matTracer.getWorld().geometries.add(new Node(new Transform().scale(500,500,500),new Sphere(
-                    new SingleColorMaterial(new CheckerTexture(new Color(0,0,0),20,10,0,0,0), new SingleColorTexture(new Color(0,0,0)),0),true,true,true,false),true,true,true,false));
+    /**
+     * sets the tracer up. It uses the material from AController.material
+     */
+    public void setUpTracer() {
+        MaterialView that = this;
+        matTracer.getWorld().lights.clear();
+        matTracer.getWorld().geometries.clear();
 
-            matTracer.render(this);
+        matTracer.setCamera(new OrthographicCamera(new Point3(0, 0, 4), new Vector3(0, 0, -1), new Vector3(0, 1, 0), 2.2, new SamplingPattern(1)));
+        matTracer.getWorld().lights.add(new PointLight(new Color(1, 1, 1), new Point3(4, 4, 4), false, 500, new LightShadowPattern(0, 1)));
+        matTracer.getWorld().geometries.add(new Node(new Transform(), new Sphere(controller.AController.material.get().generate(), true, true, true, false), true, true, true, false));
+        matTracer.getWorld().geometries.add(new Node(new Transform().scale(10, 10, 10), new Sphere(
+                new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0)), new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), true, true, true, false), true, true, true, false));
+
+        controller.AController.material.addListener(a -> {
+            if (controller.AController.material.getValue() != null&& !matTracer.rendering) {
+                matTracer.stopRender();
+                matTracer.getWorld().geometries.clear();
+                matTracer.getWorld().geometries.add(new Node(new Transform(), new Sphere(controller.AController.material.get().generate(), true, true, true, false), true, true, true, false));
+                matTracer.getWorld().geometries.add(new Node(new Transform().scale(10, 10, 10), new Sphere(
+                        new SingleColorMaterial(new CheckerTexture(new Color(0, 0, 0)), new SingleColorTexture(new Color(0, 0, 0)), 0, false, 2, 16), true, true, true, false), true, true, true, false));
+
+                matTracer.render(that);
+            }
         });
-        matTracer.render(this);
-
+        matTracer.render(that);
     }
 }

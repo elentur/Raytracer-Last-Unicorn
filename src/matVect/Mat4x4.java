@@ -1,78 +1,75 @@
 package matVect;
 
-import java.io.Serializable;
-
 /**
  * This class represents a Mat4x4 Object.
  *
  * @author Robert Dziuba on 15/12/15.
  */
-public class Mat4x4 implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Mat4x4 {
     /**
      * This Component represent the m11-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m11;
+    private final double m11;
     /**
      * This Component represent the m12-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m12;
+    private final double m12;
     /**
      * This Component represent the m13-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m13;
+    private final double m13;
     /**
      * This Component represent the m14-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m14;
+    private final double m14;
     /**
      * This Component represent the m21-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m21;
+    private final double m21;
     /**
      * This Component represent the m22-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m22;
+    private final double m22;
     /**
      * This Component represent the m23-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m23;
+    private final double m23;
     /**
      * This Component represent the m24-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m24;
+    private final double m24;
     /**
      * This Component represent the m31-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m31;
+    private final double m31;
     /**
      * This Component represent the m32-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m32;
+    private final double m32;
     /**
      * This Component represent the m33-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m33;
+    private final double m33;
     /**
      * This Component represent the m34-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m34;
+    private final double m34;
     /**
      * This Component represent the m41-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m41;
+    private final double m41;
     /**
      * This Component represent the m42-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m42;
+    private final double m42;
     /**
      * This Component represent the m43-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m43;
+    private final double m43;
     /**
      * This Component represent the m44-Value of the matVect.Mat4x4 as Double.
      */
-    public final double m44;
+    private final double m44;
 
 
     /**
@@ -147,7 +144,7 @@ public class Mat4x4 implements Serializable {
                 (m14 * m.m21 + m24 * m.m22 + m34 * m.m23 + m44 * m.m24),
                 (m14 * m.m31 + m24 * m.m32 + m34 * m.m33 + m44 * m.m34),
                 (m14 * m.m41 + m24 * m.m42 + m34 * m.m43 + m44 * m.m44)
-                );
+        );
     }
 
     /**
@@ -182,20 +179,21 @@ public class Mat4x4 implements Serializable {
 
     /**
      * Returns a transposed Mat4x4 object.
+     *
      * @return a transposed Mat4x4 object.
      */
-    public Mat4x4 trans(){
+    public Mat4x4 trans() {
         return new Mat4x4(
-                m11,m12,m13,m14,
-                m21,m22,m23,m24,
-                m31,m32,m33,m34,
-                m41,m42,m43,m44
+                m11, m12, m13, m14,
+                m21, m22, m23, m24,
+                m31, m32, m33, m34,
+                m41, m42, m43, m44
         );
     }
 
     @Override
     public String toString() {
-        return  m11 + ", " + m21 + ", " + m31 + ", " + m41 + "\n" +
+        return m11 + ", " + m21 + ", " + m31 + ", " + m41 + "\n" +
                 m12 + ", " + m22 + ", " + m32 + ", " + m42 + "\n" +
                 m13 + ", " + m23 + ", " + m33 + ", " + m43 + "\n" +
                 m14 + ", " + m24 + ", " + m34 + ", " + m44 + "\n"

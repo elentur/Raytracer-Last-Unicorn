@@ -6,6 +6,8 @@ import material.Material;
 import utils.Hit;
 import utils.Ray;
 
+import java.util.Arrays;
+
 /**
  * This class represents a AxisAlignedBox Object.
  *
@@ -16,11 +18,11 @@ public class AxisAlignedBox extends Geometry {
     /**
      * The left bottom far corner of the Axis Aligned Box.
      */
-    public final Point3 lbf;
+    private final Point3 lbf;
     /**
      * The right top near corner of the Axis Aligned Box.
      */
-    public final Point3 run;
+    private final Point3 run;
 
     /**
      * The 6 sites of the Box.
@@ -31,32 +33,36 @@ public class AxisAlignedBox extends Geometry {
     /**
      * Instantiates a new Axis Aligned Box Object.
      *
-     * @param material of the Axis Aligned Box. Can't be null.
-     * @throws IllegalArgumentException if one of the given arguments are null.
+     * @param material of the Axis Aligned Box. Can't be null
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
+     * @throws IllegalArgumentException if one of the given arguments are null
      */
-    public AxisAlignedBox(final Material material, final boolean reciveShadows, final boolean castShadows
-            ,final boolean visibility,final boolean flipNormal) {
-        super(material,reciveShadows, castShadows,visibility,flipNormal);
+    public AxisAlignedBox(final Material material, final boolean receiveShadows, final boolean castShadows
+            , final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
         this.lbf = new Point3(-0.5, -0.5, -0.5);
         this.run = new Point3(0.5, 0.5, 0.5);
 
-        Plane p = new Plane(material,reciveShadows,castShadows,visibility,flipNormal);
+        Plane p = new Plane(material, receiveShadows, castShadows, visibility, flipNormal);
 
-        faces[0] = new Node(new Transform().translate(0,run.y,0),p,reciveShadows,castShadows,visibility,flipNormal); // up site
-        faces[1] = new Node(new Transform().translate(0,lbf.y,0).rotateX(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // down site
+        faces[0] = new Node(new Transform().translate(0, run.y, 0), p, receiveShadows, castShadows, visibility, flipNormal); // up site
+        faces[1] = new Node(new Transform().translate(0, lbf.y, 0).rotateX(Math.PI), p, receiveShadows, castShadows, visibility, flipNormal); // down site
 
-        faces[2] = new Node(new Transform().translate(0,0,run.z).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // front site
-        faces[3] = new Node(new Transform().translate(0,0,lbf.z).rotateX(-Math.PI/2).rotateY(Math.PI),p,reciveShadows,castShadows,visibility,flipNormal); // back site
+        faces[2] = new Node(new Transform().translate(0, 0, run.z).rotateX(Math.PI / 2), p, receiveShadows, castShadows, visibility, flipNormal); // front site
+        faces[3] = new Node(new Transform().translate(0, 0, lbf.z).rotateX(-Math.PI / 2).rotateY(Math.PI), p, receiveShadows, castShadows, visibility, flipNormal); // back site
 
-        faces[4] = new Node(new Transform().translate(lbf.x,0,0).rotateY(-Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // left site
-        faces[5] = new Node(new Transform().translate(run.x,0,0).rotateY(Math.PI/2).rotateX(Math.PI/2),p,reciveShadows,castShadows,visibility,flipNormal); // right site
-
+        faces[4] = new Node(new Transform().translate(lbf.x, 0, 0).rotateY(-Math.PI / 2).rotateX(Math.PI / 2), p, receiveShadows, castShadows, visibility, flipNormal); // left site
+        faces[5] = new Node(new Transform().translate(run.x, 0, 0).rotateY(Math.PI / 2).rotateX(Math.PI / 2), p, receiveShadows, castShadows, visibility, flipNormal); // right site
     }
+
 
     @Override
     public Hit hit(final Ray r) {
         if (r == null) {
-            throw new IllegalArgumentException("The r cannot be null!");
+            throw new IllegalArgumentException("The ray cannot be null!");
         }
 
         final Hit[] hits = new Hit[]{
@@ -71,10 +77,10 @@ public class AxisAlignedBox extends Geometry {
         double t = Double.MAX_VALUE;
         Hit hit = null;
 
-        for(Hit h : hits){
-            if(h!= null){
+        for (Hit h : hits) {
+            if (h != null) {
                 final Point3 p = r.at(h.t);
-                if(comp(p,0.00001) && h.t < t && t > 0 && h.t > 0.00001) {
+                if (comp(p) && h.t < t && t > 0 && h.t > 0.00001) {
                     t = h.t;
                     hit = h;
                 }
@@ -85,11 +91,12 @@ public class AxisAlignedBox extends Geometry {
         return hit;
     }
 
-    private boolean comp(final Point3 p, final double e) {
 
-        return (lbf.x <= p.x + e && p.x <= run.x + e) &&
-                (lbf.y <= p.y + e && p.y <= run.y + e) &&
-                (lbf.z <= p.z + e && p.z <= run.z + e);
+    private boolean comp(final Point3 p) {
+
+        return (lbf.x <= p.x + 0.00001 && p.x <= run.x + 0.00001) &&
+                (lbf.y <= p.y + 0.00001 && p.y <= run.y + 0.00001) &&
+                (lbf.z <= p.z + 0.00001 && p.z <= run.z + 0.00001);
 
     }
 
@@ -102,16 +109,16 @@ public class AxisAlignedBox extends Geometry {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (!(o instanceof AxisAlignedBox)) return false;
 
         AxisAlignedBox that = (AxisAlignedBox) o;
 
         if (lbf != null ? !lbf.equals(that.lbf) : that.lbf != null) return false;
         if (run != null ? !run.equals(that.run) : that.run != null) return false;
-        return material.equals(that.material) && name.equals(that.name);
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(faces, that.faces);
 
     }
 
