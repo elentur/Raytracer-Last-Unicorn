@@ -3,13 +3,19 @@ package controller;
 import UI.Dialog;
 import UI.IO;
 import javafx.beans.property.SimpleDoubleProperty;
+
 import javafx.collections.FXCollections;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Control;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+
 import javafx.scene.image.ImageView;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import observables.geometries.AOGeometry;
@@ -31,6 +37,10 @@ public class MenuController extends AController {
 
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private Menu fileMenu;
+    @FXML
+    private Menu runMenu;
 
     /**
      * Handle action related to  menu item.
@@ -71,8 +81,27 @@ public class MenuController extends AController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        fileMenu.setOnShowing(e -> {
+            Object obj = menuBar.getScene().getFocusOwner();
+            menuBar.requestFocus();
+            setFocusBack(obj);
+        });
+        runMenu.setOnShowing(e -> {
+            Object obj = menuBar.getScene().getFocusOwner();
+            menuBar.requestFocus();
+            setFocusBack(obj);
+        });
+    }
 
+    private void setFocusBack(Object element){
 
+        if(element instanceof Node){
+            ((Node)element).requestFocus();
+        }else{
+            Scene scene = menuBar.getScene();
+            Node node = scene.lookup("#elementsTreeView");
+            node.requestFocus();
+        }
     }
 
     public void handleLoadModel() {

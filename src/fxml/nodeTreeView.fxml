@@ -18,7 +18,8 @@
 
     <TreeView fx:id="elementsTreeView" VBox.vgrow="ALWAYS"/>
 
-    <HBox styleClass="form-group-3">
+    <HBox styleClass="form-group-4">
+        <Button styleClass="col-1" onAction="#handleDuplicateAction" text="Dublicate"/>
         <Button styleClass="col-1" onAction="#handleGroupAction" text="Group"/>
         <Button styleClass="col-1" onAction="#handleUngroupAction" text="Ungroup"/>
         <Button styleClass="col-1" onAction="#handleDeleteAction" text="Delete"/>

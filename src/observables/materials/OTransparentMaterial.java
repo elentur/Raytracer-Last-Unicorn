@@ -28,6 +28,11 @@ public class OTransparentMaterial extends AOMaterial {
         reflection.addListener(a -> refreshMaterial());
         exponent.addListener(a -> refreshMaterial());
         indexOfRefraction.addListener(a -> refreshMaterial());
+
+        exponent.addListener(a -> {
+            if(exponent.get() < 1) exponent.set(1);
+            refreshMaterial();
+        });
     }
 
     @Override

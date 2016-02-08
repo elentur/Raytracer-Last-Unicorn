@@ -19,6 +19,14 @@ public class OOrthographicCamera extends AOCamera {
     public OOrthographicCamera() {
         name.set("Orthographic Camera");
         s.setValue(3);
+
+        patternSubdiv.addListener(a->{
+            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        });
+
+        s.addListener(a->{
+            if( s.get() < 1)  s.set(1);
+        });
     }
 
     @Override

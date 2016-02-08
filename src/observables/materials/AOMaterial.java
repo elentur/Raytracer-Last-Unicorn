@@ -32,6 +32,16 @@ public abstract class AOMaterial extends AOElement {
         bumpScale.addListener(a -> refreshMaterial());
         irradiance.addListener(a -> refreshMaterial());
 
+        ambientSize.addListener(a->{
+            if(ambientSize.get() < 0) ambientSize.set(0);
+            refreshMaterial();
+        });
+
+        ambientSubdiv.addListener(a->{
+            if(ambientSubdiv.get() < 1) ambientSubdiv.set(1);
+            refreshMaterial();
+        });
+
     }
 
     public abstract Material generate();
