@@ -22,6 +22,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 07.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * The Controller for the Light settings
  */
 public class MainSettingsLightController extends AController {
     @FXML
@@ -111,9 +113,11 @@ public class MainSettingsLightController extends AController {
             initialized = true;
         }
     }
-
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initializeFields() {
-        AOLight l = (AOLight) selectedTreeItem.get().getValue();
+        final AOLight l = (AOLight) selectedTreeItem.get().getValue();
         clpLightColor.valueProperty().bindBidirectional(l.color);
         if (txtPositionX != null) {
             if (l instanceof OPointLight) {
@@ -151,7 +155,6 @@ public class MainSettingsLightController extends AController {
             sldAngle.setMax(90);
             sldAngle.valueProperty().bindBidirectional(((OSpotLight) l).halfAngle);
         }
-        //clpLightColor.setValue(new Color(l.color.r, l.color.g, l.color.b, 1));
         chkCastShadows.selectedProperty().bindBidirectional(l.castShadow);
         txtIrradiance.doubleProperty.bindBidirectional(l.photons);
         txtLightSize.doubleProperty.bindBidirectional(l.patternSize);

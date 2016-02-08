@@ -18,6 +18,8 @@ import java.io.IOException;
 /**
  * Created by
  * Robert Dziuba on 04.02.16.
+ *
+ * Controller for the renderViewWindow
  */
 class RenderViewController extends Stage {
 
@@ -52,10 +54,17 @@ class RenderViewController extends Stage {
         this.show();
     }
 
+    /**
+     *
+     * @return the ImageView
+     */
     public ImageView getImageView() {
         return image;
     }
 
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initialize() {
         ScrollPane sp = (ScrollPane) root.lookup("#scrollPane");
         image = (ImageView) sp.getContent();

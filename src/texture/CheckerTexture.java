@@ -6,11 +6,17 @@ import utils.Color;
  * Created by Marcus Baetz on 03/12/15.
  *
  * @author Marcus Bätz
+ *
+ * represents a procedural generated Checkerstexture
  */
 public class CheckerTexture extends Texture {
 
     private final Color color;
 
+    /**
+     *
+     * @param color the black equivalent color
+     */
     public CheckerTexture(final Color color) {
         super((double) 10, (double) 5, (double) 0, (double) 0, (double) 0, null);
         if (color == null) {

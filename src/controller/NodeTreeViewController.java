@@ -18,6 +18,8 @@ import java.util.ResourceBundle;
  * Created by roberto on 05.01.16.
  *
  * @author Robert Dziuba
+ *
+ * Controller for the TreeView
  */
 public class NodeTreeViewController extends AController {
 
@@ -38,11 +40,14 @@ public class NodeTreeViewController extends AController {
 
 
     public void initialize(URL url, ResourceBundle resource) {
-        initializeComobox();
+        initializeComboBox();
         initializeTreeView();
 
     }
 
+    /**
+     * initialize the TreeView and sets all necessary bindings and actions
+     */
     private void initializeTreeView() {
 
         elementsTreeView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -64,9 +69,7 @@ public class NodeTreeViewController extends AController {
 
         elementsTreeView.setCellFactory(new ElementTreeCellFactory());
 
-        // wenn element ausgewählt
         elementsTreeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // wenn nur ein Elmenet ausgewählt wurde
             if (elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
                 selectedTreeItem.set(newValue);
             } else {
@@ -75,9 +78,10 @@ public class NodeTreeViewController extends AController {
         });
     }
 
-    private void initializeComobox() {
-
-        // TODO in eigene Klasse auslagern
+    /**
+     * initialize the ComboBox for creating new Nodes, Lights or Cameras
+     */
+    private void initializeComboBox() {
         cmbNewElement.setCellFactory(new Callback<ListView<AOElement>, ListCell<AOElement>>() {
             @Override
             public ListCell<AOElement> call(ListView<AOElement> c) {
@@ -123,6 +127,9 @@ public class NodeTreeViewController extends AController {
 
     }
 
+    /**
+     * Precheck group conditions and delegate it to ObservableElementList
+     */
     public void handleGroupAction() {
         if (elementsTreeView != null && elementsTreeView.getSelectionModel().getSelectedItems().size() > 0) {
             ObservableList<TreeItem<AOElement>> selectedItems = elementsTreeView.getSelectionModel().getSelectedItems();
@@ -135,7 +142,9 @@ public class NodeTreeViewController extends AController {
             elementLists.groupNodes(nodes);
         }
     }
-
+    /**
+     * Precheck ungroup conditions and delegate it to ObservableElementList
+     */
     public void handleUngroupAction() {
         if (elementsTreeView != null && elementsTreeView.getSelectionModel().getSelectedItems().size() == 1) {
             TreeItem<AOElement> selectedItem = elementsTreeView.getSelectionModel().getSelectedItem();
@@ -146,13 +155,18 @@ public class NodeTreeViewController extends AController {
             }
         }
     }
-
+    /**
+     * Precheck delete conditions and delegate it to ObservableElementList
+     */
     public void handleDeleteAction() {
         if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null && selectedTreeItem.get().getValue().getClass() != AOElement.class) {
             elementLists.removeElement(selectedTreeItem.get().getValue());
         }
     }
 
+    /**
+     * Precheck create-new-Element  conditions and delegate it to ObservableElementList
+     */
     @FXML
     private void handleNewElementAction() {
         if (cmbNewElement != null && cmbNewElement.getSelectionModel().getSelectedItem() != null && cmbNewElement.getSelectionModel().getSelectedItem() instanceof AOElement) {
@@ -179,6 +193,9 @@ public class NodeTreeViewController extends AController {
         }
     }
 
+    /**
+     * Precheck duplicate conditions and delegate it to ObservableElementList
+     */
     @FXML
     private void handleDuplicateAction(){
         if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null)

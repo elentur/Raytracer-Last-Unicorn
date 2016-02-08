@@ -16,38 +16,31 @@ public abstract class Camera {
     /**
      * the eye position
      */
-    Point3 e;
-    /**
-     * the gaze direction (Blickrichtung)
-     */
-    private Vector3 g;
-    /**
-     * the up-vector
-     */
-    private Vector3 t;
+    final Point3 e;
 
     /**
      * u-axis of the local coordinate-system
      */
-    Vector3 u;
+    final Vector3 u;
 
     /**
      * v-axis of the local coordinate-system
      */
-    Vector3 v;
+    final Vector3 v;
 
     /**
      * w-axis of the local coordinate-system
      */
-    Vector3 w;
+    final Vector3 w;
 
     /**
      * the Sampling Pattern of the camera
      */
-    SamplingPattern samplingPattern;
+    final SamplingPattern samplingPattern;
 
     /**
      * constructor initializes e. g and t.
+     * and set Up U,V,W
      *
      * @param e eye position
      * @param g gaze vector (Blickrichtung)
@@ -62,11 +55,9 @@ public abstract class Camera {
         if (samplingPattern == null) throw new IllegalArgumentException("samplingPattern must not be null");
 
         this.e = e;
-        this.g = g;
-        this.t = t;
 
-        this.w = this.g.normalized().mul(-1.0);
-        this.u = this.t.x(this.w).normalized();
+        this.w = g.normalized().mul(-1.0);
+        this.u = t.x(this.w).normalized();
         this.v = this.w.x(this.u).mul(-1);
         this.samplingPattern = samplingPattern;
     }
@@ -81,6 +72,8 @@ public abstract class Camera {
      * @return beamset for certain pixel
      */
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
+
+
 
 
 }

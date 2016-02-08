@@ -28,6 +28,7 @@ public class PerspectiveCamera extends Camera {
      * @param g     gaze vector (gaze direction)
      * @param t     up vector
      * @param angle the opening angle between ]0 and PI/2]
+     * @param samplingPattern the Sampling Pattern of the camera
      */
     public PerspectiveCamera(final Point3 e, final Vector3 g, final Vector3 t, final double angle, final SamplingPattern samplingPattern) {
         super(e, g, t, samplingPattern);
@@ -45,11 +46,11 @@ public class PerspectiveCamera extends Camera {
         if (x < 0 || x >= w) throw new IllegalArgumentException("x have to be between 0 and w");
         if (y < 0 || y >= h) throw new IllegalArgumentException("y have to be between 0 and h");
 
-        Set<Ray> rays = new HashSet<>();
+        final Set<Ray> rays = new HashSet<>();
 
         final Vector3 summand1 = this.w.mul(-1).mul((h * 1.0 / 2) / Math.tan(angle / 2));
 
-        List<Point2> points = samplingPattern.generateSampling();
+        final List<Point2> points = samplingPattern.generateSampling();
 
         for (Point2 point : points) {
             final Vector3 summand2 = this.u.mul(x + point.x - ((w - 1.0) / 2));

@@ -27,13 +27,20 @@ public class OrenNayarMaterial extends Material {
      * Instantiates a new SpotLight Object.
      *
      * @param texture   of the Material. Can't be null.
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
      * @param roughness of the Material. Can't be under 0.0 and over 1.0.
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public OrenNayarMaterial(final Texture texture, final double roughness,
                              final Texture bumpMap, final double bumpScale, final Texture irradiance,
-                             boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
-        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+                             boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
         if (roughness < 0.0 && roughness > 1.0) {
             throw new IllegalArgumentException("The roughness muss be between 0.0 and 1.0!");
         }

@@ -28,10 +28,14 @@ public class Plane extends Geometry {
      * Instantiates a new Plane Object.
      *
      * @param material of the Plane. Can't be null.
+     * @param receiveShadows  boolean if Geometry receives Shadows
+     * @param castShadows boolean if Geometry cast shadows
+     * @param visibility boolean if Geometry is visible
+     * @param flipNormal boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if one of the given arguments are null.
      */
-    public Plane(final Material material, final boolean reciveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
-        super(material, reciveShadows, castShadows, visibility, flipNormal);
+    public Plane(final Material material, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {
+        super(material, receiveShadows, castShadows, visibility, flipNormal);
         this.a = new Point3(0, 0, 0);
         this.n = new Normal3(0, 1, 0);
     }

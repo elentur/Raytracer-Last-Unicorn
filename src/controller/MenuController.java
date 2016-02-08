@@ -3,19 +3,13 @@ package controller;
 import UI.Dialog;
 import UI.IO;
 import javafx.beans.property.SimpleDoubleProperty;
-
 import javafx.collections.FXCollections;
-
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import observables.geometries.AOGeometry;
@@ -31,6 +25,8 @@ import java.util.stream.Collectors;
 
 /**
  * Created by roberto on 05.01.16.
+ *
+ * The Controller for the Menu-Bar
  */
 public class MenuController extends AController {
 
@@ -50,34 +46,16 @@ public class MenuController extends AController {
         new RenderSettingsController();
     }
 
+
     /**
-     * Handle action related to input (in this case specifically only responds to
-     * keyboard event CTRL-A).
-     *
-     * @param event Input event.
+     * Handler for Exit the Program
      */
-    @FXML
-    private void handleKeyInput(final InputEvent event) {
-        if (event instanceof KeyEvent) {
-            final KeyEvent keyEvent = (KeyEvent) event;
-
-            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.S) {
-                System.out.println("ctr + s");
-                saveAction();
-            }
-
-            if (keyEvent.isControlDown() && keyEvent.getCode() == KeyCode.L) {
-                System.out.println("ctr + s");
-                loadAction();
-            }
-        }
-    }
-
     public void handleExitAction() {
 
         Stage stage = (Stage) menuBar.getScene().getWindow();
         stage.close();
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,6 +71,10 @@ public class MenuController extends AController {
         });
     }
 
+    /**
+     * Reset the Focus to the Element selected before clicking the MenuBar
+     * @param element
+     */
     private void setFocusBack(Object element){
 
         if(element instanceof Node){
@@ -104,6 +86,9 @@ public class MenuController extends AController {
         }
     }
 
+    /**
+     * Handler for Loading a new obj Model
+     */
     public void handleLoadModel() {
         FileChooser dlg = new FileChooser();
         dlg.getExtensionFilters().add(new FileChooser.ExtensionFilter("Wavefront obj File. (*.obj)", "*.obj"));
@@ -120,23 +105,24 @@ public class MenuController extends AController {
 
     }
 
+    /**
+     * handler for saving a scene
+     */
     public void handleSaveAction() {
-        saveAction();
-    }
-
-    private void saveAction() {
         IO.saveScene((Stage) menuBar.getScene().getWindow(), rootItem);
     }
 
+    /**
+     * handler for loading a scene
+     */
     public void handleLoadAction() {
-        loadAction();
-    }
-
-    private void loadAction() {
         IO.loadScene((Stage) menuBar.getScene().getWindow());
     }
 
 
+    /**
+     * Handler to start new rendering
+     */
     public void handleRenderAction() {
         ObservableElementLists list = ObservableElementLists.getInstance();
         if (list.camera != null) {
@@ -161,6 +147,9 @@ public class MenuController extends AController {
         }
     }
 
+    /**
+     * handler for stop rendering
+     */
     public void handleStopRenderAction() {
         raytracer.stopRender();
     }

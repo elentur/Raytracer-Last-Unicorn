@@ -15,7 +15,7 @@ import java.util.Locale;
  * BigDecimal property The user input is formatted when the focus is lost or the
  * user hits RETURN.
  *
- * @author Thomas Bolz
+ * @author Thomas Bolz, Marcus Bätz
  */
 public class NumberTextField extends TextField {
 

@@ -6,9 +6,18 @@ import utils.Color;
 
 /**
  * @author Robert Dziuba on 03/12/15.
+ * represents an Interpolated ImageTexture
  */
 public class InterpolatedImageTexture extends Texture {
-
+    /**
+     *
+     * @param scaleU represents scaling value for u-axis
+     * @param scaleV represents scaling value for v-axis
+     * @param offsetU represents offset value for u-axis
+     * @param offsetV represents offset value for v-axis
+     * @param rotate represents rotation value
+     * @param img represents the image for the texture
+     */
     public InterpolatedImageTexture(final Image img, final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate) {
         super(scaleU, scaleV, offsetU, offsetV, rotate, img);
     }

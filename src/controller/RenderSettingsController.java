@@ -21,6 +21,8 @@ import java.util.Map;
 
 /**
  * Created by roberto on 12.01.16.
+ *
+ * The Controller for the RenderSettingsWindow
  */
 class RenderSettingsController extends Stage {
     @FXML
@@ -75,7 +77,9 @@ class RenderSettingsController extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
     }
-
+    /**
+     * setup all FieldValues and binds them to the related Object. And sets all necessary actions
+     */
     private void initialize() {
         chkMultithreading = (CheckBox) root.lookup("#chkMultithreading");
         chkHDRRendering = (CheckBox) root.lookup("#chkHDRRendering");
@@ -109,12 +113,20 @@ class RenderSettingsController extends Stage {
         loadConfig();
     }
 
+    /**
+     * sets the selected resolution to the txtWidth and txtHeight NumberTextField
+     */
     private void setResolution() {
         String[] s = chbResolution.getSelectionModel().getSelectedItem().split("x");
         txtWidth.setNumber(s[0]);
         txtHeight.setNumber(s[1]);
     }
 
+    /**
+     * if this is selected and width or height is changed, the other attribute is
+     * simultaneously changed to keep the ratio
+     * @param txt NumberTextField that is changed
+     */
     private void keepRation(NumberTextField txt) {
         if (chkKeepRatio.isSelected()) {
             if (txt.equals(txtWidth)) {
@@ -126,6 +138,9 @@ class RenderSettingsController extends Stage {
         }
     }
 
+    /**
+     * loads saved settings
+     */
     private void loadConfig() {
         Map<String, String> input = IO.readFile();
         if (input.size() > 0) {
@@ -165,6 +180,9 @@ class RenderSettingsController extends Stage {
         }
     }
 
+    /**
+     * save new settings
+     */
     private void saveConfig() {
         Map<String, String> output = new HashMap<>();
         output.put("multithreading", chkMultithreading.isSelected() + "");
@@ -185,10 +203,16 @@ class RenderSettingsController extends Stage {
         IO.writeFile(output);
     }
 
+    /**
+     * quit without saving
+     */
     private void onCancel() {
         this.close();
     }
 
+    /**
+     * sets the new Values to the raytracer
+     */
     private void onOK() {
         saveConfig();
         int width = txtWidth.getInteger();

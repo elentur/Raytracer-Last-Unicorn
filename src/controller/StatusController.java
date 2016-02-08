@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 /**
  * Created by roberto on 05.01.16.
+ * The Controller for the progressView
  */
 public class StatusController extends AController {
     @FXML

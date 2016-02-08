@@ -4,11 +4,17 @@ import utils.Color;
 
 /**
  * @author Robert Dziuba on 03/12/15.
+ *
+ * represents a SingleColorTexture
  */
 public class SingleColorTexture extends Texture {
 
     private final Color color;
 
+    /**
+     *
+     * @param color represents the Color of the Texture
+     */
     public SingleColorTexture(final Color color) {
         super(1, 1, 1, 1, 0, null);
         if (color == null) {

@@ -18,21 +18,52 @@ import java.util.List;
  * Created by Marcus Baetz on 11.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * A Collection of Lists and tools to add, remove, group, ungroup or duplicate Elements in the TreeView
  */
 public class ObservableElementLists {
     private static final ObservableElementLists ourInstance = new ObservableElementLists();
+    /**
+     * represents the TreeView
+     */
     private TreeView<AOElement> treeView;
+    /**
+     * represents the TreeItem root for AOGeometry
+     */
     private TreeItem<AOElement> nodeTree;
+    /**
+     * represents the TreeItem root for AOLight
+     */
     private TreeItem<AOElement> lightTree;
+    /**
+     * represents the TreeItem root for AOCamera
+     */
     private TreeItem<AOElement> cameraTree;
+    /**
+     * represents a list of all nodes equal to the geometry list in world
+     */
     public final ObservableList<AOGeometry> geometries = FXCollections.observableArrayList();
+    /**
+     * represents a list of all lights equal to the light list in world
+     */
     public final ObservableList<AOLight> lights = FXCollections.observableArrayList();
+    /**
+     * represents the camera equal to the camera of the raytracer
+     */
     public AOCamera camera = null;
 
+    /**
+     *
+     * @return the only instance of this Class
+     */
     public static ObservableElementLists getInstance() {
         return ourInstance;
     }
 
+    /**
+     * sets the TreeView to treeView
+     * @param t reference to TreeView
+     */
     public void setTreeview(TreeView<AOElement> t) {
         treeView = t;
         nodeTree = t.getRoot().getChildren().get(0);
@@ -43,6 +74,10 @@ public class ObservableElementLists {
     private ObservableElementLists() {
     }
 
+    /**
+     * this Method delegates all addCalls to the relevant Typ Method
+     * @param e the Element that have to be added
+     */
     public void addElement(AOElement e) {
         treeView.getSelectionModel().clearSelection();
         if (e instanceof AOCamera) {
@@ -56,33 +91,10 @@ public class ObservableElementLists {
         }
     }
 
-    public void duplicateElement(AOElement e){
-
-        if(e instanceof ONode) {
-
-            ONode parent = getParentNode(geometries, (ONode) e);
-            ONode newNode = ((ONode) e).getInstance();
-
-            if (parent != null) {
-                parent.oGeos.add(newNode);
-                TreeItem<AOElement> tiParent = treeView.getSelectionModel().getSelectedItem().getParent();
-                treeView.getSelectionModel().clearSelection();
-                treeView.getSelectionModel().select(tiParent);
-                TreeItem<AOElement> recTreeItem = addNodeRecursive(newNode);
-                tiParent.getChildren().add(recTreeItem);
-                treeView.getSelectionModel().clearSelection();
-                treeView.getSelectionModel().select(recTreeItem);
-            } else {
-                treeView.getSelectionModel().clearSelection();
-                addNode(newNode);
-            }
-        }else if(e instanceof AOLight){
-            AOLight newLight = ((AOLight) e).getInstance();
-            treeView.getSelectionModel().clearSelection();
-            addLight(newLight);
-        }
-    }
-
+    /**
+     * this Method delegates all removeCalls to the relevant Typ Method
+     * @param e the Element that vae to be removed
+     */
     public void removeElement(AOElement e) {
         if (e instanceof AOCamera) {
             removeCamera();
@@ -95,7 +107,10 @@ public class ObservableElementLists {
         }
         treeView.getSelectionModel().clearSelection();
     }
-
+    /**
+     * this Method adds a new Camera
+     * @param c the camera that have to be added
+     */
     private void addCamera(AOCamera c) {
 
         cameraTree.getChildren().clear();
@@ -105,14 +120,19 @@ public class ObservableElementLists {
         camera = c;
     }
 
-
+    /**
+     * this Method removes the selected Camera
+     */
     private void removeCamera() {
 
         cameraTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
         treeView.getSelectionModel().clearSelection();
         camera = null;
     }
-
+    /**
+     * this Method adds a new light
+     * @param l the light that have to be added
+     */
     private void addLight(AOLight l) {
         TreeItem<AOElement> treeItem = new TreeItem<>(l);
         lightTree.getChildren().add(treeItem);
@@ -121,13 +141,18 @@ public class ObservableElementLists {
 
     }
 
-
+    /**
+     * this Method removes the selected light
+     */
     private void removeLight(AOLight l) {
         lightTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
         treeView.getSelectionModel().clearSelection();
         lights.remove(l);
     }
-
+    /**
+     * this Method adds a new Node
+     * @param n the node that have to be added
+     */
     private void addNode(ONode n) {
         if (!(n.oGeos.get(0) instanceof ONode)) {
             TreeItem<AOElement> treeItem = new TreeItem<>(n);
@@ -142,6 +167,11 @@ public class ObservableElementLists {
         }
     }
 
+    /**
+     * a recursiv addNode call for nodes that have subNodes
+     * @param n the node that have to be adde
+     * @return the TreeItem including all necessary subTreeItems
+     */
     private TreeItem<AOElement> addNodeRecursive(ONode n) {
         if (!(n.oGeos.get(0) instanceof ONode)) {
             return new TreeItem<>(n);
@@ -154,7 +184,9 @@ public class ObservableElementLists {
         }
     }
 
-
+    /**
+     * this Method removes the selected node
+     */
     private void removeNode(ONode n) {
         if (nodeTree.getChildren().contains(treeView.getSelectionModel().getSelectedItem())) {
             nodeTree.getChildren().remove(treeView.getSelectionModel().getSelectedItem());
@@ -187,6 +219,12 @@ public class ObservableElementLists {
         }
     }
 
+    /**
+     * returns the parent node of a node or null if the node has no parent
+     * @param nodes list of all nodes o the same level an with the same parent
+     * @param n node that have to be checked for parent
+     * @return the parent node of a node or null if the node has no parent
+     */
     private ONode getParentNode(ObservableList<AOGeometry> nodes, ONode n) {
         ONode node = null;
         for (AOGeometry p : nodes) {
@@ -198,6 +236,10 @@ public class ObservableElementLists {
         return node;
     }
 
+    /**
+     * groups multiple nodes that are part of the same parentNode
+     * @param nodes list of nodes that have to be grouped to a new node
+     */
     public void groupNodes(List<AOGeometry> nodes) {
         ONode parent = getParentNode(geometries, (ONode) nodes.get(0));
         ONode n = new ONode(
@@ -234,7 +276,11 @@ public class ObservableElementLists {
 
     }
 
-
+    /**
+     * ungroup a node and put all subNodes in the parentNode
+     * @param children List of all subNodes
+     * @param parent the ParentNode
+     */
     public void ungroupNodes(final ObservableList<TreeItem<AOElement>> children, final TreeItem<AOElement> parent) {
         TreeItem<AOElement> selectedItem = treeView.getSelectionModel().getSelectedItem();
         parent.getChildren().remove(selectedItem);
@@ -250,7 +296,40 @@ public class ObservableElementLists {
         }
 
     }
+    /**
+     * this Method duplicates Nodes and lights
+     * @param e
+     */
+    public void duplicateElement(AOElement e){
 
+        if(e instanceof ONode) {
+
+            ONode parent = getParentNode(geometries, (ONode) e);
+            ONode newNode = ((ONode) e).getInstance();
+
+            if (parent != null) {
+                parent.oGeos.add(newNode);
+                TreeItem<AOElement> tiParent = treeView.getSelectionModel().getSelectedItem().getParent();
+                treeView.getSelectionModel().clearSelection();
+                treeView.getSelectionModel().select(tiParent);
+                TreeItem<AOElement> recTreeItem = addNodeRecursive(newNode);
+                tiParent.getChildren().add(recTreeItem);
+                treeView.getSelectionModel().clearSelection();
+                treeView.getSelectionModel().select(recTreeItem);
+            } else {
+                treeView.getSelectionModel().clearSelection();
+                addNode(newNode);
+            }
+        }else if(e instanceof AOLight){
+            AOLight newLight = ((AOLight) e).getInstance();
+            treeView.getSelectionModel().clearSelection();
+            addLight(newLight);
+        }
+    }
+
+    /**
+     * Clear all list for a new setup after loading a new scene
+     */
     public void clearAll() {
         ObservableList<AOMaterial> list = AController.materialList;
         list.remove(7, list.size());

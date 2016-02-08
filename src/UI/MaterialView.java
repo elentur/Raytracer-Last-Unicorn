@@ -20,10 +20,21 @@ import utils.Color;
  * Created by Marcus Baetz on 24.11.2015.
  *
  * @author Marcus Bätz
+ *
+ * This View alows a preview of a set material
  */
 public class MaterialView extends ImageView {
+    /**
+     * first instance of this Class
+     */
     private static final MaterialView materialView1 = new MaterialView();
+    /**
+     * second instance of this Class
+     */
     private static final MaterialView materialView2 = new MaterialView();
+    /**
+     * the instance of the raytracer used for this view
+     */
     private final static Raytracer matTracer = new Raytracer(false);
 
     private MaterialView() {
@@ -38,6 +49,9 @@ public class MaterialView extends ImageView {
         return materialView2;
     }
 
+    /**
+     * sets the tracer up. It uses the material from AController.material
+     */
     public void setUpTracer() {
         MaterialView that = this;
         matTracer.getWorld().lights.clear();

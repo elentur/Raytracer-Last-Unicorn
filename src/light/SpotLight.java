@@ -40,6 +40,8 @@ public class SpotLight extends Light {
      * @param direction  of the Light. Can't be null.
      * @param halfAngle  of the Light. Can't be under 0 and over 90 degrees.
      * @param castShadow Shadows on or of.
+     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      * @throws IllegalArgumentException if one of the given arguments are null or not in the value range.
      */
     public SpotLight(final Color color, final Point3 position, final Vector3 direction,
@@ -68,7 +70,7 @@ public class SpotLight extends Light {
         }
 
         if (Math.acos(direction.dot(directionFrom(point).mul(-1))) <= halfAngle) {
-            if (castsShadow && geo.reciveShadows) {
+            if (castsShadow && geo.receiveShadows) {
                 final Ray r = new Ray(point, directionFrom(point, samplePoint));
 
                 final double tl = r.tOf(position);

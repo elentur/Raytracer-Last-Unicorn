@@ -14,6 +14,8 @@ import observables.lights.AOLight;
  * Created by Marcus Baetz on 11.01.2016.
  *
  * @author Marcus Bätz
+ *
+ * The TreeCellFactory for the TreeView
  */
 class ElementTreeCellFactory implements Callback<TreeView<AOElement>, TreeCell<AOElement>> {
 

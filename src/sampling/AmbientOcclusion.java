@@ -15,8 +15,10 @@ import java.util.Random;
  * Created by Marcus Baetz on 04.02.2016.
  *
  * @author Marcus Bätz
+ *
+ * Represents a pattern to calculate ambientOcclusion
  */
-public class AmbienOcclusion {
+public class AmbientOcclusion {
 
     public double getOcclusion(double size, int subdiv, Hit hit, Point3 p, World world) {
         List<Vector3> testDirections = new ArrayList<>();

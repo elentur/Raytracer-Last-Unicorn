@@ -13,17 +13,47 @@ import utils.World;
  */
 public abstract class Material {
 
-
+    /**
+     * Represents the diffuse Color property of the material
+     */
     final Texture texture;
+    /**
+     * represents the normalMap of the Material
+     */
     public final Texture bumpMap;
+    /**
+     * represents the amount of the normalMap displacement
+     */
     public final double bumpScale;
+    /**
+     * represents the irradiance Color and intensity of the material(not implemented)
+     */
     private final Texture irradiance;
-    final boolean ambientOcllusion;
+    /**
+     * represents if the material allows ambientOcclusion or not
+     */
+    final boolean ambientOcclusion;
+    /**
+     * represent the pattern size
+     */
     final double ambientSize;
+    /**
+     * represent the ambient occlusion Subdivisions
+     */
     final int ambientSubdiv;
 
+    /**
+     *  Creates a new Material
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     */
     Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
-             boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
+             boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
         if (texture == null) {
             throw new IllegalArgumentException("Texture cannot be null!");
         }
@@ -31,7 +61,7 @@ public abstract class Material {
         this.bumpMap = bumpMap;
         this.bumpScale = bumpScale;
         this.irradiance = irradiance;
-        this.ambientOcllusion = ambientOcllusion;
+        this.ambientOcclusion = ambientOcclusion;
         this.ambientSize = ambientSize;
         this.ambientSubdiv = ambientSubdiv;
     }
@@ -54,7 +84,7 @@ public abstract class Material {
         Material material = (Material) o;
 
         if (Double.compare(material.bumpScale, bumpScale) != 0) return false;
-        if (ambientOcllusion != material.ambientOcllusion) return false;
+        if (ambientOcclusion != material.ambientOcclusion) return false;
         if (Double.compare(material.ambientSize, ambientSize) != 0) return false;
         if (ambientSubdiv != material.ambientSubdiv) return false;
         if (!texture.equals(material.texture)) return false;
@@ -72,7 +102,7 @@ public abstract class Material {
         temp = Double.doubleToLongBits(bumpScale);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (irradiance != null ? irradiance.hashCode() : 0);
-        result = 31 * result + (ambientOcllusion ? 1 : 0);
+        result = 31 * result + (ambientOcclusion ? 1 : 0);
         temp = Double.doubleToLongBits(ambientSize);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + ambientSubdiv;

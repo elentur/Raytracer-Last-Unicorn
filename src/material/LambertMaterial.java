@@ -3,7 +3,7 @@ package material;
 import light.Light;
 import matVect.Point2;
 import matVect.Point3;
-import sampling.AmbienOcclusion;
+import sampling.AmbientOcclusion;
 import texture.Texture;
 import utils.Color;
 import utils.Hit;
@@ -20,13 +20,19 @@ public class LambertMaterial extends Material {
 
 
     /**
-     * Generates a new Lambert material with the given color
+     * Creates a new Lambert Material
      *
-     * @param texture Represents the Color of the Lambert material
+     * @param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
      */
     public LambertMaterial(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
-                           boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
-        super(texture, bumpMap, bumpScale, irradiance, ambientOcllusion, ambientSize, ambientSubdiv);
+                           boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, irradiance, ambientOcclusion, ambientSize, ambientSubdiv);
     }
 
 
@@ -49,12 +55,8 @@ public class LambertMaterial extends Material {
                 }
                 c = c.mul(1.0 / light.lightShadowPattern.generateSampling().size());
             }
-
-            ///ambient occlusion test
-            if (ambientOcllusion && world.ambientOcclusion)
-                c = c.mul(new AmbienOcclusion().getOcclusion(ambientSize, ambientSubdiv, hit, p, world));
-
-            ////
+            if (ambientOcclusion && world.ambientOcclusion)
+                c = c.mul(new AmbientOcclusion().getOcclusion(ambientSize, ambientSubdiv, hit, p, world));
         }
 
         return texture.getColor(hit.texCoord.u, hit.texCoord.v).mul(world.ambientLight).add(c);

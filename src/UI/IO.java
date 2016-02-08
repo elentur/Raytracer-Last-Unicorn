@@ -51,6 +51,11 @@ public class IO {
         }
     }
 
+    /**
+     * This Method loads a new scene
+     * @param stage a stage that is used as parent for dialog window
+     * @param rootItem  The rootItem of the TreeView
+     */
     public static void saveScene(final Stage stage, final TreeItem<AOElement> rootItem) {
         if (rootItem == null) {
             Dialog dlg = new Dialog("No Elements!");

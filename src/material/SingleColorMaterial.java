@@ -15,18 +15,21 @@ import utils.World;
  */
 public class SingleColorMaterial extends Material {
 
-    private final Texture texture;
 
     /**
      * Generates a SinglColor Object with the given texture
-     *
+     *@param texture Represents the diffuse Color property of the material
+     * @param bumpMap represents the normalMap of the Material
+     * @param bumpScale represents the amount of the normalMap displacement
+     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
+     * @param ambientSize represent the pattern size
+     * @param ambientSubdiv represent the ambient occlusion Subdivisions
      * @param texture The Diffuse Color Texture Material
      */
 
     public SingleColorMaterial(final Texture texture, final Texture bumpMap, final double bumpScale,
-                               boolean ambientOcllusion, double ambientSize, int ambientSubdiv) {
-        super(texture, bumpMap, bumpScale, new SingleColorTexture(new Color(0, 0, 0)), ambientOcllusion, ambientSize, ambientSubdiv);
-        this.texture = texture;
+                               boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {
+        super(texture, bumpMap, bumpScale, new SingleColorTexture(new Color(0, 0, 0)), ambientOcclusion, ambientSize, ambientSubdiv);
     }
 
 

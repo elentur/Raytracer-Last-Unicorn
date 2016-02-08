@@ -31,7 +31,13 @@ import java.util.Set;
  */
 public class Raytracer {
 
+    /**
+     * represents if raytracer actually is rendering
+     */
     public boolean rendering = false;
+    /**
+     * represents the HDRFilter
+     */
     private HDRFilter hdrFilter;
     /**
      * threadBreak exits all Threads.
@@ -106,11 +112,25 @@ public class Raytracer {
      * represents the start time of the render process.
      */
     private long startTime = 0;
+    /**
+     * represents if in default mode for MaterialRenderView or not
+     */
     private boolean def = false;
+    /**
+     * represents the Image that is used for rendering
+     */
     private WritableImage img;
+
+    /**
+     * represents if the threads are running or not
+     */
     private int running;
 
 
+    /**
+     * loads raytracer renderSettings
+     * @param loadConfig if the settings have to be loaded or if there have to be ste default values
+     */
     public Raytracer(boolean loadConfig) {
         world = new World(new Color(0, 0, 0), new Color(0.2, 0.2, 0.2), ambientOcclusion);
         if (loadConfig) loadConfig();
@@ -118,6 +138,9 @@ public class Raytracer {
         maxProgress.bind(imgHeight.multiply(imgWidth));
     }
 
+    /**
+     * sets default options
+     */
     private void setDefault() {
         cores = 1;
         pattern = 0;
