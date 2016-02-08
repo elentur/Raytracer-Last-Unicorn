@@ -6,7 +6,7 @@ import serializable.geometries.SSphere;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OSphere
  */
 public class OSphere extends AOGeometry {

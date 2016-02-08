@@ -13,7 +13,7 @@ import serializable.materials.SReflectivMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OReflectiveMaterial
  */
 public class OReflectiveMaterial extends AOMaterial {
@@ -40,7 +40,7 @@ public class OReflectiveMaterial extends AOMaterial {
 
         exponent.addListener(a -> {
             System.out.println(exponent.get());
-            if(exponent.get() < 1) exponent.set(1);
+            if (exponent.get() < 1) exponent.set(1);
             refreshMaterial();
         });
     }

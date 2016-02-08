@@ -10,7 +10,7 @@ import serializable.materials.STransparentMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OTransparentMaterial Object
  */
 public class OTransparentMaterial extends AOMaterial {
@@ -47,12 +47,12 @@ public class OTransparentMaterial extends AOMaterial {
         });
 
         indexOfRefraction.addListener(a -> {
-            if(indexOfRefraction.get() < 0.0 && indexOfRefraction.get() > 2.0) indexOfRefraction.set(0.0);
-                refreshMaterial();
+            if (indexOfRefraction.get() < 0.0 && indexOfRefraction.get() > 2.0) indexOfRefraction.set(0.0);
+            refreshMaterial();
         });
 
         exponent.addListener(a -> {
-            if(exponent.get() < 1) exponent.set(1);
+            if (exponent.get() < 1) exponent.set(1);
             refreshMaterial();
         });
     }

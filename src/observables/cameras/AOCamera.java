@@ -11,7 +11,7 @@ import serializable.cameras.SCamera;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Abstract observable class AOCamera
  */
 public abstract class AOCamera extends AOElement {
@@ -59,28 +59,28 @@ public abstract class AOCamera extends AOElement {
     public final IntegerProperty patternSubdiv = new SimpleIntegerProperty(1);
 
 
-    public AOCamera(){
-        tx.addListener(a->{
+    public AOCamera() {
+        tx.addListener(a -> {
             checkT();
         });
 
-        ty.addListener(a->{
+        ty.addListener(a -> {
             checkT();
         });
 
-        tz.addListener(a->{
+        tz.addListener(a -> {
             checkT();
         });
 
-        gx.addListener(a->{
+        gx.addListener(a -> {
             checkG();
         });
 
-        gy.addListener(a->{
+        gy.addListener(a -> {
             checkG();
         });
 
-        gz.addListener(a->{
+        gz.addListener(a -> {
             checkG();
         });
 
@@ -91,28 +91,31 @@ public abstract class AOCamera extends AOElement {
      * checks if the given values creates a vector
      * if not it creates a vector
      */
-    private void checkT(){
-        if(tx.get() == 0 && ty.get() == 0 && tz.get() == 0)
+    private void checkT() {
+        if (tx.get() == 0 && ty.get() == 0 && tz.get() == 0)
             ty.set(1);
     }
+
     /**
      * checks if the given values creates a vector
      * if not it creates a vector
      */
-    private void checkG(){
-        if(gx.get() == 0 && gy.get() == 0 && gz.get() == 0)
+    private void checkG() {
+        if (gx.get() == 0 && gy.get() == 0 && gz.get() == 0)
             gz.set(1);
     }
 
 
     /**
      * Creates a new Camera for rendering
+     *
      * @return a Camera-Object
      */
     public abstract Camera generate();
 
     /**
-     *Creates a new SCamera for saving
+     * Creates a new SCamera for saving
+     *
      * @return a SCameraObject
      */
     public abstract SCamera serialize();

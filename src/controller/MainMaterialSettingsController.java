@@ -33,8 +33,8 @@ import java.util.Set;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
- *
- * The Controller for the Material and Texture settings
+ *         <p>
+ *         The Controller for the Material and Texture settings
  */
 public class MainMaterialSettingsController extends AController {
     @FXML
@@ -307,8 +307,9 @@ public class MainMaterialSettingsController extends AController {
 
     /**
      * frees a materialAttribute from its relation to this Texture
-     * @param texture The TextureObject to be reset
-     * @param cmbTexture the ComboBox that have to be unselect
+     *
+     * @param texture        The TextureObject to be reset
+     * @param cmbTexture     the ComboBox that have to be unselect
      * @param clpColorPicker the ColorPicker that have to be select
      */
     private void clearTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture, final ColorPicker clpColorPicker) {
@@ -324,7 +325,8 @@ public class MainMaterialSettingsController extends AController {
 
     /**
      * Sets a Texture to a given TextureAttribute
-     * @param texture The TextureObject that have to be changed
+     *
+     * @param texture    The TextureObject that have to be changed
      * @param cmbTexture the  ComboBox where the relevant Texture that have to be used is selected
      */
     private void setTexture(final ObjectProperty<AOTexture> texture, final ComboBox<AOTexture> cmbTexture) {
@@ -335,6 +337,7 @@ public class MainMaterialSettingsController extends AController {
 
     /**
      * Creates a new Texture and sets it to the given ComboBox
+     *
      * @param comboBox The ComboBox where the Texture have to be placed
      */
     private void newTexture(final ComboBox<AOTexture> comboBox) {
@@ -396,9 +399,10 @@ public class MainMaterialSettingsController extends AController {
 
     /**
      * setup all FieldValues for TextureTab and binds them to the related Object. And sets all necessary actions
-     * @param v The VBox where the Material have to be placed
+     *
+     * @param v       The VBox where the Material have to be placed
      * @param texture The Texture that have to be used
-     * @param tab The Tab where the VBox have to be placed
+     * @param tab     The Tab where the VBox have to be placed
      */
     private void initializeTexture(final VBox v, final AOTexture texture, final Tab tab) {
         ((TextField) v.lookup("#txtTextureName")).textProperty().bindBidirectional(texture.name);
@@ -449,7 +453,6 @@ public class MainMaterialSettingsController extends AController {
 
 
     }
-
 
 
 }

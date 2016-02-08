@@ -20,8 +20,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
- *
- * The Controller for the Camera settings
+ *         <p>
+ *         The Controller for the Camera settings
  */
 public class MainSettingsCameraController extends AController {
     @FXML
@@ -103,6 +103,7 @@ public class MainSettingsCameraController extends AController {
             initialized = true;
         }
     }
+
     /**
      * setup all FieldValues and binds them to the related Object. And sets all necessary actions
      */

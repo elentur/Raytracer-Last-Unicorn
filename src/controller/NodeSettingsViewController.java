@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
- *
- * Controller for the Settings TabPane
+ *         <p>
+ *         Controller for the Settings TabPane
  */
 public class NodeSettingsViewController extends AController {
 

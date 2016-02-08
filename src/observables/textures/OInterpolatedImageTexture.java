@@ -6,7 +6,7 @@ import texture.InterpolatedImageTexture;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OInterpolatedImageTexture Object
  */
 public class OInterpolatedImageTexture extends AOTexture {
@@ -24,7 +24,7 @@ public class OInterpolatedImageTexture extends AOTexture {
                 scaleV.get(),
                 offsetU.get(),
                 offsetV.get(),
-                rotate.get()*Math.PI/180
+                rotate.get() * Math.PI / 180
         );
     }
 

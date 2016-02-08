@@ -12,7 +12,7 @@ import utils.Color;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OSpotLight Object
  */
 public class OSpotLight extends AOLight {
@@ -59,12 +59,12 @@ public class OSpotLight extends AOLight {
 
         this.halfAngle.set(20);
 
-        patternSize.addListener(a->{
-            if(patternSize.get() < 0) patternSize.set(0);
+        patternSize.addListener(a -> {
+            if (patternSize.get() < 0) patternSize.set(0);
         });
 
-        patternSubdiv.addListener(a->{
-            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        patternSubdiv.addListener(a -> {
+            if (patternSubdiv.get() < 1) patternSubdiv.set(1);
         });
     }
 

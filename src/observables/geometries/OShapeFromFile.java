@@ -10,7 +10,7 @@ import java.io.File;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OShapeFromFile Object
  */
 public class OShapeFromFile extends AOGeometry {
@@ -20,7 +20,6 @@ public class OShapeFromFile extends AOGeometry {
     public final StringProperty path = new SimpleStringProperty();
 
     /**
-     *
      * @param path the path of the obj file
      */
     public OShapeFromFile(String path) {

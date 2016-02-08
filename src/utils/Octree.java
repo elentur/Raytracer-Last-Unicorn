@@ -47,6 +47,7 @@ public class Octree {
 
     /**
      * Instantiates a new Octree Object .
+     *
      * @param g is a list of geometries
      */
     public Octree(List<Geometry> g) {
@@ -84,7 +85,8 @@ public class Octree {
 
     /**
      * Instantiates a new Octree Object which given attributes.
-     * @param g is a list of geometries
+     *
+     * @param g    is a list of geometries
      * @param runX The right top near corner of the Axis Aligned Box.
      * @param runY The right top near corner of the Axis Aligned Box.
      * @param runZ The right top near corner of the Axis Aligned Box.
@@ -141,7 +143,7 @@ public class Octree {
                 }
                 for (Iterator<Geometry> geo = g.iterator(); geo.hasNext(); ) {
                     Geometry g = geo.next();
-                    if(g instanceof Triangle) {
+                    if (g instanceof Triangle) {
                         Triangle t = (Triangle) g;
                         if ((newLbfX <= t.a.x && t.a.x <= newRunX + e) &&
                                 (newLbfY <= t.a.y + e && t.a.y <= newRunY + e) &&
@@ -171,7 +173,7 @@ public class Octree {
      * @throws IllegalArgumentException if one of the given argument is null.
      */
     public Hit hit(Ray r) {
-        if (r == null)  throw new IllegalArgumentException("The Ray cannot be null!");
+        if (r == null) throw new IllegalArgumentException("The Ray cannot be null!");
 
         Hit h = null;
 

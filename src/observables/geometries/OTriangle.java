@@ -6,7 +6,7 @@ import serializable.geometries.STriangle;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OTriangle
  */
 public class OTriangle extends AOGeometry {

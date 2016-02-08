@@ -15,8 +15,8 @@ import java.util.Random;
  * Created by Marcus Baetz on 04.02.2016.
  *
  * @author Marcus Bätz
- *
- * Represents a pattern to calculate ambientOcclusion
+ *         <p>
+ *         Represents a pattern to calculate ambientOcclusion
  */
 public class AmbientOcclusion {
 

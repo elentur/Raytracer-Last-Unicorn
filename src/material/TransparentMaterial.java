@@ -32,18 +32,17 @@ public class TransparentMaterial extends Material {
     private final int exponent;
 
     /**
-     *
-     * @param specular represents the specular color and amount of the material
-     * @param reflection represents the reflective color and amount of the material
-     * @param exponent represents the intensity of the specular
+     * @param specular          represents the specular color and amount of the material
+     * @param reflection        represents the reflective color and amount of the material
+     * @param exponent          represents the intensity of the specular
      * @param indexOfRefraction represents the index of refraction of the material
-     * @param texture Represents the diffuse Color property of the material
-     * @param bumpMap represents the normalMap of the Material
-     * @param bumpScale represents the amount of the normalMap displacement
-     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
-     * @param ambientOcclusion represents if the material allows ambientOcclusion or not
-     * @param ambientSize represent the pattern size
-     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     * @param texture           Represents the diffuse Color property of the material
+     * @param bumpMap           represents the normalMap of the Material
+     * @param bumpScale         represents the amount of the normalMap displacement
+     * @param irradiance        represents the irradiance Color and intensity of the material(not implemented)
+     * @param ambientOcclusion  represents if the material allows ambientOcclusion or not
+     * @param ambientSize       represent the pattern size
+     * @param ambientSubdiv     represent the ambient occlusion Subdivisions
      */
     public TransparentMaterial(final Texture texture, final Texture specular, final Texture reflection,
                                final int exponent, double indexOfRefraction, final Texture bumpMap,
@@ -131,17 +130,17 @@ public class TransparentMaterial extends Material {
             synchronized (light.lightShadowPattern) {
                 light.lightShadowPattern.generateSampling();
 
-               // for (Point2 point : light.lightShadowPattern.generateSampling()) {
+                // for (Point2 point : light.lightShadowPattern.generateSampling()) {
                 //    if (light.illuminates(p, point, world, hit.geo)) {
 
-                        basicColor = basicColor.add(
-                                specular.getColor(hit.texCoord.u, hit.texCoord.v)
-                                        .mul(light.color)
-                                        .mul(Math.pow(
-                                                Math.max(0,rl.dot( hit.ray.d.mul(-1).normalized())), exponent)
-                                        )
-                        );
-                  //  }
+                basicColor = basicColor.add(
+                        specular.getColor(hit.texCoord.u, hit.texCoord.v)
+                                .mul(light.color)
+                                .mul(Math.pow(
+                                        Math.max(0, rl.dot(hit.ray.d.mul(-1).normalized())), exponent)
+                                )
+                );
+                //  }
 
                 //}
                 //basicColor = basicColor.mul(1.0 / light.lightShadowPattern.generateSampling().size());

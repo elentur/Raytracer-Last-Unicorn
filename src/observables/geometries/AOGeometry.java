@@ -13,7 +13,7 @@ import serializable.geometries.SGeometry;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new AOGeometry Object
  */
 public abstract class AOGeometry extends AOElement {
@@ -41,11 +41,14 @@ public abstract class AOGeometry extends AOElement {
 
     /**
      * Creates a new Geometry for rendering
+     *
      * @return a Geometry-Object
      */
     public abstract Geometry generate();
+
     /**
      * Creates a new SGeometry for saving
+     *
      * @return a SGeometry-Object
      */
     public abstract SGeometry serialize();

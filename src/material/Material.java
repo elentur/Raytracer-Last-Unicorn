@@ -43,14 +43,15 @@ public abstract class Material {
     final int ambientSubdiv;
 
     /**
-     *  Creates a new Material
-     * @param texture Represents the diffuse Color property of the material
-     * @param bumpMap represents the normalMap of the Material
-     * @param bumpScale represents the amount of the normalMap displacement
-     * @param irradiance represents the irradiance Color and intensity of the material(not implemented)
+     * Creates a new Material
+     *
+     * @param texture          Represents the diffuse Color property of the material
+     * @param bumpMap          represents the normalMap of the Material
+     * @param bumpScale        represents the amount of the normalMap displacement
+     * @param irradiance       represents the irradiance Color and intensity of the material(not implemented)
      * @param ambientOcclusion represents if the material allows ambientOcclusion or not
-     * @param ambientSize represent the pattern size
-     * @param ambientSubdiv represent the ambient occlusion Subdivisions
+     * @param ambientSize      represent the pattern size
+     * @param ambientSubdiv    represent the ambient occlusion Subdivisions
      */
     Material(final Texture texture, final Texture bumpMap, final double bumpScale, final Texture irradiance,
              boolean ambientOcclusion, double ambientSize, int ambientSubdiv) {

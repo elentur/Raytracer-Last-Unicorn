@@ -22,7 +22,8 @@ public class HDRFilter {
 
     /**
      * Instantiates a new HDRFilter Object.
-     * @param width is the width of the image. it has to be bigger than 0.
+     *
+     * @param width  is the width of the image. it has to be bigger than 0.
      * @param height is the height of the image. it has to be bigger than 0.
      * @throws IllegalArgumentException if one of the given arguments are smaller or equals 0.
      */

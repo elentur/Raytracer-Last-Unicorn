@@ -14,7 +14,7 @@ import java.io.File;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new AOTexture Object
  */
 public abstract class AOTexture extends AOElement {
@@ -53,11 +53,14 @@ public abstract class AOTexture extends AOElement {
 
     /**
      * Creates a new Texture for rendering
+     *
      * @return a Texture-Object
      */
     public abstract Texture generate();
+
     /**
      * Creates a new STexture for saving
+     *
      * @return a STexture-Object
      */
     public abstract STexture serialize();
@@ -74,6 +77,7 @@ public abstract class AOTexture extends AOElement {
             refreshMaterial();
         });
     }
+
     /**
      * refreshes the AController.material to force the MaterialView to rerender
      */

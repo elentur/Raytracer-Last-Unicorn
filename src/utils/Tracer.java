@@ -17,6 +17,7 @@ public class Tracer {
 
     /**
      * Instantiates a new Tracer Object .
+     *
      * @param recursionDepth
      * @throws IllegalArgumentException if the given argument is smaller than 0.
      */
@@ -27,8 +28,9 @@ public class Tracer {
 
     /**
      * calculate the reflection Color according the recursion depth.
+     *
      * @param reflectionRay of the reflection
-     * @param world of the Scene
+     * @param world         of the Scene
      * @return the reflection Color or the world backgroundColor when recursion depth is 0.
      * @throws IllegalArgumentException if the given arguments are null.
      */

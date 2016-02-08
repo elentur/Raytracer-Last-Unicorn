@@ -12,7 +12,6 @@ public class SingleColorTexture extends Texture {
     private final Color color;
 
     /**
-     *
      * @param color represents the Color of the Texture
      */
     public SingleColorTexture(final Color color) {

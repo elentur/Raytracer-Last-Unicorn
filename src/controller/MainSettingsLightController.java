@@ -22,8 +22,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 07.01.2016.
  *
  * @author Marcus Bätz
- *
- * The Controller for the Light settings
+ *         <p>
+ *         The Controller for the Light settings
  */
 public class MainSettingsLightController extends AController {
     @FXML
@@ -113,6 +113,7 @@ public class MainSettingsLightController extends AController {
             initialized = true;
         }
     }
+
     /**
      * setup all FieldValues and binds them to the related Object. And sets all necessary actions
      */

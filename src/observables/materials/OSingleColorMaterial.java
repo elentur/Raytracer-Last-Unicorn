@@ -6,7 +6,7 @@ import serializable.materials.SSingleColorMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OSingleColorMaterial Object
  */
 public class OSingleColorMaterial extends AOMaterial {

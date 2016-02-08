@@ -18,7 +18,7 @@ import java.io.IOException;
 /**
  * Created by
  * Robert Dziuba on 04.02.16.
- *
+ * <p>
  * Controller for the renderViewWindow
  */
 class RenderViewController extends Stage {
@@ -55,7 +55,6 @@ class RenderViewController extends Stage {
     }
 
     /**
-     *
      * @return the ImageView
      */
     public ImageView getImageView() {

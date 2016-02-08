@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  * Created by roberto on 12.01.16.
- *
+ * <p>
  * The Controller for the RenderSettingsWindow
  */
 class RenderSettingsController extends Stage {
@@ -77,6 +77,7 @@ class RenderSettingsController extends Stage {
         this.initModality(Modality.APPLICATION_MODAL);
         this.showAndWait();
     }
+
     /**
      * setup all FieldValues and binds them to the related Object. And sets all necessary actions
      */
@@ -125,6 +126,7 @@ class RenderSettingsController extends Stage {
     /**
      * if this is selected and width or height is changed, the other attribute is
      * simultaneously changed to keep the ratio
+     *
      * @param txt NumberTextField that is changed
      */
     private void keepRation(NumberTextField txt) {

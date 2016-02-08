@@ -31,7 +31,7 @@ public abstract class Geometry {
     /**
      * represents if a geometry has its normal direction changed
      */
-    public final boolean  flipNormal;
+    public final boolean flipNormal;
 
 
     /**

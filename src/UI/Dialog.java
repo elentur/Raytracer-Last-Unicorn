@@ -37,7 +37,6 @@ public class Dialog extends Stage {
     }
 
     /**
-     *
      * @param s Title text
      */
     public Dialog(String s) {

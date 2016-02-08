@@ -39,8 +39,6 @@ public class OrthographicCamera extends Camera {
     }
 
 
-
-
     @Override
     public Set<Ray> rayFor(final int w, final int h, final int x, final int y) {
         if (w <= 0) throw new IllegalArgumentException("w must not be 0 or lower");

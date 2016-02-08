@@ -74,6 +74,4 @@ public abstract class Camera {
     public abstract Set<Ray> rayFor(final int w, final int h, final int x, final int y);
 
 
-
-
 }

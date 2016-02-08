@@ -33,13 +33,12 @@ public abstract class Texture {
     final Image image;
 
     /**
-     *
-     * @param scaleU represents scaling value for u-axis
-     * @param scaleV represents scaling value for v-axis
+     * @param scaleU  represents scaling value for u-axis
+     * @param scaleV  represents scaling value for v-axis
      * @param offsetU represents offset value for u-axis
      * @param offsetV represents offset value for v-axis
-     * @param rotate represents rotation value
-     * @param img represents the image for the texture
+     * @param rotate  represents rotation value
+     * @param img     represents the image for the texture
      */
     Texture(final double scaleU, final double scaleV, final double offsetU, final double offsetV, final double rotate, Image img) {
         this.scaleU = scaleU;

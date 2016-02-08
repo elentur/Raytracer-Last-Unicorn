@@ -60,12 +60,12 @@ public class ShapeFromFile extends Geometry {
     /**
      * Instantiates a new ShapeFromFile Object.
      *
-     * @param material of the Axis Aligned Box. Can't be null
-     * @param path the File Object with the path information of the obj-File
-     * @param receiveShadows  boolean if Geometry receives Shadows
-     * @param castShadows boolean if Geometry cast shadows
-     * @param visibility boolean if Geometry is visible
-     * @param flipNormal boolean if Geometry need to flip Normals direction
+     * @param material       of the Axis Aligned Box. Can't be null
+     * @param path           the File Object with the path information of the obj-File
+     * @param receiveShadows boolean if Geometry receives Shadows
+     * @param castShadows    boolean if Geometry cast shadows
+     * @param visibility     boolean if Geometry is visible
+     * @param flipNormal     boolean if Geometry need to flip Normals direction
      * @throws IllegalArgumentException if one of the given arguments are null
      */
     public ShapeFromFile(final File path, final Material material, final boolean receiveShadows, final boolean castShadows, final boolean visibility, final boolean flipNormal) {

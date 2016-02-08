@@ -14,9 +14,9 @@ public class SInterpolatedImageTexture extends STexture {
 
     private final String path;
 
-    public SInterpolatedImageTexture(final String path, final String name,final double scaleU, final double scaleV,
+    public SInterpolatedImageTexture(final String path, final String name, final double scaleU, final double scaleV,
                                      final double offsetU, final double offsetV, final double rotate) {
-        super(name,scaleU,scaleV,offsetU,offsetV,rotate);
+        super(name, scaleU, scaleV, offsetU, offsetV, rotate);
         this.path = path;
     }
 

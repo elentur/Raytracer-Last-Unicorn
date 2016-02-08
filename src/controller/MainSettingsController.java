@@ -16,8 +16,8 @@ import java.util.ResourceBundle;
  * Created by Marcus Baetz on 06.01.2016.
  *
  * @author Marcus Bätz
- *
- * The Controller for the MainSettingsView
+ *         <p>
+ *         The Controller for the MainSettingsView
  */
 public class MainSettingsController extends AController {
 

@@ -22,12 +22,12 @@ public class OPerspectiveCamera extends AOCamera {
         name.set("Perspective Camera");
         angle.setValue(40);
 
-        patternSubdiv.addListener(a->{
-            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        patternSubdiv.addListener(a -> {
+            if (patternSubdiv.get() < 1) patternSubdiv.set(1);
         });
 
-        angle.addListener(a ->{
-            if(angle.get() < 1 || angle.get() > 90)
+        angle.addListener(a -> {
+            if (angle.get() < 1 || angle.get() > 90)
                 angle.set(1);
         });
     }

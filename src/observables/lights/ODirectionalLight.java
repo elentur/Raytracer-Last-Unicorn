@@ -11,7 +11,7 @@ import utils.Color;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new ODirectionalLight Object
  */
 public class ODirectionalLight extends AOLight {
@@ -34,12 +34,12 @@ public class ODirectionalLight extends AOLight {
         dy.set(0.0);
         dz.set(-1.0);
 
-        patternSize.addListener(a->{
-            if(patternSize.get() < 0) patternSize.set(0);
+        patternSize.addListener(a -> {
+            if (patternSize.get() < 0) patternSize.set(0);
         });
 
-        patternSubdiv.addListener(a->{
-            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        patternSubdiv.addListener(a -> {
+            if (patternSubdiv.get() < 1) patternSubdiv.set(1);
         });
     }
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new AOMaterial Object
  */
 public abstract class AOMaterial extends AOElement {
@@ -55,25 +55,28 @@ public abstract class AOMaterial extends AOElement {
         bumpScale.addListener(a -> refreshMaterial());
         irradiance.addListener(a -> refreshMaterial());
 
-        ambientSize.addListener(a->{
-            if(ambientSize.get() < 0) ambientSize.set(0);
+        ambientSize.addListener(a -> {
+            if (ambientSize.get() < 0) ambientSize.set(0);
             refreshMaterial();
         });
 
-        ambientSubdiv.addListener(a->{
-            if(ambientSubdiv.get() < 1) ambientSubdiv.set(1);
+        ambientSubdiv.addListener(a -> {
+            if (ambientSubdiv.get() < 1) ambientSubdiv.set(1);
             refreshMaterial();
         });
 
     }
 
-     /**
+    /**
      * Creates a new Material for rendering
+     *
      * @return a Material-Object
      */
     public abstract Material generate();
+
     /**
      * Creates a new SMaterial for saving
+     *
      * @return a SMaterial-Object
      */
     public abstract SMaterial serialize();

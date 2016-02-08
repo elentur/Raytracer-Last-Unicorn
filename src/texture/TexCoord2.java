@@ -17,7 +17,6 @@ public class TexCoord2 {
     final public double v;
 
     /**
-     *
      * @param u represents u value of the coordinate
      * @param v represents v value of the coordinate
      */

@@ -6,7 +6,7 @@ import texture.ImageTexture;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OImageTexture Object
  */
 public class OImageTexture extends AOTexture {
@@ -23,7 +23,7 @@ public class OImageTexture extends AOTexture {
                 scaleV.get(),
                 offsetU.get(),
                 offsetV.get(),
-                rotate.get()*Math.PI/180
+                rotate.get() * Math.PI / 180
         );
     }
 

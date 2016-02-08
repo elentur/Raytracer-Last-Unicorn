@@ -129,6 +129,7 @@ public class Raytracer {
 
     /**
      * loads raytracer renderSettings
+     *
      * @param loadConfig if the settings have to be loaded or if there have to be ste default values
      */
     public Raytracer(boolean loadConfig) {
@@ -268,7 +269,7 @@ public class Raytracer {
                 rt = new Task() {
                     @Override
                     protected Object call() throws Exception {
-                        rendering=true;
+                        rendering = true;
                         final PixelWriter pixelWriter = img.getPixelWriter();
                         final PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
                         final byte[] imageData = new byte[imgWidth.get() * imgHeight.get() * 3];
@@ -282,7 +283,7 @@ public class Raytracer {
                         }
                         pixelWriter.setPixels(0, 0, imgWidth.get(), imgHeight.get(), pixelFormat, imageData, 0,
                                 imgWidth.get() * 3);
-                        rendering=false;
+                        rendering = false;
                         return null;
                     }
                 };

@@ -14,7 +14,6 @@ public class CheckerTexture extends Texture {
     private final Color color;
 
     /**
-     *
      * @param color the black equivalent color
      */
     public CheckerTexture(final Color color) {

@@ -15,7 +15,7 @@ import raytracer.Raytracer;
 
 /**
  * Created by roberto on 05.01.16.
- *
+ * <p>
  * The Abstract ControllerClass to access all relevant Controller to the given attributes
  */
 public abstract class AController implements Initializable {
@@ -49,7 +49,6 @@ public abstract class AController implements Initializable {
             DefaultMaterial.getDefaultLambert()
     );
     /**
-     *
      * The observable List of all Textures that are new created or in use
      */
     public final static ObservableList<AOTexture> textureList = FXCollections.observableArrayList();

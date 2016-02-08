@@ -18,8 +18,8 @@ import java.util.ResourceBundle;
  * Created by roberto on 05.01.16.
  *
  * @author Robert Dziuba
- *
- * Controller for the TreeView
+ *         <p>
+ *         Controller for the TreeView
  */
 public class NodeTreeViewController extends AController {
 
@@ -142,6 +142,7 @@ public class NodeTreeViewController extends AController {
             elementLists.groupNodes(nodes);
         }
     }
+
     /**
      * Precheck ungroup conditions and delegate it to ObservableElementList
      */
@@ -155,6 +156,7 @@ public class NodeTreeViewController extends AController {
             }
         }
     }
+
     /**
      * Precheck delete conditions and delegate it to ObservableElementList
      */
@@ -197,9 +199,9 @@ public class NodeTreeViewController extends AController {
      * Precheck duplicate conditions and delegate it to ObservableElementList
      */
     @FXML
-    private void handleDuplicateAction(){
+    private void handleDuplicateAction() {
         if (selectedTreeItem.get() != null && selectedTreeItem.get().getValue() != null)
-        elementLists.duplicateElement(selectedTreeItem.get().getValue());
+            elementLists.duplicateElement(selectedTreeItem.get().getValue());
     }
 
 

@@ -14,7 +14,7 @@ import serializable.cameras.SDOFCamera;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a ODOFCamera
  */
 public class ODOFCamera extends AOCamera {
@@ -42,20 +42,20 @@ public class ODOFCamera extends AOCamera {
         dPatternFStop.setValue(8);
         focalLength.setValue(5);
 
-        patternSubdiv.addListener(a->{
-            if(patternSubdiv.get() < 1) patternSubdiv.set(1);
+        patternSubdiv.addListener(a -> {
+            if (patternSubdiv.get() < 1) patternSubdiv.set(1);
         });
 
         dPatternSubdiv.addListener(a -> {
-            if(dPatternSubdiv.get() < 1) dPatternSubdiv.set(1);
+            if (dPatternSubdiv.get() < 1) dPatternSubdiv.set(1);
         });
 
-        dPatternFStop.addListener(a->{
-            if(dPatternFStop.get() < 0) dPatternFStop.set(0);
+        dPatternFStop.addListener(a -> {
+            if (dPatternFStop.get() < 0) dPatternFStop.set(0);
         });
 
-        angle.addListener(a ->{
-            if(angle.get() < 1 || angle.get() > 90)
+        angle.addListener(a -> {
+            if (angle.get() < 1 || angle.get() > 90)
                 angle.set(1);
         });
 

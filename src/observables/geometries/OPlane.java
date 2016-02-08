@@ -6,7 +6,7 @@ import serializable.geometries.SPlane;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OPlane Object
  */
 public class OPlane extends AOGeometry {

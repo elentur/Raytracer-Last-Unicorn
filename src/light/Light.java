@@ -35,9 +35,9 @@ public abstract class Light {
     /**
      * Generates a Light with given LightColor and direction
      *
-     * @param color      The Color of the Light
-     * @param castShadow Shadows on or of
-     * @param photons represents the number of photons cast from this lightSource( not implemented)
+     * @param color              The Color of the Light
+     * @param castShadow         Shadows on or of
+     * @param photons            represents the number of photons cast from this lightSource( not implemented)
      * @param lightShadowPattern represents the light Shadow Pattern to simulate sized lightsources
      */
     Light(final Color color, final boolean castShadow, final int photons, final LightShadowPattern lightShadowPattern) {

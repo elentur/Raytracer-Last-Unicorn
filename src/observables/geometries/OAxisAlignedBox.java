@@ -6,7 +6,7 @@ import serializable.geometries.SAxisAlignedBox;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OAxisAlignedBox
  */
 public class OAxisAlignedBox extends AOGeometry {

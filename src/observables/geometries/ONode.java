@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by
  * Robert Dziuba  on 02/02/16.
- *
+ * <p>
  * Creates a new ONode
  */
 public class ONode extends AOGeometry {
@@ -63,18 +63,17 @@ public class ONode extends AOGeometry {
 
 
     /**
-     *
-     * @param name name of the node
+     * @param name  name of the node
      * @param oGeos list of subGeometries
      */
     public ONode(String name, List<AOGeometry> oGeos) {
         this.name.set(name);
         this.oGeos.setAll(oGeos);
-        if(!this.oGeos.isEmpty()&& !(this.oGeos.get(0) instanceof ONode)){
-            this.castShadows.addListener(a->syncAttributes());
-            this.receiveShadows.addListener(a->syncAttributes());
-            this.visibility.addListener(a->syncAttributes());
-            this.flipNormal.addListener(a->syncAttributes());
+        if (!this.oGeos.isEmpty() && !(this.oGeos.get(0) instanceof ONode)) {
+            this.castShadows.addListener(a -> syncAttributes());
+            this.receiveShadows.addListener(a -> syncAttributes());
+            this.visibility.addListener(a -> syncAttributes());
+            this.flipNormal.addListener(a -> syncAttributes());
         }
 
     }
@@ -82,8 +81,8 @@ public class ONode extends AOGeometry {
     /**
      * gives the values to their sub Geometries if they are not ONodes
      */
-    private void syncAttributes(){
-        for(AOGeometry g : this.oGeos){
+    private void syncAttributes() {
+        for (AOGeometry g : this.oGeos) {
             g.castShadows.set(this.castShadows.get());
             g.receiveShadows.set(this.receiveShadows.get());
             g.visibility.set(this.visibility.get());

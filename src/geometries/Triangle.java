@@ -142,7 +142,7 @@ public class Triangle extends Geometry {
             if (gamma > 0 && beta + gamma <= 1) {
                 final double detA3 = m.col3(vec).determinant;
                 final double t = detA3 / detA;
-                if (t +0.000001> 0) {
+                if (t + 0.000001 > 0) {
                     Normal3 n = na.mul(1 - beta - gamma).add(nb.mul(beta)).add(nc.mul(gamma));
 
 
@@ -151,7 +151,7 @@ public class Triangle extends Geometry {
                     Color normalC = material.bumpMap.getColor(u, v);
                     Vector3 nc = new Vector3(normalC.r * 2 - 1, normalC.g * 2 - 1, normalC.b * 2 - 1).normalized();
                     Normal3 n1 = new Vector3(n.x + nc.x * material.bumpScale, n.y + nc.y * material.bumpScale, n.z).normalized().asNormal();
-                    if (flipNormal){
+                    if (flipNormal) {
                         n1 = n1.mul(-1);
                         System.out.println("fliped");
                     }

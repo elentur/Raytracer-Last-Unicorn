@@ -18,8 +18,8 @@ import java.util.List;
  * Created by Marcus Baetz on 11.01.2016.
  *
  * @author Marcus Bätz
- *
- * A Collection of Lists and tools to add, remove, group, ungroup or duplicate Elements in the TreeView
+ *         <p>
+ *         A Collection of Lists and tools to add, remove, group, ungroup or duplicate Elements in the TreeView
  */
 public class ObservableElementLists {
     private static final ObservableElementLists ourInstance = new ObservableElementLists();
@@ -53,7 +53,6 @@ public class ObservableElementLists {
     public AOCamera camera = null;
 
     /**
-     *
      * @return the only instance of this Class
      */
     public static ObservableElementLists getInstance() {
@@ -62,6 +61,7 @@ public class ObservableElementLists {
 
     /**
      * sets the TreeView to treeView
+     *
      * @param t reference to TreeView
      */
     public void setTreeview(TreeView<AOElement> t) {
@@ -76,6 +76,7 @@ public class ObservableElementLists {
 
     /**
      * this Method delegates all addCalls to the relevant Typ Method
+     *
      * @param e the Element that have to be added
      */
     public void addElement(AOElement e) {
@@ -93,6 +94,7 @@ public class ObservableElementLists {
 
     /**
      * this Method delegates all removeCalls to the relevant Typ Method
+     *
      * @param e the Element that vae to be removed
      */
     public void removeElement(AOElement e) {
@@ -107,8 +109,10 @@ public class ObservableElementLists {
         }
         treeView.getSelectionModel().clearSelection();
     }
+
     /**
      * this Method adds a new Camera
+     *
      * @param c the camera that have to be added
      */
     private void addCamera(AOCamera c) {
@@ -129,8 +133,10 @@ public class ObservableElementLists {
         treeView.getSelectionModel().clearSelection();
         camera = null;
     }
+
     /**
      * this Method adds a new light
+     *
      * @param l the light that have to be added
      */
     private void addLight(AOLight l) {
@@ -149,8 +155,10 @@ public class ObservableElementLists {
         treeView.getSelectionModel().clearSelection();
         lights.remove(l);
     }
+
     /**
      * this Method adds a new Node
+     *
      * @param n the node that have to be added
      */
     private void addNode(ONode n) {
@@ -169,6 +177,7 @@ public class ObservableElementLists {
 
     /**
      * a recursiv addNode call for nodes that have subNodes
+     *
      * @param n the node that have to be adde
      * @return the TreeItem including all necessary subTreeItems
      */
@@ -221,8 +230,9 @@ public class ObservableElementLists {
 
     /**
      * returns the parent node of a node or null if the node has no parent
+     *
      * @param nodes list of all nodes o the same level an with the same parent
-     * @param n node that have to be checked for parent
+     * @param n     node that have to be checked for parent
      * @return the parent node of a node or null if the node has no parent
      */
     private ONode getParentNode(ObservableList<AOGeometry> nodes, ONode n) {
@@ -238,6 +248,7 @@ public class ObservableElementLists {
 
     /**
      * groups multiple nodes that are part of the same parentNode
+     *
      * @param nodes list of nodes that have to be grouped to a new node
      */
     public void groupNodes(List<AOGeometry> nodes) {
@@ -278,8 +289,9 @@ public class ObservableElementLists {
 
     /**
      * ungroup a node and put all subNodes in the parentNode
+     *
      * @param children List of all subNodes
-     * @param parent the ParentNode
+     * @param parent   the ParentNode
      */
     public void ungroupNodes(final ObservableList<TreeItem<AOElement>> children, final TreeItem<AOElement> parent) {
         TreeItem<AOElement> selectedItem = treeView.getSelectionModel().getSelectedItem();
@@ -296,13 +308,15 @@ public class ObservableElementLists {
         }
 
     }
+
     /**
      * this Method duplicates Nodes and lights
+     *
      * @param e
      */
-    public void duplicateElement(AOElement e){
+    public void duplicateElement(AOElement e) {
 
-        if(e instanceof ONode) {
+        if (e instanceof ONode) {
 
             ONode parent = getParentNode(geometries, (ONode) e);
             ONode newNode = ((ONode) e).getInstance();
@@ -320,7 +334,7 @@ public class ObservableElementLists {
                 treeView.getSelectionModel().clearSelection();
                 addNode(newNode);
             }
-        }else if(e instanceof AOLight){
+        } else if (e instanceof AOLight) {
             AOLight newLight = ((AOLight) e).getInstance();
             treeView.getSelectionModel().clearSelection();
             addLight(newLight);

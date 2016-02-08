@@ -13,7 +13,7 @@ import serializable.materials.SPhongMaterial;
 /**
  * Created by
  * Robert Dziuba on 02/02/16.
- *
+ * <p>
  * Creates a new OPhongMaterial Object
  */
 public class OPhongMaterial extends AOMaterial {
@@ -33,7 +33,7 @@ public class OPhongMaterial extends AOMaterial {
         specular.addListener(a -> refreshMaterial());
 
         exponent.addListener(a -> {
-            if(exponent.get() < 1) exponent.set(1);
+            if (exponent.get() < 1) exponent.set(1);
             refreshMaterial();
         });
     }

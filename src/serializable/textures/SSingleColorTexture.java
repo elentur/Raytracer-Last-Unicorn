@@ -21,7 +21,7 @@ public class SSingleColorTexture extends STexture implements SElement {
     public SSingleColorTexture(final double red, final double green, final double blue, final String name,
                                final double scaleU, final double scaleV,
                                final double offsetU, final double offsetV, final double rotate) {
-        super("",scaleU,scaleV,offsetU,offsetV,rotate);
+        super("", scaleU, scaleV, offsetU, offsetV, rotate);
         this.red = red;
         this.blue = blue;
         this.green = green;

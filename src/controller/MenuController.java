@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * Created by roberto on 05.01.16.
- *
+ * <p>
  * The Controller for the Menu-Bar
  */
 public class MenuController extends AController {
@@ -73,13 +73,14 @@ public class MenuController extends AController {
 
     /**
      * Reset the Focus to the Element selected before clicking the MenuBar
+     *
      * @param element
      */
-    private void setFocusBack(Object element){
+    private void setFocusBack(Object element) {
 
-        if(element instanceof Node){
-            ((Node)element).requestFocus();
-        }else{
+        if (element instanceof Node) {
+            ((Node) element).requestFocus();
+        } else {
             Scene scene = menuBar.getScene();
             Node node = scene.lookup("#elementsTreeView");
             node.requestFocus();
