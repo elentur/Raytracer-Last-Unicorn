@@ -23,7 +23,7 @@ public class OImageTexture extends AOTexture {
                 scaleV.get(),
                 offsetU.get(),
                 offsetV.get(),
-                rotate.get()
+                rotate.get()*Math.PI/180
         );
     }
 
@@ -31,6 +31,11 @@ public class OImageTexture extends AOTexture {
     public SImageTexture serialize() {
         return new SImageTexture(
                 path.get(),
-                name.get());
+                name.get(),
+                scaleU.get(),
+                scaleV.get(),
+                offsetU.get(),
+                offsetV.get(),
+                rotate.get());
     }
 }

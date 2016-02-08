@@ -33,7 +33,12 @@ public class OSingleColorTexture extends AOTexture {
                 color.get().getRed(),
                 color.get().getGreen(),
                 color.get().getBlue(),
-                name.get()
+                name.get(),
+                scaleU.get(),
+                scaleV.get(),
+                offsetU.get(),
+                offsetV.get(),
+                rotate.get()
         );
     }
 }

@@ -18,8 +18,10 @@ public class SSingleColorTexture extends STexture implements SElement {
     private final double green;
     private final double blue;
 
-    public SSingleColorTexture(final double red, final double green, final double blue, final String name) {
-        super("");
+    public SSingleColorTexture(final double red, final double green, final double blue, final String name,
+                               final double scaleU, final double scaleV,
+                               final double offsetU, final double offsetV, final double rotate) {
+        super("",scaleU,scaleV,offsetU,offsetV,rotate);
         this.red = red;
         this.blue = blue;
         this.green = green;
@@ -31,6 +33,11 @@ public class SSingleColorTexture extends STexture implements SElement {
     public OSingleColorTexture generate() {
         OSingleColorTexture t = new OSingleColorTexture(new Color(red, green, blue, 1));
         t.name.setValue(name);
+        t.scaleV.setValue(scaleV);
+        t.scaleU.setValue(scaleU);
+        t.offsetU.setValue(offsetU);
+        t.offsetV.setValue(offsetV);
+        t.rotate.setValue(rotate);
         return t;
     }
 }

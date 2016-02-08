@@ -14,8 +14,9 @@ public class SInterpolatedImageTexture extends STexture {
 
     private final String path;
 
-    public SInterpolatedImageTexture(final String path, final String name) {
-        super(name);
+    public SInterpolatedImageTexture(final String path, final String name,final double scaleU, final double scaleV,
+                                     final double offsetU, final double offsetV, final double rotate) {
+        super(name,scaleU,scaleV,offsetU,offsetV,rotate);
         this.path = path;
     }
 
@@ -24,6 +25,11 @@ public class SInterpolatedImageTexture extends STexture {
         OInterpolatedImageTexture t = new OInterpolatedImageTexture(path);
         t.name.setValue(name);
         AController.textureList.add(t);
+        t.scaleV.setValue(scaleV);
+        t.scaleU.setValue(scaleU);
+        t.offsetU.setValue(offsetU);
+        t.offsetV.setValue(offsetV);
+        t.rotate.setValue(rotate);
         return t;
     }
 }

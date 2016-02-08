@@ -155,7 +155,7 @@ public class Triangle extends Geometry {
                         n1 = n1.mul(-1);
                         System.out.println("fliped");
                     }
-                    return new Hit(t, n1, r, this, new TexCoord2(u, v));
+                    return new Hit(t, n1, r, this, new TexCoord2(u, -v));
                 }
             }
 

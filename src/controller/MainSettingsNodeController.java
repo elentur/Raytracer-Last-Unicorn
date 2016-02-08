@@ -206,8 +206,8 @@ public class MainSettingsNodeController extends AController {
             try {
                 m = cmbMaterial.getSelectionModel().getSelectedItem().getClass().newInstance();
                 materialList.add(m);
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+            } catch (NullPointerException | InstantiationException | IllegalAccessException e) {
+                //e.printStackTrace();
             }
 
         }

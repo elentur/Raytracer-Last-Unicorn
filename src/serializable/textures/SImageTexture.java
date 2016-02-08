@@ -14,8 +14,9 @@ public class SImageTexture extends STexture {
 
     private final String path;
 
-    public SImageTexture(final String path, final String name) {
-        super(name);
+    public SImageTexture(final String path, final String name, final double scaleU, final double scaleV,
+                         final double offsetU, final double offsetV, final double rotate) {
+        super(name,scaleU,scaleV,offsetU,offsetV,rotate);
         this.path = path;
     }
 
@@ -23,6 +24,11 @@ public class SImageTexture extends STexture {
     public OImageTexture generate() {
         OImageTexture t = new OImageTexture(path);
         t.name.setValue(name);
+        t.scaleV.setValue(scaleV);
+        t.scaleU.setValue(scaleU);
+        t.offsetU.setValue(offsetU);
+        t.offsetV.setValue(offsetV);
+        t.rotate.setValue(rotate);
         AController.textureList.add(t);
         return t;
     }

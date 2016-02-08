@@ -24,7 +24,7 @@ public class OInterpolatedImageTexture extends AOTexture {
                 scaleV.get(),
                 offsetU.get(),
                 offsetV.get(),
-                rotate.get()
+                rotate.get()*Math.PI/180
         );
     }
 
@@ -32,6 +32,11 @@ public class OInterpolatedImageTexture extends AOTexture {
     public SInterpolatedImageTexture serialize() {
         return new SInterpolatedImageTexture(
                 path.get(),
-                name.get());
+                name.get(),
+                scaleU.get(),
+                scaleV.get(),
+                offsetU.get(),
+                offsetV.get(),
+                rotate.get());
     }
 }
