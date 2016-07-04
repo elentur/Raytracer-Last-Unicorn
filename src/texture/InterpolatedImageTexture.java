@@ -29,9 +29,6 @@ public class InterpolatedImageTexture extends Texture {
         u = (u / scaleU + offsetU) % 1.0;
         v = (v / scaleV + offsetV) % 1.0;
 
-        u = (u / scaleU + offsetU) % 1.0;
-        v = (v / scaleV + offsetV) % 1.0;
-
         if (u < 0) u += 1.0;
         if (v < 0) v += 1.0;
 

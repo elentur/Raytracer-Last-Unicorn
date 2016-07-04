@@ -2,6 +2,7 @@ package sampling;
 
 import matVect.Point2;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,12 +29,19 @@ public class SamplingPattern extends SubdivisionPattern {
             points.add(new Point2(0, 0));
             return points;
         }
+        final List<Double> xCord = new ArrayList<>();
         final double v = 2 * size / subdiv;
         for (int i = 0; i < subdiv + 1; i++) {
             final double z = i * v - size;
             points.add(new Point2(z, z));
+            xCord.add(z);
         }
-        Collections.shuffle(points);
+        //Collections.shuffle(points);
+        Collections.shuffle(xCord);
+        for (int i = 0; i < points.size(); i++) {
+            points.set(i, new Point2(xCord.get(i), points.get(i).y));
+
+        }
         return points;
     }
 
